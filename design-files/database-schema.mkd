@@ -1,0 +1,108 @@
+# PROJECT Z 
+
+## ABOUT
+### This project is going to be a "Game backlog tracker". 
+
+## OBJECTIVE
+
+### This project objective is to offer gamers a way where they can track their games, but also, their achievements.
+
+## DESIGNING THE DATABASE
+
+### GLOSSARY
+- **PK**: _PRIMARY KEY_
+- **FK**: _FOREIGN KEY_
+- **UQ**: _UNIQUE ATTRIBUTE_
+- **DE**: _DATA ENTITY_
+- **PE**: _PIVOT ENTITY_
+- **CE**: _CATALOGUE ENTITY_
+
+### ENTITIES
+
+#### USERS **(DE)**
+
+- user_id **(PK)**
+- username **(UNIQUE)**
+- email **(UNIQUE)**
+- password
+- avatar
+- country **(FK)**
+- title
+- status_lock
+
+#### GAMES **(EXTERNAL API)**
+
+- game_id **(PK)**
+- name
+- publishers
+- developers
+- genre
+- ... and more
+
+#### COLLECTIONS **(DE)**
+
+- collection_id **(PK)**
+- user_id **(FK)**
+- creation_date
+
+
+#### COLLECTION_USER **(PE)**
+
+- collection_user_id **(PK)**
+- collection_id **(FK)**
+- game_id **(FK)**
+- ownership
+- status
+
+#### COUNTRY **(CE)**
+
+- country_id **(PK)**
+- name
+- domain **(UNIQUE)**
+
+### RELATIONSHIPS
+
+1. A **User** has a **Country** (1 - 1).
+1. A **Collection** has a **User** (1 - 1).
+1. A **Collection** belongs to **Collection_User** (1 - M).
+1. A **Game** belongs **Collection_User** (1 - 1).
+
+### RELATIONAL DATABASE MODEL
+
+![](./relational-model.png)
+
+### BUSINESS RULES
+
+#### USERS
+
+1. Create a user.
+1. Read all users.
+1. Read a user.
+1. Update a user.
+1. Block a user.
+
+#### COLLECTIONS
+
+1. Create a collection.
+1. Read all collection.
+1. Read a collection.
+1. Read a user collection.
+1. Update a collection.
+1. Delete a collection.
+
+#### COLLECTION_USER
+
+1. Create a Collection_User.
+1. Read all Collection_Users.
+1. Read a Collection_User.
+1. Update a Collection_User.
+1. Delete a Collection_User.
+
+#### COUNTRY
+
+1. Create a Country.
+1. Read all Country.
+1. Read a Country.
+1. Update a Country.
+1. Delete a Country.
+
