@@ -23,10 +23,16 @@ export const signup = async (req, res) => {
 
     const token = await handleJwt({ id: newUser[0].user_id });
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "none",
+      /*       secure: true,
+       */ maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+
     res.status(201).json({
       success: true,
       message: "User created",
-      token,
       user_id: newUser[0].user_id,
       username: newUser[0].username,
       email: newUser[0].email,
@@ -59,6 +65,15 @@ export const signin = async (req, res) => {
         .status(401)
         .json({ success: false, message: "Wrong password" });
 
+    const token = await handleJwt({ id: user[0].user_id });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "none",
+      /*       secure: true,
+       */ maxAge: 24 * 60 * 60 * 1000, // 1 day
+    });
+
     res.status(200).json({
       success: true,
       message: "User found",
@@ -78,17 +93,13 @@ export const signin = async (req, res) => {
 };
 
 export const signout = (req, res) => {
-  res.sendStatus(200).json({
-    success: true,
-    logged: false,
-    message: "User logged out",
-  });
+  res.clearCookie("token");
+  res.sendStatus(200);
 };
 
 export const profile = async (req, res) => {
-  const { id } = req.params;
   try {
-    const user = await sql`SELECT * FROM users WHERE user_id = ${id}`;
+    const user = await sql`SELECT * FROM users WHERE user_id = ${req.user_id}`;
 
     if (!user[0])
       return res
@@ -97,7 +108,6 @@ export const profile = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      logged: true,
       message: "User found",
       user: user[0],
     });
