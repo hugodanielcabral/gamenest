@@ -43,6 +43,7 @@
 
 - collection_id **(PK)**
 - user_id **(FK)**
+- title
 - creation_date
 
 

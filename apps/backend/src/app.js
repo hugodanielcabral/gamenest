@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
+import collectionRoutes from "./routes/collection.routes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
@@ -31,6 +32,7 @@ app.use(
 // Routes
 
 app.use("/api", authRoutes);
+app.use("/api", collectionRoutes);
 
 // Error Handling
 app.use((error, req, res, next) => {
