@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import collectionRoutes from "./routes/collection.routes.js";
+import collectionUserRoutes from "./routes/collection_user.routes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
@@ -33,6 +34,7 @@ app.use(
 
 app.use("/api", authRoutes);
 app.use("/api", collectionRoutes);
+app.use("/api", collectionUserRoutes);
 
 // Error Handling
 app.use((error, req, res, next) => {

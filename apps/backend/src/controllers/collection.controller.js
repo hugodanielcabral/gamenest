@@ -74,7 +74,7 @@ export const deleteCollection = async (req, res) => {
         .status(404)
         .json({ success: false, message: "Collection not found" });
 
-    res.status(201).json({ success: true, message: "Collection deleted" });
+    res.status(204);
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
