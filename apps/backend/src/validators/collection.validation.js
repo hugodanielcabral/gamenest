@@ -1,12 +1,8 @@
-import { check } from "express-validator";
+import { existsAndNotEmpty } from "../helpers/handleExistsAndNotEmpty.js";
 import { validateResult } from "../helpers/handleValidateResult.js";
 
 export const createCollectionValidator = [
-  check("title")
-    .exists()
-    .withMessage("Title is required")
-    .notEmpty()
-    .withMessage("Title must not be empty")
+  existsAndNotEmpty("title", "Title")
     .isString()
     .withMessage("Title must be a string")
     .isLength({ min: 3 })
@@ -19,11 +15,7 @@ export const createCollectionValidator = [
 ];
 
 export const updateCollectionValidator = [
-  check("title")
-    .exists()
-    .withMessage("Title is required")
-    .notEmpty()
-    .withMessage("Title must not be empty")
+  existsAndNotEmpty("title", "Title")
     .isString()
     .withMessage("Title must be a string")
     .isLength({ min: 3 })
