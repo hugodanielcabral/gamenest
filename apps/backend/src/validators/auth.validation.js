@@ -1,14 +1,10 @@
-import { check } from "express-validator";
+import { existsAndNotEmpty } from "../helpers/handleExistsAndNotEmpty.js";
 import { validateResult } from "../helpers/handleValidateResult.js";
-import sql from "../db.js";
 import { comparePassword } from "../helpers/handleBcrypt.js";
+import sql from "../db.js";
 
 export const signupValidator = [
-  check("username")
-    .exists()
-    .withMessage("Username is required")
-    .notEmpty()
-    .withMessage("Username must not be empty")
+  existsAndNotEmpty("username", "Username")
     .isString()
     .withMessage("Username must be a string")
     .isLength({ min: 5 })
@@ -17,16 +13,11 @@ export const signupValidator = [
     .withMessage("Username must be at most 20 characters long")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
-
       if (user.length > 0) {
         throw new Error("Username already in use");
       }
     }),
-  check("email")
-    .exists()
-    .withMessage("Email is required")
-    .notEmpty()
-    .withMessage("Email must not be empty")
+  existsAndNotEmpty("email", "Email")
     .isEmail()
     .withMessage("Email must be a valid email")
     .isLength({ max: 60 })
@@ -37,49 +28,29 @@ export const signupValidator = [
         throw new Error("Email already in use");
       }
     }),
-  check("pass")
-    .exists()
-    .withMessage("Password is required")
-    .notEmpty()
-    .withMessage("Password must not be empty")
+  existsAndNotEmpty("pass", "Password")
     .isString()
     .withMessage("Password must be a string")
     .isLength({ min: 5 })
     .withMessage("Password must be at least 5 characters long")
     .isLength({ max: 30 })
     .withMessage("Password must be at most 30 characters long"),
-  check("avatar")
-    .exists()
-    .withMessage("Avatar is required")
-    .notEmpty()
-    .withMessage("Avatar must not be empty")
+  existsAndNotEmpty("avatar", "Avatar")
     .isString()
     .withMessage("Avatar must be a string")
     .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png)/)
     .withMessage("Avatar must be a valid url"),
-  check("title")
-    .exists()
-    .withMessage("Title is required")
-    .notEmpty()
-    .withMessage("Title must not be empty")
+  existsAndNotEmpty("title", "Title")
     .isString()
     .withMessage("Title must be a string")
     .isLength({ min: 3 })
     .withMessage("Title must be at least 3 characters long")
     .isLength({ max: 30 })
     .withMessage("Title must be at most 30 characters long"),
-  check("status_lock")
-    .exists()
-    .withMessage("Status lock is required")
-    .notEmpty()
-    .withMessage("Status lock must not be empty")
+  existsAndNotEmpty("status_lock", "Status lock")
     .isBoolean()
     .withMessage("Status lock must be a boolean"),
-  check("country")
-    .exists()
-    .withMessage("Country is required")
-    .notEmpty()
-    .withMessage("Country must not be empty")
+  existsAndNotEmpty("country", "Country")
     .isInt()
     .withMessage("Country must be a number"),
   (req, res, next) => {
@@ -88,11 +59,7 @@ export const signupValidator = [
 ];
 
 export const signinValidator = [
-  check("username")
-    .exists()
-    .withMessage("Username is required")
-    .notEmpty()
-    .withMessage("Username must not be empty")
+  existsAndNotEmpty("username", "Username")
     .isString()
     .withMessage("Username must be a string")
     .isLength({ min: 5 })
@@ -101,16 +68,11 @@ export const signinValidator = [
     .withMessage("Username must be at most 20 characters long")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
-
       if (!user[0]) {
         throw new Error("Username not found");
       }
     }),
-  check("pass")
-    .exists()
-    .withMessage("Password is required")
-    .notEmpty()
-    .withMessage("Password must not be empty")
+  existsAndNotEmpty("pass", "Password")
     .isString()
     .withMessage("Password must be a string")
     .isLength({ min: 5 })
