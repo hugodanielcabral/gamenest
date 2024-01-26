@@ -23,7 +23,7 @@ export const HeaderNav = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-white"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-grey_color rounded-box w-52 text-black_color"
           >
             <li>
               <a>Home</a>
@@ -45,13 +45,13 @@ export const HeaderNav = () => {
             alt="GameNest Logo"
             className="w-10 h-10 mr-2"
           />
-          <p className="text-white">
-            Game<span className="text-red-400">Nest</span>
+          <p className="text-grey_color">
+            Game<span className="text-red_color">Nest</span>
           </p>
         </a>
       </div>
       <div className="hidden navbar-center lg:flex">
-        <ul className="px-1 text-white menu menu-horizontal">
+        <ul className="px-1 text-white_color menu menu-horizontal">
           <li>
             <a>Home</a>
           </li>
@@ -83,7 +83,7 @@ export const HeaderNav = () => {
             </div>
             <ul
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-grey_color bg-opacity-40 rounded-box w-52"
             >
               <li>
                 <a className="justify-between">

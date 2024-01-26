@@ -1,9 +1,13 @@
-import { Header } from "./components/layout/header/Header";
+import { Layout } from "./components/layout/Layout";
+import { Routes, Route } from "react-router-dom";
+import { HomePage } from "./pages/HomePage";
 
 export const GameNestApp = () => {
   return (
-    <div>
-      <Header />
-    </div>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Layout>
   );
 };
