@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import collectionRoutes from "./routes/collection.routes.js";
 import collectionUserRoutes from "./routes/collection_user.routes.js";
+import gamesRoutes from "./routes/games.routes.js";
 import countryRoutes from "./routes/country.routes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -24,12 +25,7 @@ app.use(
   express.static(path.join(__dirname, "public", "avatars"))
 );
 // CORS
-/* app.use(
-  cors({
-    origin: "URL OR LOCALHOST",
-    credentials: true,
-  })
-); */
+app.use(cors());
 
 // Routes
 
@@ -37,6 +33,7 @@ app.use("/api", authRoutes);
 app.use("/api", collectionRoutes);
 app.use("/api", collectionUserRoutes);
 app.use("/api", countryRoutes);
+app.use("/api", gamesRoutes);
 
 // Error Handling
 app.use((error, req, res, next) => {
