@@ -1,7 +1,7 @@
-# PROJECT Z 
+# GAMENEST 
 
 ## ABOUT
-### This project is going to be a "Game backlog tracker". 
+### This project is going to be a "Game backlog tracker and a blog". 
 
 ## OBJECTIVE
 
@@ -24,11 +24,11 @@
 - user_id **(PK)**
 - username **(UNIQUE)**
 - email **(UNIQUE)**
-- password
+- pass
 - avatar
-- country **(FK)**
 - title
 - status_lock
+- country **(FK)**
 
 #### GAMES **(EXTERNAL API)**
 
@@ -43,8 +43,8 @@
 
 - collection_id **(PK)**
 - user_id **(FK)**
-- title
 - creation_date
+- title
 
 
 #### COLLECTION_USER **(PE)**
@@ -61,13 +61,26 @@
 - name
 - domain **(UNIQUE)**
 
+#### ARTICLES **(DE)**
+
+- article_id  **(PK)**
+- title
+- subtitle
+- description
+- body
+- image
+- created_on
+- user_id **(FK)**
+
 ### RELATIONSHIPS
 
 1. A **User** has a **Country** (1 - 1).
 1. A **Collection** has a **User** (1 - 1).
 1. A **Collection** belongs to **Collection_User** (1 - M).
-1. A **Game** belongs **Collection_User** (1 - 1).
+1. A **Game** belongs to **Collection_User** (1 - 1).
+1. A **User** creates **Articles** (1 - M).
 
+ 
 ### RELATIONAL DATABASE MODEL
 
 ![](./relational-model.png)
@@ -107,3 +120,10 @@
 1. Update a Country.
 1. Delete a Country.
 
+#### ARTICLES
+
+1. Create a Article.
+1. Read all Articles.
+1. Read a Article.
+1. Update a Article.
+1. Delete a Article.

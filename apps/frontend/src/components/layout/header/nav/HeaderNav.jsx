@@ -1,8 +1,13 @@
 import gameNestLogo from "../../../../assets/gamenest-logo.svg";
+import { Link } from "react-router-dom";
 
-export const HeaderNav = () => {
+export const HeaderNav = ({ pathname }) => {
   return (
-    <div className="absolute bg-transparent navbar">
+    <div
+      className={`absolute z-50 navbar ${
+        pathname === "/" ? "bg-transparent" : "bg-white_color"
+      }`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -26,16 +31,16 @@ export const HeaderNav = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-grey_color rounded-box w-52 text-black_color"
           >
             <li>
-              <a>Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a>Games</a>
+              <Link to="/games">Games</Link>
             </li>
             <li>
-              <a>Collection</a>
+              <Link to="/">Collection</Link>
             </li>
             <li>
-              <a>Reviews</a>
+              <Link to="/reviews">Reviews</Link>
             </li>
           </ul>
         </div>
@@ -45,24 +50,32 @@ export const HeaderNav = () => {
             alt="GameNest Logo"
             className="w-10 h-10 mr-2"
           />
-          <p className="text-grey_color">
+          <p
+            className={`${
+              pathname === "/" ? "text-grey_color" : "text-black_color"
+            }`}
+          >
             Game<span className="text-red_color">Nest</span>
           </p>
         </a>
       </div>
       <div className="hidden navbar-center lg:flex">
-        <ul className="px-1 text-white_color menu menu-horizontal">
+        <ul
+          className={`px-1 ${
+            pathname === "/" ? "text-white_color" : "text-black_color"
+          } menu menu-horizontal text-2xl font-bold`}
+        >
           <li>
-            <a>Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a>Games</a>
+            <Link to="/games">Games</Link>
           </li>
           <li>
-            <a>Collection</a>
+            <Link to="/">Collection</Link>
           </li>
           <li>
-            <a>Reviews</a>
+            <Link to="/reviews">Reviews</Link>
           </li>
         </ul>
       </div>
