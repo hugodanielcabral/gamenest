@@ -68,7 +68,7 @@ export const HomePage = () => {
   ];
 
   return (
-    <>
+    <div>
       <div className="flex items-center justify-between p-3 mb-3 bg-red_color">
         <h2 className="text-3xl font-bold text-white_color">Featured Games</h2>
       </div>
@@ -102,6 +102,11 @@ export const HomePage = () => {
           />
         </article>
       </div>
-    </>
+      <aside>
+        <div className="md:col-span-1 bg-red_color">
+          <h1>Aside</h1>
+        </div>
+      </aside>
+    </div>
   );
 };
