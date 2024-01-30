@@ -67,17 +67,17 @@ export const HeaderCarousel = () => {
       <div className="flex items-center justify-between mx-6 h-[600px]">
         <button
           onClick={() => handlePreviousCarouselData()}
-          className="p-5 transition duration-500 ease-in-out transform bg-opacity-50 rounded-full bg-white_color hover:bg-red_color hover:scale-110"
+          className="p-5 transition duration-500 ease-in-out transform bg-opacity-50 rounded-full bg-white-color hover:bg-red-color hover:scale-110"
         >
           <img src={left_arrow} alt="Image of a left arrow" />
         </button>
         <div className="w-2/4">
-          <h2 className="text-3xl text-white_color">{currentItem.title}</h2>
+          <h2 className="text-3xl text-white-color">{currentItem.title}</h2>
           <h4 className="mt-5 text-2xl">{currentItem.description}</h4>
           <ul className="flex gap-4 mt-5">
             <li>
               <p>
-                posted by: <span className="text-red_color">admin</span>
+                posted by: <span className="text-red-color">admin</span>
               </p>
             </li>
             <li>
@@ -87,7 +87,7 @@ export const HeaderCarousel = () => {
         </div>
         <button
           onClick={() => handleNextCarouselData()}
-          className="p-5 transition duration-500 ease-in-out transform bg-opacity-50 rounded-full bg-white_color hover:bg-red_color hover:scale-110"
+          className="p-5 transition duration-500 ease-in-out transform bg-opacity-50 rounded-full bg-white-color hover:bg-red-color hover:scale-110"
         >
           <img src={right_arrow} alt="Image of a right arrow" />
         </button>

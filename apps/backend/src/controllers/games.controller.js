@@ -10,7 +10,7 @@ export const getGames = async (req, res) => {
         "Client-ID": process.env.CLIENT_ID,
         Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
       },
-      body: `fields name, storyline, summary, rating, cover.url, genres.name, platforms.name, screenshots.url; where id = (1942, 214417, 1877);`,
+      body: `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 80; sort rating desc; limit 10; offset 23;`,
     });
     const data = await response.json();
     res.json(data);

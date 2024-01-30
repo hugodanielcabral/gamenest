@@ -69,10 +69,10 @@ export const HomePage = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between p-3 mb-3 bg-red_color">
+      <div className="flex items-center justify-between p-3 mb-3 bg-red-color">
         <h2 className="text-3xl font-bold text-white_color">Featured Games</h2>
       </div>
-      <div className="grid grid-cols-3 grid-rows-6 p-5 border border-orange_tag_adventure bg-grey_color gap-x-4 gap-y-3">
+      <div className="grid grid-cols-3 grid-rows-6 p-5 border border-orange-tag-adventure bg-grey-color gap-x-4 gap-y-3">
         <article className="relative col-span-3 row-span-3 md:row-span-6 md:col-span-2">
           <img
             src={images[0].src}
@@ -103,7 +103,7 @@ export const HomePage = () => {
         </article>
       </div>
       <aside>
-        <div className="md:col-span-1 bg-red_color">
+        <div className="md:col-span-1 bg-red-color">
           <h1>Aside</h1>
         </div>
       </aside>

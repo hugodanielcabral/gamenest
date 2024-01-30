@@ -5,7 +5,7 @@ export const HeaderNav = ({ pathname }) => {
   return (
     <div
       className={`absolute z-50 navbar ${
-        pathname === "/" ? "bg-transparent" : "bg-white_color"
+        pathname === "/" ? "bg-transparent" : "bg-white-color"
       }`}
     >
       <div className="navbar-start">
@@ -28,7 +28,7 @@ export const HeaderNav = ({ pathname }) => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-grey_color rounded-box w-52 text-black_color"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-grey-color rounded-box w-52 text-black-color"
           >
             <li>
               <Link to="/">Home</Link>
@@ -52,17 +52,17 @@ export const HeaderNav = ({ pathname }) => {
           />
           <p
             className={`${
-              pathname === "/" ? "text-grey_color" : "text-black_color"
+              pathname === "/" ? "text-grey-color" : "text-black-color"
             }`}
           >
-            Game<span className="text-red_color">Nest</span>
+            Game<span className="text-red-color">Nest</span>
           </p>
         </a>
       </div>
       <div className="hidden navbar-center lg:flex">
         <ul
           className={`px-1 ${
-            pathname === "/" ? "text-white_color" : "text-black_color"
+            pathname === "/" ? "text-white-color" : "text-black-color"
           } menu menu-horizontal text-2xl font-bold`}
         >
           <li>
@@ -96,7 +96,7 @@ export const HeaderNav = ({ pathname }) => {
             </div>
             <ul
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-grey_color bg-opacity-40 rounded-box w-52"
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-grey-color bg-opacity-40 rounded-box w-52"
             >
               <li>
                 <a className="justify-between">

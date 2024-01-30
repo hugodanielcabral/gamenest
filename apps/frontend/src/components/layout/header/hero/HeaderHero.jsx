@@ -5,12 +5,12 @@ export const HeaderHero = () => {
     <div>
       <img
         src={games_page_hero_img}
-        className="relative w-full h-[500px] object-cover blur-sm brightness-50"
+        className="relative w-full h-[500px] object-cover  brightness-50"
         alt="Hero image for the games page"
       />
-      <h1 className="absolute z-50 text-5xl font-bold top-52 text-orange_tag_adventure left-1/4 ">
+      {/*  <h1 className="absolute z-50 text-5xl font-bold text-center top-52 text-orange-tag-adventure left-1/4">
         Games
-      </h1>
+      </h1> */}
     </div>
   );
 };
