@@ -4,7 +4,7 @@ import "./GameCard.css";
 
 export const GameCard = ({ game }) => {
   return (
-    <Link key={game.id} to={`/games/${game.id}`}>
+    <Link key={game.id} to={`/games/gamepage/${game.id}`}>
       <div className="flex items-center justify-between p-3 my-5 transition duration-500 ease-in-out rounded-lg shadow-lg cursor-pointer bg-white-color hover:shadow-xl hover:saturate-50">
         <div className="flex flex-1 gap-x-3">
           <img

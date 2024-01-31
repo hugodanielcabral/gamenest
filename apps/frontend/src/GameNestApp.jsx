@@ -9,6 +9,7 @@ export const GameNestApp = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games" element={<GamesPage />} />
+        <Route path="/games/:page" element={<GamesPage />} />
       </Routes>
     </Layout>
   );

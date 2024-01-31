@@ -15,7 +15,14 @@ export default {
       "pink-tag-fighter": "#F06594",
       "red-tag-role-playing": "#DD3333",
     },
-    extend: {},
+    extend: {
+      variants: {
+        extend: {
+          opacity: ["disabled"],
+          cursor: ["disabled"],
+        },
+      },
+    },
   },
   plugins: [daisyui],
 };

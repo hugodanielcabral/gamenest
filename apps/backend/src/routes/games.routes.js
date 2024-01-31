@@ -5,4 +5,6 @@ const router = Router();
 
 router.get("/games", getGames);
 
+/* router.get("/games/count", getGamesCount);
+ */
 export default router;
