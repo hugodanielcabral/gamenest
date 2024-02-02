@@ -24,5 +24,9 @@ export default {
       },
     },
   },
-  plugins: [daisyui],
+  // eslint-disable-next-line no-undef
+  plugins: [daisyui, require("@tailwindcss/typography")],
+  daisyui: {
+    themes: ["dark", "light"],
+  },
 };

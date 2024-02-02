@@ -1,5 +1,6 @@
 import gameNestLogo from "../../../../assets/gamenest-logo.svg";
 import { Link } from "react-router-dom";
+import propTypes from "prop-types";
 
 export const HeaderNav = ({ pathname }) => {
   return (
@@ -116,4 +117,8 @@ export const HeaderNav = ({ pathname }) => {
       </div>
     </div>
   );
+};
+
+HeaderNav.propTypes = {
+  pathname: propTypes.string.isRequired,
 };

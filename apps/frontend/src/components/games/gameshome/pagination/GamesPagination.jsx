@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
 
-export const GamesPagination = ({ page, handlePageChange }) => {
+// eslint-disable-next-line react/prop-types
+export const GamesPagination = ({ page, handlePageChange, totalPages }) => {
+  // eslint-disable-next-line react/prop-types
+  const { count } = totalPages;
+  const totalPageCount = Math.ceil(count / 10); // Assuming 10 items per page
+
   return (
     <div className="grid grid-cols-2 mx-auto join max-w-60">
       <button
@@ -11,6 +16,7 @@ export const GamesPagination = ({ page, handlePageChange }) => {
         Previous page
       </button>
       <button
+        disabled={page >= totalPageCount - 1} // Disable if current page is the last page
         onClick={() => handlePageChange(page + 1)}
         className="join-item btn btn-outline bg-white-color text-black-color"
       >
