@@ -43,6 +43,14 @@ export const getGames = async (req, res) => {
   try {
     let page = Math.max(Number(req.query.page) || 0, 0);
     let gameName = req.query.gamename || null;
+    /*     let platforms = req.query.filters || ""; */
+    let platforms = req.query.platforms
+      ? `& platforms=(${req.query.platforms})`
+      : "";
+
+    let genres = req.query.genres ? `& genres=(${req.query.genres})` : "";
+
+    console.log(platforms);
 
     const headers = {
       "Client-ID": process.env.CLIENT_ID,
@@ -52,11 +60,11 @@ export const getGames = async (req, res) => {
     let body = "";
 
     if (gameName) {
-      body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gameName}";where rating > 1;limit 10; offset ${
+      body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gameName}";where rating > 1 ${`${platforms}`} ${genres};limit 10; offset ${
         page * 10
       };`;
     } else {
-      body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1; sort rating desc;limit 10; offset ${
+      body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${`${platforms}`} ${genres}; sort rating desc;limit 10; offset ${
         page * 10
       };`;
     }

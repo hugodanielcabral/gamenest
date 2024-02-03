@@ -1,4 +1,5 @@
 import { GamesHome } from "../../src/components/games/gameshome/GamesHome.jsx";
+import { GamesFilters } from "../components/games/gameshome/filters/GamesFilters.jsx";
 
 export const GamesPage = () => {
   return (
@@ -6,10 +7,8 @@ export const GamesPage = () => {
       <div className="grid-cols-2 col-span-4 lg:col-span-3">
         <GamesHome />
       </div>
-      <aside className="hidden lg:block bg-base-300 border border-base-content border-opacity-20 max-h-[900px] sticky top-0">
-        <h3 className="mt-5 font-bold text-center text-red-color">
-          GAMES FILTERS
-        </h3>
+      <aside className="sticky top-0 hidden bg-transparent border h-fit lg:block border-base-content border-opacity-20">
+        <GamesFilters />
       </aside>
     </>
   );

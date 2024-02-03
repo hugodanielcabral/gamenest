@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import propTypes from "prop-types";
 
 const GamesContext = createContext();
@@ -20,6 +20,16 @@ export function GamesProvider({ children }) {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
+  //! This is the same as the one in the GamesHome component
+  //* Maybe we can extract this to a custom hook and use it in both places
+  let params = new URL(document.location);
+  const navigate = useNavigate();
+
+  const handleFilterChange = (filter, value) => {
+    params.searchParams.set(filter, value);
+    navigate(`/games${params.search}`);
+  };
+
   useEffect(() => {
     let pageParams = Number(searchParams.get("page")) || 0;
     let gameNameParams = searchParams.get("gamename") || "";
@@ -30,6 +40,12 @@ export function GamesProvider({ children }) {
       let url = `http://localhost:3000/api/games?page=${pageParams}`;
       if (gameNameParams.trim() !== "") {
         url += `&gamename=${gameNameParams}`;
+      }
+      if (searchParams.get("platforms")) {
+        url += `&platforms=${searchParams.get("platforms")}`;
+      }
+      if (searchParams.get("genres")) {
+        url += `&genres=${searchParams.get("genres")}`;
       }
       const response = await fetch(url);
       const data = await response.json();
@@ -51,6 +67,8 @@ export function GamesProvider({ children }) {
         page,
         searchParams,
         totalPages,
+        handleFilterChange,
+        params,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
-import { useGames } from "../../../context/GamesContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { useGames } from "../../../context/GamesContext.jsx";
 import { GameCard } from "../gameshome/card/GameCard.jsx";
 import { Loading } from "../../ui/loading/Loading.jsx";
 import { GamesSearch } from "./search/GamesSearch.jsx";
