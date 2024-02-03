@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./GameCard.css";
+import { GameCardRating } from "./rating/GameCardRating";
 
 export const GameCard = ({ game }) => {
   return (
@@ -32,13 +33,7 @@ export const GameCard = ({ game }) => {
             </p>
           </div>
         </div>
-        <div
-          className={`hidden p-6 text-2xl font-bold rounded-full md:block ${
-            game.rating > 49 ? "bg-success" : "bg-error"
-          } text-base-300`}
-        >
-          {Math.round(game.rating)}
-        </div>
+        <GameCardRating rating={game.rating} />
       </div>
     </Link>
   );
