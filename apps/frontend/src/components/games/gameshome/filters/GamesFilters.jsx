@@ -76,7 +76,7 @@ export const GamesFilters = () => {
           Filters
         </h2>
         <button
-          className="w-16 h-10 font-bold rounded-md bg-secondary hover:bg-secondary/75 text-primary-content"
+          className="w-16 h-10 font-bold rounded-xl bg-primary hover:bg-primary/75 text-primary-content"
           onClick={handleResetFilters}
         >
           Clear all

@@ -28,7 +28,10 @@ export const GamesHome = () => {
 
   return (
     <>
-      <GamesSearch handleGameNameChange={handleGameNameChange} />
+      <GamesSearch
+        handleGameNameChange={handleGameNameChange}
+        params={params}
+      />
       {isLoading ? (
         <div className="flex justify-center my-60">
           <Loading />

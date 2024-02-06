@@ -27,7 +27,6 @@ export const GamesFiltersDrawer = ({ children }) => {
 
   document.addEventListener("scroll", () => {
     const drawer = document.querySelector(".drawer");
-    console.log(window.scrollY);
     if (drawer) {
       if (window.scrollY < 2500 && window.scrollY > 200) {
         drawer.classList.add("fixed");

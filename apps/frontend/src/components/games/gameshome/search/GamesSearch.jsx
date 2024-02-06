@@ -3,8 +3,9 @@ import propTypes from "prop-types";
 import { IoMdSearch } from "react-icons/io";
 import "./GamesSearch.css";
 
-export const GamesSearch = ({ handleGameNameChange }) => {
+export const GamesSearch = ({ handleGameNameChange, params }) => {
   const [searchValue, setSearchValue] = useState("");
+  const gameNameParams = params.searchParams.get("gamename");
 
   const resetSearch = () => {
     setSearchValue("");
@@ -27,7 +28,7 @@ export const GamesSearch = ({ handleGameNameChange }) => {
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
-          {searchValue && (
+          {gameNameParams && (
             <button
               type="button"
               className="absolute top-0 right-0 px-4 py-1 mt-[6px] mr-2 text-lg font-bold text-white rounded-sm bg-error hover:bg-error/75"
@@ -47,4 +48,5 @@ export const GamesSearch = ({ handleGameNameChange }) => {
 
 GamesSearch.propTypes = {
   handleGameNameChange: propTypes.func.isRequired,
+  params: propTypes.object.isRequired,
 };
