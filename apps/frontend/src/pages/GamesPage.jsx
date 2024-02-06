@@ -1,5 +1,8 @@
-import { GamesHome } from "../../src/components/games/gameshome/GamesHome.jsx";
-import { GamesFilters } from "../components/games/gameshome/filters/GamesFilters.jsx";
+import {
+  GamesFilters,
+  GamesFiltersDrawer,
+  GamesHome,
+} from "../components/games/gameshome/index.js";
 
 export const GamesPage = () => {
   return (
@@ -7,9 +10,12 @@ export const GamesPage = () => {
       <div className="grid-cols-2 col-span-4 lg:col-span-3">
         <GamesHome />
       </div>
-      <aside className="sticky top-0 hidden bg-transparent border h-fit lg:block border-base-content border-opacity-20">
+      <aside className="sticky hidden bg-transparent border shadow-lg top-24 h-fit lg:block border-base-content border-opacity-20">
         <GamesFilters />
       </aside>
+      <GamesFiltersDrawer>
+        <GamesFilters />
+      </GamesFiltersDrawer>
     </>
   );
 };

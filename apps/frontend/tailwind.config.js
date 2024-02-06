@@ -27,6 +27,6 @@ export default {
   // eslint-disable-next-line no-undef
   plugins: [daisyui, require("@tailwindcss/typography")],
   daisyui: {
-    themes: ["dark", "light"],
+    themes: ["dark", "light", "dracula", "nord", "business"],
   },
 };

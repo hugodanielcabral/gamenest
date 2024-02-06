@@ -11,14 +11,14 @@ export const GamesPagination = ({ page, handlePageChange, totalPages }) => {
       <button
         disabled={page === 0}
         onClick={() => handlePageChange(page - 1)}
-        className="join-item btn btn-outline bg-white-color text-black-color disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none disabled:border-none disabled:text-black-color disabled:bg-white-color"
+        className="text-sm join-item btn btn-outline bg-base"
       >
         Previous page
       </button>
       <button
         disabled={page >= totalPageCount - 1} // Disable if current page is the last page
         onClick={() => handlePageChange(page + 1)}
-        className="join-item btn btn-outline bg-white-color text-black-color"
+        className="text-sm join-item btn btn-outline bg-base"
       >
         Next page
       </button>

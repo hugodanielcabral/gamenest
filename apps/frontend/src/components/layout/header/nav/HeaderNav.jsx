@@ -1,15 +1,18 @@
 import gameNestLogo from "../../../../assets/gamenest-logo.svg";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
+import "./HeaderNav.css";
 
 export const HeaderNav = ({ pathname }) => {
   return (
     <div
-      className={`absolute z-50 navbar ${
-        pathname === "/" ? "bg-transparent" : "bg-white-color"
+      className={`z-10 navbar ${
+        pathname === "/"
+          ? "bg-transparent"
+          : "bg-base-200 sticky top-0 shadow-lg bg-opacity-90"
       }`}
     >
-      <div className="navbar-start">
+      <div className="py-3 navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -29,7 +32,7 @@ export const HeaderNav = ({ pathname }) => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-grey-color rounded-box w-52 text-black-color"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52 text-base-content"
           >
             <li>
               <Link to="/">Home</Link>
@@ -45,7 +48,7 @@ export const HeaderNav = ({ pathname }) => {
             </li>
           </ul>
         </div>
-        <a className="text-xl btn btn-ghost">
+        <a className="btn btn-ghost">
           <img
             src={gameNestLogo}
             alt="GameNest Logo"
@@ -53,17 +56,17 @@ export const HeaderNav = ({ pathname }) => {
           />
           <p
             className={`${
-              pathname === "/" ? "text-grey-color" : "text-black-color"
+              pathname === "/" ? "text-grey-color" : "text-base-content"
             }`}
           >
-            Game<span className="text-red-color">Nest</span>
+            Game<span className="text-error">Nest</span>
           </p>
         </a>
       </div>
       <div className="hidden navbar-center lg:flex">
         <ul
           className={`px-1 ${
-            pathname === "/" ? "text-white-color" : "text-black-color"
+            pathname === "/" ? "text-white-color" : "text-base-content"
           } menu menu-horizontal text-2xl font-bold`}
         >
           <li>
@@ -86,9 +89,9 @@ export const HeaderNav = ({ pathname }) => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="w-16 h-16 btn btn-ghost btn-circle avatar"
             >
-              <div className="w-10 rounded-full">
+              <div className="w-16 h-16 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
                   src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
@@ -97,7 +100,7 @@ export const HeaderNav = ({ pathname }) => {
             </div>
             <ul
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-grey-color bg-opacity-40 rounded-box w-52"
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-300 bg-opacity-40 rounded-box w-52"
             >
               <li>
                 <a className="justify-between">

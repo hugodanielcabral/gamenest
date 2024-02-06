@@ -1,24 +1,39 @@
 import propTypes from "prop-types";
 import { gamesGenres } from "../../../../../data/gamesGenres.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const GamesFiltersGenres = ({ handleGenreChange }) => {
+export const GamesFiltersGenres = ({ handleGenreChange, filtersReset }) => {
   const [showMoreGenres, SetShowMoreGenres] = useState(false);
   const [hidden, setHidden] = useState("hidden");
+  const [checkboxesChecked, setCheckboxesChecked] = useState(
+    Array(gamesGenres.length).fill(false)
+  );
 
   const handleShowMoreGenres = () => {
     SetShowMoreGenres(!showMoreGenres);
     setHidden(showMoreGenres ? "hidden" : "");
   };
-  console.log(showMoreGenres);
+
+  useEffect(() => {
+    if (filtersReset) {
+      setCheckboxesChecked(Array(gamesGenres.length).fill(false));
+    }
+  }, [filtersReset]);
+
+  const handleCheckboxChange = (e, index) => {
+    handleGenreChange(e);
+    const newCheckboxesChecked = [...checkboxesChecked];
+    newCheckboxesChecked[index] = e.target.checked;
+    setCheckboxesChecked(newCheckboxesChecked);
+  };
 
   return (
     <div className="rounded-none collapse bg-base-200">
       <input type="checkbox" className="peer" />
-      <div className="text-base font-bold bg-transparent collapse-title">
+      <div className="text-lg font-bold bg-transparent collapse-title">
         Genres
       </div>
-      <div className="bg-transparent collapse-content text-primary-content">
+      <div className="bg-base-100 collapse-content text-primary-content">
         <div className={`form-control`}>
           {gamesGenres.map((genre, index) => (
             <label
@@ -30,7 +45,8 @@ export const GamesFiltersGenres = ({ handleGenreChange }) => {
                 type="checkbox"
                 className="checkbox"
                 value={genre.id}
-                onChange={handleGenreChange}
+                onChange={(e) => handleCheckboxChange(e, index)}
+                checked={checkboxesChecked[index]}
               />
             </label>
           ))}
@@ -45,4 +61,5 @@ export const GamesFiltersGenres = ({ handleGenreChange }) => {
 
 GamesFiltersGenres.propTypes = {
   handleGenreChange: propTypes.func.isRequired,
+  filtersReset: propTypes.bool.isRequired,
 };

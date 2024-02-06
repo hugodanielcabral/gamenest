@@ -1,5 +1,6 @@
 import { Header } from "../layout/header/Header.jsx";
 import propTypes from "prop-types";
+import { Footer } from "./footer/Footer.jsx";
 
 export const Layout = ({ children }) => {
   return (
@@ -8,6 +9,7 @@ export const Layout = ({ children }) => {
       <main className="grid w-5/6 grid-cols-4 gap-6 p-5 mx-auto">
         {children}
       </main>
+      <Footer />
     </div>
   );
 };

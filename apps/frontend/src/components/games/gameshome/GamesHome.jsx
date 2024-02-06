@@ -30,7 +30,7 @@ export const GamesHome = () => {
     <>
       <GamesSearch handleGameNameChange={handleGameNameChange} />
       {isLoading ? (
-        <div className="flex justify-center">
+        <div className="flex justify-center my-60">
           <Loading />
         </div>
       ) : count === 0 || !games.length ? (
