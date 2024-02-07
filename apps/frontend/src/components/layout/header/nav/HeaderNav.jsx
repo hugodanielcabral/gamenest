@@ -2,16 +2,20 @@ import gameNestLogo from "../../../../assets/gamenest-logo.svg";
 import { Link } from "react-router-dom";
 import propTypes from "prop-types";
 import "./HeaderNav.css";
+import { ThemeSwitcher } from "../../../themeswitcher/ThemeSwitcher";
 
 export const HeaderNav = ({ pathname }) => {
   return (
     <div
-      className={`z-10 navbar ${
+      className={`z-10 navbar relative ${
         pathname === "/"
           ? "bg-transparent"
           : "bg-base-300 sticky top-0 shadow-lg bg-opacity-90"
       }`}
     >
+      <div className="hidden transform md:-translate-x-1/2 md:-translate-y-1/2 md:absolute md:left-1/2 md:top-1/2 lg:left-3/4 lg:top-auto lg:translate-x-0 lg:translate-y-0 md:block">
+        <ThemeSwitcher />
+      </div>
       <div className="py-3 navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
