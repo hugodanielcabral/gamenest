@@ -33,7 +33,7 @@ export const GamesFiltersGenres = ({ handleGenreChange, filtersReset }) => {
       <div className="text-lg font-bold bg-transparent collapse-title">
         Genres
       </div>
-      <div className="bg-base-100 collapse-content text-primary-content">
+      <div className="rounded-lg bg-base-100 collapse-content text-primary-content">
         <div className={`form-control`}>
           {gamesGenres.map((genre, index) => (
             <label

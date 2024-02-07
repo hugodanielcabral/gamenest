@@ -28,7 +28,7 @@ export const GamesFiltersPlatforms = ({
       <div className="text-lg font-bold bg-transparent collapse-title">
         Platforms
       </div>
-      <div className="bg-base-100 collapse-content text-primary-content">
+      <div className="rounded-lg bg-base-100 collapse-content text-primary-content">
         <div className="form-control">
           {gamesPlatforms.map((platform, index) => (
             <label key={platform.id} className="cursor-pointer label">

@@ -9,7 +9,7 @@ export const HeaderNav = ({ pathname }) => {
       className={`z-10 navbar ${
         pathname === "/"
           ? "bg-transparent"
-          : "bg-base-200 sticky top-0 shadow-lg bg-opacity-90"
+          : "bg-base-300 sticky top-0 shadow-lg bg-opacity-90"
       }`}
     >
       <div className="py-3 navbar-start">
@@ -32,7 +32,7 @@ export const HeaderNav = ({ pathname }) => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52 text-base-content"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52 text-white"
           >
             <li>
               <Link to="/">Home</Link>
@@ -56,7 +56,7 @@ export const HeaderNav = ({ pathname }) => {
           />
           <p
             className={`${
-              pathname === "/" ? "text-grey-color" : "text-base-content"
+              pathname === "/" ? "text-grey-color" : "text-stone-950-700"
             }`}
           >
             Game<span className="text-error">Nest</span>
@@ -66,7 +66,7 @@ export const HeaderNav = ({ pathname }) => {
       <div className="hidden navbar-center lg:flex">
         <ul
           className={`px-1 ${
-            pathname === "/" ? "text-white-color" : "text-base-content"
+            pathname === "/" ? "text-white-color" : "text-base"
           } menu menu-horizontal text-2xl font-bold`}
         >
           <li>

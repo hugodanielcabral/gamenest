@@ -72,11 +72,11 @@ export const GamesFilters = () => {
   return (
     <>
       <div className="flex items-center justify-evenly bg-base-200">
-        <h2 className="p-3 text-2xl font-bold text-center text-primary">
+        <h2 className="p-3 text-2xl font-bold text-center text-error">
           Filters
         </h2>
         <button
-          className="w-16 h-10 font-bold rounded-xl bg-primary hover:bg-primary/75 text-primary-content"
+          className="w-16 h-10 text-base font-bold rounded-xl bg-error hover:bg-error/75"
           onClick={handleResetFilters}
         >
           Clear all

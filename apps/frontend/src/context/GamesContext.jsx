@@ -29,6 +29,7 @@ export function GamesProvider({ children }) {
     params.searchParams.set(filter, value);
     navigate(`/games${params.search}`);
   };
+  console.log(games);
 
   useEffect(() => {
     let pageParams = Number(searchParams.get("page")) || 0;
