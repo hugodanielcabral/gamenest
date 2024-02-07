@@ -5,7 +5,6 @@ import style from "./Layout.module.css";
 
 export const Layout = ({ children }) => {
   let theme = document.documentElement.getAttribute("data-theme");
-  console.log(theme);
 
   return (
     <div
@@ -14,7 +13,7 @@ export const Layout = ({ children }) => {
       } `}
     >
       <Header />
-      <main className="grid w-5/6 grid-cols-4 gap-6 p-5 mx-auto">
+      <main /* className="grid w-5/6 grid-cols-4 gap-6 p-5 mx-auto" */>
         {children}
       </main>
       <Footer />
