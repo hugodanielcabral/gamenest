@@ -1,7 +1,6 @@
 import propTypes from "prop-types";
 
 export const HeaderHero = ({ heroInfo }) => {
-  console.log(heroInfo, "heroInfo");
   return (
     <div
       className="relative min-h-screen hero"

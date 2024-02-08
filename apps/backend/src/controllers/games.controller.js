@@ -50,8 +50,8 @@ export const getGames = async (req, res) => {
 
     let genres = req.query.genres ? `& genres=(${req.query.genres})` : "";
 
-    console.log(platforms);
-
+    /*     console.log(platforms);
+     */
     const headers = {
       "Client-ID": process.env.CLIENT_ID,
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
@@ -95,7 +95,6 @@ export const getGames = async (req, res) => {
       count: countData,
     };
 
-    console.log(data);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -103,23 +102,27 @@ export const getGames = async (req, res) => {
   }
 };
 
-/* export const getGamesCount = async (req, res) => {
-  let gameName = req.query.gamename || null;
-
-  if (!gameName) return;
-
+export const getGame = async (req, res) => {
+  console.log(req.params.id, "id");
   try {
-    const response = await fetch("https://api.igdb.com/v4/games/count", {
+    const headers = {
+      "Client-ID": process.env.CLIENT_ID,
+      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+    };
+
+    const body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; where id = ${req.params.id};`;
+
+    const response = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
-      headers: {
-        "Client-ID": process.env.CLIENT_ID,
-        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
-      },
-      body: `fields name; search "${gameName}";where rating > 1;`,
+      headers,
+      body,
     });
+
     const data = await response.json();
+    console.log(data);
     res.json(data);
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-}; */
+};
