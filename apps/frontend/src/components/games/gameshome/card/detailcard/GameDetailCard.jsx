@@ -3,7 +3,11 @@ export const GameDetailCard = ({ cover, name, platforms, summary }) => {
   return (
     <div className="flex flex-1 gap-x-3">
       <img
-        src={cover.url.replace("t_thumb", "t_1080p")}
+        src={
+          cover
+            ? `${cover.url.replace("t_thumb", "t_1080p")}`
+            : "https://via.placeholder.com/300x400?text=No+Cover+Available"
+        }
         alt={`${name} cover`}
         className="object-cover w-20 h-full md:w-36 md:h-full"
       />

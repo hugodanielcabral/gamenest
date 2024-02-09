@@ -36,7 +36,7 @@ export const GamesHome = () => {
         <div className="flex justify-center my-60">
           <Loading />
         </div>
-      ) : count === 0 || !games.length ? (
+      ) : count === 0 || games.length <= 0 ? (
         <div className="flex justify-center">
           <NotFound
             message="No games found"

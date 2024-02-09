@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  GameDetailsMedia,
-  GameDetailsInfo,
-  GameDetailsReleaseDates,
-  GameDetailsAgeRating,
+  GameDetailsOverview,
   GameDetailsHeader,
   GameDetailsGallery,
 } from "./index.js";
 import { useFetchGameDetails } from "../../../hooks/useFetchGameDetails.js";
 import { Loading } from "../../ui/loading/Loading.jsx";
+import "./GameDetails.css";
 
 export const GameDetails = () => {
   const { gameId } = useParams();
@@ -21,10 +19,7 @@ export const GameDetails = () => {
       case "overview":
         return (
           <>
-            <GameDetailsMedia game={game} />
-            <GameDetailsInfo game={game} />
-            <GameDetailsReleaseDates game={game} />
-            <GameDetailsAgeRating game={game} />
+            <GameDetailsOverview game={game} />
           </>
         );
       case "media":

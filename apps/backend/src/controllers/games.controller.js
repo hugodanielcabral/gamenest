@@ -104,6 +104,7 @@ export const getGames = async (req, res) => {
 
 export const getGame = async (req, res) => {
   console.log(req.params.id, "id");
+
   try {
     const headers = {
       "Client-ID": process.env.CLIENT_ID,

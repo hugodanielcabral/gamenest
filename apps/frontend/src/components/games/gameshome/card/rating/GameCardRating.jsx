@@ -21,7 +21,7 @@ export const GameCardRating = ({ rating }) => {
     return "Poor";
   };
   return (
-    <div className="hidden md:flex-col md:flex">
+    <div>
       <div
         className={`radial-progress ${getRatingColor(Math.round(rating))}`}
         style={{ "--value": `${Math.round(rating)}` }}

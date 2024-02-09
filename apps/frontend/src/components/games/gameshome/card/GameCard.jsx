@@ -14,7 +14,9 @@ export const GameCard = ({ game }) => {
           platforms={game.platforms}
           summary={game.summary}
         />
-        <GameCardRating rating={game.rating} />
+        <div className="hidden md:flex-col md:flex">
+          <GameCardRating rating={game.rating} />
+        </div>
       </div>
     </Link>
   );
