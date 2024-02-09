@@ -57,18 +57,25 @@ export function GamesProvider({ children }) {
     fetchGames();
   }, [searchParams]);
 
+  const getGame = async (gameId) => {
+    const response = await fetch(`http://localhost:3000/api/games/${gameId}`);
+    const data = await response.json();
+    return data;
+  };
+
   return (
     <GamesContext.Provider
       value={{
         games,
         setGames,
         isLoading,
-        setPage,
         page,
+        setPage,
         searchParams,
         totalPages,
         handleFilterChange,
         params,
+        getGame,
       }}
     >
       {children}

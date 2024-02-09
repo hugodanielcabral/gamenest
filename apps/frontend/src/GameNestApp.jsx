@@ -10,7 +10,7 @@ export const GameNestApp = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/games" element={<GamesPage />} />
-        <Route path="/games/:id" element={<GameDetails />} />
+        <Route path="/games/:gameId" element={<GameDetails />} />
       </Routes>
     </Layout>
   );

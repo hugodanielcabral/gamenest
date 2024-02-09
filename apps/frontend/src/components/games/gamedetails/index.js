@@ -1,13 +1,17 @@
-import { GameDetailsInfo } from "./info/GameDetailsInfo";
-import { GameDetailsOverview } from "./overview/GameDetailsOverview";
-import { GameDetailsMedia } from "./media/GameDetailsMedia";
-import { GameDetailsReleaseDates } from "./releasedates/GameDetailsReleaseDates";
-import { GameDetailsAgeRating } from "./agerating/GameDetailsAgeRating";
+import { GameDetailsInfo } from "./overview/info/GameDetailsInfo";
+import { GameDetailsMedia } from "./overview/media/GameDetailsMedia";
+import { GameDetailsReleaseDates } from "./overview/releasedates/GameDetailsReleaseDates";
+import { GameDetailsAgeRating } from "./overview/agerating/GameDetailsAgeRating";
+
+import { GameDetailsHeader } from "./header/GameDetailsHeader";
+
+import { GameDetailsGallery } from "./gallery/GameDetailsGallery";
 
 export {
   GameDetailsInfo,
-  GameDetailsOverview,
   GameDetailsMedia,
   GameDetailsReleaseDates,
   GameDetailsAgeRating,
+  GameDetailsHeader,
+  GameDetailsGallery,
 };
