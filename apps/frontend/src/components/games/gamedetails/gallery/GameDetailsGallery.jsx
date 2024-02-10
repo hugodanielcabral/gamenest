@@ -46,7 +46,7 @@ export const GameDetailsGallery = () => {
         </div>
       </div>
       <div className="p-3 bg-pink-600">
-        <h2 className="text-2xl font-bold">Screenshots</h2>
+        <h2 className="text-2xl font-bold">Artworks</h2>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5">
           {data.map((item, index) => (
             <img key={index} src={item.image} alt="artwork" />
@@ -54,7 +54,7 @@ export const GameDetailsGallery = () => {
         </div>
       </div>
       <div className="p-3 bg-blue-600">
-        <h2 className="text-2xl font-bold">Screenshots</h2>
+        <h2 className="text-2xl font-bold">Videos</h2>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-5">
           {data.map((item, index) => (
             <img key={index} src={item.image} alt="artwork" />

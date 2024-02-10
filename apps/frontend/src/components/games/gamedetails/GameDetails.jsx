@@ -10,18 +10,14 @@ import { Loading } from "../../ui/loading/Loading.jsx";
 import "./GameDetails.css";
 
 export const GameDetails = () => {
-  const { gameId } = useParams();
-  const { game, isLoading } = useFetchGameDetails(gameId);
+  const { gameId: gameSlug } = useParams();
+  const { game, isLoading } = useFetchGameDetails(gameSlug);
   const [activeTab, setActiveTab] = useState("overview");
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "overview":
-        return (
-          <>
-            <GameDetailsOverview game={game} />
-          </>
-        );
+        return <GameDetailsOverview game={game} />;
       case "media":
         return <GameDetailsGallery game={game} />;
       default:
@@ -29,30 +25,50 @@ export const GameDetails = () => {
     }
   };
 
+  console.log(game);
+
   return isLoading ? (
     <Loading />
   ) : (
-    <div className="container p-4 mx-auto">
-      <GameDetailsHeader game={game} />
-      <div className="flex justify-center space-x-4">
-        <button
-          onClick={() => setActiveTab("overview")}
-          className={`${
-            activeTab === "overview" ? "bg-gray-900 text-white" : ""
-          } px-4 py-2 rounded-md`}
+    <div
+      className={`p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed bg-opacity-50 bg-blur-3xl bg-gradient-to-b from-base-100 to-base-200`}
+      style={
+        game.screenshots && {
+          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%), url(${game.screenshots[0].url.replace(
+            "t_thumb",
+            "t_screenshot_huge"
+          )})`,
+        }
+      }
+    >
+      <div className="container mx-auto">
+        <GameDetailsHeader game={game} />
+        <div
+          role="tablist"
+          className="tabs tabs-bordered tabs-lg *:font-bold bg-base-200"
         >
-          Overview
-        </button>
-        <button
-          onClick={() => setActiveTab("media")}
-          className={`${
-            activeTab === "media" ? "bg-gray-600 text-white" : ""
-          } px-4 py-2 rounded-md`}
-        >
-          Gallery
-        </button>
+          <button
+            role="tab"
+            className={`tab ${activeTab === "overview" && "tab-active"}`}
+            onClick={() => setActiveTab("overview")}
+          >
+            Overview
+          </button>
+          {game.screenshots || game.videos ? (
+            <button
+              role="tab"
+              className={`tab ${activeTab === "media" && "tab-active"}`}
+              onClick={() => setActiveTab("media")}
+            >
+              Media
+            </button>
+          ) : null}
+          <button role="tab" className="tab" disabled>
+            Reviews
+          </button>
+        </div>
+        {renderTabContent()}
       </div>
-      {renderTabContent()}
     </div>
   );
 };

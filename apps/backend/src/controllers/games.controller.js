@@ -60,11 +60,11 @@ export const getGames = async (req, res) => {
     let body = "";
 
     if (gameName) {
-      body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gameName}";where rating > 1 ${`${platforms}`} ${genres};limit 10; offset ${
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gameName}";where rating > 1 ${`${platforms}`} ${genres};limit 10; offset ${
         page * 10
       };`;
     } else {
-      body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${`${platforms}`} ${genres}; sort rating desc;limit 10; offset ${
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${`${platforms}`} ${genres}; sort rating desc;limit 10; offset ${
         page * 10
       };`;
     }
@@ -103,15 +103,13 @@ export const getGames = async (req, res) => {
 };
 
 export const getGame = async (req, res) => {
-  console.log(req.params.id, "id");
-
   try {
     const headers = {
       "Client-ID": process.env.CLIENT_ID,
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     };
 
-    const body = `fields name, storyline, summary, rating, cover.url, genres.name, platforms.abbreviation, screenshots.url; where id = ${req.params.id};`;
+    const body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url, videos.video_id, artworks.url, websites.url, involved_companies.developer, involved_companies.company.name; where slug = "${req.params.id}";`;
 
     const response = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",

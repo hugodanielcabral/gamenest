@@ -3,7 +3,7 @@ import propTypes from "prop-types";
 export const HeaderCover = ({ game }) => {
   const { cover } = game;
   return (
-    <div className="col-span-5 mx-auto md:mx-0 md:col-span-1 ">
+    <div className="col-span-5 mx-auto md:mx-0 md:col-span-1">
       <img
         src={
           cover

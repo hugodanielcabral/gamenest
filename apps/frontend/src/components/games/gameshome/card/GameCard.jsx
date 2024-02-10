@@ -5,8 +5,9 @@ import { GameCardRating } from "./rating/GameCardRating";
 import { GameDetailCard } from "./detailcard/GameDetailCard";
 
 export const GameCard = ({ game }) => {
+  console.log(game, "game");
   return (
-    <Link key={game.id} to={`/games/${game.id}`}>
+    <Link key={game.id} to={`/games/${game.slug}`}>
       <div className="flex items-center justify-between p-3 my-5 transition duration-700 ease-in-out border rounded-lg shadow-lg cursor-pointer bg-base-300 border-base-content border-opacity-20 hover:bg-base-100">
         <GameDetailCard
           cover={game.cover}

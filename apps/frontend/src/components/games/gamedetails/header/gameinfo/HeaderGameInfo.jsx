@@ -1,10 +1,42 @@
 import propTypes from "prop-types";
+import { useState } from "react";
 export const HeaderGameInfo = ({ game }) => {
-  const { name, summary } = game;
+  const { name, summary, first_release_date, involved_companies } = game;
+  const unixTimestamp = first_release_date;
+  const date = new Date(unixTimestamp * 1000);
+  const year = date.getFullYear();
+  const [lineClamp, setLineClamp] = useState(true);
+
+  const handleLineClamp = () => {
+    setLineClamp(!lineClamp);
+  };
+
+  const involvedCompanies = involved_companies.find(
+    (company) => company.developer === true
+  );
+  console.log(involvedCompanies);
+
   return (
-    <div className="col-span-5 md:col-span-3 *:my-5">
-      <h1 className="text-3xl font-bold">{name}</h1>
-      <p className="text-lg max-w-[80ch] line-clamp-3">{summary}</p>
+    <div className="col-span-5 md:col-span-3 *:m-5 ">
+      <h1 className="text-3xl font-bold">
+        {name} ({year})
+      </h1>
+      <h2 className="text-2xl prose">{involvedCompanies.company.name}</h2>
+      <div>
+        <p
+          className={`text-lg max-w-[80ch] ${lineClamp ? "line-clamp-3" : ""}`}
+        >
+          {summary}
+        </p>
+        <button
+          className={`text-lg font-bold text-accent ${
+            lineClamp ? "" : "hidden"
+          }`}
+          onClick={handleLineClamp}
+        >
+          Read more...
+        </button>
+      </div>
       <div className="flex gap-x-1">
         <p className="text-base font-bold">Platforms:</p>
         <ul className="flex gap-x-2">
@@ -16,7 +48,7 @@ export const HeaderGameInfo = ({ game }) => {
         </ul>
       </div>
       <div>
-        <ul className="flex gap-x-2 *:bg-base-content *:text-base-300 *:rounded-md *:p-1 *:font-bold">
+        <ul className="flex gap-x-2 *:bg-error *:text-black *:rounded-md *:p-1 *:font-bold">
           {game.genres.map((genre) => (
             <li key={genre.id} className="text-base">
               {genre.name}

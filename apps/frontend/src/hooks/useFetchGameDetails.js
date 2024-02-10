@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useFetchGameDetails = (gameId) => {
+export const useFetchGameDetails = (gameSlug) => {
   const [game, setGame] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -8,7 +8,7 @@ export const useFetchGameDetails = (gameId) => {
     const getGame = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/games/${gameId}`
+          `http://localhost:3000/api/games/${gameSlug}`
         );
         const data = await response.json();
         setGame(data[0]);
@@ -19,7 +19,7 @@ export const useFetchGameDetails = (gameId) => {
     };
 
     getGame();
-  }, [gameId]);
+  }, [gameSlug]);
 
   return { game, isLoading };
 };

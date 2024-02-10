@@ -1,4 +1,4 @@
-.dracula {
+/* .dracula {
   background: hsla(208, 33%, 21%, 1);
 
   background: linear-gradient(
@@ -20,7 +20,7 @@
   );
 
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#243748", endColorstr="#4b749f", GradientType=1 );
-}
+} */
 
 .light {
   background: hsla(208, 33%, 21%, 1);
