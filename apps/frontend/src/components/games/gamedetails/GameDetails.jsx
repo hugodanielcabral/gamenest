@@ -25,8 +25,6 @@ export const GameDetails = () => {
     }
   };
 
-  console.log(game);
-
   return isLoading ? (
     <Loading />
   ) : (

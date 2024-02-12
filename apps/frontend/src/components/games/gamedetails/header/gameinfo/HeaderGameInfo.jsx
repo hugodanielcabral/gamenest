@@ -11,10 +11,9 @@ export const HeaderGameInfo = ({ game }) => {
     setLineClamp(!lineClamp);
   };
 
-  const involvedCompanies = involved_companies.find(
-    (company) => company.developer === true
-  );
-  console.log(involvedCompanies);
+  const involvedCompanies = involved_companies
+    ? involved_companies.find((company) => company.developer === true)
+    : null;
 
   return (
     <div className="col-span-5 md:col-span-3 *:m-5 ">

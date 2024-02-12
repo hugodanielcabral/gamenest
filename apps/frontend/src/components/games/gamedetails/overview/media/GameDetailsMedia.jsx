@@ -18,8 +18,6 @@ export const GameDetailsMedia = ({ game }) => {
     setGalleryIndex(index);
   };
 
-  console.log(screen);
-
   useEffect(() => {
     if (!screenshots) return;
     const images = screenshots.slice(0, 4).map((screenshot) => {

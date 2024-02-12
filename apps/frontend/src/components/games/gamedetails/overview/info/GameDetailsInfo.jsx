@@ -69,9 +69,9 @@ export const GameDetailsInfo = ({ game }) => {
     },
   ];
 
-  const involvedCompanies = game.involved_companies.find(
-    (company) => company.developer === true
-  );
+  const involvedCompanies = game.involved_companies
+    ? game.involved_companies.find((company) => company.developer === true)
+    : null;
 
   return (
     <div className="flex flex-col justify-center col-span-4 p-5 md:col-span-1 gap-y-3 bg-base-100/90">
