@@ -1,8 +1,36 @@
 import propTypes from "prop-types";
 import ReactPlayer from "react-player";
+import { MediaModal } from "./modal/MediaModal";
+import { useEffect, useState } from "react";
 
 export const GameDetailsMedia = ({ game }) => {
   const { videos, screenshots } = game;
+  const [screen, setScreen] = useState([
+    {
+      original: "",
+    },
+  ]);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+
+  const handleModal = (index) => {
+    const modal = document.getElementById("gamedetailsmedia_modal");
+    modal.showModal();
+    setGalleryIndex(index);
+  };
+
+  console.log(screen);
+
+  useEffect(() => {
+    if (!screenshots) return;
+    const images = screenshots.slice(0, 4).map((screenshot) => {
+      return {
+        original: screenshot.url.replace("t_thumb", "t_1080p"),
+      };
+    });
+
+    setScreen(images);
+  }, []);
+
   return (
     <div className="col-span-4 row-span-3 md:col-span-3">
       {game && (
@@ -15,6 +43,8 @@ export const GameDetailsMedia = ({ game }) => {
                   light={true}
                   width={"100%"}
                   height={"100%"}
+                  controls={true}
+                  muted={true}
                 />
               </div>
             )}
@@ -31,14 +61,13 @@ export const GameDetailsMedia = ({ game }) => {
                         "t_screenshot_med"
                       )}
                       alt={game.name}
-                      className="object-cover w-full h-full transition-opacity duration-300 ease-in-out rounded-md cursor-pointer hover:opacity-75"
-                      onClick={() => {
-                        console.log("clicked"); //! Agregar un modal para ver la imagen en tamaño completo.
-                      }}
+                      className="object-cover w-full h-full transition-all duration-200 ease-in-out transform border-transparent rounded-md cursor-pointer hover:border-accent hover:border hover:scale-105 "
+                      onClick={() => handleModal(index)}
                     />
                   )
               )}
           </div>
+          <MediaModal screen={screen} galleryIndex={galleryIndex} />
         </div>
       )}
     </div>
