@@ -109,8 +109,7 @@ export const getGame = async (req, res) => {
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     };
 
-    const body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url, videos.video_id, artworks.url, websites.url, involved_companies.developer, involved_companies.company.name; where slug = "${req.params.id}";`;
-
+    const body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url, videos.video_id, artworks.url, websites.*, involved_companies.company.name, involved_companies.developer, game_modes.name, player_perspectives.name, franchises.name, release_dates.*, age_ratings.*, age_ratings.content_descriptions.*; where slug = "${req.params.id}";`;
     const response = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
       headers,

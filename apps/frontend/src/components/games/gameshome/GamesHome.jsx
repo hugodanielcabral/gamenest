@@ -5,6 +5,7 @@ import { Loading } from "../../ui/loading/Loading.jsx";
 import { GamesSearch } from "./search/GamesSearch.jsx";
 import { GamesPagination } from "./pagination/GamesPagination.jsx";
 import { NotFound } from "../../notfound/NotFound.jsx";
+
 export const GamesHome = () => {
   const { games, isLoading, page, totalPages } = useGames();
 
@@ -27,7 +28,7 @@ export const GamesHome = () => {
   };
 
   return (
-    <>
+    <div className="games-home">
       <GamesSearch
         handleGameNameChange={handleGameNameChange}
         params={params}
@@ -51,6 +52,6 @@ export const GamesHome = () => {
         handlePageChange={handlePageChange}
         totalPages={totalPages}
       />
-    </>
+    </div>
   );
 };

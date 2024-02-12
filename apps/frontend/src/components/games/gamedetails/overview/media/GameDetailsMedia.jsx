@@ -4,9 +4,9 @@ import ReactPlayer from "react-player";
 export const GameDetailsMedia = ({ game }) => {
   const { videos, screenshots } = game;
   return (
-    <div className="col-span-4 row-span-3 border md:col-span-3">
+    <div className="col-span-4 row-span-3 md:col-span-3">
       {game && (
-        <div className="grid grid-cols-4 grid-rows-2 gap-3 p-3">
+        <div className="grid grid-cols-4 grid-rows-2 gap-3">
           <div className="col-span-2 row-span-2">
             {videos && (
               <div className="h-full min-h-64">

@@ -3,16 +3,14 @@ import {
   GameDetailsMedia,
   GameDetailsInfo,
   GameDetailsReleaseDates,
-  GameDetailsAgeRating,
 } from "../index.js";
 
 export const GameDetailsOverview = ({ game }) => {
   return (
-    <div className="grid grid-cols-4">
+    <div className="grid grid-cols-4 gap-3 mt-2">
       <GameDetailsMedia game={game} />
       <GameDetailsInfo game={game} />
       <GameDetailsReleaseDates game={game} />
-      <GameDetailsAgeRating game={game} />
     </div>
   );
 };

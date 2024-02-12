@@ -1,9 +1,10 @@
 import gameNestLogo from "../../../../assets/gamenest-logo.svg";
 import { Link } from "react-router-dom";
-import propTypes from "prop-types";
 import "./HeaderNav.css";
 import { ThemeSwitcher } from "../../../themeswitcher/ThemeSwitcher";
 
+// eslint-disable-next-line react/prop-types
+//! Quitar el pathname - O mejor, hacer un rework de la navbar.
 export const HeaderNav = ({ pathname }) => {
   return (
     <div
@@ -124,8 +125,4 @@ export const HeaderNav = ({ pathname }) => {
       </div>
     </div>
   );
-};
-
-HeaderNav.propTypes = {
-  pathname: propTypes.string.isRequired,
 };

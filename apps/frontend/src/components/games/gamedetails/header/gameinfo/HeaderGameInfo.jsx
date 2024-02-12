@@ -21,7 +21,9 @@ export const HeaderGameInfo = ({ game }) => {
       <h1 className="text-3xl font-bold">
         {name} ({year})
       </h1>
-      <h2 className="text-2xl prose">{involvedCompanies.company.name}</h2>
+      <h2 className="text-2xl prose">
+        {involvedCompanies && involvedCompanies.company.name}
+      </h2>
       <div>
         <p
           className={`text-lg max-w-[80ch] ${lineClamp ? "line-clamp-3" : ""}`}
@@ -48,7 +50,7 @@ export const HeaderGameInfo = ({ game }) => {
         </ul>
       </div>
       <div>
-        <ul className="flex gap-x-2 *:bg-error *:text-black *:rounded-md *:p-1 *:font-bold">
+        <ul className="flex gap-x-2 *:bg-info *:text-stone-950 *:rounded-md *:p-2 *:font-bold">
           {game.genres.map((genre) => (
             <li key={genre.id} className="text-base">
               {genre.name}

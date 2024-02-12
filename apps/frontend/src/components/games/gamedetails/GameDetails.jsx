@@ -49,7 +49,9 @@ export const GameDetails = () => {
         >
           <button
             role="tab"
-            className={`tab ${activeTab === "overview" && "tab-active"}`}
+            className={`tab ${
+              activeTab === "overview" && "tab-active text-info"
+            }`}
             onClick={() => setActiveTab("overview")}
           >
             Overview
@@ -57,7 +59,9 @@ export const GameDetails = () => {
           {game.screenshots || game.videos ? (
             <button
               role="tab"
-              className={`tab ${activeTab === "media" && "tab-active"}`}
+              className={`tab ${
+                activeTab === "media" && "tab-active text-info"
+              }`}
               onClick={() => setActiveTab("media")}
             >
               Media
