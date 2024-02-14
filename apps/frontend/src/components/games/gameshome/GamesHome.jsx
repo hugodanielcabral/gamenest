@@ -1,43 +1,32 @@
-import { useNavigate } from "react-router-dom";
 import { useGames } from "../../../context/GamesContext.jsx";
+import { useQuery } from "../../../hooks/useQuery.js";
 import { GameCard } from "../gameshome/card/GameCard.jsx";
-import { Loading } from "../../ui/loading/Loading.jsx";
-import { GamesSearch } from "./search/GamesSearch.jsx";
 import { GamesPagination } from "./pagination/GamesPagination.jsx";
+import { GamesSearch } from "./search/GamesSearch.jsx";
+import { Loading } from "../../ui/loading/Loading.jsx";
 import { NotFound } from "../../notfound/NotFound.jsx";
+import { useFetchGames } from "../../../hooks/useFetchGames.js";
 
 export const GamesHome = () => {
-  const { games, isLoading, page, totalPages } = useGames();
+  const { page, totalPages } = useGames();
+  const { params, handlePageChange, handleQueryNameChange, handleResetSearch } =
+    useQuery("games");
+  const { gamesData, isLoading } = useFetchGames();
 
   const { count } = totalPages;
-
-  let params = new URL(document.location);
-  const navigate = useNavigate();
-
-  const handlePageChange = (newPage) => {
-    params.searchParams.set("page", newPage);
-    navigate(`/games${params.search}`);
-  };
-
-  const handleGameNameChange = (gameName) => {
-    params.searchParams.set("gamename", gameName);
-    if (params.searchParams.get("page") !== "0") {
-      params.searchParams.delete("page");
-    }
-    navigate(`/games${params.search}`);
-  };
 
   return (
     <div className="games-home">
       <GamesSearch
-        handleGameNameChange={handleGameNameChange}
+        handleQueryNameChange={handleQueryNameChange}
         params={params}
+        handleResetSearch={handleResetSearch}
       />
       {isLoading ? (
         <div className="flex justify-center my-60">
           <Loading />
         </div>
-      ) : count === 0 || games.length <= 0 ? (
+      ) : count === 0 || !gamesData.length ? (
         <div className="flex justify-center">
           <NotFound
             message="No games found"
@@ -45,7 +34,7 @@ export const GamesHome = () => {
           />
         </div>
       ) : (
-        games.map((game) => <GameCard key={game.id} game={game} />)
+        gamesData.map((game) => <GameCard key={game.id} game={game} />)
       )}
       <GamesPagination
         page={page}

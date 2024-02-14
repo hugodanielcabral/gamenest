@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
-import { gamesPlatforms } from "../../../../../data/gamesPlatforms.js";
 import { useEffect, useState } from "react";
+import { gamesPlatforms } from "../../../../../data/gamesPlatforms.js";
 
 export const GamesFiltersPlatforms = ({
   handlePlatformChange,

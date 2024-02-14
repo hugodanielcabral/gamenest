@@ -1,23 +1,26 @@
-import { useState } from "react";
 import propTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import "./GamesSearch.css";
 
-export const GamesSearch = ({ handleGameNameChange, params }) => {
+export const GamesSearch = ({
+  handleQueryNameChange,
+  params,
+  handleResetSearch,
+}) => {
   const [searchValue, setSearchValue] = useState("");
   const gameNameParams = params.searchParams.get("gamename");
 
-  const resetSearch = () => {
-    setSearchValue("");
-    handleGameNameChange("");
-  };
+  useEffect(() => {
+    setSearchValue(gameNameParams || "");
+  }, [gameNameParams]);
 
   return (
     <div className="relative">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleGameNameChange(searchValue);
+          handleQueryNameChange("gamename", searchValue);
         }}
       >
         <div className="relative">
@@ -31,8 +34,10 @@ export const GamesSearch = ({ handleGameNameChange, params }) => {
           {gameNameParams && (
             <button
               type="button"
-              className="absolute top-0 right-0 px-4 py-1 mt-[6px] mr-2 text-lg font-bold text-white rounded-sm bg-error hover:bg-error/75"
-              onClick={() => resetSearch()}
+              className="reset absolute top-0 right-0 px-4 py-1 mt-[6px] mr-2 text-lg font-bold text-white rounded-sm bg-error hover:bg-error/75"
+              onClick={() => {
+                handleResetSearch();
+              }}
             >
               X
             </button>
@@ -47,6 +52,7 @@ export const GamesSearch = ({ handleGameNameChange, params }) => {
 };
 
 GamesSearch.propTypes = {
-  handleGameNameChange: propTypes.func.isRequired,
+  handleQueryNameChange: propTypes.func.isRequired,
   params: propTypes.object.isRequired,
+  handleResetSearch: propTypes.func.isRequired,
 };

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import propTypes from "prop-types";
-import { FaFilter } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { useGames } from "../../../../../context/GamesContext";
+import { FaFilter } from "react-icons/fa";
 
 export const GamesFiltersDrawer = ({ children }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -50,7 +50,6 @@ export const GamesFiltersDrawer = ({ children }) => {
         <div className="z-50 bottom-[50px] left-2/4 drawer drawer-end lg:hidden">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
-            {/* Page content here */}
             <label
               htmlFor="my-drawer-4"
               className="bg-base-content drawer-button btn btn-outline text-base-300 drawer-button-lg"

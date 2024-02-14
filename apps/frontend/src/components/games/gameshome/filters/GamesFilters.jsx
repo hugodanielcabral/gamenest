@@ -3,6 +3,8 @@ import { useGames } from "../../../../context/GamesContext";
 import { useNavigate } from "react-router-dom";
 import { GamesFiltersPlatforms } from "./platforms/GamesFiltersPlatforms";
 import { GamesFiltersGenres } from "./genres/GamesFiltersGenres";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export const GamesFilters = () => {
   const [platformValues, setPlatformValues] = useState([]);
@@ -72,14 +74,16 @@ export const GamesFilters = () => {
   return (
     <>
       <div className="flex items-center justify-evenly bg-base-200">
-        <h2 className="p-3 text-2xl font-bold text-center text-error">
-          Filters
-        </h2>
+        <h2 className="p-3 text-2xl font-bold text-center">Filters</h2>
         <button
-          className="w-16 h-10 text-base font-bold rounded-xl bg-error hover:bg-error/75"
+          className="px-3 py-2 font-bold rounded-xl btn-ghost"
           onClick={handleResetFilters}
         >
-          Clear all
+          <FontAwesomeIcon
+            icon={faFilterCircleXmark}
+            size="2xl"
+            style={{ color: "#f13304" }}
+          />
         </button>
       </div>
       <GamesFiltersPlatforms

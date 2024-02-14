@@ -1,28 +1,19 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 
 export const useFetchGames = () => {
-  const [searchParams] = useSearchParams();
-  const [games, setGames] = useState([]);
+  const [gamesData, setGamesData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    let pageParams = Number(searchParams.get("page")) || 0;
-    setPage(pageParams);
-
-    const fetchGames = async () => {
-      setIsLoading(true);
-      const response = await fetch(
-        `http://localhost:3000/api/games?page=${pageParams}`
-      );
+    const getGames = async () => {
+      const response = await fetch("http://localhost:3000/api/games");
       const data = await response.json();
-      setGames(data);
+      setGamesData(data.games);
       setIsLoading(false);
+      console.log(gamesData);
     };
+    getGames();
+  }, []);
 
-    fetchGames();
-  }, [searchParams]);
-
-  return { games, isLoading, setPage, page };
+  return { gamesData, isLoading };
 };

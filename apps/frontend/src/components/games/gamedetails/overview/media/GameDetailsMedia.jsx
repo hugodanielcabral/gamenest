@@ -54,10 +54,7 @@ export const GameDetailsMedia = ({ game }) => {
                   index < 4 && (
                     <img
                       key={screenshots[index].id}
-                      src={screenshot.url.replace(
-                        "t_thumb",
-                        "t_screenshot_med"
-                      )}
+                      src={screenshot.url.replace("t_thumb", "t_cover_big")}
                       alt={game.name}
                       className="object-cover w-full h-full transition-all duration-200 ease-in-out transform border-transparent rounded-md cursor-pointer hover:border-accent hover:border hover:scale-105 "
                       onClick={() => handleModal(index)}

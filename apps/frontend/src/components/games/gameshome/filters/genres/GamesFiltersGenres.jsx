@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
-import { gamesGenres } from "../../../../../data/gamesGenres.js";
 import { useEffect, useState } from "react";
+import { gamesGenres } from "../../../../../data/gamesGenres.js";
 
 export const GamesFiltersGenres = ({ handleGenreChange, filtersReset }) => {
   const [showMoreGenres, SetShowMoreGenres] = useState(false);

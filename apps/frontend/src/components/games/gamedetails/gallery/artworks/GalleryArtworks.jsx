@@ -21,7 +21,7 @@ export const GalleryArtworks = ({
               <img
                 key={artwork.id}
                 src={artwork.url.replace("t_thumb", "t_cover_big")}
-                className="object-cover w-full h-full transition-all duration-200 ease-in-out transform border-transparent rounded-md cursor-pointer hover:border-accent hover:border hover:scale-105 max-h-40"
+                className="object-cover w-full h-40 transition-all duration-200 ease-in-out transform border-transparent rounded-md cursor-pointer min-h-32 hover:border-accent hover:border hover:scale-105 max-h-40"
                 alt={`Artwork ${index} of the game ${name}`}
                 onClick={() => handleModal(index, true)}
               />
