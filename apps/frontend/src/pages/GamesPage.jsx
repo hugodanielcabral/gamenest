@@ -22,9 +22,9 @@ export const GamesPage = () => {
           <GamesFilters />
         </aside>
         {/* The component "GamesFiltersDrawer" is the mobile version of GamesFilters */}
-        <GamesFiltersDrawer>
+        {/* <GamesFiltersDrawer>
           <GamesFilters />
-        </GamesFiltersDrawer>
+        </GamesFiltersDrawer> */}
       </div>
     </>
   );

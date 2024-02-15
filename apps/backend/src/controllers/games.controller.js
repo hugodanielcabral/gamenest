@@ -3,15 +3,16 @@ import env from "dotenv";
 env.config();
 
 export const getGames = async (req, res) => {
+  const { gamename } = req.query || "";
+
+  let queryFilters = "";
+  for (const key in req.query) {
+    if (req.query[key] && key !== "gamename") {
+      queryFilters += `&${key}=${req.query[key]}`;
+    }
+  }
+
   try {
-    let page = Math.max(Number(req.query.page) || 0, 0);
-    let gameName = req.query.gamename || null;
-    let platforms = req.query.platforms
-      ? `& platforms=(${req.query.platforms})`
-      : "";
-
-    let genres = req.query.genres ? `& genres=(${req.query.genres})` : "";
-
     const headers = {
       "Client-ID": process.env.CLIENT_ID,
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
@@ -19,14 +20,14 @@ export const getGames = async (req, res) => {
 
     let body = "";
 
-    if (gameName) {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gameName}";where rating > 1 ${`${platforms}`} ${genres};limit 10; offset ${
-        page * 10
-      };`;
+    if (gamename) {
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gamename}"; where rating > 1 ${
+        req.query && queryFilters
+      }; limit 10; offset 0;`;
     } else {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${`${platforms}`} ${genres}; sort follows desc;limit 10; offset ${
-        page * 10
-      };`;
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${
+        req.query && queryFilters
+      }; sort follows desc;limit 10; offset 0;`;
     }
 
     const gamesResponse = await fetch("https://api.igdb.com/v4/games", {
@@ -36,12 +37,7 @@ export const getGames = async (req, res) => {
     });
     const gamesData = await gamesResponse.json();
 
-    let countBody = "";
-    if (gameName) {
-      countBody = `search "${gameName}";where rating > 1;`;
-    } else {
-      countBody = `where rating > 1;`;
-    }
+    let countBody = `where rating > 1;`;
 
     const countResponse = await fetch("https://api.igdb.com/v4/games/count", {
       method: "POST",
@@ -49,6 +45,8 @@ export const getGames = async (req, res) => {
       body: countBody,
     });
     const countData = await countResponse.json();
+
+    console.log(gamesData, countData);
 
     const data = {
       games: gamesData,

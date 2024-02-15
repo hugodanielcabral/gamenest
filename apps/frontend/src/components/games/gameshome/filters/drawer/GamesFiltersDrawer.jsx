@@ -1,11 +1,9 @@
 import propTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { useGames } from "../../../../../context/GamesContext";
 import { FaFilter } from "react-icons/fa";
 
 export const GamesFiltersDrawer = ({ children }) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { games } = useGames();
 
   useEffect(() => {
     const handleClick = (e) => {
