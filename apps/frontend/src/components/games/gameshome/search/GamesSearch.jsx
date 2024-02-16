@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSearchParamsQuery } from "../../../../hooks/useSearchParamsQuery";
 import { SearchForm } from "./searchform/SearchForm";
+import "./GamesSearch.css";
 
 export const GamesSearch = () => {
   const { addQueryParam, deleteQueryParam } = useSearchParamsQuery();

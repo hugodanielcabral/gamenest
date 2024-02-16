@@ -25,6 +25,7 @@ export const GamesHome = () => {
       ) : (
         gamesData.map((game) => <GameCard key={game.id} game={game} />)
       )}
+
       <GamesPagination />
     </>
   );

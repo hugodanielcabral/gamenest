@@ -3,22 +3,16 @@ import { useSearchParams } from "react-router-dom";
 export const useSearchParamsQuery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const getQueryParam = (key) => {
+    return searchParams.get(key);
+  };
+
   const addQueryParam = (key, value) => {
-    console.log(key, value, "key, value");
     setSearchParams((params) => {
       if (params.has(key)) {
         params.set(key, value);
       } else {
         params.append(key, value);
-      }
-      return new URLSearchParams(params.toString());
-    });
-  };
-
-  const updateQueryParam = (key, value) => {
-    setSearchParams((params) => {
-      if (params.has(key)) {
-        params.set(key, value);
       }
       return new URLSearchParams(params.toString());
     });
@@ -33,5 +27,5 @@ export const useSearchParamsQuery = () => {
     });
   };
 
-  return { addQueryParam, updateQueryParam, deleteQueryParam, searchParams };
+  return { addQueryParam, deleteQueryParam, searchParams, getQueryParam };
 };

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParamsQuery } from "./useSearchParamsQuery";
 
 export const useFetchGames = () => {
-  const [gamesData, setGamesData] = useState();
+  const [gamesData, setGamesData] = useState([]);
+  const [gamesCount, setGamesCount] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { searchParams } = useSearchParamsQuery();
 
@@ -20,6 +21,7 @@ export const useFetchGames = () => {
     );
     const data = await response.json();
     setGamesData(data.games);
+    setGamesCount(data.count.count);
     setIsLoading(false);
   };
 
@@ -27,10 +29,11 @@ export const useFetchGames = () => {
     getGames();
 
     return () => {
-      setGamesData();
+      setGamesData([]);
+      setGamesCount({});
       setIsLoading(true);
     };
   }, [searchParams]);
 
-  return { gamesData, isLoading };
+  return { gamesData, isLoading, gamesCount };
 };
