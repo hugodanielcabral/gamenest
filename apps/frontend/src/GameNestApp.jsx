@@ -1,9 +1,17 @@
+import { lazy, Suspense } from "react";
 import { Layout } from "./components/layout/Layout";
 import { Routes, Route } from "react-router-dom";
-import { HomePage, GamesPage } from "./pages/index.js";
-import { GameDetails } from "./components/games/gamedetails/GameDetails";
 
 export const GameNestApp = () => {
+  //* Lazy: let "lazy" load the components when the user needs it.
+  const HomePage = lazy(() => import("./pages/HomePage.jsx"));
+  const GamesPage = lazy(() => import("./pages/GamesPage.jsx"));
+  const GameDetails = lazy(() =>
+    import("./components/games/gamedetails/GameDetails").then((module) => ({
+      default: module.GameDetails,
+    }))
+  );
+
   const publicRoutes = [
     {
       id: 1,
@@ -24,13 +32,16 @@ export const GameNestApp = () => {
 
   return (
     <Layout>
-      <Routes>
-        {publicRoutes.map((route) => {
-          return (
-            <Route key={route.id} path={route.path} element={route.element} />
-          );
-        })}
-      </Routes>
+      {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <Routes>
+          {publicRoutes.map((route) => {
+            return (
+              <Route key={route.id} path={route.path} element={route.element} />
+            );
+          })}
+        </Routes>
+      </Suspense>
     </Layout>
   );
 };

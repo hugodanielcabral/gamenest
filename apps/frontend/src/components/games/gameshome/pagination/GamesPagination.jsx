@@ -1,39 +1,53 @@
-import { useState, useEffect } from "react";
-import { useSearchParamsQuery } from "../../../../hooks/useSearchParamsQuery";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-export const GamesPagination = () => {
-  const { addQueryParam } = useSearchParamsQuery();
-  const [currentPage, setCurrentPage] = useState(1);
+export const GamesPagination = ({ currentPage, totalPages }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [page, setPage] = useState(currentPage);
 
   const handleNextPage = () => {
-    setCurrentPage(currentPage + 1);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    setPage((prev) => prev + 1);
+    newSearchParams.set("page", page + 1);
+    setSearchParams(newSearchParams);
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    setPage((prev) => prev - 1);
+    newSearchParams.set("page", page - 1);
+    setSearchParams(newSearchParams);
   };
 
   useEffect(() => {
-    addQueryParam("page", currentPage);
+    setPage(currentPage);
   }, [currentPage]);
 
   return (
-    <div className="flex justify-center w-full gap-x-2">
+    <div className="flex justify-center join">
       <button
-        disabled={currentPage <= 1}
-        className="p-2 font-bold rounded-lg bg-base-content text-base-100 hover:bg-base-content/70 disabled:bg-opacity-20 disabled:pointer-events-none"
-        onClick={() => handlePrevPage()}
+        className="join-item btn btn-error"
+        onClick={handlePrevPage}
+        disabled={currentPage <= 1 ? true : false}
       >
-        Prev
+        «
+      </button>
+      <button className="join-item btn btn-info text-base-100">
+        Page {currentPage}
       </button>
       <button
-        className="p-2 font-bold rounded-lg bg-base-content text-base-100 hover:bg-base-content/70"
-        onClick={() => handleNextPage()}
+        className="join-item btn btn-error"
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages ? true : false}
       >
-        Next
+        »
       </button>
     </div>
   );
+};
+
+GamesPagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
 };

@@ -6,7 +6,7 @@ import {
 import { HeaderHero } from "../components/layout/header/hero/HeaderHero.jsx";
 import { heroInfo } from "../data/heroInfo.js";
 
-export const GamesPage = () => {
+const GamesPage = () => {
   const gamesHeroInfo = heroInfo.find((hero) => hero.title === "Games");
 
   return (
@@ -22,10 +22,12 @@ export const GamesPage = () => {
           <GamesFilters />
         </aside>
         {/* The component "GamesFiltersDrawer" is the mobile version of GamesFilters */}
-        {/* <GamesFiltersDrawer>
+        <GamesFiltersDrawer>
           <GamesFilters />
-        </GamesFiltersDrawer> */}
+        </GamesFiltersDrawer>
       </div>
     </>
   );
 };
+
+export default GamesPage;

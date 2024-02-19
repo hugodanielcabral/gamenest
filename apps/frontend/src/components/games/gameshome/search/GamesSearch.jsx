@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useSearchParamsQuery } from "../../../../hooks/useSearchParamsQuery";
 import { SearchForm } from "./searchform/SearchForm";
 import "./GamesSearch.css";
+import { useSearchParams } from "react-router-dom";
 
 export const GamesSearch = () => {
-  const { addQueryParam, deleteQueryParam } = useSearchParamsQuery();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [inputSearchValue, setInputSearchValue] = useState("");
 
   const onInputChange = ({ target }) => {
@@ -13,8 +13,18 @@ export const GamesSearch = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputSearchValue, "inputsearchvalue");
-    addQueryParam("gamename", inputSearchValue);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.delete("page");
+    newSearchParams.set("gamename", inputSearchValue);
+    setSearchParams(newSearchParams);
+  };
+
+  const handleResetQueries = () => {
+    const newSearchParams = new URLSearchParams();
+    for (const [key] of searchParams.entries()) {
+      newSearchParams.delete(key);
+    }
+    setSearchParams(newSearchParams);
   };
 
   return (
@@ -22,9 +32,9 @@ export const GamesSearch = () => {
       <SearchForm
         handleSubmit={handleSubmit}
         onInputChange={onInputChange}
-        deleteQueryParam={deleteQueryParam}
         inputSearchValue={inputSearchValue}
         setInputSearchValue={setInputSearchValue}
+        handleResetQueries={handleResetQueries}
       />
     </div>
   );

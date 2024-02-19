@@ -3,9 +3,9 @@ import propTypes from "prop-types";
 export const SearchForm = ({
   handleSubmit,
   onInputChange,
-  deleteQueryParam,
   inputSearchValue,
   setInputSearchValue,
+  handleResetQueries,
 }) => {
   return (
     <>
@@ -24,8 +24,8 @@ export const SearchForm = ({
           !inputSearchValue && "hidden"
         }`}
         onClick={() => {
-          deleteQueryParam("gamename");
           setInputSearchValue("");
+          handleResetQueries();
         }}
       >
         X
@@ -37,7 +37,7 @@ export const SearchForm = ({
 SearchForm.propTypes = {
   handleSubmit: propTypes.func.isRequired,
   onInputChange: propTypes.func.isRequired,
-  deleteQueryParam: propTypes.func.isRequired,
   inputSearchValue: propTypes.string.isRequired,
   setInputSearchValue: propTypes.func.isRequired,
+  handleResetQueries: propTypes.func.isRequired,
 };

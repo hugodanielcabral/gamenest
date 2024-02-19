@@ -2,9 +2,11 @@ import env from "dotenv";
 
 env.config();
 
+// TODO Improve this controller, it's too big. Maybe split it into smaller functions.
 export const getGames = async (req, res) => {
   const { gamename } = req.query || "";
-  const { page } = req.query || 0;
+  const { page } = req.query;
+  console.log(page);
 
   let queryFilters = "";
   for (const key in req.query) {
@@ -22,13 +24,14 @@ export const getGames = async (req, res) => {
     let body = "";
 
     if (gamename) {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gamename}"; where rating > 1 ${queryFilters}; limit 10; offset 10;`;
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gamename}"; where rating > 1 ${queryFilters}; limit 10; offset ${
+        page ? (page - 1) * 10 : 0
+      };`;
     } else {
       body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${queryFilters}; sort follows desc;limit 10; offset ${
-        (page - 1) * 10
+        page ? (page - 1) * 10 : 0
       };`;
     }
-    console.log(body);
 
     const gamesResponse = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
@@ -37,7 +40,9 @@ export const getGames = async (req, res) => {
     });
     const gamesData = await gamesResponse.json();
 
-    let countBody = `where rating > 1;`;
+    let countBody = gamename
+      ? `search "${gamename}"; where rating > 1;`
+      : `where rating > 1;`;
 
     const countResponse = await fetch("https://api.igdb.com/v4/games/count", {
       method: "POST",
@@ -46,11 +51,11 @@ export const getGames = async (req, res) => {
     });
     const countData = await countResponse.json();
 
-    console.log(gamesData, countData);
-
     const data = {
       games: gamesData,
       count: countData,
+      currentPage: parseInt(page, 10) || 1,
+      totalPages: Math.ceil(countData.count / 10),
     };
 
     res.json(data);

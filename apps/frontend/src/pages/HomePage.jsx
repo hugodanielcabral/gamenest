@@ -1,4 +1,4 @@
-export const HomePage = () => {
+const HomePage = () => {
   const images = [
     {
       id: 1,
@@ -110,3 +110,5 @@ export const HomePage = () => {
     </div>
   );
 };
+
+export default HomePage;

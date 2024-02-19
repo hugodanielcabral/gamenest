@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 
 export const GamesFiltersDrawer = ({ children }) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  /* const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -23,7 +23,7 @@ export const GamesFiltersDrawer = ({ children }) => {
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  }, [isDrawerOpen]);
+  }, [isDrawerOpen]); */
 
   document.addEventListener("scroll", () => {
     const drawer = document.querySelector(".drawer");
@@ -44,7 +44,7 @@ export const GamesFiltersDrawer = ({ children }) => {
 
   return (
     <>
-      {games.length > 0 && (
+      {/*   {games.length > 0 && (
         <div className="z-50 bottom-[50px] left-2/4 drawer drawer-end lg:hidden">
           <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content">
@@ -68,11 +68,11 @@ export const GamesFiltersDrawer = ({ children }) => {
             </ul>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
-
+/* 
 GamesFiltersDrawer.propTypes = {
   children: propTypes.node.isRequired,
-};
+}; */
