@@ -35,19 +35,29 @@ export const GamesFiltersPlatforms = () => {
   }, []);
   return (
     <>
-      {gamesPlatforms.map((platform) => (
-        <label key={platform.id}>
-          <input
-            type="checkbox"
-            name={platform.name}
-            id={platform.id}
-            value={platform.id}
-            onChange={onCheckboxChange}
-            checked={platforms.includes(platform.id.toString())}
-          />
-          {platform.name}
-        </label>
-      ))}
+      <div className="rounded-none collapse bg-base-200">
+        <input type="checkbox" className="peer" />
+        <div className="text-lg font-bold bg-transparent collapse-title">
+          Platforms
+        </div>
+        <div className="rounded-lg bg-base-300 collapse-content text-primary-content">
+          <div className={`form-control`}>
+            {gamesPlatforms.map((platform) => (
+              <label key={platform.id} className={`cursor-pointer label`}>
+                <span className="label-text">{platform.name}</span>
+                <input
+                  type="checkbox"
+                  name={platform.name}
+                  id={platform.id}
+                  value={platform.id}
+                  onChange={onCheckboxChange}
+                  checked={platforms.includes(platform.id.toString())}
+                />
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

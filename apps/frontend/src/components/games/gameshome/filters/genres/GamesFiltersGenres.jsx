@@ -1,31 +1,45 @@
-import propTypes from "prop-types";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { gamesGenres } from "../../../../../data/gamesGenres.js";
 
-export const GamesFiltersGenres = ({ handleGenreChange, filtersReset }) => {
+export const GamesFiltersGenres = () => {
   const [showMoreGenres, SetShowMoreGenres] = useState(false);
   const [hidden, setHidden] = useState("hidden");
-  const [checkboxesChecked, setCheckboxesChecked] = useState(
-    Array(gamesGenres.length).fill(false)
-  );
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [genres, setGenres] = useState([]);
 
   const handleShowMoreGenres = () => {
     SetShowMoreGenres(!showMoreGenres);
     setHidden(showMoreGenres ? "hidden" : "");
   };
 
-  useEffect(() => {
-    if (filtersReset) {
-      setCheckboxesChecked(Array(gamesGenres.length).fill(false));
+  const onCheckboxChange = (e) => {
+    const newGenres = [...genres];
+    if (e.target.checked) {
+      newGenres.push(e.target.value);
+    } else {
+      const index = newGenres.indexOf(e.target.value);
+      if (index > -1) {
+        newGenres.splice(index, 1);
+      }
     }
-  }, [filtersReset]);
+    setGenres(newGenres);
 
-  const handleCheckboxChange = (e, index) => {
-    handleGenreChange(e);
-    const newCheckboxesChecked = [...checkboxesChecked];
-    newCheckboxesChecked[index] = e.target.checked;
-    setCheckboxesChecked(newCheckboxesChecked);
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    if (newGenres.length > 0) {
+      newSearchParams.set("genres", newGenres.join(","));
+    } else {
+      newSearchParams.delete("genres");
+    }
+    setSearchParams(newSearchParams);
   };
+
+  useEffect(() => {
+    const genresParam = searchParams.get("genres");
+    if (genresParam) {
+      setGenres(genresParam.split(","));
+    }
+  }, []);
 
   return (
     <div className="rounded-none collapse bg-base-200">
@@ -33,7 +47,7 @@ export const GamesFiltersGenres = ({ handleGenreChange, filtersReset }) => {
       <div className="text-lg font-bold bg-transparent collapse-title">
         Genres
       </div>
-      <div className="rounded-lg bg-base-100 collapse-content text-primary-content">
+      <div className="rounded-lg bg-base-300 collapse-content text-primary-content">
         <div className={`form-control`}>
           {gamesGenres.map((genre, index) => (
             <label
@@ -43,10 +57,11 @@ export const GamesFiltersGenres = ({ handleGenreChange, filtersReset }) => {
               <span className="label-text">{genre.name}</span>
               <input
                 type="checkbox"
-                className="checkbox"
+                name={genre.name}
+                id={genre.id}
                 value={genre.id}
-                onChange={(e) => handleCheckboxChange(e, index)}
-                checked={checkboxesChecked[index]}
+                onChange={onCheckboxChange}
+                checked={genres.includes(genre.id.toString())}
               />
             </label>
           ))}
@@ -57,9 +72,4 @@ export const GamesFiltersGenres = ({ handleGenreChange, filtersReset }) => {
       </div>
     </div>
   );
-};
-
-GamesFiltersGenres.propTypes = {
-  handleGenreChange: propTypes.func.isRequired,
-  filtersReset: propTypes.bool.isRequired,
 };

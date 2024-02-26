@@ -7,7 +7,7 @@ export const getGames = async (req, res) => {
   const { gamename } = req.query || "";
   const { page } = req.query;
   const { platforms } = req.query;
-  console.log(typeof platforms);
+  const { genres } = req.query;
 
   try {
     const headers = {
@@ -20,10 +20,14 @@ export const getGames = async (req, res) => {
     if (gamename) {
       body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gamename}"; where rating > 1 ${
         platforms ? `& platforms=(${platforms})` : ""
-      }; limit 10; offset ${page ? (page - 1) * 10 : 0};`;
+      }  ${genres ? `& genres=(${genres})` : ""}; limit 10; offset ${
+        page ? (page - 1) * 10 : 0
+      };`;
     } else {
       body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${
         platforms ? `& platforms=(${platforms})` : ""
+      } ${
+        genres ? `& genres=(${genres})` : ""
       }; sort follows desc;limit 10; offset ${page ? (page - 1) * 10 : 0};`;
     }
 

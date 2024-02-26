@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { GamesFiltersPlatforms } from "./platforms/GamesFiltersPlatforms.jsx";
+import { GamesFiltersGenres } from "./genres/GamesFiltersGenres.jsx";
 
 export const GamesFilters = () => {
   return (
@@ -16,8 +17,8 @@ export const GamesFilters = () => {
         </button>
       </div>
       <div className="flex flex-col justify-evenly bg-base-200">
-        <h3 className="p-3 font-bold text-1xl">Platforms</h3>
         <GamesFiltersPlatforms />
+        <GamesFiltersGenres />
       </div>
     </div>
   );

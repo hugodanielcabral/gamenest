@@ -12,7 +12,7 @@ export const useFetchGames = () => {
   const page = searchParams.get("page") || 1;
   const gamename = searchParams.get("gamename") || "";
   const platforms = searchParams.get("platforms") || "";
-  console.log(platforms);
+  const genres = searchParams.get("genres") || "";
 
   const queryObject = {};
   const fillQueryObject = () => {
@@ -28,7 +28,8 @@ export const useFetchGames = () => {
         `http://localhost:3000/api/games${
           Object.prototype.hasOwnProperty.call(queryObject, "gamename") ||
           Object.prototype.hasOwnProperty.call(queryObject, "page") ||
-          Object.prototype.hasOwnProperty.call(queryObject, "platforms")
+          Object.prototype.hasOwnProperty.call(queryObject, "platforms") ||
+          Object.prototype.hasOwnProperty.call(queryObject, "genres")
             ? "?" + new URLSearchParams(queryObject)
             : ""
         }`
@@ -46,7 +47,7 @@ export const useFetchGames = () => {
       setIsLoading(true);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, gamename, platforms]);
+  }, [page, gamename, platforms, genres]);
 
   return { gamesData, isLoading, gamesCount, currentPage, totalPages };
 };
