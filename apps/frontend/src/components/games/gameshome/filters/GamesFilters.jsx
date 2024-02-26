@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { GamesFiltersPlatforms } from "./platforms/GamesFiltersPlatforms.jsx";
 import { GamesFiltersGenres } from "./genres/GamesFiltersGenres.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export const GamesFilters = () => {
   return (

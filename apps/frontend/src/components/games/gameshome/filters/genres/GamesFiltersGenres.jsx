@@ -39,7 +39,7 @@ export const GamesFiltersGenres = () => {
     if (genresParam) {
       setGenres(genresParam.split(","));
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="rounded-none collapse bg-base-200">

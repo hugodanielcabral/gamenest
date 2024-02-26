@@ -1,13 +1,15 @@
+import { FiltersMobile } from "../components/games/gameshome/filters/mobile/FiltersMobile.jsx";
 import {
   GamesFilters,
-  GamesFiltersDrawer,
   GamesHome,
 } from "../components/games/gameshome/index.js";
 import { HeaderHero } from "../components/layout/header/hero/HeaderHero.jsx";
 import { heroInfo } from "../data/heroInfo.js";
+import { useFetchGames } from "../hooks/useFetchGames.js";
 
 const GamesPage = () => {
   const gamesHeroInfo = heroInfo.find((hero) => hero.title === "Games");
+  const { isLoading } = useFetchGames();
 
   return (
     <>
@@ -21,10 +23,7 @@ const GamesPage = () => {
         <aside className="sticky hidden bg-transparent lg:block top-24 h-fit border-base-content">
           <GamesFilters />
         </aside>
-        {/* The component "GamesFiltersDrawer" is the mobile version of GamesFilters */}
-        <GamesFiltersDrawer>
-          <GamesFilters />
-        </GamesFiltersDrawer>
+        {isLoading ? null : <FiltersMobile />}
       </div>
     </>
   );

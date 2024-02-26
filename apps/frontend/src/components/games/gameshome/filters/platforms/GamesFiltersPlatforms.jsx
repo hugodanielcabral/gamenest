@@ -32,7 +32,7 @@ export const GamesFiltersPlatforms = () => {
     if (platformsParam) {
       setPlatforms(platformsParam.split(","));
     }
-  }, []);
+  }, [searchParams]);
   return (
     <>
       <div className="rounded-none collapse bg-base-200">

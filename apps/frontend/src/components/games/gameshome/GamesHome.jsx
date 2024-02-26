@@ -6,8 +6,7 @@ import { Loading } from "../../ui/loading/Loading.jsx";
 import { NotFound } from "../../notfound/NotFound.jsx";
 
 export const GamesHome = () => {
-  const { gamesData, isLoading, gamesCount, currentPage, totalPages } =
-    useFetchGames();
+  const { gamesData, isLoading, currentPage, totalPages } = useFetchGames();
 
   return (
     <>
