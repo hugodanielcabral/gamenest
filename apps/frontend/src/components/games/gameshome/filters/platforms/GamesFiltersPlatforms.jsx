@@ -1,54 +1,53 @@
-import propTypes from "prop-types";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { gamesPlatforms } from "../../../../../data/gamesPlatforms.js";
 
-export const GamesFiltersPlatforms = ({
-  handlePlatformChange,
-  filtersReset,
-}) => {
-  const [checkboxesChecked, setCheckboxesChecked] = useState(
-    Array(gamesPlatforms.length).fill(false)
-  );
+export const GamesFiltersPlatforms = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [platforms, setPlatforms] = useState([]);
+
+  const onCheckboxChange = (e) => {
+    const newPlatforms = [...platforms];
+    if (e.target.checked) {
+      newPlatforms.push(e.target.value);
+    } else {
+      const index = newPlatforms.indexOf(e.target.value);
+      if (index > -1) {
+        newPlatforms.splice(index, 1);
+      }
+    }
+    setPlatforms(newPlatforms);
+
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    if (newPlatforms.length > 0) {
+      newSearchParams.set("platforms", newPlatforms.join(","));
+    } else {
+      newSearchParams.delete("platforms");
+    }
+    setSearchParams(newSearchParams);
+  };
 
   useEffect(() => {
-    if (filtersReset) {
-      setCheckboxesChecked(Array(gamesPlatforms.length).fill(false));
+    const platformsParam = searchParams.get("platforms");
+    if (platformsParam) {
+      setPlatforms(platformsParam.split(","));
     }
-  }, [filtersReset]);
-
-  const handleCheckboxChange = (e, index) => {
-    handlePlatformChange(e);
-    const newCheckboxesChecked = [...checkboxesChecked];
-    newCheckboxesChecked[index] = e.target.checked;
-    setCheckboxesChecked(newCheckboxesChecked);
-  };
+  }, []);
   return (
-    <div className="rounded-none collapse bg-base-200">
-      <input type="checkbox" className="peer" />
-      <div className="text-lg font-bold bg-transparent collapse-title">
-        Platforms
-      </div>
-      <div className="rounded-lg bg-base-100 collapse-content text-primary-content">
-        <div className="form-control">
-          {gamesPlatforms.map((platform, index) => (
-            <label key={platform.id} className="cursor-pointer label">
-              <span className="label-text">{platform.name}</span>
-              <input
-                type="checkbox"
-                className="checkbox"
-                value={platform.id}
-                onChange={(e) => handleCheckboxChange(e, index)}
-                checked={checkboxesChecked[index]}
-              />
-            </label>
-          ))}
-        </div>
-      </div>
-    </div>
+    <>
+      {gamesPlatforms.map((platform) => (
+        <label key={platform.id}>
+          <input
+            type="checkbox"
+            name={platform.name}
+            id={platform.id}
+            value={platform.id}
+            onChange={onCheckboxChange}
+            checked={platforms.includes(platform.id.toString())}
+          />
+          {platform.name}
+        </label>
+      ))}
+    </>
   );
-};
-
-GamesFiltersPlatforms.propTypes = {
-  handlePlatformChange: propTypes.func.isRequired,
-  filtersReset: propTypes.bool.isRequired,
 };

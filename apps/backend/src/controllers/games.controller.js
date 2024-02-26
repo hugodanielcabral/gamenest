@@ -6,14 +6,8 @@ env.config();
 export const getGames = async (req, res) => {
   const { gamename } = req.query || "";
   const { page } = req.query;
-  console.log(page);
-
-  let queryFilters = "";
-  for (const key in req.query) {
-    if (req.query[key] && key !== "gamename" && key !== "page") {
-      queryFilters += `&${key}=${req.query[key]}`;
-    }
-  }
+  const { platforms } = req.query;
+  console.log(typeof platforms);
 
   try {
     const headers = {
@@ -24,13 +18,13 @@ export const getGames = async (req, res) => {
     let body = "";
 
     if (gamename) {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gamename}"; where rating > 1 ${queryFilters}; limit 10; offset ${
-        page ? (page - 1) * 10 : 0
-      };`;
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gamename}"; where rating > 1 ${
+        platforms ? `& platforms=(${platforms})` : ""
+      }; limit 10; offset ${page ? (page - 1) * 10 : 0};`;
     } else {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${queryFilters}; sort follows desc;limit 10; offset ${
-        page ? (page - 1) * 10 : 0
-      };`;
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${
+        platforms ? `& platforms=(${platforms})` : ""
+      }; sort follows desc;limit 10; offset ${page ? (page - 1) * 10 : 0};`;
     }
 
     const gamesResponse = await fetch("https://api.igdb.com/v4/games", {

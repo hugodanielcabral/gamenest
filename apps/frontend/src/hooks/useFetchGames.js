@@ -8,9 +8,11 @@ export const useFetchGames = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
   const gamename = searchParams.get("gamename") || "";
+  const platforms = searchParams.get("platforms") || "";
+  console.log(platforms);
 
   const queryObject = {};
   const fillQueryObject = () => {
@@ -20,20 +22,13 @@ export const useFetchGames = () => {
   };
   fillQueryObject();
 
-  /*    let queryString = "?";
-
-  for (const [key, value] of searchParams) {
-    queryString.length === 1
-      ? (queryString += `${key}=${value}`)
-      : (queryString += `&${key}=${value}`);
-  }
- */
   useEffect(() => {
     const getGames = async () => {
       const response = await fetch(
         `http://localhost:3000/api/games${
           Object.prototype.hasOwnProperty.call(queryObject, "gamename") ||
-          Object.prototype.hasOwnProperty.call(queryObject, "page")
+          Object.prototype.hasOwnProperty.call(queryObject, "page") ||
+          Object.prototype.hasOwnProperty.call(queryObject, "platforms")
             ? "?" + new URLSearchParams(queryObject)
             : ""
         }`
@@ -50,7 +45,8 @@ export const useFetchGames = () => {
     return () => {
       setIsLoading(true);
     };
-  }, [page, gamename]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, gamename, platforms]);
 
   return { gamesData, isLoading, gamesCount, currentPage, totalPages };
 };

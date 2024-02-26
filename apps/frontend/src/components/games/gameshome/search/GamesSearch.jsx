@@ -20,10 +20,9 @@ export const GamesSearch = () => {
   };
 
   const handleResetQueries = () => {
-    const newSearchParams = new URLSearchParams();
-    for (const [key] of searchParams.entries()) {
-      newSearchParams.delete(key);
-    }
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.delete("gamename");
+    newSearchParams.delete("page");
     setSearchParams(newSearchParams);
   };
 
