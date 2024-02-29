@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="p-10 text-white rounded bg-opacity-5 bg-base-300 footer footer-center">
+    <footer className="p-10 rounded text-primary bg-opacity-5 bg-base-300 footer footer-center">
       <nav className="grid grid-flow-col gap-4">
         <a
           href="https://danielcabral.onrender.com/"

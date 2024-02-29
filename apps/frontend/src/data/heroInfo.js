@@ -1,4 +1,4 @@
-import games_page_hero_img from "../assets/hero/games-page-hero-img.jpg";
+import games_page_hero_img from "../assets/hero/games-page-hero-img.webp";
 
 export const heroInfo = [
   {

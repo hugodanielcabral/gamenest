@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Layout } from "./components/layout/Layout";
 import { Routes, Route } from "react-router-dom";
+import { CollectionPage } from "./pages/CollectionPage.jsx";
+import { NewCollection } from "./components/collection/creation/NewCollection.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -27,6 +29,16 @@ export const GameNestApp = () => {
       id: 3,
       path: "/games/:gameId",
       element: <GameDetails />,
+    },
+    {
+      id: 4,
+      path: "/collection",
+      element: <CollectionPage />,
+    },
+    {
+      id: 5,
+      path: "/collection/new",
+      element: <NewCollection />,
     },
   ];
 

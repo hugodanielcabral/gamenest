@@ -46,7 +46,7 @@ export const HeaderNav = ({ pathname }) => {
               <Link to="/games">Games</Link>
             </li>
             <li>
-              <Link to="/">Collection</Link>
+              <Link to="/collection">Collection</Link>
             </li>
             <li>
               <Link to="/reviews">Reviews</Link>
@@ -81,7 +81,7 @@ export const HeaderNav = ({ pathname }) => {
             <Link to="/games">Games</Link>
           </li>
           <li>
-            <Link to="/">Collection</Link>
+            <Link to="/collection">Collection</Link>
           </li>
           <li>
             <Link to="/reviews">Reviews</Link>
