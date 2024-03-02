@@ -7,7 +7,6 @@ import {
 } from "./index.js";
 import { useFetchGameDetails } from "../../../hooks/useFetchGameDetails.js";
 import { Loading } from "../../ui/loading/Loading.jsx";
-import "./GameDetails.css";
 
 export const GameDetails = () => {
   const { gameId: gameSlug } = useParams();

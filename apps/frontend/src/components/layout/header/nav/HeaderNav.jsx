@@ -51,6 +51,12 @@ export const HeaderNav = ({ pathname }) => {
             <li>
               <Link to="/reviews">Reviews</Link>
             </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
           </ul>
         </div>
         <a className="btn btn-ghost">
@@ -85,6 +91,12 @@ export const HeaderNav = ({ pathname }) => {
           </li>
           <li>
             <Link to="/reviews">Reviews</Link>
+          </li>
+          <li>
+            <Link to="/register">Register</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
           </li>
         </ul>
       </div>

@@ -1,9 +1,18 @@
-export const Input = (props) => {
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import propTypes from "prop-types";
+
+export const Input = ({ className, ...props }) => {
   return (
     <input
-      type="text"
-      className="w-full max-w-xs input input-bordered"
+      className={twMerge(
+        clsx("w-full max-w-xs input input-bordered", className)
+      )}
       {...props}
     />
   );
+};
+
+Input.propTypes = {
+  className: propTypes.string.isRequired,
 };
