@@ -6,6 +6,8 @@ import { NewCollection } from "./components/collection/creation/NewCollection.js
 import { RegisterPage } from "./pages/RegisterPage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFound } from "./components/notfound/NotFound.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
+import { useAuth } from "./context/AuthContext.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -16,6 +18,9 @@ export const GameNestApp = () => {
       default: module.GameDetails,
     }))
   );
+
+  const { isAuth } = useAuth();
+  console.log(isAuth);
 
   const publicRoutes = [
     {
@@ -34,27 +39,7 @@ export const GameNestApp = () => {
       element: <GameDetails />,
     },
     {
-      id: 4,
-      path: "/collection",
-      element: <CollectionPage />,
-    },
-    {
-      id: 5,
-      path: "/collection/new",
-      element: <NewCollection />,
-    },
-    {
       id: 6,
-      path: "/register",
-      element: <RegisterPage />,
-    },
-    {
-      id: 7,
-      path: "/login",
-      element: <LoginPage />,
-    },
-    {
-      id: 8,
       path: "*",
       element: <NotFound message="Oops" />,
     },
@@ -63,28 +48,18 @@ export const GameNestApp = () => {
   const privateRoutes = [
     {
       id: 1,
-      path: "/",
-      element: <HomePage />,
-    },
-    {
-      id: 2,
-      path: "/games",
-      element: <GamesPage />,
-    },
-    {
-      id: 3,
-      path: "/games/:gameId",
-      element: <GameDetails />,
-    },
-    {
-      id: 4,
       path: "/collection",
       element: <CollectionPage />,
     },
     {
-      id: 5,
+      id: 2,
       path: "/collection/new",
       element: <NewCollection />,
+    },
+    {
+      id: 3,
+      path: "/",
+      element: <HomePage />,
     },
   ];
 
@@ -93,16 +68,36 @@ export const GameNestApp = () => {
       {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
       <Suspense fallback={<h1>Loading...</h1>}>
         <Routes>
-          {publicRoutes.map((route) => {
-            return (
-              <Route key={route.id} path={route.path} element={route.element} />
-            );
-          })}
-          {privateRoutes.map((route) => {
-            return (
-              <Route key={route.id} path={route.path} element={route.element} />
-            );
-          })}
+          <Route
+            element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/" />}
+          >
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Route>
+          <Route>
+            {publicRoutes.map((route) => {
+              return (
+                <Route
+                  key={route.id}
+                  path={route.path}
+                  element={route.element}
+                />
+              );
+            })}
+          </Route>
+          <Route
+            element={<ProtectedRoute isAllowed={isAuth} redirectTo="/login" />}
+          >
+            {privateRoutes.map((route) => {
+              return (
+                <Route
+                  key={route.id}
+                  path={route.path}
+                  element={route.element}
+                />
+              );
+            })}
+          </Route>
         </Routes>
       </Suspense>
     </Layout>

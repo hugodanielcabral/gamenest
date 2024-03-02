@@ -2,10 +2,14 @@ import gameNestLogo from "../../../../assets/gamenest-logo.svg";
 import { Link } from "react-router-dom";
 import "./HeaderNav.css";
 import { ThemeSwitcher } from "../../../themeswitcher/ThemeSwitcher";
+import { authRoutes, privateRoutes, publicRoutes } from "./navigation.js";
+import { useAuth } from "../../../../context/AuthContext.jsx";
 
 // eslint-disable-next-line react/prop-types
 //! Quitar el pathname - O mejor, hacer un rework de la navbar.
 export const HeaderNav = ({ pathname }) => {
+  const { isAuth, signout } = useAuth();
+
   return (
     <div
       className={`z-10 navbar relative ${
@@ -45,18 +49,19 @@ export const HeaderNav = ({ pathname }) => {
             <li>
               <Link to="/games">Games</Link>
             </li>
-            <li>
-              <Link to="/collection">Collection</Link>
-            </li>
-            <li>
-              <Link to="/reviews">Reviews</Link>
-            </li>
-            <li>
-              <Link to="/register">Register</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
+
+            {!isAuth
+              ? authRoutes.map((route) => (
+                  <li key={route.path}>
+                    <Link to={route.path}>{route.name}</Link>
+                  </li>
+                ))
+              : privateRoutes.map((route) => (
+                  <li key={route.path}>
+                    <Link to={route.path}>{route.name}</Link>
+                  </li>
+                ))}
+            <li onClick={signout}>Logout</li>
           </ul>
         </div>
         <a className="btn btn-ghost">
@@ -86,18 +91,22 @@ export const HeaderNav = ({ pathname }) => {
           <li>
             <Link to="/games">Games</Link>
           </li>
-          <li>
-            <Link to="/collection">Collection</Link>
-          </li>
-          <li>
-            <Link to="/reviews">Reviews</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          {!isAuth ? (
+            authRoutes.map((route) => (
+              <li key={route.path}>
+                <Link to={route.path}>{route.name}</Link>
+              </li>
+            ))
+          ) : (
+            <>
+              {privateRoutes.map((route) => (
+                <li key={route.path}>
+                  <Link to={route.path}>{route.name}</Link>
+                </li>
+              ))}
+              <li onClick={() => signout()}>Logout</li>
+            </>
+          )}
         </ul>
       </div>
       <div className="navbar-end">

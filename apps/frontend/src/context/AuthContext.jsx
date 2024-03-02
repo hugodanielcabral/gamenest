@@ -82,6 +82,25 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
+
+  const signout = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signout`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+      });
+      const data = await response.json();
+      setUser(null);
+      setIsAuth(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (Cookies.get("token")) {
       fetch(`${import.meta.env.VITE_BASE_URL}/profile`, {
@@ -105,7 +124,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isAuth, errors, signup, signin }}>
+    <AuthContext.Provider
+      value={{ user, isAuth, errors, signup, signin, signout }}
+    >
       {children}
     </AuthContext.Provider>
   );
