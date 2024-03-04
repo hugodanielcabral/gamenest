@@ -22,26 +22,26 @@ export const useFetchGames = () => {
   };
   fillQueryObject();
 
+  const getGames = async () => {
+    const response = await fetch(
+      `http://localhost:3000/api/games${
+        Object.prototype.hasOwnProperty.call(queryObject, "gamename") ||
+        Object.prototype.hasOwnProperty.call(queryObject, "page") ||
+        Object.prototype.hasOwnProperty.call(queryObject, "platforms") ||
+        Object.prototype.hasOwnProperty.call(queryObject, "genres")
+          ? "?" + new URLSearchParams(queryObject)
+          : ""
+      }`
+    );
+    const data = await response.json();
+    console.log(data);
+    setGamesData(data.games);
+    setGamesCount(data.count.count);
+    setCurrentPage(data.currentPage);
+    setTotalPages(data.totalPages);
+    setIsLoading(false);
+  };
   useEffect(() => {
-    const getGames = async () => {
-      const response = await fetch(
-        `http://localhost:3000/api/games${
-          Object.prototype.hasOwnProperty.call(queryObject, "gamename") ||
-          Object.prototype.hasOwnProperty.call(queryObject, "page") ||
-          Object.prototype.hasOwnProperty.call(queryObject, "platforms") ||
-          Object.prototype.hasOwnProperty.call(queryObject, "genres")
-            ? "?" + new URLSearchParams(queryObject)
-            : ""
-        }`
-      );
-      const data = await response.json();
-      console.log(data);
-      setGamesData(data.games);
-      setGamesCount(data.count.count);
-      setCurrentPage(data.currentPage);
-      setTotalPages(data.totalPages);
-      setIsLoading(false);
-    };
     getGames();
     return () => {
       setIsLoading(true);

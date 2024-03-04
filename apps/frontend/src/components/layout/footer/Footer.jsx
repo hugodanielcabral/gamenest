@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="p-10 rounded text-primary bg-opacity-5 bg-base-300 footer footer-center">
+    <footer className="p-10 text-pink-500 rounded footer bg-base-300 footer-center">
       <nav className="grid grid-flow-col gap-4">
         <a
           href="https://danielcabral.onrender.com/"
@@ -52,7 +52,7 @@ export const Footer = () => {
       <aside>
         <p>
           Copyright © 2024 - All right reserved by
-          <span className="font-bold"> Game</span>
+          <span className="font-bold text-base-content"> Game</span>
           <span className="font-bold text-error">Nest</span>
         </p>
       </aside>

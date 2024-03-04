@@ -5,12 +5,16 @@ import {
   GameDetailsHeader,
   GameDetailsGallery,
 } from "./index.js";
-import { useFetchGameDetails } from "../../../hooks/useFetchGameDetails.js";
 import { Loading } from "../../ui/loading/Loading.jsx";
+import { useFetch } from "../../../hooks/useFetch.js";
 
 export const GameDetails = () => {
   const { gameId: gameSlug } = useParams();
-  const { game, isLoading } = useFetchGameDetails(gameSlug);
+
+  const { data, isLoading } = useFetch(
+    `http://localhost:3000/api/games/${gameSlug}`
+  );
+  const game = data ? data[0] : null;
   const [activeTab, setActiveTab] = useState("overview");
 
   const renderTabContent = () => {

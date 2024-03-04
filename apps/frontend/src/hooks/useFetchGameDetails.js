@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+/* import { useState, useEffect } from "react";
 
 export const useFetchGameDetails = (gameSlug) => {
   const [game, setGame] = useState([]);
@@ -23,3 +23,4 @@ export const useFetchGameDetails = (gameSlug) => {
 
   return { game, isLoading };
 };
+ */

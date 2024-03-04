@@ -7,7 +7,7 @@ export const Button = ({ children, className, ...props }) => {
     <button
       className={twMerge(
         clsx(
-          "bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded py-4",
+          "bg-primary hover:bg-primary/70 text-white font-bold px-4 rounded py-4",
           className
         )
       )}

@@ -24,10 +24,10 @@ export const signup = async (req, res) => {
     const token = await handleJwt({ id: newUser[0].user_id });
 
     res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "none",
-      /*       secure: true,
-       */ maxAge: 24 * 60 * 60 * 1000, // 1 day
+      /*       httpOnly: true,
+       */ sameSite: "none",
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
 
     res.status(201).json({
@@ -68,10 +68,10 @@ export const signin = async (req, res) => {
     const token = await handleJwt({ id: user[0].user_id });
 
     res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "none",
-      /*       secure: true,
-       */ maxAge: 24 * 60 * 60 * 1000, // 1 day
+      /*       httpOnly: true,
+       */ sameSite: "none",
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
 
     res.status(200).json({
@@ -88,7 +88,7 @@ export const signin = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: "Something went wrong" });
+    res.status(500).json({ error: error });
   }
 };
 

@@ -1,6 +1,8 @@
 import { createContext, useState, useContext, useEffect } from "react";
+
 import propTypes from "prop-types";
 import Cookies from "js-cookie";
+import { useLocation } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -18,6 +20,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuth, setIsAuth] = useState(false);
   const [errors, setErrors] = useState(null);
+  const { pathname } = useLocation();
 
   const signup = async (formData) => {
     try {
@@ -122,6 +125,12 @@ export const AuthProvider = ({ children }) => {
         });
     }
   }, []);
+
+  //* Because i was getting Login errors on the register page and viceversa
+  //* But also, when i changed pages, the error never disappeared
+  useEffect(() => {
+    setErrors(null);
+  }, [pathname]);
 
   return (
     <AuthContext.Provider

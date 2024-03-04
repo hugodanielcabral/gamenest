@@ -2,6 +2,8 @@ import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
+import { AuthCard } from "../components/auth/AuthCard";
+import { Button } from "../components/ui";
 
 export const LoginPage = () => {
   const { signin } = useAuth();
@@ -24,9 +26,18 @@ export const LoginPage = () => {
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%), url(${backgroundImage})`,
       }}
     >
-      <h1>Good morning, Vault-Tec calling!</h1>
+      <div className="flex flex-col items-center mt-3">
+        <h1 className="text-3xl text-white">
+          <span className="font-bold">Game</span>
+          <span className="font-bold text-red-500">Nest</span>: Your Backlog
+          Adventure
+        </h1>
+        <h3 className="mt-4 text-xl text-center text-white text-balance">
+          Welcome back!
+        </h3>
+      </div>
 
-      <div className="mx-auto mt-32 size-96">
+      <AuthCard title="Login">
         <form className="*:my-3" onSubmit={handleSubmit}>
           <label className="flex items-center gap-2 input input-bordered">
             Username
@@ -51,11 +62,9 @@ export const LoginPage = () => {
             />
           </label>
 
-          <button type="submit" className="btn btn-primary">
-            Sign in
-          </button>
+          <Button type="submit">Sign in</Button>
         </form>
-      </div>
+      </AuthCard>
     </div>
   );
 };

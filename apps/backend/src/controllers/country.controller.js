@@ -4,10 +4,7 @@ export const getCountries = async (req, res) => {
   try {
     const countries = await sql`SELECT * FROM country`;
 
-    res.status(200).json({
-      success: true,
-      countries,
-    });
+    res.status(200).json(countries);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -21,10 +18,7 @@ export const getCountry = async (req, res) => {
     if (!country[0])
       return res.status(404).json({ error: "Country not found" });
 
-    res.status(200).json({
-      success: true,
-      country,
-    });
+    res.status(200).json(country);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

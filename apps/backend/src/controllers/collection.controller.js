@@ -34,10 +34,11 @@ export const getCollection = async (req, res) => {
 };
 
 export const createCollection = async (req, res) => {
-  const { title } = req.body;
+  const { title, color, description } = req.body;
+  console.log(title, color, description, req.user_id);
   try {
     const collection =
-      await sql`INSERT INTO collection (user_id, created_on, title) VALUES (${req.user_id}, NOW(), ${title}) RETURNING *`;
+      await sql`INSERT INTO collection (user_id, created_on, title, color, description) VALUES (${req.user_id}, NOW(), ${title}, ${color}, ${description}) RETURNING *`;
 
     res.status(201).json({ success: true, collection: collection[0] });
   } catch (error) {
@@ -47,10 +48,10 @@ export const createCollection = async (req, res) => {
 
 export const updateCollection = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
+  const { title, color, description } = req.body;
   try {
     const collection =
-      await sql`UPDATE collection SET title = ${title} WHERE collection_id = ${id} RETURNING *`;
+      await sql`UPDATE collection SET title = ${title}, color = ${color}, description = ${description} WHERE collection_id = ${id} RETURNING *`;
 
     if (!collection[0])
       return res

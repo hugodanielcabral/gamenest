@@ -14,9 +14,9 @@ import {
 
 const router = Router();
 
-router.get("/country", isAuth, getCountries);
+router.get("/country", getCountries);
 
-router.get("/country/:id", isAuth, getCountry);
+router.get("/country/:id", getCountry);
 
 router.post("/country", isAuth, createCountryValidator, createCountry);
 
