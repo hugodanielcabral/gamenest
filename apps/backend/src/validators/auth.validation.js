@@ -2,6 +2,7 @@ import { existsAndNotEmpty } from "../helpers/handleExistsAndNotEmpty.js";
 import { validateResult } from "../helpers/handleValidateResult.js";
 import { comparePassword } from "../helpers/handleBcrypt.js";
 import sql from "../db.js";
+import { check } from "express-validator";
 
 export const signupValidator = [
   existsAndNotEmpty("username", "Username")
@@ -65,33 +66,29 @@ export const signupValidator = [
 ];
 
 export const signinValidator = [
-  existsAndNotEmpty("username", "Username")
+  check("pass")
     .isString()
-    .withMessage("Username must be a string")
-    .isLength({ min: 5 })
-    .withMessage("Username must be at least 5 characters long")
-    .isLength({ max: 20 })
-    .withMessage("Username must be at most 20 characters long")
+    .withMessage("Invalid username or password.")
+    .isLength({ min: 5, max: 20 })
+    .withMessage("Invalid username or password.")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
       if (!user[0]) {
-        throw new Error("Username not found");
+        throw new Error("Invalid username or password.");
       }
     }),
-  existsAndNotEmpty("pass", "Password")
+  check("username")
     .isString()
-    .withMessage("Password must be a string")
-    .isLength({ min: 5 })
-    .withMessage("Password must be at least 5 characters long")
-    .isLength({ max: 30 })
-    .withMessage("Password must be at most 30 characters long")
+    .withMessage("Invalid username or password.")
+    .isLength({ min: 5, max: 30 })
+    .withMessage("Invalid username or password.")
     .custom(async (value, { req }) => {
       const user =
         await sql`SELECT * FROM users WHERE username = ${req.body.username}`;
       if (user[0]) {
         const match = await comparePassword(value, user[0].pass);
         if (!match) {
-          throw new Error("Wrong password");
+          throw new Error("Invalid username or password.");
         }
       }
     }),

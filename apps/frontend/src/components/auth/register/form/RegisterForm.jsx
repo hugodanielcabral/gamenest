@@ -202,7 +202,7 @@ export const RegisterForm = ({
 RegisterForm.propTypes = {
   handleOnSubmit: propTypes.func.isRequired,
   handleOnChange: propTypes.func.isRequired,
-  data: propTypes.array.isRequired,
+  data: propTypes.array,
   isLoading: propTypes.bool.isRequired,
   errors: propTypes.array,
   username: propTypes.string.isRequired,

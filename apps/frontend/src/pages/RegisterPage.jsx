@@ -6,6 +6,7 @@ import { RegisterForm } from "../components/auth/register/form/RegisterForm.jsx"
 import { AuthCard } from "../components/auth/AuthCard.jsx";
 import { Toast } from "../components/ui/index.js";
 import { useNavigate } from "react-router-dom";
+import emailjs from "@emailjs/browser";
 import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 
 export const RegisterPage = () => {
@@ -40,6 +41,7 @@ export const RegisterPage = () => {
 
       if (userData) {
         setShowToast(true);
+        sendWelcomeEmail();
         setButtonDisabled(true);
         setTimeout(() => {
           setShowToast(false);
@@ -51,6 +53,31 @@ export const RegisterPage = () => {
       console.log(error);
       setButtonDisabled(false);
     }
+  };
+
+  const templateParams = {
+    user_name: username,
+    destination: email,
+  };
+
+  const sendWelcomeEmail = () => {
+    emailjs
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        }
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        (error) => {
+          console.log("FAILED...", error);
+        }
+      );
   };
 
   return (
