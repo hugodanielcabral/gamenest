@@ -31,10 +31,11 @@ export const AuthProvider = ({ children }) => {
           username: formData.username,
           email: formData.email,
           pass: formData.password,
+          repass: formData.repassword,
           avatar:
             "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
           title: "Lord",
-          country: 1,
+          country: formData.country,
           status_lock: false,
         }),
         headers: {

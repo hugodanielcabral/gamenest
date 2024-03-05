@@ -1,6 +1,6 @@
+import propTypes from "prop-types";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import propTypes from "prop-types";
 
 export const Label = ({ children, className, ...props }) => {
   return (

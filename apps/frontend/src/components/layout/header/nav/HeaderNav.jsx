@@ -1,4 +1,4 @@
-import gameNestLogo from "../../../../assets/gamenest-logo.svg";
+import gameNestLogo from "../../../../assets/gamenest-logo.png";
 import { Link } from "react-router-dom";
 import "./HeaderNav.css";
 import { ThemeSwitcher } from "../../../themeswitcher/ThemeSwitcher";
@@ -41,7 +41,7 @@ export const HeaderNav = ({ pathname }) => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52 text-white"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-300 rounded-box w-52 text-white uppercase"
           >
             <li>
               <Link to="/">Home</Link>
@@ -53,7 +53,9 @@ export const HeaderNav = ({ pathname }) => {
             {!isAuth
               ? authRoutes.map((route) => (
                   <li key={route.path}>
-                    <Link to={route.path}>{route.name}</Link>
+                    <Link className="text-red-500" to={route.path}>
+                      {route.name}
+                    </Link>
                   </li>
                 ))
               : privateRoutes.map((route) => (
@@ -64,12 +66,8 @@ export const HeaderNav = ({ pathname }) => {
             <li onClick={signout}>Logout</li>
           </ul>
         </div>
-        <a className="btn btn-ghost">
-          <img
-            src={gameNestLogo}
-            alt="GameNest Logo"
-            className="w-10 h-10 mr-2"
-          />
+        <Link className="flex items-center text-xs font-bold" to="/">
+          <img src={gameNestLogo} alt="" className="size-12" />
           <p
             className={`${
               pathname === "/" ? "text-grey-color" : "text-stone-950-700"
@@ -77,13 +75,13 @@ export const HeaderNav = ({ pathname }) => {
           >
             Game<span className="text-error">Nest</span>
           </p>
-        </a>
+        </Link>
       </div>
       <div className="hidden navbar-center lg:flex">
         <ul
           className={`px-1 ${
             pathname === "/" ? "text-white-color" : "text-base"
-          } menu menu-horizontal text-2xl font-bold`}
+          } menu menu-horizontal text-2xl font-bold uppercase`}
         >
           <li>
             <Link to="/">Home</Link>
@@ -94,7 +92,9 @@ export const HeaderNav = ({ pathname }) => {
           {!isAuth ? (
             authRoutes.map((route) => (
               <li key={route.path}>
-                <Link to={route.path}>{route.name}</Link>
+                <Link className="text-pink-500" to={route.path}>
+                  {route.name}
+                </Link>
               </li>
             ))
           ) : (
@@ -115,9 +115,9 @@ export const HeaderNav = ({ pathname }) => {
             <div
               tabIndex={0}
               role="button"
-              className="w-16 h-16 btn btn-ghost btn-circle avatar"
+              className="w-10 h-10 btn btn-ghost btn-circle avatar"
             >
-              <div className="w-16 h-16 rounded-full">
+              <div className="w-10 h-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
                   src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"

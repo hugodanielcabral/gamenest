@@ -8,6 +8,7 @@ import { AuthCard } from "../components/auth/AuthCard.jsx";
 import { useFetch } from "../hooks/useFetch.js";
 import { Label } from "../components/ui/label/Label.jsx";
 import { useState } from "react";
+import { Toast } from "../components/ui/toast/Toast.jsx";
 
 export const RegisterPage = () => {
   const { signup, errors } = useAuth();
@@ -29,20 +30,28 @@ export const RegisterPage = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useFetch("http://localhost:3000/api/country");
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();
-      setButtonDisabled(true); // Desactivas el botón al inicio del envío
+      setButtonDisabled(true);
+
       const userData = await signup(formData);
-      setButtonDisabled(false); // Reactivas el botón después de que se completa el envío
+      setButtonDisabled(false);
 
       if (userData) {
-        navigate("/login");
+        setShowToast(true);
+        setButtonDisabled(true);
+        setTimeout(() => {
+          setShowToast(false);
+          setButtonDisabled(false);
+          navigate("/login");
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
-      setButtonDisabled(false); // También reactivas el botón en caso de error
+      setButtonDisabled(false);
     }
   };
 
@@ -53,6 +62,7 @@ export const RegisterPage = () => {
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(${backgroundImage})`,
       }}
     >
+      <Toast message="User created successfully!" showToast={showToast} />
       <div className="flex items-center mt-5 justify-evenly">
         <article className="flex flex-col items-center mt-3">
           <h1 className="text-4xl font-bold text-pink-500 uppercase">
@@ -135,7 +145,15 @@ export const RegisterPage = () => {
           )}
           <select
             name="country"
-            className="w-full max-w-xs mb-2 select select-bordered select-md"
+            className={clsx(
+              {
+                "border-4 border-red-500":
+                  errors && errors.some((err) => err.path == "country"),
+                "border-0":
+                  errors && !errors.some((err) => err.path == "country"),
+              },
+              "w-full max-w-xs mb-2 select select-bordered select-md"
+            )}
             onChange={handleOnChange}
             value={country}
           >
@@ -149,6 +167,11 @@ export const RegisterPage = () => {
                 </option>
               ))}
           </select>
+          {errors && errors.find((err) => err.path == "country") && (
+            <p className="mb-2 text-sm font-bold text-center text-red-500">
+              {errors.find((err) => err.path == "country").msg}
+            </p>
+          )}
           <Label
             className={clsx(
               {
@@ -187,8 +210,9 @@ export const RegisterPage = () => {
             className={clsx(
               {
                 "border-4 border-red-500":
-                  errors && errors.some((err) => err.path == "pass"),
-                "border-0": errors && !errors.some((err) => err.path == "pass"),
+                  errors && errors.some((err) => err.path == "repass"),
+                "border-0":
+                  errors && !errors.some((err) => err.path == "repass"),
               },
               "mb-2"
             )}
@@ -214,9 +238,9 @@ export const RegisterPage = () => {
               autoComplete="password"
             />
           </Label>
-          {errors && errors.find((err) => err.path == "pass") && (
+          {errors && errors.find((err) => err.path == "repass") && (
             <p className="my-2 text-sm font-bold text-center text-red-500">
-              {errors.find((err) => err.path == "pass").msg}
+              {errors.find((err) => err.path == "repass").msg}
             </p>
           )}
 

@@ -52,7 +52,13 @@ export const signupValidator = [
     .withMessage("Status lock must be a boolean"),
   existsAndNotEmpty("country", "Country")
     .isInt()
-    .withMessage("Country must be a number"),
+    .withMessage("Oops something went wrong, please try again later"),
+  existsAndNotEmpty("repass", "Repeat password").custom((value, { req }) => {
+    if (value !== req.body.pass) {
+      throw new Error("Passwords must match");
+    }
+    return true;
+  }),
   (req, res, next) => {
     validateResult(req, res, next);
   },

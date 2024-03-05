@@ -5,6 +5,7 @@ import { handleJwt } from "../helpers/handleJwt.js";
 export const signup = async (req, res) => {
   const { username, email, pass, avatar, title, status_lock, country } =
     req.body;
+  console.log(country);
 
   try {
     const oldUser = await sql`SELECT * FROM users WHERE username LIKE ${
