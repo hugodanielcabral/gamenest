@@ -1,7 +1,7 @@
+import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Button, Label } from "../../../ui/index.js";
 import { clsx } from "clsx";
-import propTypes from "prop-types";
 
 export const RegisterForm = ({
   handleOnSubmit,

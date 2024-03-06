@@ -1,24 +1,46 @@
-import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "../hooks/useForm";
+import { LoginForm } from "../components/auth/login/form/LoginForm.jsx";
 import { AuthCard } from "../components/auth/AuthCard";
-import { Button, Label } from "../components/ui/index.js";
-import { clsx } from "clsx";
+import { Toast } from "../components/ui/index.js";
+import { useNavigate } from "react-router-dom";
+import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 
 export const LoginPage = () => {
-  const { signin, errors } = useAuth();
+  const { signin, errors, setIsAuth } = useAuth();
   const { formData, handleOnChange, username, password } = useForm({
     username: "",
     password: "",
   });
   const navigate = useNavigate();
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const userData = await signin(formData);
+    try {
+      e.preventDefault();
+      setButtonDisabled(true);
+      const userData = await signin(formData);
+      setButtonDisabled(false);
 
-    if (userData) navigate("/");
+      //* Because setIsAuth is set to true, the page reloads automatically. This caused
+      //* the inability to execute any message with the "data" return variable. I resolved this by moving
+      //* setIsAuth to the handleSubmit function in the LoginPage component.
+      if (userData) {
+        setShowToast(true);
+        setButtonDisabled(true);
+        setTimeout(() => {
+          setShowToast(false);
+          setButtonDisabled(false);
+          setIsAuth(true);
+          navigate("/profile");
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+      setButtonDisabled(false);
+    }
   };
 
   return (
@@ -28,6 +50,11 @@ export const LoginPage = () => {
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(${backgroundImage})`,
       }}
     >
+      <Toast
+        message="You've Logged In Successfully. Welcome!"
+        showToast={showToast}
+      />
+
       <div className="flex items-center mt-5 justify-evenly">
         <article className="flex flex-col items-center mt-3">
           <h1 className="text-4xl font-bold text-pink-500 uppercase">
@@ -41,61 +68,14 @@ export const LoginPage = () => {
       </div>
 
       <AuthCard title="Login">
-        <form className="*:my-3" onSubmit={handleSubmit}>
-          <h3>
-            {errors && (
-              <p className="py-2 my-2 text-sm font-bold text-center text-red-500 bg-red-100">
-                {errors[0].msg}
-              </p>
-            )}
-          </h3>
-          <Label className={clsx("my-2")}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-              className="w-4 h-4 opacity-70"
-              fill="currentColor"
-            >
-              <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
-            </svg>
-            <input
-              type="text"
-              className="grow"
-              placeholder="Username"
-              value={username}
-              name="username"
-              onChange={handleOnChange}
-              autoComplete="name"
-            />
-          </Label>
-          <Label className={clsx("mb-2")}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="w-4 h-4 opacity-70"
-              fill="currentColor"
-            >
-              <path d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z" />
-            </svg>
-
-            <input
-              type="password"
-              className="grow"
-              value={password}
-              name="password"
-              onChange={handleOnChange}
-              placeholder="Password"
-              autoComplete="password"
-            />
-          </Label>
-
-          <Button
-            type="submit"
-            className="transition-all duration-500 ease-in-out bg-gradient-to-r from-pink-400 via-pink-500 to-pink-700 hover:from-pink-500 hover:via-pink-600 hover:to-pink-700 disabled:pointer-events-none disabled:opacity-15"
-          >
-            Sign in
-          </Button>
-        </form>
+        <LoginForm
+          handleSubmit={handleSubmit}
+          handleOnChange={handleOnChange}
+          errors={errors}
+          buttonDisabled={buttonDisabled}
+          username={username}
+          password={password}
+        />
       </AuthCard>
     </div>
   );

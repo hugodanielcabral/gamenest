@@ -5,7 +5,6 @@ import { handleJwt } from "../helpers/handleJwt.js";
 export const signup = async (req, res) => {
   const { username, email, pass, avatar, title, status_lock, country } =
     req.body;
-  console.log(country);
 
   try {
     const oldUser = await sql`SELECT * FROM users WHERE username LIKE ${
@@ -24,12 +23,12 @@ export const signup = async (req, res) => {
 
     const token = await handleJwt({ id: newUser[0].user_id });
 
-    res.cookie("token", token, {
-      /*       httpOnly: true,
-       */ sameSite: "none",
+    /* res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "none",
       secure: true,
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-    });
+    }); */
 
     res.status(201).json({
       success: true,
