@@ -36,9 +36,9 @@ export const createCollection = async (req, res) => {
   console.log(title, color, description, category, req.user_id);
   try {
     const collection =
-      await sql`INSERT INTO collection (user_id, created_on, title, color, description) VALUES (${req.user_id}, NOW(), ${title}, ${color}, ${description}, ${category}) RETURNING *`;
+      await sql`INSERT INTO collection (user_id, created_on, title, color, description, category) VALUES (${req.user_id}, NOW(), ${title}, ${color}, ${description}, ${category}) RETURNING *`;
 
-    res.status(201).json({ collection: collection[0] });
+    res.status(201).json(collection);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
