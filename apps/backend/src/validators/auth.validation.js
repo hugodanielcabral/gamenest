@@ -66,10 +66,10 @@ export const signupValidator = [
 ];
 
 export const signinValidator = [
-  check("pass")
+  check("username")
     .isString()
     .withMessage("Invalid username or password.")
-    .isLength({ min: 5, max: 20 })
+    .isLength({ min: 5, max: 30 })
     .withMessage("Invalid username or password.")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
@@ -77,15 +77,15 @@ export const signinValidator = [
         throw new Error("Invalid username or password.");
       }
     }),
-  check("username")
+  check("pass")
     .isString()
     .withMessage("Invalid username or password.")
-    .isLength({ min: 5, max: 30 })
+    .isLength({ min: 5, max: 20 })
     .withMessage("Invalid username or password.")
     .custom(async (value, { req }) => {
       const user =
         await sql`SELECT * FROM users WHERE username = ${req.body.username}`;
-      if (user[0]) {
+      if (user.length > 0) {
         const match = await comparePassword(value, user[0].pass);
         if (!match) {
           throw new Error("Invalid username or password.");
