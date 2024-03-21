@@ -21,10 +21,11 @@ export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [errors, setErrors] = useState(null);
   const { pathname } = useLocation();
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const signup = async (formData) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signup`, {
+      const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({
@@ -58,18 +59,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signin = async (formData) => {
+    console.log(formData.password);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signin`, {
+      const response = await fetch(`${BASE_URL}/signin`, {
         method: "POST",
         credentials: "include",
-        body: JSON.stringify({
-          username: formData.username,
-          pass: formData.password,
-        }),
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
+        body: JSON.stringify({
+          username: formData.username,
+          pass: formData.password,
+        }),
       });
 
       const data = await response.json();
@@ -92,7 +94,7 @@ export const AuthProvider = ({ children }) => {
 
   const signout = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/signout`, {
+      const response = await fetch(`${BASE_URL}/signout`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -110,7 +112,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (Cookies.get("token")) {
-      fetch(`${import.meta.env.VITE_BASE_URL}/profile`, {
+      fetch(`${BASE_URL}/profile`, {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",

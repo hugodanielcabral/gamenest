@@ -10,6 +10,8 @@ import emailjs from "@emailjs/browser";
 import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 
 export const RegisterPage = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
   const { signup, errors } = useAuth();
   const {
     formData,
@@ -27,7 +29,7 @@ export const RegisterPage = () => {
     repassword: "",
   });
   const navigate = useNavigate();
-  const { data, isLoading } = useFetch("http://localhost:3000/api/country");
+  const { data, isLoading } = useFetch(`${BASE_URL}/country`);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [showToast, setShowToast] = useState(false);
 

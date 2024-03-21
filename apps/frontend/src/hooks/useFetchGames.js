@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export const useFetchGames = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
   const [gamesData, setGamesData] = useState([]);
   const [gamesCount, setGamesCount] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +26,7 @@ export const useFetchGames = () => {
 
   const getGames = async () => {
     const response = await fetch(
-      `http://localhost:3000/api/games${
+      `${BASE_URL}/games${
         Object.prototype.hasOwnProperty.call(queryObject, "gamename") ||
         Object.prototype.hasOwnProperty.call(queryObject, "page") ||
         Object.prototype.hasOwnProperty.call(queryObject, "platforms") ||

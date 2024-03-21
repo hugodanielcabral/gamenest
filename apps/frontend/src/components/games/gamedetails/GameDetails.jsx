@@ -9,11 +9,11 @@ import { Loading } from "../../ui/loading/Loading.jsx";
 import { useFetch } from "../../../hooks/useFetch.js";
 
 export const GameDetails = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
   const { gameId: gameSlug } = useParams();
 
-  const { data, isLoading } = useFetch(
-    `http://localhost:3000/api/games/${gameSlug}`
-  );
+  const { data, isLoading } = useFetch(`${BASE_URL}/games/${gameSlug}`);
   const game = data ? data[0] : null;
   const [activeTab, setActiveTab] = useState("overview");
 
