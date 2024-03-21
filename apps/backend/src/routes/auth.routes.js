@@ -15,7 +15,7 @@ const router = Router();
 
 router.post("/signin", signinValidator, signin);
 
-router.post("/signup", /* signupValidator, */ signup);
+router.post("/signup", signupValidator, signup);
 
 router.post("/signout", signout);
 

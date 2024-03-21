@@ -6,7 +6,8 @@ export const getCountries = async (req, res) => {
 
     res.status(200).json(countries);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -20,7 +21,8 @@ export const getCountry = async (req, res) => {
 
     res.status(200).json(country);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -30,12 +32,10 @@ export const createCountry = async (req, res) => {
     const newCountry =
       await sql`INSERT INTO country (country_name, country_domain) VALUES (${country_name}, ${country_domain}) RETURNING *`;
 
-    res.status(201).json({
-      success: true,
-      newCountry,
-    });
+    res.status(201).json(newCountry);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -54,7 +54,8 @@ export const updateCountry = async (req, res) => {
       updatedCountry,
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -69,6 +70,7 @@ export const deleteCountry = async (req, res) => {
 
     res.status(204);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 };
