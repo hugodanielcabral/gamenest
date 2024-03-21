@@ -7,6 +7,7 @@ import collectionRoutes from "./routes/collection.routes.js";
 import collectionUserRoutes from "./routes/collection_user.routes.js";
 import gamesRoutes from "./routes/games.routes.js";
 import countryRoutes from "./routes/country.routes.js";
+import rolesRoutes from "./routes/roles.routes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
@@ -38,6 +39,7 @@ app.use("/api", authRoutes);
 app.use("/api", collectionRoutes);
 app.use("/api", collectionUserRoutes);
 app.use("/api", countryRoutes);
+app.use("/api", rolesRoutes);
 app.use("/api", gamesRoutes);
 
 // Error Handling
