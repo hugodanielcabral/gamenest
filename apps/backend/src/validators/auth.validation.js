@@ -25,7 +25,7 @@ export const signupValidator = [
     .withMessage("Email must be at most 60 characters long")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE email = ${value}`;
-      if (user[0]) {
+      if (user.length > 0) {
         throw new Error("Email already in use");
       }
     }),
@@ -36,22 +36,25 @@ export const signupValidator = [
     .withMessage("Password must be at least 5 characters long")
     .isLength({ max: 30 })
     .withMessage("Password must be at most 30 characters long"),
+  check("birthday")
+    .optional()
+    .isDate()
+    .withMessage("Birthday must be a valid date"),
   existsAndNotEmpty("avatar", "Avatar")
     .isString()
     .withMessage("Avatar must be a string")
     .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png)/)
     .withMessage("Avatar must be a valid url"),
-  existsAndNotEmpty("title", "Title")
+  check("title")
+    .optional()
     .isString()
     .withMessage("Title must be a string")
     .isLength({ min: 3 })
     .withMessage("Title must be at least 3 characters long")
     .isLength({ max: 30 })
     .withMessage("Title must be at most 30 characters long"),
-  existsAndNotEmpty("status_lock", "Status lock")
-    .isBoolean()
-    .withMessage("Status lock must be a boolean"),
-  existsAndNotEmpty("country", "Country")
+  check("status_lock").isBoolean().withMessage("Status lock must be a boolean"),
+  existsAndNotEmpty("country_id", "Country")
     .isInt()
     .withMessage("Oops something went wrong, please try again later"),
   existsAndNotEmpty("repass", "Repeat password").custom((value, { req }) => {
