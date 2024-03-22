@@ -59,7 +59,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signin = async (formData) => {
-    console.log(formData.password);
     try {
       const response = await fetch(`${BASE_URL}/signin`, {
         method: "POST",

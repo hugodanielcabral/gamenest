@@ -1,3 +1,5 @@
+import propTypes from "prop-types";
+
 export const AuthCard = ({ children, title }) => {
   return (
     <div className="py-5 mx-auto mt-32 bg-black bg-opacity-50 rounded-lg shadow-2xl w-96 px-7 shadow-black">
@@ -5,4 +7,9 @@ export const AuthCard = ({ children, title }) => {
       {children}
     </div>
   );
+};
+
+AuthCard.propTypes = {
+  children: propTypes.node,
+  title: propTypes.string,
 };
