@@ -20,7 +20,6 @@ export const GameNestApp = () => {
   );
 
   const { isAuth } = useAuth();
-  console.log(isAuth);
 
   const publicRoutes = [
     {
@@ -53,7 +52,7 @@ export const GameNestApp = () => {
     },
     {
       id: 2,
-      path: "/collection/new",
+      path: "/collection/add",
       element: <NewCollection />,
     },
     {
