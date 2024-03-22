@@ -86,6 +86,26 @@ export const getGame = async (req, res) => {
   }
 };
 
+export const getGamesFromUser = async (collection) => {
+  const collections_id = collection.map((game) => game.game_id).join(",");
+
+  try {
+    const response = await fetch("https://api.igdb.com/v4/games", {
+      method: "POST",
+      headers: {
+        "Client-ID": process.env.CLIENT_ID,
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+      },
+      body: `fields name, cover.url; where id = (${collections_id});`,
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 //* I should use this function to get the token and save it in a .env file
 //? I should also use a cron job to update the token every 60 days
 

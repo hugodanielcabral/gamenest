@@ -1,4 +1,6 @@
 import sql from "../db.js";
+import { getGamesFromUser } from "../controllers/games.controller.js";
+import mapCollections from "../helpers/mapCollections.js";
 
 export const getCollections = async (req, res) => {
   try {
@@ -18,11 +20,16 @@ export const getAllGamesFromUser = async (req, res) => {
   try {
     const collection =
       await sql`SELECT * FROM collection WHERE user_id = ${req.user_id}`;
+    console.log(collection);
 
     if (!collection[0])
       return res.status(404).json({ message: "Collection not found" });
 
-    res.status(200).json(collection);
+    const games = await getGamesFromUser(collection);
+
+    const fullData = await mapCollections(collection, games);
+
+    res.status(200).json(fullData);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
