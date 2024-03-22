@@ -25,35 +25,39 @@
 - username **(UNIQUE)**
 - email **(UNIQUE)**
 - pass
+- birthday
 - avatar
 - title
 - status_lock
+- verified
+- role **(FK)**
 - country **(FK)**
 
-#### GAMES **(EXTERNAL API)**
+### ROLES **(CE)**
 
-- game_id **(PK)**
+- role_id **(PK)**
 - name
-- publishers
-- developers
-- genre
-- ... and more
 
-#### COLLECTIONS **(DE)**
+
+<!-- #### COLLECTION **(DE)**
 
 - collection_id **(PK)**
 - user_id **(FK)**
-- creation_date
-- title
-
-
-#### COLLECTION_USER **(PE)**
-
-- collection_user_id **(PK)**
-- collection_id **(FK)**
-- game_id **(FK)**
 - ownership
 - status
+- progress
+- note -->
+
+### COLLECTION **(DE)** *NEW*
+
+- collection_id  **(PK)**
+- game_id **(EXTERNAL ID FROM API)**
+- platform **(EXTERNAL ID FROM API)**
+- ownership
+- status
+- progress
+- progress_note
+- user_id **(FK)**
 
 #### COUNTRY **(CE)**
 
@@ -61,29 +65,17 @@
 - name
 - domain **(UNIQUE)**
 
-#### ARTICLES **(DE)**
-
-- article_id  **(PK)**
-- title
-- subtitle
-- description
-- body
-- image
-- created_on
-- user_id **(FK)**
-
 ### RELATIONSHIPS
 
+1. A **User** has a **Collection** (1 - 1).
 1. A **User** has a **Country** (1 - 1).
-1. A **Collection** has a **User** (1 - 1).
-1. A **Collection** belongs to **Collection_User** (1 - M).
-1. A **Game** belongs to **Collection_User** (1 - 1).
-1. A **User** creates **Articles** (1 - M).
+1. A **User** has a **Role** (1 - 1).
+1. A **Collection** has **Games_Collection** (1 - M).
 
  
 ### RELATIONAL DATABASE MODEL
 
-![](./relational-model.png)
+![](./relational-model-v2.webp)
 
 ### BUSINESS RULES
 
@@ -95,6 +87,13 @@
 1. Update a user.
 1. Block a user.
 
+#### ROLES
+
+1. Create a role.
+1. Read all roles.
+1. Read a role.
+1. Update a role.
+
 #### COLLECTIONS
 
 1. Create a collection.
@@ -103,14 +102,8 @@
 1. Read a user collection.
 1. Update a collection.
 1. Delete a collection.
-
-#### COLLECTION_USER
-
-1. Create a Collection_User.
-1. Read all Collection_Users.
-1. Read a Collection_User.
-1. Update a Collection_User.
-1. Delete a Collection_User.
+1. Add Games to a collection
+1. Delete Games from a collection.
 
 #### COUNTRY
 
@@ -120,10 +113,3 @@
 1. Update a Country.
 1. Delete a Country.
 
-#### ARTICLES
-
-1. Create a Article.
-1. Read all Articles.
-1. Read a Article.
-1. Update a Article.
-1. Delete a Article.

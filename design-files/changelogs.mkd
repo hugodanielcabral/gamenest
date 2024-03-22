@@ -1,0 +1,22 @@
+# CHANGELOGS
+
+### [03/20/2024]
+
+## Added
+- Now Users has two new properties: Birthday and Verified.
+- Merged Ownership and Status from Collection_User to Collection.
+- Added Progress, Note to Collection.
+- New Entity "Games_Collection".
+- New Entity "Roles".
+
+## Changed
+- Changed Collections to Collection.
+- Changed relational model diagram.
+
+## Fixed
+- 
+
+## Removed
+- Games Entity (Because of its being an external API, it had no point of being here).
+- Collection_User Entity (The Users are going to have only 1 collection)
+- Removed title and creation_date from Collection Entity.
