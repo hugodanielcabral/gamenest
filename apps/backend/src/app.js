@@ -4,7 +4,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
 import collectionRoutes from "./routes/collection.routes.js";
-import collectionUserRoutes from "./routes/collection_user.routes.js";
 import gamesRoutes from "./routes/games.routes.js";
 import countryRoutes from "./routes/country.routes.js";
 import rolesRoutes from "./routes/roles.routes.js";
@@ -37,7 +36,6 @@ app.use(
 
 app.use("/api", authRoutes);
 app.use("/api", collectionRoutes);
-app.use("/api", collectionUserRoutes);
 app.use("/api", countryRoutes);
 app.use("/api", rolesRoutes);
 app.use("/api", gamesRoutes);
