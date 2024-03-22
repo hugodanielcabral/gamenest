@@ -85,3 +85,28 @@ export const getGame = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+//* I should use this function to get the token and save it in a .env file
+//? I should also use a cron job to update the token every 60 days
+
+/* const getIGDBToken = async () => {
+  try {
+    const response = await fetch(
+      `https://id.twitch.tv/oauth2/token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&grant_type=client_credentials`,
+      {
+        method: "POST",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data.access_token;
+  } catch (error) {
+    console.log(error);
+  }
+};
+ */
