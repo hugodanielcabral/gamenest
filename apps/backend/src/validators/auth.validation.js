@@ -36,11 +36,12 @@ export const signupValidator = [
     .withMessage("Password must be at least 5 characters long")
     .isLength({ max: 30 })
     .withMessage("Password must be at most 30 characters long"),
-  check("birthday")
-    .optional()
-    .isDate()
-    .withMessage("Birthday must be a valid date"),
-  existsAndNotEmpty("avatar", "Avatar")
+  check("birthday").optional(),
+  /* .isDate()
+    .withMessage("Birthday must be a valid date") */ existsAndNotEmpty(
+    "avatar",
+    "Avatar"
+  )
     .isString()
     .withMessage("Avatar must be a string")
     .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png)/)

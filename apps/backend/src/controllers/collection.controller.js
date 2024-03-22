@@ -2,65 +2,74 @@ import sql from "../db.js";
 
 export const getCollections = async (req, res) => {
   try {
+    const collection = await sql`SELECT * FROM collection`;
+
+    if (!collection[0])
+      return res.status(404).json({ message: "Collection not found" });
+
+    res.status(200).json(collection);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAllGamesFromUser = async (req, res) => {
+  try {
     const collection =
       await sql`SELECT * FROM collection WHERE user_id = ${req.user_id}`;
 
     if (!collection[0])
       return res.status(404).json({ message: "Collection not found" });
 
-    res.status(200).json({ collection });
+    res.status(200).json(collection);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
 
-export const getCollection = async (req, res) => {
-  const { id } = req.params;
+export const addGameToCollection = async (req, res) => {
+  const { game_id, platform, ownership, status, progress, progress_note } =
+    req.body;
   try {
     const collection =
-      await sql`SELECT * FROM collection WHERE collection_id = ${id}`;
-
-    if (!collection[0])
-      return res
-        .status(404)
-        .json({ success: false, message: "Collection not found" });
-
-    res.status(200).json({ collection: collection[0] });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const createCollection = async (req, res) => {
-  const { title, color, description, category } = req.body;
-  console.log(title, color, description, category, req.user_id);
-  try {
-    const collection =
-      await sql`INSERT INTO collection (user_id, created_on, title, color, description, category) VALUES (${req.user_id}, NOW(), ${title}, ${color}, ${description}, ${category}) RETURNING *`;
+      await sql`INSERT INTO collection (game_id, platform, ownership, status, progress, progress_note, user_id) VALUES (${game_id}, ${platform}, ${ownership}, ${status}, ${progress}, ${progress_note}, ${req.body.user_id}) RETURNING *`;
 
     res.status(201).json(collection);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
 
-export const updateCollection = async (req, res) => {
+export const updateGameFromCollection = async (req, res) => {
   const { id } = req.params;
-  const { title, color, description, category } = req.body;
+  const { platform, ownership, status, progress, progress_note } = req.body;
+
   try {
-    const collection =
-      await sql`UPDATE collection SET title = ${title}, color = ${color}, description = ${description}, category = ${category} WHERE collection_id = ${id} RETURNING *`;
+    const collection = await sql`
+      UPDATE collection 
+      SET 
+        platform = COALESCE(${platform}, platform),
+        ownership = COALESCE(${ownership}, ownership),
+        status = COALESCE(${status}, status),
+        progress = COALESCE(${progress}, progress),
+        progress_note = COALESCE(${progress_note}, progress_note)
+      WHERE collection_id = ${id} 
+      RETURNING *`;
 
     if (!collection[0])
       return res.status(404).json({ message: "Collection not found" });
 
-    res.status(200).json({ collection: collection[0] });
+    res.status(200).json(collection);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
 
-export const deleteCollection = async (req, res) => {
+export const deleteGameFromCollection = async (req, res) => {
   const { id } = req.params;
   try {
     const collection =
@@ -71,6 +80,7 @@ export const deleteCollection = async (req, res) => {
 
     res.status(204);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
