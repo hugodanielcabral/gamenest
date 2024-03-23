@@ -128,5 +128,4 @@ export const getGamesFromUser = async (collection) => {
   } catch (error) {
     console.log(error);
   }
-};
- */
+}; */

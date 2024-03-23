@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { Layout } from "./components/layout/Layout";
 import { Routes, Route } from "react-router-dom";
 import { CollectionPage } from "./pages/CollectionPage.jsx";
-import { NewCollection } from "./components/collection/creation/NewCollection.jsx";
 import { RegisterPage } from "./pages/RegisterPage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFound } from "./components/notfound/NotFound.jsx";
@@ -53,7 +52,7 @@ export const GameNestApp = () => {
     {
       id: 2,
       path: "/collection/add",
-      element: <NewCollection />,
+      element: <h1>Soon</h1>,
     },
     {
       id: 3,
