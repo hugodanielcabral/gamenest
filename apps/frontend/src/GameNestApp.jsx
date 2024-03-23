@@ -7,6 +7,7 @@ import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFound } from "./components/notfound/NotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
+import { AddToCollection } from "./components/collection/addToCollection/AddToCollection.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -46,18 +47,23 @@ export const GameNestApp = () => {
   const privateRoutes = [
     {
       id: 1,
+      path: "/",
+      element: <HomePage />,
+    },
+    {
+      id: 2,
       path: "/collection",
       element: <CollectionPage />,
     },
     {
-      id: 2,
-      path: "/collection/add",
-      element: <h1>Soon</h1>,
+      id: 3,
+      path: "/collection/add/:gameId",
+      element: <h1>Add - Soon</h1>,
     },
     {
-      id: 3,
-      path: "/",
-      element: <HomePage />,
+      id: 4,
+      path: "/collection/edit/:gameId",
+      element: <AddToCollection />,
     },
   ];
 
