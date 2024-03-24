@@ -9,7 +9,7 @@ import { Button } from "../../../ui/index.js";
 // eslint-disable-next-line react/prop-types
 export const HeaderNav = ({ pathname }) => {
   const { signout } = useAuth();
-  const isAuth = localStorage.getItem("isAuth");
+  const isAuth = localStorage.getItem("isAuth") === "true";
 
   return (
     <div
