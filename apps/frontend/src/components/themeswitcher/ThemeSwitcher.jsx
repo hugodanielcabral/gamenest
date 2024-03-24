@@ -9,9 +9,11 @@ export const ThemeSwitcher = () => {
   useEffect(() => {
     window.localStorage.setItem("theme", JSON.stringify(dark));
     if (dark) {
-      document.documentElement.setAttribute("data-theme", "dracula");
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.classList.add("dark");
     } else {
       document.documentElement.setAttribute("data-theme", "light");
+      document.documentElement.classList.remove("dark");
     }
   }, [dark]);
 
