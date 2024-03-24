@@ -19,7 +19,7 @@ export const GameNestApp = () => {
     }))
   );
 
-  const isAuth = localStorage.getItem("isAuth");
+  const isAuth = localStorage.getItem("isAuth") === "true";
   console.log(isAuth);
 
   const publicRoutes = [
@@ -90,7 +90,9 @@ export const GameNestApp = () => {
               );
             })}
           </Route>
-          <Route element={<ProtectedRoute isAllowed={isAuth} />}>
+          <Route
+            element={<ProtectedRoute isAllowed={isAuth} redirectTo="/login" />}
+          >
             {privateRoutes.map((route) => {
               return (
                 <Route
