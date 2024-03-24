@@ -1,12 +1,13 @@
 import { lazy, Suspense } from "react";
 import { Layout } from "./components/layout/Layout";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { CollectionPage } from "./pages/CollectionPage.jsx";
 import { RegisterPage } from "./pages/RegisterPage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFound } from "./components/notfound/NotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { AddToCollection } from "./components/collection/addToCollection/AddToCollection.jsx";
+import { CollectionProvider } from "./context/CollectionContext.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -92,15 +93,23 @@ export const GameNestApp = () => {
           <Route
             element={<ProtectedRoute isAllowed={isAuth} redirectTo="/login" />}
           >
-            {privateRoutes.map((route) => {
-              return (
-                <Route
-                  key={route.id}
-                  path={route.path}
-                  element={route.element}
-                />
-              );
-            })}
+            <Route
+              element={
+                <CollectionProvider>
+                  <Outlet />
+                </CollectionProvider>
+              }
+            >
+              {privateRoutes.map((route) => {
+                return (
+                  <Route
+                    key={route.id}
+                    path={route.path}
+                    element={route.element}
+                  />
+                );
+              })}
+            </Route>
           </Route>
         </Routes>
       </Suspense>
