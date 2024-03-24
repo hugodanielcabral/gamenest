@@ -6,7 +6,6 @@ import { RegisterPage } from "./pages/RegisterPage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFound } from "./components/notfound/NotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
-import { useAuth } from "./context/AuthContext.jsx";
 import { AddToCollection } from "./components/collection/addToCollection/AddToCollection.jsx";
 
 export const GameNestApp = () => {

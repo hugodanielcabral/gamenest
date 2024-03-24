@@ -56,45 +56,6 @@ export const useFetch = (url) => {
     }
   };
 
-  /* const postFetch = async () => {
-    try {
-      setLoadingState();
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bodyData),
-      });
-
-      if (!response.ok) {
-        setState({
-          data: null,
-          isLoading: false,
-          hasError: true,
-          error: {
-            code: response.status,
-            message: response.statusText,
-          },
-        });
-        return;
-      }
-
-      const data = await response.json();
-      setState({
-        data,
-        isLoading: false,
-        hasError: false,
-        error: null,
-      });
-
-      localCache[url] = data;
-    } catch (error) {
-      console.log(error);
-    }
-  }; */
-
   return {
     data: state.data,
     isLoading: state.isLoading,
