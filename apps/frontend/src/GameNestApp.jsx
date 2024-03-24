@@ -19,7 +19,8 @@ export const GameNestApp = () => {
     }))
   );
 
-  const { isAuth } = useAuth();
+  const isAuth = localStorage.getItem("isAuth");
+  console.log(isAuth);
 
   const publicRoutes = [
     {
@@ -57,12 +58,12 @@ export const GameNestApp = () => {
     },
     {
       id: 3,
-      path: "/collection/add/:gameId",
-      element: <h1>Add - Soon</h1>,
+      path: "/collection/add/:gameSlug",
+      element: <AddToCollection />,
     },
     {
       id: 4,
-      path: "/collection/edit/:gameId",
+      path: "/collection/edit/:gameSlug",
       element: <AddToCollection />,
     },
   ];
@@ -89,9 +90,7 @@ export const GameNestApp = () => {
               );
             })}
           </Route>
-          <Route
-            element={<ProtectedRoute isAllowed={isAuth} redirectTo="/login" />}
-          >
+          <Route element={<ProtectedRoute isAllowed={isAuth} />}>
             {privateRoutes.map((route) => {
               return (
                 <Route

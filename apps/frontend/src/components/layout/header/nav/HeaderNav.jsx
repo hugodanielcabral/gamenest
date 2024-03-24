@@ -4,11 +4,12 @@ import "./HeaderNav.css";
 import { ThemeSwitcher } from "../../../themeswitcher/ThemeSwitcher";
 import { authRoutes, privateRoutes, publicRoutes } from "./navigation.js";
 import { useAuth } from "../../../../context/AuthContext.jsx";
+import { Button } from "../../../ui/index.js";
 
 // eslint-disable-next-line react/prop-types
-//! Quitar el pathname - O mejor, hacer un rework de la navbar.
 export const HeaderNav = ({ pathname }) => {
-  const { isAuth, signout } = useAuth();
+  const { signout } = useAuth();
+  const isAuth = localStorage.getItem("isAuth");
 
   return (
     <div
@@ -63,7 +64,7 @@ export const HeaderNav = ({ pathname }) => {
                     <Link to={route.path}>{route.name}</Link>
                   </li>
                 ))}
-            <li onClick={signout}>Logout</li>
+            <Button onClick={signout}>Logout</Button>
           </ul>
         </div>
         <Link className="flex items-center text-xs font-bold" to="/">
@@ -104,7 +105,7 @@ export const HeaderNav = ({ pathname }) => {
                   <Link to={route.path}>{route.name}</Link>
                 </li>
               ))}
-              <li onClick={() => signout()}>Logout</li>
+              <Button onClick={signout}>Logout</Button>
             </>
           )}
         </ul>

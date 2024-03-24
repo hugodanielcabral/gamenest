@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }) => {
       //* the inability to execute any message with the "data" return variable. I resolved this by moving
       //* setIsAuth to the handleSubmit function in the LoginPage component.
       /*   setIsAuth(true); */
+      localStorage.setItem("isAuth", true);
       return data;
     } catch (error) {
       console.log(error);
@@ -101,9 +102,8 @@ export const AuthProvider = ({ children }) => {
           "Access-Control-Allow-Credentials": true,
         },
       });
-      const data = await response.json();
       setUser(null);
-      setIsAuth(false);
+      localStorage.removeItem("isAuth");
     } catch (error) {
       console.log(error);
     }
@@ -121,12 +121,12 @@ export const AuthProvider = ({ children }) => {
         .then((res) => res.json())
         .then((data) => {
           setUser(data);
-          setIsAuth(true);
+          localStorage.setItem("isAuth", true);
         })
         .catch((error) => {
           console.log(error);
           setUser(null);
-          setIsAuth(false);
+          localStorage.removeItem("isAuth");
         });
     }
   }, []);
