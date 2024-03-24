@@ -104,6 +104,7 @@ export const AuthProvider = ({ children }) => {
       });
       setUser(null);
       localStorage.removeItem("isAuth");
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
     }
