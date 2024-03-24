@@ -15,9 +15,9 @@ import {
 
 const router = Router();
 
-router.get("/collection", isAuth, getCollections);
-
-router.get("/collection/:id", isAuth, getAllGamesFromUser);
+/* router.get("/collection", isAuth, getCollections);
+ */
+router.get("/collection", isAuth, getAllGamesFromUser);
 
 router.post(
   "/collection",

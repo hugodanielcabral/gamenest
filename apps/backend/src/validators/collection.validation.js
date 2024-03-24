@@ -21,11 +21,6 @@ export const addGameToCollectionValidator = [
     .withMessage("Status must be at least 3 characters long")
     .isLength({ max: 30 })
     .withMessage("Status must be at most 100 characters long"),
-  existsAndNotEmpty("progress", "Progress")
-    .isLength({ min: 3 })
-    .withMessage("Progress must be at least 3 characters long")
-    .isLength({ max: 30 })
-    .withMessage("Progress must be at most 100 characters long"),
   check("progress_note")
     .optional()
     .isString()
