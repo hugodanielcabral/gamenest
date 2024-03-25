@@ -1,13 +1,39 @@
-import { useEffect } from "react";
-import backgroundImage from "../assets/backgrounds/collection-wallpaper.webp";
-import { CollectionCard } from "../components/collection/card/CollectionCard";
+import { useEffect, useState } from "react";
 import { useCollection } from "../context/CollectionContext";
+import { CollectionCard } from "../components/collection/card/CollectionCard";
+import { Toast } from "../components/ui";
+import backgroundImage from "../assets/backgrounds/collection-wallpaper.webp";
 
 export const CollectionPage = () => {
-  const { collectionData, getAllGamesFromUser } = useCollection();
-  //TODO 2: Reducir el tamaño de las cards debido a que habra 20 elementos por pagina.
+  const {
+    collectionData,
+    setCollectionData,
+    getAllGamesFromUser,
+    deleteGameFromCollection,
+  } = useCollection();
+  const [toast, setToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  //TODO: Agregar paginacion usando offset y limit en el la base de datos/backend y req.query.
+  const handleOnDelete = async (collectionId) => {
+    const isDeleted = await deleteGameFromCollection(collectionId);
+    console.log(isDeleted);
+
+    if (isDeleted.status === 204) {
+      const newCollectionData = collectionData.filter(
+        (collection) => collection.collection_id !== collectionId
+      );
+      const { name } = collectionData.find(
+        (collection) => collection.collection_id === collectionId
+      );
+      setCollectionData(newCollectionData);
+      setToast(true);
+      setToastMessage(name + " has been deleted from your collection");
+
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    }
+  };
 
   useEffect(() => {
     getAllGamesFromUser();
@@ -26,10 +52,14 @@ export const CollectionPage = () => {
           <div>Order by:</div>
         </div>
       </div>
+      <Toast toastMessage={toastMessage} showToast={toast} />
 
       <div className="grid grid-cols-6 gap-10 mt-2">
-        <CollectionCard collectionData={collectionData} />
-        <aside className="hidden md:col-span-2 md:block">FILTERS</aside>
+        <CollectionCard
+          collectionData={collectionData}
+          handleOnDelete={handleOnDelete}
+        />
+        <aside className="hidden md:col-span-2 md:block"></aside>
       </div>
     </div>
   );
