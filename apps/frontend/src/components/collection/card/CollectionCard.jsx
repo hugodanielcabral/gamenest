@@ -1,11 +1,18 @@
 import propTypes from "prop-types";
-import { FaPencilAlt } from "react-icons/fa";
-import { IoMdMore } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import { getStatusIconCollection } from "../../../utils/getStatusIconCollection";
+import { CardDeleteModal } from "./deleteModal/CardDeleteModal";
 import clsx from "clsx";
+import { FaPencilAlt, FaInfo, FaTrash } from "react-icons/fa";
+import { IoMdMore } from "react-icons/io";
 
-export const CollectionCard = ({ collectionData }) => {
-  console.log(collectionData);
+export const CollectionCard = ({ collectionData, handleOnDelete }) => {
+  const navigate = useNavigate();
+
+  const handleOnModal = (collection_id) => {
+    document.getElementById(`${collection_id}`).showModal();
+  };
+
   return (
     <div className="col-span-6 md:col-span-4 *:mb-2">
       {collectionData
@@ -26,9 +33,9 @@ export const CollectionCard = ({ collectionData }) => {
               </div>
               {/* platform and status */}
               <div className="flex flex-col gap-5 items-center col-span-4 md:col-span-3 lg:col-span-2 p-5">
-                <div className="bg-details-500 rounded-md size-10 h-fit p-1">
-                  <p className="text-center text-xl font-bold text-textDark-500">
-                    PC
+                <div className="bg-details-500 rounded-md max-w-32 w-full p-1">
+                  <p className="text-center text-sm line-clamp-1 font-bold text-textDark-500">
+                    {collection.platform}
                   </p>
                 </div>
                 <div
@@ -52,18 +59,56 @@ export const CollectionCard = ({ collectionData }) => {
               {/* edit and ...(gameinfo and delete) buttons */}
               <div className="flex-col col-span-1 w-10 justify-self-end bg-base-300 py-5 h-full">
                 <div className="flex flex-col h-full *:h-full *:mx-auto">
-                  <button>
-                    <FaPencilAlt className="text-buttons-500 dark:text-buttons-300" />
-                  </button>
-                  <div className="divider"></div>
-                  <button>
-                    <IoMdMore
-                      size={30}
-                      className="text-buttons-500 dark:text-buttons-300"
+                  <button
+                    onClick={() =>
+                      navigate(
+                        `/collection/edit/${collection.game_slug}/${collection.collection_id}`
+                      )
+                    }
+                  >
+                    <FaPencilAlt
+                      className="text-buttons-500 dark:text-buttons-300 hover:text-details-700 dark:hover:text-details-500"
+                      size={19}
                     />
                   </button>
+                  <div className="divider"></div>
+                  <div className="dropdown dropdown-top dropdown-end p-0 m-0">
+                    <div
+                      tabIndex={0}
+                      role="button"
+                      className="hover:text-details-700 dark:hover:text-details-500 h-full w-full text-buttons-500 dark:text-buttons-300"
+                    >
+                      <IoMdMore size={30} />
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu shadow bg-base-300 w-40 h-fit p-0"
+                    >
+                      <li>
+                        <button className="p-3 font-bold text-sm text-center">
+                          <FaInfo className="dark:text-textDark-100 text-textDark-300" />
+                          Game info
+                        </button>
+                      </li>
+                      <li>
+                        <button
+                          className="p-3 font-bold text-sm text-center"
+                          onClick={() =>
+                            handleOnModal(collection.collection_id)
+                          }
+                        >
+                          <FaTrash className="text-danger-500" />
+                          Delete game
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
+              <CardDeleteModal
+                collection={collection}
+                handleOnDelete={handleOnDelete}
+              />
             </div>
           ))
         : null}
@@ -73,4 +118,5 @@ export const CollectionCard = ({ collectionData }) => {
 
 CollectionCard.propTypes = {
   collectionData: propTypes.array,
+  handleOnDelete: propTypes.func,
 };
