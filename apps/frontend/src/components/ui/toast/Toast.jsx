@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import { clsx } from "clsx";
 
-export const Toast = ({ message, showToast }) => {
+export const Toast = ({ toastMessage, showToast }) => {
   return (
     <div
       className={clsx(
@@ -13,13 +13,13 @@ export const Toast = ({ message, showToast }) => {
       )}
     >
       <div className="alert alert-success">
-        <span>{message}</span>
+        <span>{toastMessage}</span>
       </div>
     </div>
   );
 };
 
 Toast.propTypes = {
-  message: propTypes.string.isRequired,
+  toastMessage: propTypes.string.isRequired,
   showToast: propTypes.bool.isRequired,
 };

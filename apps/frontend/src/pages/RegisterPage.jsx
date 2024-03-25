@@ -89,7 +89,7 @@ export const RegisterPage = () => {
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(${backgroundImage})`,
       }}
     >
-      <Toast message="User created successfully!" showToast={showToast} />
+      <Toast toastMessage="User created successfully!" showToast={showToast} />
       <div className="flex items-center mt-5 justify-evenly">
         <article className="flex flex-col items-center mt-3">
           <h1 className="text-4xl font-bold text-pink-500 uppercase">

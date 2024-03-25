@@ -51,7 +51,7 @@ export const LoginPage = () => {
       }}
     >
       <Toast
-        message="You've Logged In Successfully. Welcome!"
+        toastMessage="You've Logged In Successfully. Welcome!"
         showToast={showToast}
       />
 
