@@ -58,6 +58,7 @@ export const AddToCollectionProgress = ({
             placeholder="Notes"
             name="progressNotes"
             id="progressNotes"
+            value={formData.progressNotes}
             onChange={handleOnChange}
           ></textarea>
         </div>

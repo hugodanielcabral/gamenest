@@ -1,8 +1,10 @@
 import propTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../../ui/index.js";
+import clsx from "clsx";
 
 export const AddToCollectionHeader = ({ data, gameSlug }) => {
+  const { collectionId } = useParams();
   const navigate = useNavigate();
 
   return (
@@ -27,8 +29,17 @@ export const AddToCollectionHeader = ({ data, gameSlug }) => {
 
       <div className="flex flex-col justify-around items-center md:items-start">
         <div>
-          <h1 className="text-2xl uppercase font-bold text-buttons-400">
-            ADDING TO YOUR COLLECTION:
+          <h1
+            className={clsx(
+              {
+                "text-details-600": collectionId,
+              },
+              "text-2xl uppercase font-bold text-buttons-400"
+            )}
+          >
+            {collectionId
+              ? "Edit Game in Collection"
+              : "Add Game to Collection"}
           </h1>
           <h2 className="text-2xl font-bold text-buttons-400">
             {data[0]?.name}

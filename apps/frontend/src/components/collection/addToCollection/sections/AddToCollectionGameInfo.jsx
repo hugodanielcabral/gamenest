@@ -8,7 +8,6 @@ export const AddToCollectionGameInfo = ({
   handleOnChange,
   errors,
 }) => {
-  console.log(errors);
   return (
     <section className="col-span-2 bg-base-100/90 bg-opacity-90 shadow-sm shadow-black p-3">
       <h3 className="text-xl underline underline-offset-8 decoration-buttons-500">
@@ -27,10 +26,15 @@ export const AddToCollectionGameInfo = ({
               "select select-bordered w-full max-w-xs mt-5"
             )}
             onChange={handleOnChange}
+            value={
+              formData.platform === ""
+                ? "Choose your platform"
+                : formData.platform
+            }
             name="platform"
             id="platform"
           >
-            <option disabled defaultValue="" selected>
+            <option disabled selected>
               Choose your platform
             </option>
             {data[0].platforms.map((platform) => (

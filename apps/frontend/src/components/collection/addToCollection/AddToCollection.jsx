@@ -6,11 +6,15 @@ import { AddToCollectionHeader } from "./sections/AddToCollectionHeader.jsx";
 import { AddToCollectionGameInfo } from "./sections/AddToCollectionGameInfo.jsx";
 import { AddToCollectionProgress } from "./sections/AddToCollectionProgress.jsx";
 import { useState } from "react";
+import { useEffect } from "react";
+import { useCollection } from "../../../context/CollectionContext.jsx";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const AddToCollection = () => {
-  const { gameSlug } = useParams();
+  const { gameSlug, collectionId } = useParams();
+  const { getCollectionFromUser } = useCollection();
+
   const navigate = useNavigate();
   const { data, isLoading } = useFetch(`${BASE_URL}/games/${gameSlug}`);
   const { formData, setFormData, handleOnChange } = useForm({
@@ -28,6 +32,43 @@ export const AddToCollection = () => {
       e.preventDefault();
       setButtonDisabled(true);
 
+      if (collectionId) {
+        const response = await fetch(`${BASE_URL}/collection/${collectionId}`, {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": "true",
+          },
+          body: JSON.stringify({
+            platform: formData.platform,
+            ownership: formData.ownership,
+            status: formData.status,
+            progress_note: formData.progressNotes,
+          }),
+        });
+
+        const collectionData = await response.json();
+
+        if (!response.ok) {
+          setErrors(collectionData.errors);
+          setButtonDisabled(false);
+          throw new Error(
+            collectionData.errors
+              ? collectionData.errors[0].msg
+              : "An error occurred"
+          );
+        }
+
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+          setButtonDisabled(false);
+          navigate("/collection");
+        }, 2000);
+        return;
+      }
+
       const response = await fetch(`${BASE_URL}/collection`, {
         method: "POST",
         credentials: "include",
@@ -37,6 +78,7 @@ export const AddToCollection = () => {
         },
         body: JSON.stringify({
           game_id: data[0]?.id,
+          game_slug: gameSlug,
           platform: formData.platform,
           ownership: formData.ownership,
           status: formData.status,
@@ -79,6 +121,20 @@ export const AddToCollection = () => {
     navigate(`/games/${gameSlug}`);
   };
 
+  useEffect(() => {
+    if (collectionId) {
+      getCollectionFromUser(collectionId).then((data) => {
+        setErrors(null);
+        setFormData({
+          platform: data[0].platform,
+          ownership: data[0].ownership,
+          status: data[0].status,
+          progressNotes: data[0].progress_note,
+        });
+      });
+    }
+  }, [collectionId]);
+
   return isLoading ? (
     <div className="mx-auto">
       <Loading />
@@ -95,7 +151,11 @@ export const AddToCollection = () => {
       }}
     >
       <Toast
-        message={`${data[0].name} was successfully added to your collection!`}
+        message={
+          collectionId
+            ? `${data[0].name} was successfully updated!`
+            : `${data[0].name} was successfully added to your collection!`
+        }
         showToast={showToast}
       />
 
@@ -122,7 +182,7 @@ export const AddToCollection = () => {
             disabled={buttonDisabled}
             className="bg-buttons-500 hover:bg-buttons-400 font-bold text-textWhite-50 text-lg disabled:pointer-events-none disabled:opacity-50"
           >
-            Add to collection
+            {collectionId ? "Update" : "Add to collection"}
           </Button>
           <Button
             type="button"
