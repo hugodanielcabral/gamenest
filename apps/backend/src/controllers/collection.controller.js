@@ -16,6 +16,22 @@ export const getCollections = async (req, res) => {
   }
 };
 
+export const getCollectionFromUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const collection =
+      await sql`SELECT * FROM collection WHERE collection_id = ${id}`;
+
+    if (!collection[0])
+      return res.status(404).json({ message: "Collection not found" });
+
+    res.status(200).json(collection);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const getAllGamesFromUser = async (req, res) => {
   try {
     const { page } = req.query;
@@ -38,12 +54,13 @@ export const getAllGamesFromUser = async (req, res) => {
 };
 
 export const addGameToCollection = async (req, res) => {
-  const { game_id, platform, ownership, status, progress_note } = req.body;
+  const { game_id, game_slug, platform, ownership, status, progress_note } =
+    req.body;
   console.log(req.body);
   console.log(req.user_id);
   try {
     const collection =
-      await sql`INSERT INTO collection (game_id, platform, ownership, status, progress_note, user_id) VALUES (${game_id}, ${platform}, ${ownership}, ${status}, ${progress_note}, ${req.user_id}) RETURNING *`;
+      await sql`INSERT INTO collection (game_id, game_slug, platform, ownership, status, progress_note, user_id) VALUES (${game_id}, ${game_slug}, ${platform}, ${ownership}, ${status}, ${progress_note}, ${req.user_id}) RETURNING *`;
 
     res.status(201).json(collection);
   } catch (error) {
