@@ -52,9 +52,36 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
+  const deleteGameFromCollection = async (collectionId) => {
+    try {
+      const response = await fetch(`${BASE_URL}/collection/${collectionId}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <CollectionContext.Provider
-      value={{ collectionData, getAllGamesFromUser, getCollectionFromUser }}
+      value={{
+        collectionData,
+        setCollectionData,
+        getAllGamesFromUser,
+        getCollectionFromUser,
+        deleteGameFromCollection,
+      }}
     >
       {children}
     </CollectionContext.Provider>

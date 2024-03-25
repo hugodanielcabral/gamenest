@@ -103,7 +103,9 @@ export const deleteGameFromCollection = async (req, res) => {
     if (!collection[0])
       return res.status(404).json({ message: "Collection not found" });
 
-    res.status(204);
+    console.log(collection);
+
+    res.status(204).json(collection);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
