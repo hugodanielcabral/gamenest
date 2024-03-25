@@ -34,8 +34,28 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
+  const getCollectionFromUser = async (collectionId) => {
+    try {
+      const response = await fetch(`${BASE_URL}/collection/${collectionId}`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+
+      const collectionData = await response.json();
+      return collectionData;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <CollectionContext.Provider value={{ collectionData, getAllGamesFromUser }}>
+    <CollectionContext.Provider
+      value={{ collectionData, getAllGamesFromUser, getCollectionFromUser }}
+    >
       {children}
     </CollectionContext.Provider>
   );

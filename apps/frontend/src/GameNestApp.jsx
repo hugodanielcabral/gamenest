@@ -63,7 +63,7 @@ export const GameNestApp = () => {
     },
     {
       id: 4,
-      path: "/collection/edit/:gameSlug",
+      path: "/collection/edit/:gameSlug/:collectionId",
       element: <AddToCollection />,
     },
   ];
