@@ -8,7 +8,9 @@ export const addGameToCollectionValidator = [
   existsAndNotEmpty("game_id", "Game ID")
     .isLength({ max: 100 })
     .withMessage("Game ID must be at most 100 characters long"),
-  existsAndNotEmpty("platform", "Platform")
+  check("platform")
+    .notEmpty()
+    .withMessage("You must choose a platform")
     .isLength({ max: 100 })
     .withMessage("Platform must be at most 100 characters long"),
   existsAndNotEmpty("ownership", "Ownership")

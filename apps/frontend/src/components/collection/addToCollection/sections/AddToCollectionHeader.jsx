@@ -27,7 +27,7 @@ export const AddToCollectionHeader = ({ data, gameSlug }) => {
 
       <div className="flex flex-col justify-around items-center md:items-start">
         <div>
-          <h1 className="text-2xl uppercase font-bold text-buttons-400 ">
+          <h1 className="text-2xl uppercase font-bold text-buttons-400">
             ADDING TO YOUR COLLECTION:
           </h1>
           <h2 className="text-2xl font-bold text-buttons-400">

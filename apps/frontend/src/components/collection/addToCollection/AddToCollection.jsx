@@ -40,7 +40,6 @@ export const AddToCollection = () => {
           platform: formData.platform,
           ownership: formData.ownership,
           status: formData.status,
-          progress: "yep",
           progress_note: formData.progressNotes,
         }),
       });
