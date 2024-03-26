@@ -15,20 +15,27 @@ export const useCollection = () => {
 
 export const CollectionProvider = ({ children }) => {
   const [collectionData, setCollectionData] = useState([]);
-  const [errors, setErrors] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [totalPage, setTotalPage] = useState(1);
+  /* const [errors, setErrors] = useState(null); */
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  const getAllGamesFromUser = async () => {
+  const getAllGamesFromUser = async (queryParams) => {
     try {
-      const response = await fetch(`${BASE_URL}/collection`, {
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      });
+      const response = await fetch(
+        `${BASE_URL}/collection${queryParams ? `?${queryParams}` : ""}`,
+        {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+        }
+      );
       const data = await response.json();
-      setCollectionData(data);
+      setCollectionData(data.fullData);
+      setTotalPage(data.totalPage);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -78,9 +85,12 @@ export const CollectionProvider = ({ children }) => {
       value={{
         collectionData,
         setCollectionData,
+        totalPage,
         getAllGamesFromUser,
         getCollectionFromUser,
         deleteGameFromCollection,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}
