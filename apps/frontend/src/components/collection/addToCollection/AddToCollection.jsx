@@ -151,7 +151,7 @@ export const AddToCollection = () => {
       }}
     >
       <Toast
-        message={
+        toastMessage={
           collectionId
             ? `${data[0].name} was successfully updated!`
             : `${data[0].name} was successfully added to your collection!`
