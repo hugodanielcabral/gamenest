@@ -14,6 +14,7 @@ const usePagination = (totalPageContext, initialPage = 1) => {
 
   return {
     currentPage,
+    setCurrentPage,
     totalPage,
     setTotalPage,
     handlePage,
