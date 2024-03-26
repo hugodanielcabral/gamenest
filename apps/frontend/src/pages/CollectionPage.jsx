@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useCollection } from "../context/CollectionContext";
 import { CollectionCard } from "../components/collection/card/CollectionCard";
 import { Toast } from "../components/ui";
-import backgroundImage from "../assets/backgrounds/collection-wallpaper.webp";
 import { useQuery } from "../hooks/useQuery";
 import { CollectionPagination } from "../components/collection/pagination/CollectionPagination";
 import { CollectionFilters } from "../components/collection/filters/CollectionFilters";
 import usePagination from "../hooks/usePagination";
+import backgroundImage from "../assets/backgrounds/collection-wallpaper.webp";
+import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 
 export const CollectionPage = () => {
   const {
@@ -15,7 +16,6 @@ export const CollectionPage = () => {
     totalPage: totalPageContext,
     getAllGamesFromUser,
     deleteGameFromCollection,
-    setIsLoading,
   } = useCollection();
 
   const { handlePage, currentPage, totalPage } =
@@ -23,6 +23,7 @@ export const CollectionPage = () => {
 
   const [orderBy, setOrderBy] = useState("");
   const { paramsString, searchParams, setSearchParams } = useQuery();
+
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
@@ -30,7 +31,12 @@ export const CollectionPage = () => {
   //? i should make this more "generic" to be able to use it in other pages as well.
   const handleOrderBy = ({ target }) => {
     setOrderBy(target.value);
-    searchParams.set("order", target.value);
+    searchParams.set("orderby", target.value);
+    setSearchParams(searchParams);
+  };
+  const handleSort = ({ target }) => {
+    setOrderBy(target.value);
+    searchParams.set("sort", target.value);
     setSearchParams(searchParams);
   };
 
@@ -56,10 +62,6 @@ export const CollectionPage = () => {
 
   useEffect(() => {
     getAllGamesFromUser(paramsString);
-
-    return () => {
-      setIsLoading(true);
-    };
   }, [orderBy, currentPage]);
 
   return (
@@ -70,10 +72,15 @@ export const CollectionPage = () => {
       }}
     >
       <div className="flex p-5 mt-5 bg-base-100/90 justify-evenly bg-opacity-90 min-w-[300px] max-w-[900px] mx-auto shadow-sm shadow-black">
-        <div className="flex items-center gap-3 w-full justify-around">
-          <div>View:</div>
-          <div className="flex gap-5">
-            <p>Order by:</p>
+        <div className="grid grid-cols-2 items-center gap-3 w-full justify-around">
+          <div className="flex gap-5 items-center col-span-1">
+            <p className="font-bold">View:</p>
+            <CiGrid2H size={25} className="text-details-500" />
+            <CiGrid41 size={25} className="text-details-500" />
+          </div>
+
+          <div className="flex gap-3 col-span-1 items-center">
+            <p className="font-bold">Order by:</p>
             <select
               className="select select-bordered w-full max-w-xs"
               onChange={handleOrderBy}
@@ -81,8 +88,23 @@ export const CollectionPage = () => {
               <option disabled selected>
                 Select an option
               </option>
-              <option value="asc">Asc</option>
-              <option value="desc">Desc</option>
+              <option value="status">Status</option>
+              <option value="platform">Platform</option>
+              <option value="ownership">Ownership</option>
+              <option value="collection_id">Date added</option>
+            </select>
+
+            <p className="font-bold">Sort:</p>
+
+            <select
+              className="select select-bordered w-full max-w-xs"
+              onChange={handleSort}
+            >
+              <option disabled selected>
+                Select an option
+              </option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
             </select>
           </div>
         </div>
