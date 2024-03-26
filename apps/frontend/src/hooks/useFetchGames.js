@@ -36,7 +36,6 @@ export const useFetchGames = () => {
       }`
     );
     const data = await response.json();
-    console.log(data);
     setGamesData(data.games);
     setGamesCount(data.count.count);
     setCurrentPage(data.currentPage);

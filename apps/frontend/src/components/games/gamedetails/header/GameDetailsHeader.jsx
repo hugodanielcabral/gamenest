@@ -5,7 +5,6 @@ import { HeaderRating } from "./rating/HeaderRating";
 
 export const GameDetailsHeader = ({ game }) => {
   const { rating, slug } = game;
-  console.log(slug);
 
   return (
     <div className="grid justify-center grid-cols-5 col-span-4 p-3 mt-12 shadow-sm bg-base-100/90">

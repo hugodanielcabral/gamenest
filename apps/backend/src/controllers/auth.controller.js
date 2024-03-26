@@ -16,8 +16,6 @@ export const signup = async (req, res) => {
     country_id,
   } = req.body;
 
-  console.log(req.body);
-
   try {
     const userExists = await sql`SELECT * FROM users WHERE username LIKE ${
       username + "%"

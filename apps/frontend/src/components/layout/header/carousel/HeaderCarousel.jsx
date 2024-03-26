@@ -41,7 +41,6 @@ export const HeaderCarousel = () => {
 
   const handleNextCarouselData = () => {
     const index = carouselData.findIndex((item) => item.id === currentItem.id);
-    console.log(index);
     if (index + 1 === carouselData.length) {
       setCurrentItem(carouselData[index - carouselData.length + 1]);
     } else {

@@ -20,7 +20,6 @@ export const GameNestApp = () => {
   );
 
   const isAuth = localStorage.getItem("isAuth") === "true";
-  console.log(isAuth);
 
   const publicRoutes = [
     {
