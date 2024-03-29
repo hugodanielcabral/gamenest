@@ -138,6 +138,7 @@ export const CollectionPage = () => {
           handleStatus={handleStatus}
           setStatusQuery={setStatusQuery}
         />
+
         <CollectionPagination
           handlePage={handlePage}
           currentPage={currentPage}
