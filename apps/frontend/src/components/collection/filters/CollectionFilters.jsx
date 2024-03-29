@@ -56,6 +56,7 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
       window.removeEventListener("scroll", checkScroll);
     };
   }, []);
+
   return (
     <aside className="md:col-span-1">
       <div className="hidden md:block bg-base-100/90 bg-opacity-90 shadow-sm shadow-black h-96 p-5">
@@ -87,7 +88,8 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
           <div className="drawer-content">
             <label
               htmlFor="my-drawer"
-              className="btn btn-primary drawer-button fixed inset-x-1/4 md:hidden"
+              className="btn btn-primary drawer-button 
+              fixed inset-x-1/4 top-[600px] md:hidden"
             >
               Filtros
             </label>

@@ -8,6 +8,7 @@ import { CollectionFilters } from "../components/collection/filters/CollectionFi
 import usePagination from "../hooks/usePagination";
 import backgroundImage from "../assets/backgrounds/collection-wallpaper.webp";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";
+import { CollectionSearch } from "../components/collection/search/CollectionSearch";
 
 export const CollectionPage = () => {
   const {
@@ -23,6 +24,7 @@ export const CollectionPage = () => {
 
   const [orderBy, setOrderBy] = useState("");
   const [statusQuery, setStatusQuery] = useState("");
+  const [search, setSearch] = useState("");
   const { paramsString, searchParams, setSearchParams } = useQuery();
 
   const [toast, setToast] = useState(false);
@@ -35,6 +37,7 @@ export const CollectionPage = () => {
     searchParams.set("orderby", target.value);
     setSearchParams(searchParams);
   };
+
   const handleSort = ({ target }) => {
     setOrderBy(target.value);
     searchParams.set("sort", target.value);
@@ -77,10 +80,9 @@ export const CollectionPage = () => {
     }
   };
 
-  console.log(statusQuery);
   useEffect(() => {
     getAllGamesFromUser(paramsString);
-  }, [orderBy, currentPage, statusQuery]);
+  }, [orderBy, currentPage, statusQuery, search]);
 
   return (
     <div
@@ -91,13 +93,13 @@ export const CollectionPage = () => {
     >
       <div className="flex p-5 mt-5 bg-base-100/90 justify-evenly bg-opacity-90 min-w-[300px] max-w-[900px] mx-auto shadow-sm shadow-black">
         <div className="grid grid-cols-2 items-center gap-3 w-full justify-around">
-          <div className="flex gap-5 items-center col-span-1">
+          <div className="flex gap-5 items-center col-span-2 justify-center md:col-span-1">
             <p className="font-bold">View:</p>
             <CiGrid2H size={25} className="text-details-500" />
             <CiGrid41 size={25} className="text-details-500" />
           </div>
 
-          <div className="flex gap-3 col-span-1 items-center">
+          <div className="flex gap-3 col-span-2 items-center md:col-span-1">
             <p className="font-bold">Order by:</p>
             <select
               className="select select-bordered w-full max-w-xs"
@@ -125,6 +127,12 @@ export const CollectionPage = () => {
               <option value="desc">Descending</option>
             </select>
           </div>
+
+          <CollectionSearch
+            setSearch={setSearch}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
         </div>
       </div>
       <Toast toastMessage={toastMessage} showToast={toast} />
