@@ -22,6 +22,7 @@ export const CollectionPage = () => {
     usePagination(totalPageContext);
 
   const [orderBy, setOrderBy] = useState("");
+  const [statusQuery, setStatusQuery] = useState("");
   const { paramsString, searchParams, setSearchParams } = useQuery();
 
   const [toast, setToast] = useState(false);
@@ -37,6 +38,22 @@ export const CollectionPage = () => {
   const handleSort = ({ target }) => {
     setOrderBy(target.value);
     searchParams.set("sort", target.value);
+    setSearchParams(searchParams);
+  };
+
+  const handleStatus = ({ target }) => {
+    let statusValues = searchParams.get("status")
+      ? searchParams.get("status").split(", ")
+      : [];
+
+    if (target.checked) {
+      statusValues.push(target.value);
+    } else {
+      statusValues = statusValues.filter((value) => value !== target.value);
+    }
+
+    searchParams.set("status", statusValues.join(", "));
+    setStatusQuery(statusValues.join(", "));
     setSearchParams(searchParams);
   };
 
@@ -60,9 +77,10 @@ export const CollectionPage = () => {
     }
   };
 
+  console.log(statusQuery);
   useEffect(() => {
     getAllGamesFromUser(paramsString);
-  }, [orderBy, currentPage]);
+  }, [orderBy, currentPage, statusQuery]);
 
   return (
     <div
@@ -116,7 +134,10 @@ export const CollectionPage = () => {
           collectionData={collectionData}
           handleOnDelete={handleOnDelete}
         />
-        <CollectionFilters />
+        <CollectionFilters
+          handleStatus={handleStatus}
+          setStatusQuery={setStatusQuery}
+        />
         <CollectionPagination
           handlePage={handlePage}
           currentPage={currentPage}
