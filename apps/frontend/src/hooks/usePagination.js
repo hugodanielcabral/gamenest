@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "./useQuery";
 
 const usePagination = (totalPageContext, initialPage = 1) => {
@@ -11,6 +11,10 @@ const usePagination = (totalPageContext, initialPage = 1) => {
     searchParams.set("page", page);
     setSearchParams(searchParams);
   };
+
+  useEffect(() => {
+    setCurrentPage(parseInt(searchParams.get("page")) || initialPage);
+  }, []);
 
   return {
     currentPage,

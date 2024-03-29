@@ -14,13 +14,12 @@ export const CollectionPage = () => {
   const {
     collectionData,
     setCollectionData,
-    totalPage: totalPageContext,
+    totalPage,
     getAllGamesFromUser,
     deleteGameFromCollection,
   } = useCollection();
 
-  const { handlePage, currentPage, totalPage } =
-    usePagination(totalPageContext);
+  const { handlePage, currentPage } = usePagination();
 
   const [orderBy, setOrderBy] = useState("");
   const [statusQuery, setStatusQuery] = useState("");

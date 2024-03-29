@@ -17,6 +17,7 @@ export const CollectionPagination = ({
       <button className="join-item btn">Page {currentPage}</button>
       <button
         className="join-item btn"
+        disabled={currentPage >= totalPage}
         onClick={() => handlePage(currentPage + 1)}
       >
         »
