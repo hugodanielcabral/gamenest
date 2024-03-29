@@ -34,7 +34,7 @@ export const getCollectionFromUser = async (req, res) => {
 
 export const getAllGamesFromUser = async (req, res) => {
   try {
-    const { orderby, sort, page, status } = req.query;
+    const { orderby, sort, page, status, search } = req.query;
 
     const validOrderBy = ["status", "platform", "ownership", "collection_id"];
     const orderByValidated = validOrderBy.includes(orderby)
@@ -42,8 +42,6 @@ export const getAllGamesFromUser = async (req, res) => {
       : "status";
     const validSort = ["asc", "desc"];
     const sortValidated = validSort.includes(sort) ? sort : "asc";
-
-    console.log(status);
 
     const validPage = page > 0 ? page : 1;
 
@@ -59,8 +57,14 @@ export const getAllGamesFromUser = async (req, res) => {
       ? sql`AND status = ANY(${sql.array(status.split(", "))})`
       : sql``;
 
+    const searchCondition = search
+      ? sql`AND game_slug LIKE ${`%${search}%`}`
+      : sql``;
+
     const collection = await sql`
-      SELECT * FROM collection WHERE user_id = ${req.user_id} ${statusCondition}
+      SELECT * FROM collection WHERE user_id = ${
+        req.user_id
+      } ${statusCondition} ${searchCondition}
       ORDER BY ${sql.unsafe(orderByValidated)} ${sql.unsafe(sortValidated)} 
       LIMIT 2 OFFSET ${(validPage - 1) * 2}
     `;
