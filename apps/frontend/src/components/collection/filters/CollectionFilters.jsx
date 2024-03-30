@@ -60,11 +60,11 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
   return (
     <aside className="md:col-span-1">
       <div className="hidden md:block bg-base-100/90 bg-opacity-90 shadow-sm shadow-black h-96 p-5">
-        <h2 className="text-center text-xl font-bold text-buttons-400">
-          Filters
-        </h2>
+        <h2 className="text-center text-2xl font-bold">Filters</h2>
         <div>
-          <h3 className="font-semibold">Status</h3>
+          <div className="divider divider-primary">
+            <h3 className="font-semibold">Status</h3>
+          </div>
           {statusValues.map((status) => (
             <div key={status.id} className="form-control">
               <label className="label cursor-pointer">
@@ -88,10 +88,10 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
           <div className="drawer-content">
             <label
               htmlFor="my-drawer"
-              className="btn btn-primary drawer-button 
-              fixed inset-x-1/4 top-[600px] md:hidden"
+              className="btn btn-info drawer-button 
+              fixed inset-x-1/4 top-[600px] md:hidden text-white font-bold text-lg"
             >
-              Filtros
+              Filters
             </label>
           </div>
           <div className="drawer-side">
@@ -101,7 +101,11 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
               className="drawer-overlay"
             ></label>
             <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-              <h3 className="font-semibold">Status</h3>
+              <h2 className="text-center text-2xl font-bold">Filters</h2>
+
+              <div className="divider divider-primary">
+                <h3 className="font-semibold">Status</h3>
+              </div>
               {statusValues.map((status) => (
                 <div key={status.id} className="form-control">
                   <label className="label cursor-pointer">

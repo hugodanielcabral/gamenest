@@ -12,7 +12,7 @@ export const SearchForm = ({
       <form onSubmit={handleSubmit}>
         <input
           type="search"
-          className="w-full p-2 text-lg border-2 appearance-none text-base-100 bg-base-content focus-visible:border-info "
+          className="w-full p-2 text-lg border-2 appearance-none bg-base-100"
           placeholder="Search game"
           aria-label="Search a specific game"
           value={inputSearchValue}

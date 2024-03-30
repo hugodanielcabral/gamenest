@@ -36,30 +36,30 @@ export const CollectionCard = ({
                   )}
                   alt={`Cover from the game ${collection?.name}`}
                 />
-                <h2 className="font-bold text-base sm:text-xl md:text-2xl lg:text-3xl text-buttons-400">
+                <h2 className="font-bold text-base sm:text-xl md:text-2xl lg:text-3xl text-primary">
                   {collection?.name}
                 </h2>
               </div>
               {/* platform and status */}
               <div className="flex flex-col gap-5 items-center col-span-4 md:col-span-3 lg:col-span-2 p-5">
-                <div className="bg-details-500 rounded-md max-w-32 w-full p-1">
-                  <p className="text-center text-sm line-clamp-1 font-bold text-textDark-500">
+                <div className="dark:bg-slate-600 bg-slate-600 max-w-32 w-full p-2">
+                  <p className="text-center text-sm line-clamp-1 font-bold text-white">
                     {collection.platform}
                   </p>
                 </div>
                 <div
                   className={clsx(
                     {
-                      "bg-success": collection.status === "Completed",
-                      "bg-borders-500": collection.status === "Playing",
-                      "bg-danger-500": collection.status === "Plan to play",
-                      "bg-danger-700": collection.status === "Dropped",
-                      "bg-details-700": collection.status === "No status",
+                      "bg-success/80": collection.status === "Completed",
+                      "bg-info/80": collection.status === "Playing",
+                      "bg-warning/80": collection.status === "Plan to play",
+                      "bg-error/80": collection.status === "Dropped",
+                      "bg-accent/80": collection.status === "No status",
                     },
-                    "p-2 rounded-md h-fit w-full"
+                    "p-2 h-fit w-full"
                   )}
                 >
-                  <p className="text-center text-sm md:text-base font-bold flex flex-col items-center gap-2 text-textWhite-600">
+                  <p className="text-center text-sm md:text-base font-bold flex flex-col items-center gap-2 text-white">
                     {getStatusIconCollection(collection.status)}
                     {collection.status}
                   </p>
@@ -75,19 +75,16 @@ export const CollectionCard = ({
                       )
                     }
                   >
-                    <FaPencilAlt
-                      className="text-buttons-500 dark:text-buttons-300 hover:text-details-700 dark:hover:text-details-500"
-                      size={19}
-                    />
+                    <FaPencilAlt className="hover:text-success" size={19} />
                   </button>
                   <div className="divider"></div>
                   <div className="dropdown dropdown-top dropdown-end p-0 m-0">
                     <div
                       tabIndex={0}
                       role="button"
-                      className="hover:text-details-700 dark:hover:text-details-500 h-full w-full text-buttons-500 dark:text-buttons-300"
+                      className="hover:text-info h-full w-full"
                     >
-                      <IoMdMore size={30} />
+                      <IoMdMore size={40} />
                     </div>
                     <ul
                       tabIndex={0}
@@ -95,21 +92,21 @@ export const CollectionCard = ({
                     >
                       <li>
                         <Link
-                          className="p-3 font-bold text-sm text-center"
+                          className="p-3 text-sm text-center"
                           to={`/games/${collection.game_slug}`}
                         >
-                          <FaInfo className="dark:text-textDark-100 text-textDark-300" />
+                          <FaInfo className="text-info" />
                           Game info
                         </Link>
                       </li>
                       <li>
                         <button
-                          className="p-3 font-bold text-sm text-center"
+                          className="p-3 text-sm text-center"
                           onClick={() =>
                             handleOnModal(collection.collection_id)
                           }
                         >
-                          <FaTrash className="text-danger-500" />
+                          <FaTrash className="text-error" />
                           Delete game
                         </button>
                       </li>
@@ -126,7 +123,7 @@ export const CollectionCard = ({
         ) : (
           <div className="bg-base-100/90 mx-auto flex flex-col items-center p-5">
             <p>You haven&apos;t added any games to your collection yet.</p>
-            <Link to="/games" className="text-textDark-200">
+            <Link to="/games" className="text-info font-bold">
               Find and add right now!
             </Link>
           </div>

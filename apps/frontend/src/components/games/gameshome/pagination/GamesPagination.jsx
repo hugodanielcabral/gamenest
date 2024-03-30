@@ -27,17 +27,15 @@ export const GamesPagination = ({ currentPage, totalPages }) => {
   return (
     <div className="flex justify-center join">
       <button
-        className="join-item btn btn-error"
+        className="join-item btn"
         onClick={handlePrevPage}
         disabled={currentPage <= 1 ? true : false}
       >
         «
       </button>
-      <button className="join-item btn btn-info text-base-100">
-        Page {currentPage}
-      </button>
+      <button className="join-item btn">Page {currentPage}</button>
       <button
-        className="join-item btn btn-error"
+        className="join-item btn"
         onClick={handleNextPage}
         disabled={currentPage === totalPages ? true : false}
       >

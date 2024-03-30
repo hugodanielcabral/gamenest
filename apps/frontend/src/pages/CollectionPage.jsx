@@ -100,8 +100,8 @@ export const CollectionPage = () => {
         <div className="grid grid-cols-2 items-center gap-3 w-full justify-around">
           <div className="flex gap-5 items-center col-span-2 justify-center md:col-span-1">
             <p className="font-bold">View:</p>
-            <CiGrid2H size={25} className="text-details-500" />
-            <CiGrid41 size={25} className="text-details-500" />
+            <CiGrid2H size={25} />
+            <CiGrid41 size={25} />
           </div>
 
           <div className="flex gap-3 col-span-2 items-center md:col-span-1">
