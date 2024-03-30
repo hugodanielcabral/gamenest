@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getStatusIconCollection } from "../../../utils/getStatusIconCollection";
 import { CardDeleteModal } from "./deleteModal/CardDeleteModal";
 import clsx from "clsx";
@@ -85,10 +85,13 @@ export const CollectionCard = ({ collectionData, handleOnDelete }) => {
                     className="dropdown-content z-[1] menu shadow bg-base-300 w-40 h-fit p-0"
                   >
                     <li>
-                      <button className="p-3 font-bold text-sm text-center">
+                      <Link
+                        className="p-3 font-bold text-sm text-center"
+                        to={`/games/${collection.game_slug}`}
+                      >
                         <FaInfo className="dark:text-textDark-100 text-textDark-300" />
                         Game info
-                      </button>
+                      </Link>
                     </li>
                     <li>
                       <button
@@ -110,9 +113,12 @@ export const CollectionCard = ({ collectionData, handleOnDelete }) => {
           </div>
         ))
       ) : (
-        <p className="text-center text-xl font-bold text-danger-400 bg-textWhite-500 ml-auto w-fit p-5">
-          No games in your collection
-        </p>
+        <div className="bg-base-100/90 mx-auto flex flex-col items-center p-5">
+          <p>You haven&apos;t added any games to your collection yet.</p>
+          <Link to="/games" className="text-textDark-200">
+            Find and add right now!
+          </Link>
+        </div>
       )}
     </div>
   );

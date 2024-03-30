@@ -49,6 +49,7 @@ export const getAllGamesFromUser = async (req, res) => {
       await sql` SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
 
     const totalPage = Math.ceil(totalGames[0].count / 2);
+    console.log(totalPage);
 
     if (validPage > totalPage)
       return res.status(404).json({ message: "Page not found" });

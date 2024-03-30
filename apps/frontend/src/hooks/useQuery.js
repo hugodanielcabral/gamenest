@@ -1,7 +1,8 @@
 import { useSearchParams } from "react-router-dom";
 
 export const useQuery = () => {
-  //TODO 1: Improve the useQuery hook to return the query and params as objects and make function(s)
+  // TODO 1: Improve the useQuery hook to return the query and params as objects and make function(s)
+  // TODO 2: Create a function to reset the search params
   const [searchParams, setSearchParams] = useSearchParams();
   const query = new URLSearchParams(location.search);
   const params = {};
