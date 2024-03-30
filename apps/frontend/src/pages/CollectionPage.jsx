@@ -17,6 +17,8 @@ export const CollectionPage = () => {
     totalPage,
     getAllGamesFromUser,
     deleteGameFromCollection,
+    isLoading,
+    setIsLoading,
   } = useCollection();
 
   const { handlePage, currentPage } = usePagination();
@@ -81,6 +83,10 @@ export const CollectionPage = () => {
 
   useEffect(() => {
     getAllGamesFromUser(paramsString);
+
+    return () => {
+      setIsLoading(true);
+    };
   }, [orderBy, currentPage, statusQuery, search]);
 
   return (
@@ -140,6 +146,7 @@ export const CollectionPage = () => {
         <CollectionCard
           collectionData={collectionData}
           handleOnDelete={handleOnDelete}
+          isLoading={isLoading}
         />
         <CollectionFilters
           handleStatus={handleStatus}

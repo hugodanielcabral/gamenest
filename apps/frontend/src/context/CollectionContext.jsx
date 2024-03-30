@@ -51,8 +51,8 @@ export const CollectionProvider = ({ children }) => {
           "Access-Control-Allow-Credentials": "true",
         },
       });
-
       const collectionData = await response.json();
+      setIsLoading(false);
       return collectionData;
     } catch (error) {
       console.log(error);

@@ -11,11 +11,6 @@ import { FaReddit } from "react-icons/fa";
 import { FaSteam } from "react-icons/fa";
 
 export const GameDetailsInfo = ({ game }) => {
-  //! Separar por componentes.
-  //! En el componente de website, crear un array y verificar si tiene
-  //! tal elemento(con el contains o includes) por ejemplo, verificar si tiene
-  //! en el elemento url la palabra "wiki" renderizar un icono de wikipedia.
-
   const gameWebsites = [
     {
       name: "Official",
