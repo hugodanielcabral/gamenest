@@ -10,7 +10,6 @@ import {
 
 export const Navbar = () => {
   const { isAuth, signout } = useAuth();
-  console.log(isAuth);
   const { pathname } = useLocation();
 
   return (

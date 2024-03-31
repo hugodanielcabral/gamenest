@@ -4,7 +4,6 @@ import { useForm } from "../hooks/useForm";
 import { LoginForm } from "../components/auth/login/form/LoginForm.jsx";
 import { AuthCard } from "../components/auth/AuthCard";
 import { Toast } from "../components/ui/index.js";
-import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 
 export const LoginPage = () => {
@@ -13,7 +12,6 @@ export const LoginPage = () => {
     username: "",
     password: "",
   });
-  const navigate = useNavigate();
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -34,7 +32,10 @@ export const LoginPage = () => {
           setShowToast(false);
           setButtonDisabled(false);
           setIsAuth(true);
-          navigate("/profile");
+
+          //* I use location.href instead of Navigate, because i had issues with the Navigate component.
+          //* The navigate was not "rendering" the navbar, so i could not access private routes links.
+          window.location.href = "/profile";
         }, 2000);
       }
     } catch (error) {
