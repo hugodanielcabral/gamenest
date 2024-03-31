@@ -33,7 +33,9 @@ export const GameDetails = () => {
   }, []);
 
   return isLoading ? (
-    <Loading />
+    <div className="container mx-auto h-screen flex items-center justify-center">
+      <Loading />
+    </div>
   ) : (
     <div
       className={`p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed bg-opacity-50 bg-blur-3xl bg-gradient-to-b from-base-100 to-base-200`}
