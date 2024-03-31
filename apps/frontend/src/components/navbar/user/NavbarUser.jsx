@@ -1,0 +1,71 @@
+import propTypes from "prop-types";
+import { Link } from "react-router-dom";
+
+export const NavbarUser = ({ isAuth, authRoutes, signout }) => {
+  return (
+    <div>
+      {!isAuth ? (
+        <div className="gap-3 flex md:flex-row flex-col items-center justify-center">
+          {authRoutes.map((route) => (
+            <Link
+              key={route.path}
+              to={route.path}
+              className="uppercase font-bold md:text-base text-sm lg:text-lg text-error hover:text-error/80"
+            >
+              {route.name}
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="dropdown dropdown-end">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar size-12 md:size-20 hover:scale-105 transition-transform duration-300 ease-in-out"
+          >
+            <div className="rounded-full size-12 md:size-20">
+              <img
+                alt="User Profile Picture"
+                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+              />
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow bg-base-100 rounded-box w-52 gap-2"
+          >
+            <Link
+              to="/profile"
+              className="uppercase font-bold md:text-base text-base lg:text-lg text-white"
+            >
+              Profile
+            </Link>
+            <Link
+              to="/settings"
+              className="uppercase font-bold md:text-base text-base lg:text-lg text-white"
+            >
+              Settings
+            </Link>
+            <button
+              onClick={signout}
+              className="self-start uppercase font-bold md:text-base text-base lg:text-lg text-info"
+            >
+              Logout
+            </button>
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
+NavbarUser.propTypes = {
+  isAuth: propTypes.bool.isRequired,
+  authRoutes: propTypes.arrayOf(
+    propTypes.shape({
+      name: propTypes.string.isRequired,
+      path: propTypes.string.isRequired,
+    })
+  ).isRequired,
+  signout: propTypes.func.isRequired,
+};
