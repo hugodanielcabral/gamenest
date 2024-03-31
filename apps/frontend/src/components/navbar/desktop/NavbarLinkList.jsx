@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 
-export const NavbarDesktop = ({
+export const NavbarLinkList = ({
   isAuth,
   privateRoutes,
   publicRoutes,
@@ -45,7 +45,7 @@ export const NavbarDesktop = ({
   );
 };
 
-NavbarDesktop.propTypes = {
+NavbarLinkList.propTypes = {
   isAuth: propTypes.bool.isRequired,
   privateRoutes: propTypes.arrayOf(
     propTypes.shape({

@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-export const NavbarUser = ({ isAuth, authRoutes, signout }) => {
+export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
   return (
     <div>
       {!isAuth ? (
@@ -24,10 +24,7 @@ export const NavbarUser = ({ isAuth, authRoutes, signout }) => {
             className="btn btn-ghost btn-circle avatar size-12 md:size-20 hover:scale-105 transition-transform duration-300 ease-in-out"
           >
             <div className="rounded-full size-12 md:size-20">
-              <img
-                alt="User Profile Picture"
-                src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
+              <img alt="User Profile Picture" src={user?.avatar} />
             </div>
           </div>
           <ul
@@ -59,7 +56,7 @@ export const NavbarUser = ({ isAuth, authRoutes, signout }) => {
   );
 };
 
-NavbarUser.propTypes = {
+NavbarUserSettings.propTypes = {
   isAuth: propTypes.bool.isRequired,
   authRoutes: propTypes.arrayOf(
     propTypes.shape({
@@ -68,4 +65,5 @@ NavbarUser.propTypes = {
     })
   ).isRequired,
   signout: propTypes.func.isRequired,
+  user: propTypes.object,
 };

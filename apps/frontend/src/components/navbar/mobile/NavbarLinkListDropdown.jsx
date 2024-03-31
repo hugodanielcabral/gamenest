@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 
-export const NavbarMobile = ({
+export const NavbarLinkListDropdown = ({
   isAuth,
   privateRoutes,
   publicRoutes,
@@ -68,7 +68,7 @@ export const NavbarMobile = ({
   );
 };
 
-NavbarMobile.propTypes = {
+NavbarLinkListDropdown.propTypes = {
   isAuth: propTypes.bool.isRequired,
   privateRoutes: propTypes.arrayOf(
     propTypes.shape({

@@ -1,6 +1,11 @@
-import { NavbarMobile } from "./mobile/NavbarMobile.jsx";
 import { NavbarLogo } from "./logo/NavbarLogo.jsx";
-import { NavbarDesktop } from "./desktop/NavbarDesktop.jsx";
-import { NavbarUser } from "./user/NavbarUser.jsx";
+import { NavbarUserSettings } from "./userSettings/NavbarUserSettings.jsx";
+import { NavbarLinkListDropdown } from "./mobile/NavbarLinkListDropdown.jsx";
+import { NavbarLinkList } from "./desktop/NavbarLinkList.jsx";
 
-export { NavbarMobile, NavbarLogo, NavbarDesktop, NavbarUser };
+export {
+  NavbarLogo,
+  NavbarUserSettings,
+  NavbarLinkListDropdown,
+  NavbarLinkList,
+};
