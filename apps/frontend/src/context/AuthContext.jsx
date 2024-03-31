@@ -3,6 +3,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import propTypes from "prop-types";
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
+import { useLocalStorage } from "../hooks/useStorage";
 
 export const AuthContext = createContext();
 
@@ -18,9 +19,10 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuth, setIsAuth] = useState(false);
-  const [errors, setErrors] = useState(null);
+  /*   const [isAuth, setIsAuth] = useState(false);
+   */ const [errors, setErrors] = useState(null);
   const { pathname } = useLocation();
+  const [isAuth, setIsAuth, removeIsAuth] = useLocalStorage("isAuth", false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const signup = async (formData) => {
@@ -85,7 +87,7 @@ export const AuthProvider = ({ children }) => {
       //* the inability to execute any message with the "data" return variable. I resolved this by moving
       //* setIsAuth to the handleSubmit function in the LoginPage component.
       /*   setIsAuth(true); */
-      localStorage.setItem("isAuth", true);
+      setIsAuth(true);
       return data;
     } catch (error) {
       console.log(error);
@@ -103,7 +105,7 @@ export const AuthProvider = ({ children }) => {
         },
       });
       setUser(null);
-      localStorage.removeItem("isAuth");
+      removeIsAuth();
       window.location.href = "/";
     } catch (error) {
       console.log(error);
@@ -122,12 +124,12 @@ export const AuthProvider = ({ children }) => {
         .then((res) => res.json())
         .then((data) => {
           setUser(data);
-          localStorage.setItem("isAuth", true);
+          setIsAuth(true);
         })
         .catch((error) => {
           console.log(error);
           setUser(null);
-          localStorage.removeItem("isAuth");
+          removeIsAuth();
         });
     }
   }, []);
