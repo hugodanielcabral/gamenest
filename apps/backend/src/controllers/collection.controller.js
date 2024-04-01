@@ -1,6 +1,8 @@
 import sql from "../db.js";
 import { getGamesFromUser } from "../controllers/games.controller.js";
 import mapCollections from "../helpers/mapCollections.js";
+import { validateQueryParams } from "../validators/collection.validation.js";
+import { getTotalGames } from "../helpers/handleTotalGames.js";
 
 export const getCollections = async (req, res) => {
   try {
@@ -34,50 +36,36 @@ export const getCollectionFromUser = async (req, res) => {
 
 export const getAllGamesFromUser = async (req, res) => {
   try {
-    const { orderby, sort, page, status, search } = req.query;
+    const {
+      validatedOrderBy,
+      validatedSort,
+      validatedStatus,
+      validatedSearch,
+    } = await validateQueryParams(req.query);
 
-    const validOrderBy = ["status", "platform", "ownership", "collection_id"];
-    const orderByValidated = validOrderBy.includes(orderby)
-      ? orderby
-      : "status";
-    const validSort = ["asc", "desc"];
-    const sortValidated = validSort.includes(sort) ? sort : "asc";
-
-    const validPage = page > 0 ? page : 1;
-
-    const totalGames =
-      await sql` SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
-
-    const totalPage = Math.ceil(totalGames[0].count / 2);
-    console.log(totalPage);
-
-    if (validPage > totalPage)
-      return res.status(404).json({ message: "Page not found" });
-
-    const statusCondition = status
-      ? sql`AND status = ANY(${sql.array(status.split(", "))})`
-      : sql``;
-
-    const searchCondition = search
-      ? sql`AND game_slug LIKE ${`%${search}%`}`
-      : sql``;
+    const { totalPage, validatedPage } = await getTotalGames(
+      req,
+      req.query,
+      validatedStatus
+    );
 
     const collection = await sql`
-      SELECT * FROM collection WHERE user_id = ${
-        req.user_id
-      } ${statusCondition} ${searchCondition}
-      ORDER BY ${sql.unsafe(orderByValidated)} ${sql.unsafe(sortValidated)} 
-      LIMIT 2 OFFSET ${(validPage - 1) * 2}
+      SELECT * FROM collection WHERE user_id = ${req.user_id} ${
+      validatedStatus.length > 0
+        ? sql`AND status = ANY(${sql.array(validatedStatus)})`
+        : sql``
+    } ${validatedSearch}
+      ORDER BY ${sql.unsafe(validatedOrderBy)} ${sql.unsafe(validatedSort)} 
+      LIMIT 2 OFFSET ${(validatedPage - 1) * 2}
     `;
 
     if (!collection[0])
       return res.status(404).json({ message: "Collection not found" });
 
     const games = await getGamesFromUser(collection);
-
     const fullData = await mapCollections(collection, games);
 
-    res.status(200).json({ fullData, totalPage, currentPage: validPage });
+    res.status(200).json({ fullData, totalPage, currentPage: validatedPage });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });

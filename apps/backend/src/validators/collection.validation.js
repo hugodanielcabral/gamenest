@@ -1,8 +1,12 @@
 import { check } from "express-validator";
 import { existsAndNotEmpty } from "../helpers/handleExistsAndNotEmpty.js";
 import { validateResult } from "../helpers/handleValidateResult.js";
-
-// TODO: Update the validation rules for the collection and database-schema
+import {
+  ALLOWED_ORDERBY_PARAMS,
+  ALLOWED_SORT_PARAMS,
+  ALLOWED_STATUS_PARAMS,
+} from "../constants/collectionQueryParamsData.js";
+import sql from "../db.js";
 
 export const addGameToCollectionValidator = [
   existsAndNotEmpty("game_id", "Game ID")
@@ -75,3 +79,37 @@ export const updateGameFromCollectionValidator = [
     validateResult(req, res, next);
   },
 ];
+
+export const validateQueryParams = async (query) => {
+  const { orderby, sort, status, search } = query;
+
+  const validatedOrderBy = ALLOWED_ORDERBY_PARAMS.includes(orderby)
+    ? orderby
+    : "status";
+
+  const validatedSort = ALLOWED_SORT_PARAMS.includes(sort) ? sort : "asc";
+
+  //* First i split the status query parameter to make it an array and then i filter it to only include the allowed status parameters
+  const validatedStatus = status
+    ? status.split(", ").filter((statusEl) => {
+        let statusArray = [];
+
+        if (ALLOWED_STATUS_PARAMS.includes(statusEl)) {
+          statusArray.push(statusEl);
+        }
+
+        return statusArray;
+      })
+    : [];
+
+  const validatedSearch = search
+    ? sql`AND game_slug LIKE ${`%${search}%`}`
+    : sql``;
+
+  return {
+    validatedOrderBy,
+    validatedSort,
+    validatedStatus,
+    validatedSearch,
+  };
+};
