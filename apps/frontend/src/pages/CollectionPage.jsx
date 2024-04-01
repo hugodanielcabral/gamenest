@@ -116,7 +116,6 @@ export const CollectionPage = () => {
               <option value="status">Status</option>
               <option value="platform">Platform</option>
               <option value="ownership">Ownership</option>
-              <option value="collection_id">Date added</option>
             </select>
 
             <p className="font-bold">Sort:</p>
