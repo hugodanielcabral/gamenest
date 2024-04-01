@@ -151,5 +151,5 @@ CollectionCard.propTypes = {
   collectionData: propTypes.array,
   handleOnDelete: propTypes.func,
   isLoading: propTypes.bool,
-  totalGamesInCollection: propTypes.string,
+  totalGames: propTypes.number,
 };
