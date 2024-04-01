@@ -34,8 +34,8 @@ export const Navbar = () => {
         <NavbarLogo />
 
         <NavbarUserSettings
-          user={user}
           isAuth={isAuth}
+          user={user}
           authRoutes={authRoutes}
           signout={signout}
         />

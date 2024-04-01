@@ -65,5 +65,5 @@ NavbarUserSettings.propTypes = {
     })
   ).isRequired,
   signout: propTypes.func.isRequired,
-  user: propTypes.object,
+  user: propTypes.object.isRequired,
 };

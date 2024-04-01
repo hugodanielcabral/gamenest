@@ -79,7 +79,6 @@ export const signin = async (req, res) => {
     });
 
     res.status(200).json({
-      message: "User found",
       user_id: userExists[0].user_id,
       username: userExists[0].username,
       email: userExists[0].email,
@@ -111,8 +110,7 @@ export const profile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
 
     res.status(200).json({
-      message: "User found",
-      user: userExists[0],
+      avatar: userExists[0].avatar,
     });
   } catch (error) {
     console.error(error);

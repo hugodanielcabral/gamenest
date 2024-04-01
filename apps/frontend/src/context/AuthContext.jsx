@@ -18,11 +18,10 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  /*   const [isAuth, setIsAuth] = useState(false);
-   */ const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState(null);
   const { pathname } = useLocation();
   const [isAuth, setIsAuth, removeIsAuth] = useLocalStorage("isAuth", false);
+  const [user, setUser, removeUser] = useLocalStorage("user", null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const signup = async (formData) => {
@@ -104,7 +103,7 @@ export const AuthProvider = ({ children }) => {
           "Access-Control-Allow-Credentials": true,
         },
       });
-      setUser(null);
+      removeUser();
       removeIsAuth();
       window.location.href = "/";
     } catch (error) {
@@ -128,7 +127,7 @@ export const AuthProvider = ({ children }) => {
         })
         .catch((error) => {
           console.log(error);
-          setUser(null);
+          removeUser();
           removeIsAuth();
         });
     }
