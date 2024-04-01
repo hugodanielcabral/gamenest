@@ -11,6 +11,7 @@ export const CollectionCard = ({
   collectionData,
   handleOnDelete,
   isLoading,
+  totalGames,
 }) => {
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ export const CollectionCard = ({
   return (
     <div className="col-span-6 md:col-span-5 *:mb-2">
       {!isLoading ? (
-        collectionData ? (
+        collectionData.length > 0 ? (
           collectionData.map((collection) => (
             <div
               key={collection?.collection_id}
@@ -122,10 +123,19 @@ export const CollectionCard = ({
           ))
         ) : (
           <div className="bg-base-100/90 mx-auto flex flex-col items-center p-5">
-            <p>You haven&apos;t added any games to your collection yet.</p>
-            <Link to="/games" className="text-info font-bold">
-              Find and add right now!
-            </Link>
+            {collectionData.length === 0 && totalGames < 1 ? (
+              <>
+                <p>You haven&apos;t added any games to your collection yet.</p>
+                <Link to="/games" className="text-info font-bold">
+                  Find and add right now!
+                </Link>
+              </>
+            ) : (
+              <p>
+                You haven&apos;t games in your collection that match your
+                current search parameters.
+              </p>
+            )}
           </div>
         )
       ) : (
@@ -141,4 +151,5 @@ CollectionCard.propTypes = {
   collectionData: propTypes.array,
   handleOnDelete: propTypes.func,
   isLoading: propTypes.bool,
+  totalGamesInCollection: propTypes.string,
 };

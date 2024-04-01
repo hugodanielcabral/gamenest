@@ -43,7 +43,7 @@ export const getAllGamesFromUser = async (req, res) => {
       validatedSearch,
     } = await validateQueryParams(req.query);
 
-    const { totalPage, validatedPage } = await getTotalGames(
+    const { totalPage, validatedPage, totalGames } = await getTotalGames(
       req,
       req.query,
       validatedStatus
@@ -59,13 +59,15 @@ export const getAllGamesFromUser = async (req, res) => {
       LIMIT 2 OFFSET ${(validatedPage - 1) * 2}
     `;
 
-    if (!collection[0])
-      return res.status(404).json({ message: "Collection not found" });
-
     const games = await getGamesFromUser(collection);
     const fullData = await mapCollections(collection, games);
 
-    res.status(200).json({ fullData, totalPage, currentPage: validatedPage });
+    res.status(200).json({
+      fullData,
+      totalPage,
+      currentPage: validatedPage,
+      totalGames,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });

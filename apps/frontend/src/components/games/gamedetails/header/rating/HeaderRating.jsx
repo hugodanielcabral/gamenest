@@ -36,7 +36,7 @@ export const HeaderRating = ({ rating, slug }) => {
     <div className="flex flex-col items-center col-span-5 gap-y-3 md:justify-evenly md:col-span-1">
       <GameCardRating rating={rating} />
 
-      {collectionData.length > 0 &&
+      {collectionData?.length > 0 &&
       collectionData.some((game) => game.game_slug === slug) ? (
         <Button
           onClick={() => navigate(`/collection`)}

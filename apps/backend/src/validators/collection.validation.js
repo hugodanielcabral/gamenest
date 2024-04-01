@@ -80,8 +80,8 @@ export const updateGameFromCollectionValidator = [
   },
 ];
 
-export const validateQueryParams = async (query) => {
-  const { orderby, sort, status, search } = query;
+export const validateQueryParams = async (reqQuery) => {
+  const { orderby, sort, status, search } = reqQuery;
 
   const validatedOrderBy = ALLOWED_ORDERBY_PARAMS.includes(orderby)
     ? orderby
