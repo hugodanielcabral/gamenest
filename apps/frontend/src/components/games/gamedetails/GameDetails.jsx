@@ -4,7 +4,7 @@ import { GameDetailsHeader } from "./header/GameDetailsHeader";
 import { GameDetailsMedia } from "./media/GameDetailsMedia";
 import { Loading } from "../../ui";
 import { useState } from "react";
-import { GameDetailsMediaGallery } from "./galleri/GameDetailsMediaGallery";
+import { GameDetailsMediaGallery } from "./gallery/GameDetailsMediaGallery";
 
 export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
