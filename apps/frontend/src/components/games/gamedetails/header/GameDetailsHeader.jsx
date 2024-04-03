@@ -1,23 +1,23 @@
 import propTypes from "prop-types";
-import { HeaderCover } from "./cover/HeaderCover";
-import { HeaderGameInfo } from "./gameinfo/HeaderGameInfo";
-import { HeaderRating } from "./rating/HeaderRating";
+import { DateTime } from "luxon";
 
-export const GameDetailsHeader = ({ game }) => {
-  const { rating, slug } = game;
-
+export const GameDetailsHeader = ({ data }) => {
+  const involvedCompanies = data?.involved_companies
+    ? data?.involved_companies.find((company) => company.developer === true)
+    : null;
   return (
-    <div className="grid justify-center grid-cols-5 col-span-4 p-3 mt-12 shadow-sm bg-base-100/90">
-      {/* Cover */}
-      <HeaderCover game={game} />
-      {/* Game info */}
-      <HeaderGameInfo game={game} />
-      {/* Rating */}
-      <HeaderRating rating={rating} slug={slug} />
+    <div>
+      <h1 className="text-4xl md:text-6xl text-center md:text-left text-white">
+        {data?.name}
+      </h1>
+      <h3 className="text-xl md:text-2xl md:text-left text-center">
+        {involvedCompanies && involvedCompanies.company.name} -{" "}
+        {DateTime.fromObject(data?.first_release_date).year}
+      </h3>
     </div>
   );
 };
 
 GameDetailsHeader.propTypes = {
-  game: propTypes.object.isRequired,
+  data: propTypes.object.isRequired,
 };

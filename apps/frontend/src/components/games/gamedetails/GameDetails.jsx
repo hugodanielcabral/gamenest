@@ -1,85 +1,50 @@
-import { useEffect, useState } from "react";
+import { useFetch } from "../../../hooks/useFetch";
 import { useParams } from "react-router-dom";
-import {
-  GameDetailsOverview,
-  GameDetailsHeader,
-  GameDetailsGallery,
-} from "./index.js";
-import { Loading } from "../../ui/loading/Loading.jsx";
-import { useFetch } from "../../../hooks/useFetch.js";
+import { GameDetailsHeader } from "./header/GameDetailsHeader";
+import { GameDetailsMedia } from "./media/GameDetailsMedia";
+import { Loading } from "../../ui";
+import { useState } from "react";
+import { GameDetailsMediaGallery } from "./galleri/GameDetailsMediaGallery";
 
 export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const { gameId: gameSlug } = useParams();
-
   const { data, isLoading } = useFetch(`${BASE_URL}/games/${gameSlug}`);
-  const game = data ? data[0] : null;
-  const [activeTab, setActiveTab] = useState("overview");
-
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "overview":
-        return <GameDetailsOverview game={game} />;
-      case "media":
-        return <GameDetailsGallery game={game} />;
-      default:
-        return null;
-    }
+  const [activeTab, setActiveTab] = useState(1);
+  const handleOnClick = (tab) => {
+    setActiveTab(tab);
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  return isLoading ? (
-    <div className="container mx-auto h-screen flex items-center justify-center">
-      <Loading />
+  return !isLoading ? (
+    <div className="min-h-screen">
+      <img
+        src={data?.screenshots[0]?.url.replace("t_thumb", "t_screenshot_huge")}
+        className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.5)_5%,rgb(0,0,0,0)]"
+        alt={`Background of ${data?.name}`}
+      />
+      <div className="relative z-10 p-4 container mx-auto">
+        {/* Header */}
+        <div className="my-2">
+          <GameDetailsHeader data={data} />
+        </div>
+        {/* Cover, Trailer, Add to Collection button, Brief description and Tabs */}
+        <div className="my-2 mx-auto">
+          <GameDetailsMedia
+            data={data}
+            handleOnClick={handleOnClick}
+            activeTab={activeTab}
+          />
+        </div>
+        {/* Screenshots, Videos, Artworks and Additional info */}
+        <div className="my-2 mx-auto grid grid-cols-4 gap-3">
+          <GameDetailsMediaGallery data={data} activeTab={activeTab} />
+        </div>
+      </div>
     </div>
   ) : (
-    <div
-      className={`p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed bg-opacity-50 bg-blur-3xl bg-gradient-to-b from-base-100 to-base-200`}
-      style={
-        game.screenshots && {
-          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%), url(${game.screenshots[0].url.replace(
-            "t_thumb",
-            "t_screenshot_huge"
-          )})`,
-        }
-      }
-    >
-      <div className="container mx-auto">
-        <GameDetailsHeader game={game} />
-        <div
-          role="tablist"
-          className="tabs tabs-bordered tabs-lg *:font-bold bg-base-200"
-        >
-          <button
-            role="tab"
-            className={`tab ${
-              activeTab === "overview" && "tab-active text-info"
-            }`}
-            onClick={() => setActiveTab("overview")}
-          >
-            Overview
-          </button>
-          {game.screenshots || game.videos ? (
-            <button
-              role="tab"
-              className={`tab ${
-                activeTab === "media" && "tab-active text-info"
-              }`}
-              onClick={() => setActiveTab("media")}
-            >
-              Media
-            </button>
-          ) : null}
-          <button role="tab" className="tab" disabled>
-            Reviews
-          </button>
-        </div>
-        {renderTabContent()}
-      </div>
+    <div className="container mx-auto h-screen flex items-center justify-center">
+      <Loading />
     </div>
   );
 };
