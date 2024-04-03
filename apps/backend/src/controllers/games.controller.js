@@ -78,7 +78,7 @@ export const getGame = async (req, res) => {
     });
 
     const data = await response.json();
-    res.json(data);
+    res.json(data[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
