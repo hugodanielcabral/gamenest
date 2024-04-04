@@ -5,7 +5,7 @@ import { tabsGameDetailsMediaData } from "../../../../utils/getGameDetailsMediaI
 
 export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
   return (
-    <div className="grid grid-cols-4 gap-4 items-stretch ">
+    <div className="grid grid-cols-4 gap-4 items-stretch">
       <div className="col-span-4 md:col-span-1 flex flex-col gap-3">
         <img
           className="flex-grow shadow-2xl shadow-black"
@@ -33,7 +33,7 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
           {data?.summary}
         </p>
       </div>
-      <div className="col-span-4">
+      <div className="col-span-4 my-2">
         <div
           role="tablist"
           className="tabs tabs-bordered gap-4 flex flex-wrap justify-center items-center *:w-[150px] md:w-auto"
@@ -43,8 +43,10 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
               key={tab.id}
               role="tab"
               onClick={() => handleOnClick(tab.id)}
-              className={`tab flex-grow ${
-                tab.id === activeTab ? "tab-active text-info font-bold" : ""
+              className={`tab flex-grow text-base md:text-xl  ${
+                tab.id === activeTab
+                  ? "tab-active text-info font-bold"
+                  : "text-white "
               }`}
             >
               {tab.icon}
