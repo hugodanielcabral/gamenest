@@ -2,14 +2,31 @@ import propTypes from "prop-types";
 import ReactPlayer from "react-player";
 import { Button } from "../../../ui/index.js";
 import { tabsGameDetailsMediaData } from "../../../../utils/getGameDetailsMediaIcons.jsx";
+import { useState } from "react";
+import { Modal } from "../../../ui/modal/Modal.jsx";
+import { clsx } from "clsx";
+import rightArrow from "../../../../assets/icons/arrow-right.svg";
 
 export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const summaryTextLength = data?.summary?.length;
+  console.log(summaryTextLength);
+
+  const gameCover =
+    data?.cover?.url.replace("t_thumb", "t_1080p") ||
+    "https://via.placeholder.com/300x400?text=No+Cover+Available";
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
   return (
     <div className="grid grid-cols-4 gap-4 items-stretch">
       <div className="col-span-4 md:col-span-1 flex flex-col gap-3">
         <img
           className="flex-grow shadow-2xl shadow-black"
-          src={data?.cover?.url.replace("t_thumb", "t_1080p")}
+          src={gameCover}
           alt={`Cover of ${data?.name}`}
         />
         <Button className="w-full font-bold text-lg">Add to collection</Button>
@@ -27,11 +44,38 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
             />
           </div>
         ) : (
-          "No videos available"
+          <div className="flex-grow min-h-[200px] md:min-h-[300px] shadow-2xl shadow-black ">
+            <img
+              src="https://via.placeholder.com/600x200?text=No+Video+Available"
+              alt="No Video Available"
+              className="w-full h-full object-cover"
+            />
+          </div>
         )}
         <p className="font-semibold line-clamp-6 md:p-0 md:line-clamp-2 bg-base-300/60">
-          {data?.summary}
+          {data?.summary || (
+            <p className="text-center">No summary available.</p>
+          )}
         </p>
+        <div className="flex items-center justify-end">
+          <button
+            className={clsx(
+              {
+                hidden: summaryTextLength < 236,
+                inline: summaryTextLength > 236,
+              },
+              "font-semibold text-error text-lg"
+            )}
+            onClick={handleOpenModal}
+          >
+            Read more.
+            <img
+              src={rightArrow}
+              alt="Read more arrow"
+              className="size-10 inline"
+            />
+          </button>
+        </div>
       </div>
       <div className="col-span-4 my-2">
         <div
@@ -54,6 +98,16 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
             </a>
           ))}
         </div>
+        <Modal
+          isOpen={modalOpen}
+          hasCloseBtn={true}
+          onClose={() => setModalOpen(false)}
+        >
+          <h2 className="font-bold text-xl text-info text-center">
+            {data?.name}
+          </h2>
+          <p className="text-base text-pretty md:text-3xl">{data?.summary}</p>
+        </Modal>
       </div>
     </div>
   );

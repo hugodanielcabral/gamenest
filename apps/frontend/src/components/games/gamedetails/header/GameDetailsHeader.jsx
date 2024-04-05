@@ -10,7 +10,7 @@ export const GameDetailsHeader = ({ data }) => {
       <h1 className="text-4xl md:text-6xl text-center md:text-left text-white">
         {data?.name}
       </h1>
-      <h3 className="text-xl md:text-2xl md:text-left text-center">
+      <h3 className="text-xl md:text-2xl md:text-left text-center text-info font-semibold">
         {involvedCompanies && involvedCompanies.company.name} -{" "}
         {DateTime.fromObject(data?.first_release_date).year}
       </h3>
