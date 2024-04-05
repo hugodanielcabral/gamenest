@@ -6,6 +6,7 @@ import { MediaGalleryArtworks } from "./artworks/MediaGalleryArtworks";
 import { Modal } from "../../../ui/modal/Modal";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { MediaGalleryAdditionalInfo } from "./additionalinfo/MediaGalleryAdditionalInfo";
 
 export const GameDetailsMediaGallery = ({ data, activeTab }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -77,6 +78,9 @@ export const GameDetailsMediaGallery = ({ data, activeTab }) => {
           setStartIndex={setStartIndex}
         />
       )}
+
+      {activeTab === 4 && <MediaGalleryAdditionalInfo data={data} />}
+
       <Modal
         isOpen={modalOpen}
         hasCloseBtn={true}

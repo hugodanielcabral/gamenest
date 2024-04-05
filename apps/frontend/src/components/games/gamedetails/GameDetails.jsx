@@ -20,7 +20,7 @@ export const GameDetails = () => {
     <div className="min-h-screen">
       <img
         src={data?.screenshots[0]?.url.replace("t_thumb", "t_screenshot_huge")}
-        className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.5)_5%,rgb(0,0,0,0)]"
+        className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_0%,rgb(0,0,0,0)]"
         alt={`Background of ${data?.name}`}
       />
       <div className="relative z-10 p-4 container mx-auto">
