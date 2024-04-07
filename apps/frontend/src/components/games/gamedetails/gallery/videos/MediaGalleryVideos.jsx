@@ -31,5 +31,5 @@ export const MediaGalleryVideos = ({ videos }) => {
 };
 
 MediaGalleryVideos.propTypes = {
-  videos: propTypes.object.isRequired,
+  videos: propTypes.array.isRequired,
 };

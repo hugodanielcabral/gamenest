@@ -11,7 +11,6 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const summaryTextLength = data?.summary?.length;
-  console.log(summaryTextLength);
 
   const gameCover =
     data?.cover?.url.replace("t_thumb", "t_1080p") ||
@@ -103,10 +102,10 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
           hasCloseBtn={true}
           onClose={() => setModalOpen(false)}
         >
-          <h2 className="font-bold text-xl text-info text-center">
-            {data?.name}
+          <h2 className="font-bold text-3xl text-info text-center">
+            {data.name}
           </h2>
-          <p className="text-base text-pretty md:text-3xl">{data?.summary}</p>
+          <p className="text-base text-pretty md:text-2xl ">{data?.summary}</p>
         </Modal>
       </div>
     </div>
