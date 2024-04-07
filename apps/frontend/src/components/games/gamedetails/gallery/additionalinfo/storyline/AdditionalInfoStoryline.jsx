@@ -8,7 +8,6 @@ export const AdditionalInfoStoryline = ({ data }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const storylineTextLength = data?.storyline?.length;
-  console.log(storylineTextLength);
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -49,7 +48,9 @@ export const AdditionalInfoStoryline = ({ data }) => {
         hasCloseBtn={true}
         onClose={() => setModalOpen(false)}
       >
-        <h2 className="font-bold text-info text-center">{data?.name}</h2>
+        <h2 className="font-bold text-info text-center text-3xl">
+          {data?.name}
+        </h2>
         <p className="text-base text-pretty md:text-3xl">{data?.storyline}</p>
       </Modal>
     </div>

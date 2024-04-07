@@ -36,7 +36,7 @@ export const MediaGalleryScreenshoots = ({
 };
 
 MediaGalleryScreenshoots.propTypes = {
-  screenshots: propTypes.object.isRequired,
+  screenshots: propTypes.array.isRequired,
   handleOpenModal: propTypes.func.isRequired,
   handleTypeOfMedia: propTypes.func.isRequired,
   setStartIndex: propTypes.func.isRequired,

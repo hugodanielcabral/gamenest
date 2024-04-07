@@ -37,7 +37,7 @@ export const MediaGalleryArtworks = ({
 };
 
 MediaGalleryArtworks.propTypes = {
-  artworks: propTypes.object.isRequired,
+  artworks: propTypes.array.isRequired,
   handleOpenModal: propTypes.func.isRequired,
   handleTypeOfMedia: propTypes.func.isRequired,
   setStartIndex: propTypes.func.isRequired,

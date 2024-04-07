@@ -1,26 +1,26 @@
-import officialIcon from "../assets/icons/official-website-icon.webp";
-import wikiaIcon from "../assets/icons/wikia-icon.webp";
-import wikipediaIcon from "../assets/icons/wikipedia-icon.webp";
-import facebookIcon from "../assets/icons/facebook-icon.webp";
-import twitterIcon from "../assets/icons/twitter-icon.webp";
-import twitchIcon from "../assets/icons/twitch-icon.webp";
-import instagramIcon from "../assets/icons/instagram-icon.webp";
-import youtubeIcon from "../assets/icons/youtube-icon.webp";
-import steamIcon from "../assets/icons/steam-icon.webp";
-import redditIcon from "../assets/icons/reddit-icon.webp";
-import discordIcon from "../assets/icons/discord-icon.webp";
-import epicgamesIcon from "../assets/icons/epicgames-icon.webp";
-import gogIcon from "../assets/icons/gog-icon.webp";
-import itchIcon from "../assets/icons/itch-icon.webp";
-import iphoneIcon from "../assets/icons/iphone-icon.webp";
-import androidIcon from "../assets/icons/android-icon.webp";
-import ipadIcon from "../assets/icons/ipad-icon.webp";
+import officialIcon from "../assets/icons/website.webp";
+import wikiaIcon from "../assets/icons/wikia.webp";
+import wikipediaIcon from "../assets/icons/wikipedia.webp";
+import facebookIcon from "../assets/icons/facebook.webp";
+import twitterIcon from "../assets/icons/twitter.webp";
+import twitchIcon from "../assets/icons/twitch.webp";
+import instagramIcon from "../assets/icons/instagram.webp";
+import youtubeIcon from "../assets/icons/youtube.webp";
+import steamIcon from "../assets/icons/steam.webp";
+import redditIcon from "../assets/icons/reddit.webp";
+import discordIcon from "../assets/icons/discord.webp";
+import epicgamesIcon from "../assets/icons/epic-games.webp";
+import gogIcon from "../assets/icons/gog.webp";
+import itchIcon from "../assets/icons/itch.webp";
+import iphoneIcon from "../assets/icons/iphone.webp";
+import androidIcon from "../assets/icons/android.webp";
+import ipadIcon from "../assets/icons/ipad.webp";
 
 const websiteIcons = [
   {
     category: 1,
     icon: officialIcon,
-    name: "Official Website",
+    name: "Website",
   },
   {
     category: 2,

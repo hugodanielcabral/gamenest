@@ -5,7 +5,7 @@ import {
 } from "../../../../../../utils/getGameDetailsAgeRatingCover.js";
 
 export const AdditionalInfoAgeRating = ({ data }) => {
-  const excludeAgeRating = data?.age_ratings
+  const excludedAgeRatings = data?.age_ratings
     .filter(
       (rating) =>
         rating.category !== 3 &&
@@ -17,11 +17,11 @@ export const AdditionalInfoAgeRating = ({ data }) => {
     .sort((a, b) => a.category - b.category);
 
   const esrbRating = esrbRatingsData.find(
-    (rating) => rating.igdbRating === excludeAgeRating[0].rating
+    (rating) => rating.igdbRating === excludedAgeRatings[0].rating
   );
 
   const pegiRating = pegiRatingsData.find(
-    (rating) => rating.igdbRating === excludeAgeRating[1].rating
+    (rating) => rating.igdbRating === excludedAgeRatings[1].rating
   );
 
   return (
@@ -33,12 +33,12 @@ export const AdditionalInfoAgeRating = ({ data }) => {
         <img
           src={esrbRating.image}
           alt={`ESRB Rating ${esrbRating.rating}`}
-          className="w-24 md:w-32"
+          className="w-20 h-28 md:w-24 md:h-32"
         />
         <img
           src={pegiRating.image}
           alt={`PEGI Rating ${pegiRating.rating}`}
-          className="w-24 md:w-32"
+          className="w-20 h-28 md:w-24 md:h-32"
         />
       </div>
     </div>
