@@ -77,7 +77,7 @@ export const AddToCollection = () => {
           "Access-Control-Allow-Credentials": "true",
         },
         body: JSON.stringify({
-          game_id: data[0]?.id,
+          game_id: data?.id,
           game_slug: gameSlug,
           platform: formData.platform,
           ownership: formData.ownership,
@@ -126,10 +126,10 @@ export const AddToCollection = () => {
       getCollectionFromUser(collectionId).then((data) => {
         setErrors(null);
         setFormData({
-          platform: data[0].platform,
-          ownership: data[0].ownership,
-          status: data[0].status,
-          progressNotes: data[0].progress_note,
+          platform: data.platform,
+          ownership: data.ownership,
+          status: data.status,
+          progressNotes: data.progress_note,
         });
       });
     }
@@ -145,7 +145,7 @@ export const AddToCollection = () => {
       style={{
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 90%), url(${
           data
-            ? data[0].screenshots[0].url.replace("t_thumb", "t_screenshot_huge")
+            ? data.screenshots[0].url.replace("t_thumb", "t_screenshot_huge")
             : null
         })`,
       }}
@@ -153,8 +153,8 @@ export const AddToCollection = () => {
       <Toast
         toastMessage={
           collectionId
-            ? `${data[0].name} was successfully updated!`
-            : `${data[0].name} was successfully added to your collection!`
+            ? `${data.name} was successfully updated!`
+            : `${data.name} was successfully added to your collection!`
         }
         showToast={showToast}
       />

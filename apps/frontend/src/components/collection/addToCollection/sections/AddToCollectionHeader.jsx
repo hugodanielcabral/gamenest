@@ -12,11 +12,11 @@ export const AddToCollectionHeader = ({ data, gameSlug }) => {
       <div className="flex flex-col justify-around p-3 gap-y-2 items-center">
         <img
           src={
-            data[0].cover
-              ? `${data[0].cover.url.replace("t_thumb", "t_cover_big")}`
+            data.cover
+              ? `${data.cover.url.replace("t_thumb", "t_cover_big")}`
               : "https://via.placeholder.com/300x400?text=No+Cover+Available"
           }
-          alt={`${data[0]?.name} cover`}
+          alt={`${data?.name} cover`}
           className="size-auto max-h-72 border-2 border-buttons-300 dark:border-buttons-300"
         />
         <Button
@@ -41,9 +41,7 @@ export const AddToCollectionHeader = ({ data, gameSlug }) => {
               ? "Edit Game in Collection"
               : "Add Game to Collection"}
           </h1>
-          <h2 className="text-2xl font-bold text-buttons-400">
-            {data[0]?.name}
-          </h2>
+          <h2 className="text-2xl font-bold text-buttons-400">{data?.name}</h2>
         </div>
       </div>
     </section>

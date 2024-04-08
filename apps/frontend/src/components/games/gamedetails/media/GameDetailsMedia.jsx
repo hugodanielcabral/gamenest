@@ -1,14 +1,16 @@
 import propTypes from "prop-types";
+import { useState } from "react";
 import ReactPlayer from "react-player";
 import { Button } from "../../../ui/index.js";
 import { tabsGameDetailsMediaData } from "../../../../utils/getGameDetailsMediaIcons.jsx";
-import { useState } from "react";
 import { Modal } from "../../../ui/modal/Modal.jsx";
 import { clsx } from "clsx";
 import rightArrow from "../../../../assets/icons/arrow-right.svg";
+import { useNavigate } from "react-router-dom";
 
 export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const summaryTextLength = data?.summary?.length;
 
@@ -28,7 +30,12 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
           src={gameCover}
           alt={`Cover of ${data?.name}`}
         />
-        <Button className="w-full font-bold text-lg">Add to collection</Button>
+        <Button
+          className="w-full font-bold text-lg"
+          onClick={() => navigate(`/collection/add/${data?.slug}`)}
+        >
+          Add to collection
+        </Button>
       </div>
       <div className="col-span-4 md:col-span-3 flex flex-col gap-3">
         {data?.videos ? (

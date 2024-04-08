@@ -37,7 +37,7 @@ export const AddToCollectionGameInfo = ({
             <option disabled selected>
               Choose your platform
             </option>
-            {data[0].platforms.map((platform) => (
+            {data.platforms.map((platform) => (
               <option key={platform.id} value={platform.name}>
                 {platform.name}
               </option>

@@ -15,7 +15,7 @@ export const MediaGalleryScreenshoots = ({
             <img
               key={screenshot.id}
               src={screenshot.url.replace("t_thumb", "t_cover_big")}
-              className="col-span-2 md:col-span-1 hover:scale-105 transform transition duration-300 ease-in-out cursor-pointer hover:saturate-200 h-28 md:h-32 lg:h-52 w-full object-cover"
+              className="col-span-2 md:col-span-1 hover:scale-105 transform transition duration-300 ease-in-out cursor-pointer hover:grayscale h-28 md:h-32 lg:h-52 w-full object-cover"
               loading="lazy"
               onClick={() => {
                 handleOpenModal();
