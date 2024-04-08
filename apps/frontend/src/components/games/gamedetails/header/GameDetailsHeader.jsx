@@ -28,7 +28,7 @@ export const GameDetailsHeader = ({ data }) => {
 
   return (
     <div className="flex gap-y-2 md:flex-row flex-col items-center gap-x-20">
-      <div>
+      <div className="grow">
         <h1 className="text-3xl md:text-4xl lg:text-5xl text-center md:text-left text-white">
           {data?.name}
         </h1>
@@ -37,31 +37,36 @@ export const GameDetailsHeader = ({ data }) => {
           {DateTime.fromObject(data?.first_release_date).year}
         </h3>
       </div>
-      <div className="flex gap-3 justify-center grow">
-        {filteredExternalStores.map((game) => {
-          const storeIcon = storeIcons.find(
-            (icon) => icon.igdbCategory === game.category
-          );
-          return (
-            <a
-              key={game.id}
-              href={
-                storeIcon.name === "Steam"
-                  ? `https://store.steampowered.com/app/${game.uid}`
-                  : game.url
-              }
-              target="_blank"
-              rel="noreferrer"
-              className="hover:scale-110 transition-transform duration-300 ease-in-out"
-            >
-              <img
-                src={storeIcon.icon}
-                alt={storeIcon.name}
-                className="size-4 md:size-6 lg:size-8"
-              />
-            </a>
-          );
-        }) || <p>No stores available.</p>}
+      <div className="flex gap-3 justify-center grow flex-col items-center">
+        <h2 className="text-white text-base md:text-1xl lg:text-2xl">
+          Buy this game on:
+        </h2>
+        <div className="flex gap-3">
+          {filteredExternalStores.map((game) => {
+            const storeIcon = storeIcons.find(
+              (icon) => icon.igdbCategory === game.category
+            );
+            return (
+              <a
+                key={game.id}
+                href={
+                  storeIcon.name === "Steam"
+                    ? `https://store.steampowered.com/app/${game.uid}`
+                    : game.url
+                }
+                target="_blank"
+                rel="noreferrer"
+                className="hover:scale-110 transition-transform duration-300 ease-in-out"
+              >
+                <img
+                  src={storeIcon.icon}
+                  alt={storeIcon.name}
+                  className="size-6 md:size-6 lg:size-8"
+                />
+              </a>
+            );
+          }) || <p>No stores available.</p>}
+        </div>
       </div>
     </div>
   );
