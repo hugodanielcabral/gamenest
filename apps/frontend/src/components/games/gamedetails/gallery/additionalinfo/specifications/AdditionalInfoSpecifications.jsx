@@ -1,8 +1,9 @@
 import propTypes from "prop-types";
+import { CardBackground } from "../../../../../ui/cardBackground/cardBackground";
 
 export const AdditionalInfoSpecifications = ({ data }) => {
   return (
-    <div className="col-span-3 md:col-span-1 bg-base-200/90 shadow-lg rounded-sm border-2 border-white/10 p-3">
+    <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
       <h2 className="text-center text-3xl md:text-4xl font-semibold mb-2 text-info">
         Specifications
       </h2>
@@ -54,7 +55,7 @@ export const AdditionalInfoSpecifications = ({ data }) => {
           }
         </section>
       </article>
-    </div>
+    </CardBackground>
   );
 };
 

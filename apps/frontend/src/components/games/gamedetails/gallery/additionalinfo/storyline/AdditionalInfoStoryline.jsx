@@ -1,8 +1,9 @@
 import propTypes from "prop-types";
+import { CardBackground } from "../../../../../ui/cardBackground/cardBackground";
 
 export const AdditionalInfoStoryline = ({ data }) => {
   return (
-    <div className="col-span-3  bg-base-200/90 shadow-lg rounded-sm border-2 border-white/10 p-3 max-h-60 md:max-h-96 overflow-auto">
+    <CardBackground className="col-span-3 max-h-60 md:max-h-96 overflow-auto">
       <h2 className="text-center text-3xl md:text-4xl font-semibold text-error">
         Storyline
       </h2>
@@ -13,7 +14,7 @@ export const AdditionalInfoStoryline = ({ data }) => {
           <p className="text-center mt-2">No storyline available.</p>
         )}
       </p>
-    </div>
+    </CardBackground>
   );
 };
 

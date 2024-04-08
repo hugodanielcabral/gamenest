@@ -1,10 +1,11 @@
 import propTypes from "prop-types";
 import websiteIcons from "../../../../../../utils/getGameDetailsAdditionalInfoIcons.js";
 import { Link } from "react-router-dom";
+import { CardBackground } from "../../../../../ui/cardBackground/cardBackground.jsx";
 
 export const AdditionalInfoWebsites = ({ data }) => {
   return (
-    <div className="col-span-3 md:col-span-1 bg-base-200/90 shadow-lg rounded-sm border-2 border-white/10 p-3 flex flex-col">
+    <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
       <h2 className="text-center text-3xl md:text-4xl font-semibold mb-2 text-info">
         Game Websites
       </h2>
@@ -32,7 +33,7 @@ export const AdditionalInfoWebsites = ({ data }) => {
           );
         }) || <p className="text-center col-span-4">No websites available.</p>}
       </ul>
-    </div>
+    </CardBackground>
   );
 };
 

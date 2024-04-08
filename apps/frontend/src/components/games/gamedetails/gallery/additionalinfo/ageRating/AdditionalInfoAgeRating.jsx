@@ -3,6 +3,7 @@ import {
   esrbRatingsData,
   pegiRatingsData,
 } from "../../../../../../utils/getGameDetailsAgeRatingCover.js";
+import { CardBackground } from "../../../../../ui/cardBackground/cardBackground.jsx";
 
 export const AdditionalInfoAgeRating = ({ data }) => {
   const excludedAgeRatings = data?.age_ratings
@@ -25,7 +26,7 @@ export const AdditionalInfoAgeRating = ({ data }) => {
   );
 
   return (
-    <div className="col-span-3 md:col-span-1 bg-base-200/90 shadow-lg rounded-sm border-2 border-white/10 p-3">
+    <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
       <h2 className="text-center text-3xl md:text-4xl font-semibold mb-2 text-info">
         Age Rating
       </h2>
@@ -41,7 +42,7 @@ export const AdditionalInfoAgeRating = ({ data }) => {
           className="w-20 h-28 md:w-24 md:h-32"
         />
       </div>
-    </div>
+    </CardBackground>
   );
 };
 

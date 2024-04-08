@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import { Button } from "../../../ui/index.js";
 import { tabsGameDetailsMediaData } from "../../../../utils/getGameDetailsMediaIcons.jsx";
 import { useNavigate } from "react-router-dom";
+import { CardBackground } from "../../../ui/cardBackground/cardBackground.jsx";
 
 export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
   const navigate = useNavigate();
@@ -47,13 +48,18 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
             />
           </div>
         )}
-        <div className="overflow-auto h-28">
-          <p className="font-semibold md:p-0 bg-base-300/60">
-            {data?.summary || (
-              <p className="text-center">No summary available.</p>
+        <CardBackground className="overflow-auto h-28">
+          <h3 className="text-center text-lg md:text-xl font-semibold text-error">
+            Summary
+          </h3>
+          <p className="text- text-pretty md:text-base">
+            {data?.summary?.length > 0 ? (
+              data.summary
+            ) : (
+              <p className="text-center mt-2">No description available.</p>
             )}
           </p>
-        </div>
+        </CardBackground>
       </div>
       <div className="col-span-4 my-2">
         <div
