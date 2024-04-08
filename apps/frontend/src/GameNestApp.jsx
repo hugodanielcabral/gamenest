@@ -8,6 +8,7 @@ import { NotFound } from "./components/notfound/NotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { AddToCollection } from "./components/collection/addToCollection/AddToCollection.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -71,35 +72,16 @@ export const GameNestApp = () => {
     <Layout>
       {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
       <Suspense fallback={<h1>Loading...</h1>}>
-        <Routes>
-          <Route
-            element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/" />}
-          >
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Route>
-          <Route>
-            {publicRoutes.map((route) => {
-              return (
-                <Route
-                  key={route.id}
-                  path={route.path}
-                  element={route.element}
-                />
-              );
-            })}
-          </Route>
-          <Route
-            element={<ProtectedRoute isAllowed={isAuth} redirectTo="/login" />}
-          >
+        <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+          <Routes>
             <Route
-              element={
-                <CollectionProvider>
-                  <Outlet />
-                </CollectionProvider>
-              }
+              element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/" />}
             >
-              {privateRoutes.map((route) => {
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </Route>
+            <Route>
+              {publicRoutes.map((route) => {
                 return (
                   <Route
                     key={route.id}
@@ -109,8 +91,31 @@ export const GameNestApp = () => {
                 );
               })}
             </Route>
-          </Route>
-        </Routes>
+            <Route
+              element={
+                <ProtectedRoute isAllowed={isAuth} redirectTo="/login" />
+              }
+            >
+              <Route
+                element={
+                  <CollectionProvider>
+                    <Outlet />
+                  </CollectionProvider>
+                }
+              >
+                {privateRoutes.map((route) => {
+                  return (
+                    <Route
+                      key={route.id}
+                      path={route.path}
+                      element={route.element}
+                    />
+                  );
+                })}
+              </Route>
+            </Route>
+          </Routes>
+        </SkeletonTheme>
       </Suspense>
     </Layout>
   );
