@@ -26,9 +26,9 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
           Add to collection
         </Button>
       </div>
-      <div className="col-span-4 md:col-span-3 flex flex-col gap-3">
+      <div className="col-span-4 md:col-span-3 flex flex-col gap-3 ">
         {data?.videos ? (
-          <div className="flex-grow min-h-[200px] md:min-h-[300px] shadow-2xl shadow-black">
+          <div className="flex-grow min-h-[200px] md:min-h-[300px] shadow-2xl shadow-black h-[500px]">
             <ReactPlayer
               url={`https://www.youtube.com/watch?v=${data.videos[0].video_id}`}
               light={true}
@@ -39,7 +39,7 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
             />
           </div>
         ) : (
-          <div className="flex-grow min-h-[200px] md:min-h-[300px] shadow-2xl shadow-black ">
+          <div className="flex-grow min-h-[200px] md:min-h-[300px] shadow-2xl shadow-black">
             <img
               src="https://via.placeholder.com/600x200?text=No+Video+Available"
               alt="No Video Available"
@@ -47,11 +47,13 @@ export const GameDetailsMedia = ({ data, handleOnClick, activeTab }) => {
             />
           </div>
         )}
-        <p className="font-semibold md:p-0 bg-base-300/60">
-          {data?.summary || (
-            <p className="text-center">No summary available.</p>
-          )}
-        </p>
+        <div className="overflow-auto h-28">
+          <p className="font-semibold md:p-0 bg-base-300/60">
+            {data?.summary || (
+              <p className="text-center">No summary available.</p>
+            )}
+          </p>
+        </div>
       </div>
       <div className="col-span-4 my-2">
         <div
