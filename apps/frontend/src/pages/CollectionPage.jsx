@@ -90,12 +90,13 @@ export const CollectionPage = () => {
       setIsLoading(true);
     };
   }, [orderBy, currentPage, statusQuery, search]);
+  console.log(collectionData);
 
   return (
     <div
       className="p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 90%), url(${backgroundImage})`,
+        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%), url(${backgroundImage})`,
       }}
     >
       <CardBackground className="flex p-5 mt-5 justify-evenly min-w-[300px] max-w-[900px] mx-auto">
