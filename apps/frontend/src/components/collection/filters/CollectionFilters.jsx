@@ -1,6 +1,7 @@
 import propTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { CardBackground } from "../../ui/cardBackground/CardBackground";
 
 export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
   const [searchParams] = useSearchParams();
@@ -58,8 +59,8 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
   }, []);
 
   return (
-    <aside className="md:col-span-1">
-      <div className="hidden md:block bg-base-100/90 bg-opacity-90 shadow-sm shadow-black h-96 p-5">
+    <CardBackground className="md:col-span-1">
+      <div className="hidden md:block bg-opacity-90 h-96 p-5">
         <h2 className="text-center text-2xl font-bold">Filters</h2>
         <div>
           <div className="divider divider-primary">
@@ -124,7 +125,7 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
           </div>
         </div>
       )}
-    </aside>
+    </CardBackground>
   );
 };
 

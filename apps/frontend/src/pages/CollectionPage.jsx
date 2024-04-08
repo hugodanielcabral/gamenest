@@ -9,6 +9,7 @@ import usePagination from "../hooks/usePagination";
 import backgroundImage from "../assets/backgrounds/collection-wallpaper.webp";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 import { CollectionSearch } from "../components/collection/search/CollectionSearch";
+import { CardBackground } from "../components/ui/cardBackground/CardBackground";
 
 export const CollectionPage = () => {
   const {
@@ -97,7 +98,7 @@ export const CollectionPage = () => {
         backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 90%), url(${backgroundImage})`,
       }}
     >
-      <div className="flex p-5 mt-5 bg-base-100/90 justify-evenly bg-opacity-90 min-w-[300px] max-w-[900px] mx-auto shadow-sm shadow-black">
+      <CardBackground className="flex p-5 mt-5 justify-evenly min-w-[300px] max-w-[900px] mx-auto">
         <div className="grid grid-cols-2 items-center gap-3 w-full justify-around">
           <div className="flex gap-5 items-center col-span-2 justify-center md:col-span-1">
             <p className="font-bold">View:</p>
@@ -139,7 +140,7 @@ export const CollectionPage = () => {
             setSearchParams={setSearchParams}
           />
         </div>
-      </div>
+      </CardBackground>
       <Toast toastMessage={toastMessage} showToast={toast} />
 
       <div className="grid grid-cols-6 gap-10 mt-2">
