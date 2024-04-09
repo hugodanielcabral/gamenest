@@ -59,28 +59,26 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
   }, []);
 
   return (
-    <CardBackground className="md:col-span-1">
-      <div className="hidden md:block bg-opacity-90 h-96 p-5">
-        <h2 className="text-center text-2xl font-bold">Filters</h2>
-        <div>
-          <div className="divider divider-primary">
-            <h3 className="font-semibold">Status</h3>
-          </div>
-          {statusValues.map((status) => (
-            <div key={status.id} className="form-control">
-              <label className="label cursor-pointer">
-                <span className="label-text">{status.name}</span>
-                <input
-                  type="checkbox"
-                  className="checkbox"
-                  value={status.name}
-                  checked={getStatus?.includes(status.name)}
-                  onChange={handleStatus}
-                />
-              </label>
-            </div>
-          ))}
+    <CardBackground className="md:col-span-1 hidden md:block h-96 p-5">
+      <h2 className="text-center text-2xl font-bold">Filters</h2>
+      <div>
+        <div className="divider divider-primary">
+          <h3 className="font-semibold">Status</h3>
         </div>
+        {statusValues.map((status) => (
+          <div key={status.id} className="form-control">
+            <label className="label cursor-pointer">
+              <span className="label-text">{status.name}</span>
+              <input
+                type="checkbox"
+                className="checkbox"
+                value={status.name}
+                checked={getStatus?.includes(status.name)}
+                onChange={handleStatus}
+              />
+            </label>
+          </div>
+        ))}
       </div>
 
       {!isVisible && (

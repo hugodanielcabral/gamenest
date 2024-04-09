@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCollection } from "../context/CollectionContext";
 import { CollectionCard } from "../components/collection/card/CollectionCard";
-import { Toast } from "../components/ui";
+import { Loading, Toast } from "../components/ui";
 import { useQuery } from "../hooks/useQuery";
 import { CollectionPagination } from "../components/collection/pagination/CollectionPagination";
 import { CollectionFilters } from "../components/collection/filters/CollectionFilters";
@@ -10,6 +10,7 @@ import backgroundImage from "../assets/backgrounds/collection-wallpaper.webp";
 import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 import { CollectionSearch } from "../components/collection/search/CollectionSearch";
 import { CardBackground } from "../components/ui/cardBackground/CardBackground";
+import { BackgroundImage } from "../components/ui/backgroundImage/backgroundImage";
 
 export const CollectionPage = () => {
   const {
@@ -90,15 +91,9 @@ export const CollectionPage = () => {
       setIsLoading(true);
     };
   }, [orderBy, currentPage, statusQuery, search]);
-  console.log(collectionData);
 
-  return (
-    <div
-      className="p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed"
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%), url(${backgroundImage})`,
-      }}
-    >
+  return !isLoading ? (
+    <BackgroundImage backgroundImage={backgroundImage}>
       <CardBackground className="flex p-5 mt-5 justify-evenly min-w-[300px] max-w-[900px] mx-auto">
         <div className="grid grid-cols-2 items-center gap-3 w-full justify-around">
           <div className="flex gap-5 items-center col-span-2 justify-center md:col-span-1">
@@ -162,6 +157,10 @@ export const CollectionPage = () => {
           totalPage={totalPage}
         />
       </div>
+    </BackgroundImage>
+  ) : (
+    <div className="container mx-auto h-screen flex items-center justify-center">
+      <Loading />
     </div>
   );
 };
