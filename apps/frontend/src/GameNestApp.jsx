@@ -9,7 +9,6 @@ import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { AddToCollection } from "./components/collection/addToCollection/AddToCollection.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
-import { GamesFinder } from "./components/games/gamesfinder/GamesFinder.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -43,11 +42,6 @@ export const GameNestApp = () => {
       id: 6,
       path: "*",
       element: <NotFound message="Oops" />,
-    },
-    {
-      id: 2,
-      path: "/games-v2",
-      element: <GamesFinder />,
     },
   ];
 
