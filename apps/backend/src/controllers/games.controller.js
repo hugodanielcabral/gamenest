@@ -4,7 +4,7 @@ env.config();
 
 // TODO Improve this controller, it's too big. Maybe split it into smaller functions.
 export const getGames = async (req, res) => {
-  const { gamename } = req.query || "";
+  const { search } = req.query || "";
   const { page } = req.query;
   const { platforms } = req.query;
   const { genres } = req.query;
@@ -17,8 +17,8 @@ export const getGames = async (req, res) => {
 
     let body = "";
 
-    if (gamename) {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${gamename}"; where rating > 1 ${
+    if (search) {
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${search}"; where rating > 1 ${
         platforms ? `& platforms=(${platforms})` : ""
       }  ${genres ? `& genres=(${genres})` : ""}; limit 10; offset ${
         page ? (page - 1) * 10 : 0
@@ -38,8 +38,8 @@ export const getGames = async (req, res) => {
     });
     const gamesData = await gamesResponse.json();
 
-    let countBody = gamename
-      ? `search "${gamename}"; where rating > 1;`
+    let countBody = search
+      ? `search "${search}"; where rating > 1;`
       : `where rating > 1;`;
 
     const countResponse = await fetch("https://api.igdb.com/v4/games/count", {

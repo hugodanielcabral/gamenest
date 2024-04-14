@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import { useState } from "react";
-import { InputSearch } from "../../ui/inputSearch/inputSearch";
+import { InputSearch } from "../../ui/index.js";
 
 export const CollectionSearch = ({
   setSearch,

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const useFetch = (url) => {
   const localCache = {};
+  const { search } = useLocation();
 
   const [state, setState] = useState({
     data: null,
@@ -12,7 +14,7 @@ export const useFetch = (url) => {
 
   useEffect(() => {
     getFetch();
-  }, [url]);
+  }, [url, search]);
 
   const setLoadingState = () => {
     setState({
@@ -27,7 +29,7 @@ export const useFetch = (url) => {
     try {
       setLoadingState();
 
-      const response = await fetch(url);
+      const response = await fetch(`${url}${search}`);
 
       if (!response.ok) {
         setState({
@@ -57,6 +59,7 @@ export const useFetch = (url) => {
   };
 
   return {
+    ...state.data,
     data: state.data,
     isLoading: state.isLoading,
     hasError: state.hasError,

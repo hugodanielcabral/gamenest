@@ -1,39 +1,51 @@
-import backgroundImage from "../../../assets/backgrounds/games-finder-wallpaper.webp";
-import { useFetchGames } from "../../../hooks/useFetchGames";
+import { useFetch } from "../../../hooks/useFetch.js";
+import { Loading } from "../../ui/index.js";
 import { BackgroundImage } from "../../ui/backgroundImage/backgroundImage";
-import { CardBackground } from "../../ui/cardBackground/CardBackground";
+import backgroundImage from "../../../assets/backgrounds/games-finder-wallpaper.webp";
 import { GamesFinderCard } from "./card/GamesFinderCard";
+import { GamesFinderSearch } from "./search/GamesFinderSearch.jsx";
+import { NoData } from "../../notfound/NoData.jsx";
+import { GamesFinderPagination } from "./pagination/GamesFinderPagination.jsx";
+import { GamesFinderFilters } from "./filters/GamesFinderFilters.jsx";
+import { Drawer } from "../../ui/drawer/Drawer.jsx";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GamesFinder = () => {
-  //TODO 2: Crear un componente buscador generico para poder reutilizarlo en otras paginas(por ahora en Games y Collection).
-
-  //TODO 4: Crear un componente Pagination para utilizarlo tanto en Games como en Collection.
-
-  //TODO 5: Crear un componente Filters para utilizarlo tanto en Games como en Collection.
-
-  //* Utilizar los colores info, error y white.
-  const { gamesData, isLoading, currentPage, totalPages } = useFetchGames();
-
-  console.log(gamesData);
+  const { games, currentPage, totalPages, isLoading, error } = useFetch(
+    `${BASE_URL}/games`
+  );
 
   return (
     <BackgroundImage backgroundImage={backgroundImage}>
       <div className="grid grid-cols-4 gap-6">
-        <div className="bg-red-500 text-white p-4 rounded shadow col-span-4">
-          Buscador
+        <div className="col-span-4">
+          <GamesFinderSearch />
         </div>
-        <div className="bg-blue-500 text-white p-4 rounded shadow col-span-4 flex flex-col gap-5 md:col-span-3">
+        <div className="col-span-4 md:hidden block mx-auto">
+          <Drawer btnTitle="Filters">
+            <GamesFinderFilters />
+          </Drawer>
+        </div>
+        <div className="p-4 rounded shadow col-span-4 flex flex-col gap-5 md:col-span-3 mx-auto">
           {isLoading ? (
-            <p>Loading...</p>
+            <Loading />
+          ) : games?.length ? (
+            games.map((game) => <GamesFinderCard game={game} key={game.id} />)
           ) : (
-            <GamesFinderCard gamesData={gamesData} />
+            <NoData
+              className="p-5 bg-base-100/90 text-center w-96"
+              message={error}
+            />
           )}
         </div>
-        <div className="bg-green-500 text-white p-4 rounded shadow col-span-4 md:col-span-1">
-          Filters
+        <div className="p-4 col-span-4 md:col-span-1 md:block hidden">
+          <GamesFinderFilters />
         </div>
-        <div className="bg-gray-500 col-span-4 text-white p-4 rounded shadow">
-          Pagination
+        <div className={`col-span-4 p-4 mx-auto`}>
+          <GamesFinderPagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </BackgroundImage>
