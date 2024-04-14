@@ -4,11 +4,11 @@ import { Navbar } from "../navbar/Navbar.jsx";
 
 export const Layout = ({ children }) => {
   return (
-    <div className={`relative`}>
+    <>
       <Navbar />
       <main>{children}</main>
       <Footer />
-    </div>
+    </>
   );
 };
 
