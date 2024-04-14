@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 
 export const useFetchCollection = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -34,3 +34,4 @@ export const useFetchCollection = () => {
 
   return { createCollection, errors };
 };
+ */
