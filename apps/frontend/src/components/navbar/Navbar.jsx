@@ -15,7 +15,7 @@ export const Navbar = () => {
   return (
     <>
       <div
-        className={`navbar bg-gradient-to-r from-base-100 to-base-300/90 grid grid-cols-3 items-center justify-between px-4 py-2 md:px-8 md:py-3 shadow-sm bg-opacity-90 *:mx-auto shadow-black min-h-[112px] sticky top-0 z-40`}
+        className={`navbar bg-gradient-to-r from-base-100 to-base-300/90 grid grid-cols-3 items-center justify-between px-4 py-2 md:px-8 md:py-3 shadow-sm bg-opacity-90 *:mx-auto shadow-black min-h-[112px] sticky top-0 z-20`}
       >
         <NavbarLinkListDropdown
           isAuth={isAuth}

@@ -1,3 +1,4 @@
+import propTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { useSearchParameters } from "../../../../hooks/useSearchParameters";
 import { gamesPlatforms } from "../../../../data/gamesPlatforms.js";
@@ -5,15 +6,13 @@ import { gamesGenres } from "../../../../data/gamesGenres.js";
 import { CardBackground } from "../../../ui/cardBackground/CardBackground";
 import clsx from "clsx";
 
-export const GamesFinderFilters = () => {
+export const GamesFinderFilters = ({ setActiveFiltersCount }) => {
   const { searchParams, setParams } = useSearchParameters({
     platforms: "",
     genres: "",
   });
 
   const [showMoreGenres, setShowMoreGenres] = useState("hidden");
-
-  //TODO 6: Se debe mostrar un mensaje en caso de que no se encuentren juegos con los filtros seleccionados.
 
   const [checkedFilters, setCheckedFilters] = useState({
     platforms: [],
@@ -111,6 +110,12 @@ export const GamesFinderFilters = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const totalActiveFilters =
+      checkedFilters?.platforms?.length + checkedFilters?.genres?.length;
+    setActiveFiltersCount(totalActiveFilters);
+  }, [checkedFilters]);
+
   return (
     <CardBackground>
       <button
@@ -180,4 +185,8 @@ export const GamesFinderFilters = () => {
       </div>
     </CardBackground>
   );
+};
+
+GamesFinderFilters.propTypes = {
+  setActiveFiltersCount: propTypes.func,
 };

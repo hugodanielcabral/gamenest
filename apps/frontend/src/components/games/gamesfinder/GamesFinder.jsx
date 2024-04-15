@@ -7,13 +7,16 @@ import { GamesFinderSearch } from "./search/GamesFinderSearch.jsx";
 import { NoData } from "../../notfound/NoData.jsx";
 import { GamesFinderPagination } from "./pagination/GamesFinderPagination.jsx";
 import { GamesFinderFilters } from "./filters/GamesFinderFilters.jsx";
-import { Drawer } from "../../ui/drawer/Drawer.jsx";
+import { Modal } from "../../ui/modal/Modal.jsx";
+import { useState } from "react";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GamesFinder = () => {
   const { games, currentPage, totalPages, isLoading, error } = useFetch(
     `${BASE_URL}/games`
   );
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeFiltersCount, setActiveFiltersCount] = useState(0);
 
   return (
     <BackgroundImage backgroundImage={backgroundImage}>
@@ -22,9 +25,19 @@ export const GamesFinder = () => {
           <GamesFinderSearch />
         </div>
         <div className="col-span-4 md:hidden block mx-auto">
-          <Drawer btnTitle="Filters">
-            <GamesFinderFilters />
-          </Drawer>
+          <button
+            onClick={() => setModalOpen(true)}
+            className="btn btn-info text-white text-xl btn-wide"
+          >
+            Filters ({activeFiltersCount})
+          </button>
+          <Modal
+            isOpen={modalOpen}
+            hasCloseBtn={true}
+            onClose={() => setModalOpen(false)}
+          >
+            <GamesFinderFilters setActiveFiltersCount={setActiveFiltersCount} />
+          </Modal>
         </div>
         <div className="p-4 rounded shadow col-span-4 flex flex-col gap-5 md:col-span-3 mx-auto">
           {isLoading ? (
@@ -39,7 +52,7 @@ export const GamesFinder = () => {
           )}
         </div>
         <div className="p-4 col-span-4 md:col-span-1 md:block hidden">
-          <GamesFinderFilters />
+          <GamesFinderFilters setActiveFiltersCount={setActiveFiltersCount} />
         </div>
         <div className={`col-span-4 p-4 mx-auto`}>
           <GamesFinderPagination

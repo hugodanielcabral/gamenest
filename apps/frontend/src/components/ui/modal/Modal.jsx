@@ -34,7 +34,7 @@ export const Modal = ({ isOpen, hasCloseBtn, onClose, children }) => {
   }, [isModalOpen]);
   return (
     <dialog className="modal" ref={ref} onKeyDown={handleKeyDown}>
-      <div className="modal-box">
+      <div className="modal-box w-full rounded-none">
         {hasCloseBtn && (
           <button className="modal-close" onClick={handleCloseModal}>
             <svg
