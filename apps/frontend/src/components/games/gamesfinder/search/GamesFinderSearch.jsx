@@ -3,14 +3,19 @@ import { InputSearch } from "../../../ui/index.js";
 import { useSearchParameters } from "../../../../hooks/useSearchParameters.js";
 
 export const GamesFinderSearch = () => {
+  //! Cuando hay un valor en la URL y recargo la pagina, no se coloca otra vez en el input
+
   const { searchParams, setParams, deleteParam } = useSearchParameters({
     search: "",
   });
   useSearchParameters();
-  const { search, setFormData, handleOnChange } = useForm({ search: "" });
+  const { search, setFormData, handleOnChange } = useForm({
+    search: searchParams.get("search"),
+  });
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
+    searchParams.delete("page");
     setParams({ search });
   };
 

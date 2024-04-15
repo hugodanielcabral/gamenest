@@ -40,6 +40,6 @@ export const GamesFinderPagination = ({ totalPages, currentPage }) => {
 };
 
 GamesFinderPagination.propTypes = {
-  totalPages: propTypes.number.isRequired,
-  currentPage: propTypes.number.isRequired,
+  totalPages: propTypes.number,
+  currentPage: propTypes.number,
 };

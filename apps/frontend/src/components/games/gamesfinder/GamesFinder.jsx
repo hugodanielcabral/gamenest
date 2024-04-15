@@ -34,7 +34,7 @@ export const GamesFinder = () => {
           ) : (
             <NoData
               className="p-5 bg-base-100/90 text-center w-96"
-              message={error}
+              message={error?.statusText || "No games found"}
             />
           )}
         </div>

@@ -68,7 +68,7 @@ export const GamesFinderFilters = () => {
     }
   };
 
-  const cleanFilters = () => {
+  const clearFilters = () => {
     setCheckedFilters({
       platforms: [],
       genres: [],
@@ -125,7 +125,7 @@ export const GamesFinderFilters = () => {
           },
           "btn btn-error btn-outline btn-sm mt-2 self-auto w-full my-5"
         )}
-        onClick={cleanFilters}
+        onClick={clearFilters}
       >
         Clear filters
       </button>
