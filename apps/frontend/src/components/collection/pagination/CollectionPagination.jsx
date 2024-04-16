@@ -7,7 +7,7 @@ export const CollectionPagination = ({
 }) => {
   return (
     <div
-      className={`join col-span-6 mx-auto min-h-96 items-end ${
+      className={`join col-span-4 mx-auto min-h-96 items-end ${
         totalPage <= 1 ? "hidden" : "block"
       }`}
     >
@@ -18,7 +18,7 @@ export const CollectionPagination = ({
       >
         «
       </button>
-      <button className="join-item btn">Page {currentPage}</button>
+      <button className="join-item btn">{currentPage}</button>
       <button
         className="join-item btn"
         disabled={currentPage >= totalPage}

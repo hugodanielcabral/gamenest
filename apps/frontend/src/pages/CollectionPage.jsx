@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCollection } from "../context/CollectionContext";
 import { CollectionCard } from "../components/collection/card/CollectionCard";
-import { Loading, Toast } from "../components/ui";
+import { Toast } from "../components/ui";
 import { useQuery } from "../hooks/useQuery";
 import { CollectionPagination } from "../components/collection/pagination/CollectionPagination";
 import { CollectionFilters } from "../components/collection/filters/CollectionFilters";
@@ -11,6 +11,7 @@ import { CiGrid2H, CiGrid41 } from "react-icons/ci";
 import { CollectionSearch } from "../components/collection/search/CollectionSearch";
 import { CardBackground } from "../components/ui/cardBackground/CardBackground";
 import { BackgroundImage } from "../components/ui/backgroundImage/backgroundImage";
+import { Modal } from "../components/ui/modal/Modal";
 
 export const CollectionPage = () => {
   const {
@@ -30,6 +31,7 @@ export const CollectionPage = () => {
   const [statusQuery, setStatusQuery] = useState("");
   const [search, setSearch] = useState("");
   const { paramsString, searchParams, setSearchParams } = useQuery();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [toast, setToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
@@ -84,6 +86,13 @@ export const CollectionPage = () => {
     }
   };
 
+  const handleOnClearFilters = () => {
+    setStatusQuery("");
+    searchParams.delete("status");
+    searchParams.delete("page");
+    setSearchParams(searchParams);
+  };
+
   useEffect(() => {
     getAllGamesFromUser(paramsString);
 
@@ -92,65 +101,86 @@ export const CollectionPage = () => {
     };
   }, [orderBy, currentPage, statusQuery, search]);
 
-  return !isLoading ? (
+  return (
     <BackgroundImage backgroundImage={backgroundImage}>
-      <CardBackground className="flex p-5 mt-5 justify-evenly min-w-[300px] max-w-[900px] mx-auto">
-        <div className="grid grid-cols-2 items-center gap-3 w-full justify-around">
-          <div className="flex gap-5 items-center col-span-2 justify-center md:col-span-1">
-            <p className="font-bold">View:</p>
-            <CiGrid2H size={25} />
-            <CiGrid41 size={25} />
+      <div className="grid grid-cols-4 gap-6">
+        <CardBackground className="flex col-span-4 p-5 mt-5 justify-evenly min-w-[300px] max-w-[900px] mx-auto">
+          <div className="grid grid-cols-2 items-center gap-3 w-full justify-around">
+            <div className="flex gap-5 items-center col-span-2 justify-center md:col-span-1">
+              <p className="font-bold">View:</p>
+              <CiGrid2H size={25} />
+              <CiGrid41 size={25} />
+            </div>
+
+            <div className="flex gap-3 col-span-2 items-center md:col-span-1">
+              <p className="font-bold">Order by:</p>
+              <select
+                className="select select-bordered w-full max-w-xs"
+                onChange={handleOrderBy}
+              >
+                <option disabled selected>
+                  Select an option
+                </option>
+                <option value="status">Status</option>
+                <option value="platform">Platform</option>
+                <option value="ownership">Ownership</option>
+              </select>
+
+              <p className="font-bold">Sort:</p>
+
+              <select
+                className="select select-bordered w-full max-w-xs"
+                onChange={handleSort}
+              >
+                <option disabled selected>
+                  Select an option
+                </option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </div>
+
+            <CollectionSearch
+              setSearch={setSearch}
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+            />
           </div>
-
-          <div className="flex gap-3 col-span-2 items-center md:col-span-1">
-            <p className="font-bold">Order by:</p>
-            <select
-              className="select select-bordered w-full max-w-xs"
-              onChange={handleOrderBy}
-            >
-              <option disabled selected>
-                Select an option
-              </option>
-              <option value="status">Status</option>
-              <option value="platform">Platform</option>
-              <option value="ownership">Ownership</option>
-            </select>
-
-            <p className="font-bold">Sort:</p>
-
-            <select
-              className="select select-bordered w-full max-w-xs"
-              onChange={handleSort}
-            >
-              <option disabled selected>
-                Select an option
-              </option>
-              <option value="asc">Ascending</option>
-              <option value="desc">Descending</option>
-            </select>
-          </div>
-
-          <CollectionSearch
-            setSearch={setSearch}
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-          />
+        </CardBackground>
+        <div className="col-span-4 md:hidden block mx-auto">
+          <button
+            onClick={() => setModalOpen(true)}
+            className="btn btn-info text-white text-xl btn-wide"
+          >
+            Filters
+          </button>
+          <Modal
+            isOpen={modalOpen}
+            hasCloseBtn={true}
+            onClose={() => setModalOpen(false)}
+          >
+            <CollectionFilters
+              handleStatus={handleStatus}
+              setStatusQuery={setStatusQuery}
+              handleOnClearFilters={handleOnClearFilters}
+            />
+          </Modal>
         </div>
-      </CardBackground>
-      <Toast toastMessage={toastMessage} showToast={toast} />
+        <Toast toastMessage={toastMessage} showToast={toast} />
 
-      <div className="grid grid-cols-6 gap-10 mt-2">
         <CollectionCard
           collectionData={collectionData}
           handleOnDelete={handleOnDelete}
           isLoading={isLoading}
           totalGames={totalGames}
         />
-        <CollectionFilters
-          handleStatus={handleStatus}
-          setStatusQuery={setStatusQuery}
-        />
-
+        <div className="col-span-4 md:col-span-1 md:block hidden">
+          <CollectionFilters
+            handleStatus={handleStatus}
+            setStatusQuery={setStatusQuery}
+            handleOnClearFilters={handleOnClearFilters}
+          />
+        </div>
         <CollectionPagination
           handlePage={handlePage}
           currentPage={currentPage}
@@ -158,9 +188,5 @@ export const CollectionPage = () => {
         />
       </div>
     </BackgroundImage>
-  ) : (
-    <div className="container mx-auto h-screen flex items-center justify-center">
-      <Loading />
-    </div>
   );
 };

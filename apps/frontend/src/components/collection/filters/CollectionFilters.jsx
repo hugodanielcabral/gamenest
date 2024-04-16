@@ -1,11 +1,15 @@
 import propTypes from "prop-types";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CardBackground } from "../../ui/cardBackground/CardBackground";
+import { Checkbox } from "../../ui/checkbox/Checkbox";
+import clsx from "clsx";
 
-export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
+export const CollectionFilters = ({
+  handleStatus,
+  setStatusQuery,
+  handleOnClearFilters,
+}) => {
   const [searchParams] = useSearchParams();
-  const [isVisible, setIsVisible] = useState(false);
 
   const statusValues = [
     {
@@ -27,6 +31,7 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
   ];
 
   const getStatus = searchParams.get("status");
+  console.log(getStatus);
 
   if (getStatus) {
     getStatus.split(", ").forEach((status) => {
@@ -36,93 +41,34 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
     });
   }
 
-  useEffect(() => {
-    const checkScroll = () => {
-      const scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight =
-        document.documentElement.scrollHeight || document.body.scrollHeight;
-      const scrolledTo = scrollTop / scrollHeight;
-
-      if (scrolledTo > 0.1 && scrolledTo < 0.7) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener("scroll", checkScroll);
-
-    return () => {
-      window.removeEventListener("scroll", checkScroll);
-    };
-  }, []);
-
   return (
-    <CardBackground className="md:col-span-1 hidden md:block h-96 p-5">
-      <h2 className="text-center text-2xl font-bold">Filters</h2>
-      <div>
-        <div className="divider divider-primary">
-          <h3 className="font-semibold">Status</h3>
-        </div>
-        {statusValues.map((status) => (
-          <div key={status.id} className="form-control">
-            <label className="label cursor-pointer">
-              <span className="label-text">{status.name}</span>
-              <input
-                type="checkbox"
-                className="checkbox"
-                value={status.name}
-                checked={getStatus?.includes(status.name)}
-                onChange={handleStatus}
-              />
-            </label>
-          </div>
-        ))}
-      </div>
+    <CardBackground>
+      <button
+        className={clsx(
+          {
+            hidden: !getStatus,
 
-      {!isVisible && (
-        <div className="drawer z-10">
-          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-            <label
-              htmlFor="my-drawer"
-              className="btn btn-info drawer-button 
-              fixed inset-x-1/4 top-[600px] md:hidden text-white font-bold text-lg"
-            >
-              Filters
-            </label>
-          </div>
-          <div className="drawer-side">
-            <label
-              htmlFor="my-drawer"
-              aria-label="close sidebar"
-              className="drawer-overlay"
-            ></label>
-            <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-              <h2 className="text-center text-2xl font-bold">Filters</h2>
-
-              <div className="divider divider-primary">
-                <h3 className="font-semibold">Status</h3>
-              </div>
-              {statusValues.map((status) => (
-                <div key={status.id} className="form-control">
-                  <label className="label cursor-pointer">
-                    <span className="label-text">{status.name}</span>
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      value={status.name}
-                      checked={getStatus?.includes(status.name)}
-                      onChange={handleStatus}
-                    />
-                  </label>
-                </div>
-              ))}
-            </ul>
-          </div>
+            block: getStatus,
+          },
+          "btn btn-error btn-outline btn-sm mt-2 self-auto w-full my-5"
+        )}
+        onClick={handleOnClearFilters}
+      >
+        Clear filters
+      </button>
+      <h2 className="text-xl font-semibold">Status</h2>
+      {statusValues.map((status) => (
+        <div key={status.id} className="form-control">
+          <label className="label cursor-pointer">
+            <span className="label-text">{status.name}</span>
+            <Checkbox
+              value={status.name}
+              checked={getStatus?.includes(status.name)}
+              onChange={handleStatus}
+            />
+          </label>
         </div>
-      )}
+      ))}
     </CardBackground>
   );
 };
@@ -130,4 +76,5 @@ export const CollectionFilters = ({ handleStatus, setStatusQuery }) => {
 CollectionFilters.propTypes = {
   handleStatus: propTypes.func.isRequired,
   setStatusQuery: propTypes.func.isRequired,
+  handleOnClearFilters: propTypes.func.isRequired,
 };

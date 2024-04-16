@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { FaPencilAlt, FaInfo, FaTrash } from "react-icons/fa";
 import { IoMdMore } from "react-icons/io";
 import { Loading } from "../../ui";
+import { CardBackground } from "../../ui/cardBackground/CardBackground";
 
 export const CollectionCard = ({
   collectionData,
@@ -20,13 +21,13 @@ export const CollectionCard = ({
   };
 
   return (
-    <div className="col-span-6 md:col-span-5 *:mb-2">
+    <div className="col-span-4 md:col-span-3 *:mb-2">
       {!isLoading ? (
         collectionData.length > 0 ? (
           collectionData.map((collection) => (
-            <div
+            <CardBackground
               key={collection?.collection_id}
-              className="bg-base-100/90 bg-opacity-90 grid grid-cols-12 shadow-sm shadow-black"
+              className="grid grid-cols-12 p-0"
             >
               {/* img and name */}
               <div className="flex items-center gap-x-3 col-span-7 md:col-span-8 lg:col-span-9 p-5">
@@ -36,8 +37,9 @@ export const CollectionCard = ({
                     "t_cover_small"
                   )}
                   alt={`Cover from the game ${collection?.name}`}
+                  className="border-info border-2"
                 />
-                <h2 className="font-bold text-base sm:text-xl md:text-2xl lg:text-3xl text-primary">
+                <h2 className="font-bold text-white sm:text-xl md:text-2xl lg:text-3xl">
                   {collection?.name}
                 </h2>
               </div>
@@ -119,7 +121,7 @@ export const CollectionCard = ({
                 collection={collection}
                 handleOnDelete={handleOnDelete}
               />
-            </div>
+            </CardBackground>
           ))
         ) : (
           <div className="bg-base-100/90 mx-auto flex flex-col items-center p-5">
