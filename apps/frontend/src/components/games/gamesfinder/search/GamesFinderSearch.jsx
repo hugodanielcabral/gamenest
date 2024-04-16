@@ -1,10 +1,9 @@
+import propTypes from "prop-types";
 import { useForm } from "../../../../hooks/useForm";
 import { InputSearch } from "../../../ui/index.js";
 import { useSearchParameters } from "../../../../hooks/useSearchParameters.js";
 
-export const GamesFinderSearch = () => {
-  //! Cuando hay un valor en la URL y recargo la pagina, no se coloca otra vez en el input
-
+export const GamesFinderSearch = ({ handleOnClearFilters }) => {
   const { searchParams, setParams, deleteParam } = useSearchParameters({
     search: "",
   });
@@ -16,6 +15,9 @@ export const GamesFinderSearch = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     searchParams.delete("page");
+    //* For now, we are not using the handleOnClearFilters function, but we will use it in the future.
+    /*     handleOnClearFilters();
+     */
     setParams({ search });
   };
 
@@ -42,4 +44,8 @@ export const GamesFinderSearch = () => {
       </form>
     </>
   );
+};
+
+GamesFinderSearch.propTypes = {
+  handleOnClearFilters: propTypes.func.isRequired,
 };

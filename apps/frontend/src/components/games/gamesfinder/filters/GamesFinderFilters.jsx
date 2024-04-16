@@ -1,22 +1,22 @@
 import propTypes from "prop-types";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSearchParameters } from "../../../../hooks/useSearchParameters";
 import { gamesPlatforms } from "../../../../data/gamesPlatforms.js";
 import { gamesGenres } from "../../../../data/gamesGenres.js";
 import { CardBackground } from "../../../ui/cardBackground/CardBackground";
 import clsx from "clsx";
 
-export const GamesFinderFilters = ({ setActiveFiltersCount }) => {
+export const GamesFinderFilters = ({
+  setActiveFiltersCount,
+  checkedFilters,
+  setCheckedFilters,
+  showMoreGenres,
+  setShowMoreGenres,
+  handleOnClearFilters,
+}) => {
   const { searchParams, setParams } = useSearchParameters({
     platforms: "",
     genres: "",
-  });
-
-  const [showMoreGenres, setShowMoreGenres] = useState("hidden");
-
-  const [checkedFilters, setCheckedFilters] = useState({
-    platforms: [],
-    genres: [],
   });
 
   //* Se obtienen los valores de los filtros de la URL y se guardan en un array para poder compararlos con los valores de los filtros seleccionados.
@@ -65,13 +65,6 @@ export const GamesFinderFilters = ({ setActiveFiltersCount }) => {
         ),
       });
     }
-  };
-
-  const clearFilters = () => {
-    setCheckedFilters({
-      platforms: [],
-      genres: [],
-    });
   };
 
   useEffect(() => {
@@ -130,7 +123,7 @@ export const GamesFinderFilters = ({ setActiveFiltersCount }) => {
           },
           "btn btn-error btn-outline btn-sm mt-2 self-auto w-full my-5"
         )}
-        onClick={clearFilters}
+        onClick={handleOnClearFilters}
       >
         Clear filters
       </button>
@@ -189,4 +182,9 @@ export const GamesFinderFilters = ({ setActiveFiltersCount }) => {
 
 GamesFinderFilters.propTypes = {
   setActiveFiltersCount: propTypes.func,
+  checkedFilters: propTypes.object,
+  setCheckedFilters: propTypes.func,
+  showMoreGenres: propTypes.string,
+  setShowMoreGenres: propTypes.func,
+  handleOnClearFilters: propTypes.func,
 };

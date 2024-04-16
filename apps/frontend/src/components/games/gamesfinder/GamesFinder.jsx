@@ -16,13 +16,26 @@ export const GamesFinder = () => {
     `${BASE_URL}/games`
   );
   const [modalOpen, setModalOpen] = useState(false);
+
   const [activeFiltersCount, setActiveFiltersCount] = useState(0);
+  const [checkedFilters, setCheckedFilters] = useState({
+    platforms: [],
+    genres: [],
+  });
+  const [showMoreGenres, setShowMoreGenres] = useState("hidden");
+
+  const handleOnClearFilters = () => {
+    setCheckedFilters({
+      platforms: [],
+      genres: [],
+    });
+  };
 
   return (
     <BackgroundImage backgroundImage={backgroundImage}>
       <div className="grid grid-cols-4 gap-6">
         <div className="col-span-4">
-          <GamesFinderSearch />
+          <GamesFinderSearch handleOnClearFilters={handleOnClearFilters} />
         </div>
         <div className="col-span-4 md:hidden block mx-auto">
           <button
@@ -36,7 +49,14 @@ export const GamesFinder = () => {
             hasCloseBtn={true}
             onClose={() => setModalOpen(false)}
           >
-            <GamesFinderFilters setActiveFiltersCount={setActiveFiltersCount} />
+            <GamesFinderFilters
+              setActiveFiltersCount={setActiveFiltersCount}
+              checkedFilters={checkedFilters}
+              setCheckedFilters={setCheckedFilters}
+              showMoreGenres={showMoreGenres}
+              setShowMoreGenres={setShowMoreGenres}
+              handleOnClearFilters={handleOnClearFilters}
+            />
           </Modal>
         </div>
         <div className="p-4 rounded shadow col-span-4 flex flex-col gap-5 md:col-span-3 mx-auto">
@@ -52,7 +72,14 @@ export const GamesFinder = () => {
           )}
         </div>
         <div className="p-4 col-span-4 md:col-span-1 md:block hidden">
-          <GamesFinderFilters setActiveFiltersCount={setActiveFiltersCount} />
+          <GamesFinderFilters
+            setActiveFiltersCount={setActiveFiltersCount}
+            checkedFilters={checkedFilters}
+            setCheckedFilters={setCheckedFilters}
+            showMoreGenres={showMoreGenres}
+            setShowMoreGenres={setShowMoreGenres}
+            handleOnClearFilters={handleOnClearFilters}
+          />
         </div>
         <div className={`col-span-4 p-4 mx-auto`}>
           <GamesFinderPagination
