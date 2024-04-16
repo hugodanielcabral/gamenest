@@ -92,10 +92,10 @@ export const RegisterPage = () => {
       <Toast toastMessage="User created successfully!" showToast={showToast} />
       <div className="flex items-center mt-5 justify-evenly">
         <article className="flex flex-col items-center mt-3">
-          <h1 className="text-4xl font-bold text-pink-500 uppercase">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
             Your Backlog Adventure begins today!
           </h1>
-          <h3 className="mt-4 text-xl font-bold text-center text-white text-balance">
+          <h3 className="mt-4 text-lg md:text-xl lg:text-2xl font-bold text-center text-white text-pretty">
             Embark on a journey to conquer your gaming backlog with GameNest! .
             Let the adventure begin!
           </h3>

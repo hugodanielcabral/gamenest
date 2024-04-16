@@ -2,25 +2,26 @@ import propTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../../ui/index.js";
 import clsx from "clsx";
+import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
 
 export const AddToCollectionHeader = ({ data, gameSlug }) => {
   const { collectionId } = useParams();
   const navigate = useNavigate();
 
   return (
-    <section className="col-span-2 flex flex-col md:flex-row justify-around bg-base-100/90 bg-opacity-90 shadow-sm shadow-black p-3">
+    <CardBackground className="col-span-2 flex flex-col md:flex-row justify-around">
       <div className="flex flex-col justify-around p-3 gap-y-2 items-center">
         <img
           src={
             data.cover
-              ? `${data.cover.url.replace("t_thumb", "t_cover_big")}`
+              ? `${data.cover.url.replace("t_thumb", "t_1080p	")}`
               : "https://via.placeholder.com/300x400?text=No+Cover+Available"
           }
           alt={`${data?.name} cover`}
-          className="size-auto max-h-72 border-2 border-buttons-300 dark:border-buttons-300"
+          className="max-h-72 border-2 border-info bg-cover bg-center bg-no-repeat shadow-lg"
         />
         <Button
-          className="btn-md transition-all duration-500 ease-in-out disabled:pointer-events-none disabled:opacity-15 bg-details-600 hover:bg-details-300 text-textDark-600 font-bold"
+          className="btn-md transition-all duration-500 ease-in-out disabled:pointer-events-none disabled:opacity-15 font-bold"
           onClick={() => navigate(`/games/${gameSlug}`)}
         >
           VIEW GAME PAGE
@@ -32,19 +33,21 @@ export const AddToCollectionHeader = ({ data, gameSlug }) => {
           <h1
             className={clsx(
               {
-                "text-details-600": collectionId,
+                "text-error": collectionId,
               },
-              "text-2xl uppercase font-bold text-buttons-400"
+              "text-2xl md:text-3xl uppercase font-bold text-error"
             )}
           >
             {collectionId
               ? "Edit Game in Collection"
               : "Add Game to Collection"}
           </h1>
-          <h2 className="text-2xl font-bold text-buttons-400">{data?.name}</h2>
+          <h2 className="text-xl text-center md:text-2xl font-bold text-white text-pretty">
+            {data?.name}
+          </h2>
         </div>
       </div>
-    </section>
+    </CardBackground>
   );
 };
 

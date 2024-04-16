@@ -3,18 +3,7 @@ import { encryptPassword, comparePassword } from "../helpers/handleBcrypt.js";
 import { handleJwt } from "../helpers/handleJwt.js";
 
 export const signup = async (req, res) => {
-  const {
-    username,
-    email,
-    pass,
-    birthday,
-    avatar,
-    title,
-    status_lock,
-    verified,
-    role_id,
-    country_id,
-  } = req.body;
+  const { username, email, pass, country } = req.body;
 
   try {
     const userExists = await sql`SELECT * FROM users WHERE username LIKE ${
@@ -24,10 +13,16 @@ export const signup = async (req, res) => {
     if (userExists[0])
       return res.status(400).json({ message: "User already exist" });
 
+    const title = "Newbie";
+    const status_lock = false;
+    const verified = false;
+    const birthday = null;
+    const avatar = "https://via.placeholder.com/300x300?text=No+Avatar";
+    const role_id = 3;
     const hashedPass = await encryptPassword(pass);
 
     const newUser =
-      await sql`INSERT INTO users (username, email, pass, birthday, avatar, title, status_lock, verified, country_id) VALUES (${username}, ${email}, ${hashedPass}, ${birthday}, ${avatar}, ${title}, ${status_lock}, ${true}, ${country_id}) RETURNING *`;
+      await sql`INSERT INTO users (username, email, pass, birthday, avatar, title, status_lock, verified, role_id, country_id) VALUES (${username}, ${email}, ${hashedPass}, ${birthday}, ${avatar}, ${title}, ${status_lock}, ${verified}, ${role_id}, ${country}) RETURNING *`;
 
     const token = await handleJwt({ id: newUser[0].user_id });
 

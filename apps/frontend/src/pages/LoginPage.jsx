@@ -58,10 +58,10 @@ export const LoginPage = () => {
 
       <div className="flex items-center mt-5 justify-evenly">
         <article className="flex flex-col items-center mt-3">
-          <h1 className="text-4xl font-bold text-pink-500 uppercase">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase">
             Unlock Your Gaming Realm
           </h1>
-          <h3 className="mt-4 text-xl font-bold text-center text-white text-balance">
+          <h3 className="mt-4 text-lg md:text-xl lg:text-2xl font-bold text-center text-white text-balance">
             Continue Your Backlog Adventure with GameNest! Ready to Dive Back
             In?
           </h3>

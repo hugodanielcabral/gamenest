@@ -8,6 +8,7 @@ import { AddToCollectionProgress } from "./sections/AddToCollectionProgress.jsx"
 import { useState } from "react";
 import { useEffect } from "react";
 import { useCollection } from "../../../context/CollectionContext.jsx";
+import { BackgroundImage } from "../../ui/backgroundImage/backgroundImage.jsx";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -140,15 +141,12 @@ export const AddToCollection = () => {
       <Loading />
     </div>
   ) : (
-    <div
-      className="p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed"
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 90%), url(${
-          data
-            ? data.screenshots[0].url.replace("t_thumb", "t_screenshot_huge")
-            : null
-        })`,
-      }}
+    <BackgroundImage
+      backgroundImage={
+        data
+          ? data.screenshots[0].url.replace("t_thumb", "t_screenshot_huge")
+          : null
+      }
     >
       <Toast
         toastMessage={
@@ -161,7 +159,7 @@ export const AddToCollection = () => {
 
       <form
         onSubmit={handleOnSubmit}
-        className="grid grid-cols-2 max-w-[1100px] mx-auto mt-10 gap-2"
+        className="grid grid-cols-2 mx-auto gap-2"
       >
         <AddToCollectionHeader data={data} gameSlug={gameSlug} />
         <AddToCollectionGameInfo
@@ -176,24 +174,24 @@ export const AddToCollection = () => {
           errors={errors}
         />
 
-        <section className="flex gap-5">
+        <section className="flex gap-5 col-span-2 justify-center">
           <Button
             type="submit"
             disabled={buttonDisabled}
-            className="bg-buttons-500 hover:bg-buttons-400 font-bold text-textWhite-50 text-lg disabled:pointer-events-none disabled:opacity-50"
+            className="font-bold text-white text-lg disabled:pointer-events-none disabled:opacity-50"
           >
             {collectionId ? "Update" : "Add to collection"}
           </Button>
           <Button
             type="button"
             disabled={buttonDisabled}
-            className="bg-danger-500 hover:bg-danger-400 font-bold text-textWhite-50 text-lg disabled:pointer-events-none disabled:opacity-50"
+            className="font-bold bg-error text-lg disabled:pointer-events-none disabled:opacity-50"
             onClick={handleCancel}
           >
             Cancel
           </Button>
         </section>
       </form>
-    </div>
+    </BackgroundImage>
   );
 };

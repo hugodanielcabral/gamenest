@@ -42,6 +42,7 @@ export const signupValidator = [
     "avatar",
     "Avatar"
   )
+    .optional()
     .isString()
     .withMessage("Avatar must be a string")
     .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png)/)
@@ -54,8 +55,11 @@ export const signupValidator = [
     .withMessage("Title must be at least 3 characters long")
     .isLength({ max: 30 })
     .withMessage("Title must be at most 30 characters long"),
-  check("status_lock").isBoolean().withMessage("Status lock must be a boolean"),
-  existsAndNotEmpty("country_id", "Country")
+  check("status_lock")
+    .optional()
+    .isBoolean()
+    .withMessage("Status lock must be a boolean"),
+  existsAndNotEmpty("country", "Country")
     .isInt()
     .withMessage("Oops something went wrong, please try again later"),
   existsAndNotEmpty("repass", "Repeat password").custom((value, { req }) => {

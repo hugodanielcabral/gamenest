@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (formData) => {
     try {
+      console.log(formData);
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         credentials: "include",
@@ -34,11 +35,7 @@ export const AuthProvider = ({ children }) => {
           email: formData.email,
           pass: formData.password,
           repass: formData.repassword,
-          avatar:
-            "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
-          title: "Lord",
           country: formData.country,
-          status_lock: false,
         }),
         headers: {
           "Content-Type": "application/json",

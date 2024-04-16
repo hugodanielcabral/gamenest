@@ -1,6 +1,7 @@
 import { statusValues } from "../../../../data/ownershipStatusValues";
 import propTypes from "prop-types";
 import clsx from "clsx";
+import { CardBackground } from "../../../ui/cardBackground/CardBackground";
 
 export const AddToCollectionProgress = ({
   formData,
@@ -8,8 +9,8 @@ export const AddToCollectionProgress = ({
   errors,
 }) => {
   return (
-    <section className="col-span-2 md:col-span-2 bg-base-100/90 bg-opacity-90 shadow-sm shadow-black p-3">
-      <h3 className="text-xl underline underline-offset-8 decoration-buttons-500">
+    <CardBackground className="col-span-2">
+      <h3 className="text-xl underline underline-offset-8 decoration-error text-white font-semibold">
         PROGRESS
       </h3>
       <div className="flex flex-col md:flex-row justify-around my-2">
@@ -22,12 +23,12 @@ export const AddToCollectionProgress = ({
                 className={clsx(
                   "form-control size-24 h-fit bg-base-200",
                   formData.status === status.name
-                    ? "border-details-500 border-2"
-                    : "border-details-300 border border-opacity-25"
+                    ? "border-info border-2"
+                    : "border-info border border-opacity-25"
                 )}
               >
                 <label className="label cursor-pointer">
-                  <span className="label-text flex-col flex gap-2 items-center justify-center w-full text-buttons-500 dark:text-buttons-300 font-bold">
+                  <span className="label-text flex-col flex gap-2 items-center justify-center w-full text-white font-bold">
                     {status.icon}
                     {status.name}
                   </span>
@@ -49,7 +50,7 @@ export const AddToCollectionProgress = ({
             className={clsx(
               "textarea textarea-lg	textarea-bordered w-full max-w-xs mt-5",
               {
-                "border-danger-500":
+                "border-error":
                   errors && errors.some((err) => err.path == "progress_note"),
                 "border-1":
                   errors && !errors.some((err) => err.path == "progress_note"),
@@ -63,7 +64,7 @@ export const AddToCollectionProgress = ({
           ></textarea>
         </div>
       </div>
-    </section>
+    </CardBackground>
   );
 };
 

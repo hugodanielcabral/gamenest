@@ -184,14 +184,14 @@ export const RegisterForm = ({
 
       <p className="my-3 text-base text-center text-white">
         Already have an account? {""}
-        <Link to={"/login"} className="font-bold text-pink-500">
+        <Link to={"/login"} className="font-bold text-info">
           Sign in.
         </Link>
       </p>
       <Button
         type="submit"
         disabled={buttonDisabled}
-        className="transition-all duration-500 ease-in-out bg-gradient-to-r from-pink-400 via-pink-500 to-pink-700 hover:from-pink-500 hover:via-pink-600 hover:to-pink-700 disabled:pointer-events-none disabled:opacity-15"
+        className="transition-all duration-500 ease-in-out  disabled:pointer-events-none disabled:opacity-15"
       >
         Sign up
       </Button>
