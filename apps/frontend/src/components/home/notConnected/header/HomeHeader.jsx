@@ -1,6 +1,6 @@
-import heroImageNC from "../../../assets/backgrounds/hero-image-home-not-connected.avif";
+import heroImageNC from "../../../../assets/backgrounds/hero-image-home-not-connected.avif";
 import "./HomeHeader.css";
-import { Button } from "../../ui/index.js";
+import { Button } from "../../../ui/index.js";
 
 export const HomeHeader = () => {
   return (

@@ -1,4 +1,4 @@
-import gamesPageImage from "../../../assets/backgrounds/games-page.avif";
+import gamesPageImage from "../../../../assets/backgrounds/games-page.avif";
 import "./HomeNextGame.css";
 export const HomeNextGame = () => {
   return (
