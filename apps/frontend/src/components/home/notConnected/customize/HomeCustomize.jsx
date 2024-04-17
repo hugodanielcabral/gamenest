@@ -4,7 +4,7 @@ export const HomeCustomize = () => {
   return (
     <section className="container mx-auto my-8 p-5">
       <div className="flex justify-center items-center md:gap-y-0 gap-y-5 gap-x-10 flex-wrap">
-        <figure className="grid grid-cols-2 gap-3 basis-1/3 flex-shrink-0 md:order-0 order-1">
+        <figure className="grid grid-cols-2 gap-3 basis-3/4 md:basis-1/3 flex-shrink-0 md:order-0 order-1">
           {customizeFeatures.map((feature) => (
             <img
               key={feature.id}
@@ -23,8 +23,7 @@ export const HomeCustomize = () => {
           </h2>
           <p className="text-base md:text-xl lg:text-2xl text-balance text-center">
             Customize your collection with the platform, progress notes, status,
-            and ownership.{" "}
-            <span className="font-bold">More features coming soon! 🔜</span>
+            and ownership.
           </p>
         </article>
       </div>

@@ -9,7 +9,7 @@ export const AddToCollectionHeader = ({ data, gameSlug }) => {
   const navigate = useNavigate();
 
   return (
-    <CardBackground className="col-span-2 flex flex-col md:flex-row justify-around">
+    <CardBackground className="col-span-2 flex flex-col md:flex-row justify-around bg-transparent border-0 shadow-none">
       <div className="flex flex-col justify-around p-3 gap-y-2 items-center">
         <img
           src={
