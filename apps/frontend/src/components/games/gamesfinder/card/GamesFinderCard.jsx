@@ -5,10 +5,11 @@ import { CardBackground } from "../../../ui/cardBackground/CardBackground";
 import { clsx } from "clsx";
 import { NoData } from "../../../notfound/NoData.jsx";
 import { Link } from "react-router-dom";
+import getImageUrl from "../../../../utils/getImageUrl.js";
 
 export const GamesFinderCard = ({ game }) => {
   const coverImage =
-    game?.cover?.url.replace("thumb", "cover_big") ||
+    game?.cover?.url ||
     "https://placehold.co/264x352?text=No+Cover+Image+Available";
 
   const ratingPercentage = Math.floor(game?.rating) || 0;
@@ -20,7 +21,7 @@ export const GamesFinderCard = ({ game }) => {
         className="group flex gap-2 max-h-[200px] shadow-black border-l-4 border-l-info hover:border-l-error transition-all duration-300 ease-in-out"
       >
         <img
-          src={`${coverImage}`}
+          src={getImageUrl(coverImage, "cover_big")}
           loading="lazy"
           alt={`${game?.name} cover`}
           className="flex-grow-0 w-28 border border-info group-hover:border-error transition-all duration-300 ease-in-out"
