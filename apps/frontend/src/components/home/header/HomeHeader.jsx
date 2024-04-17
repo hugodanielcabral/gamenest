@@ -8,10 +8,12 @@ export const HomeHeader = () => {
       <div className="container">
         <img src={heroImageNC} alt="" className="hero-image" />
         <div className="hero-description">
-          <h1 className="hero-title text-4xl md:text-6xl lg:text-7xl text-center">
+          <h1 className="hero-title text-4xl md:text-6xl lg:text-7xl text-center text-white">
             All your games in one place
           </h1>
-          <p className="hero-subtitle">Join us and track all your games</p>
+          <p className="hero-subtitle text-white">
+            Join us and track all your games
+          </p>
           <Button to="/signup" className="hero-button">
             Sign up
           </Button>
