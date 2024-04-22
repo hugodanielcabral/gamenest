@@ -2,5 +2,6 @@
 .env
 .vscode
 .docker-compose
+.sql
 
-
+/sql/
