@@ -45,6 +45,7 @@ export const useFetch = (url) => {
       }
 
       const data = await response.json();
+
       setState({
         data,
         isLoading: false,

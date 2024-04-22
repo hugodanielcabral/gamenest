@@ -8,6 +8,10 @@ export const GameDetailsHeader = ({ data }) => {
     ? data?.involved_companies.find((company) => company.developer === true)
     : null;
 
+  const timestamp = data?.first_release_date;
+  const date = DateTime.fromSeconds(timestamp);
+  const formattedDate = date.toFormat("yyyy");
+
   //* I'm filtering the external games to remove the excluded stores and then I'm removing the duplicates
   const filteredExternalStores = data?.external_games
     .filter((store) => {
@@ -34,7 +38,7 @@ export const GameDetailsHeader = ({ data }) => {
         </h1>
         <h3 className="text-lg md:text-xl lg:text-2xl md:text-left text-center text-info font-semibold">
           {involvedCompanies && involvedCompanies.company.name} -{" "}
-          {DateTime.fromObject(data?.first_release_date).year}
+          {formattedDate}
         </h3>
       </div>
       <div className="flex gap-3 justify-center grow flex-col items-center">
