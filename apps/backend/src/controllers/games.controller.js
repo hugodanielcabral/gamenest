@@ -104,6 +104,51 @@ export const getGamesFromUser = async (collection) => {
   }
 };
 
+export const getLatestGames = async (req, res) => {
+  const CURRENT_TIMESTAMP = Math.floor(Date.now() / 1000);
+  try {
+    const response = await fetch("https://api.igdb.com/v4/games", {
+      method: "POST",
+      headers: {
+        "Client-ID": process.env.CLIENT_ID,
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+      },
+      body: `fields slug, name,cover.url, first_release_date, themes;
+      where first_release_date < ${CURRENT_TIMESTAMP} & cover.url != null & themes != (42) & platforms = (6,49,167);sort first_release_date desc;limit 8;
+      `,
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getPopularGames = async (req, res) => {
+  const YEAR_2021 = 1600000000;
+  try {
+    const response = await fetch("https://api.igdb.com/v4/games", {
+      method: "POST",
+      headers: {
+        "Client-ID": process.env.CLIENT_ID,
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+      },
+      body: `fields first_release_date, slug,name, aggregated_rating, cover.url, release_dates.y;
+      where aggregated_rating > 85 & rating_count > 60 & first_release_date >= ${YEAR_2021} ;
+      limit 20;
+      ;
+      `,
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 //* I should use this function to get the token and save it in a .env file
 //? I should also use a cron job to update the token every 60 days
 
