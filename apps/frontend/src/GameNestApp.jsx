@@ -9,6 +9,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { AddToCollection } from "./components/collection/addToCollection/AddToCollection.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
+import { ChangelogsPage } from "./pages/ChangelogsPage.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -43,6 +44,11 @@ export const GameNestApp = () => {
       path: "*",
       element: <NotFound message="Oops" />,
     },
+    {
+      id: 7,
+      path: "/changelogs",
+      element: <ChangelogsPage />,
+    },
   ];
 
   const privateRoutes = [
@@ -65,6 +71,16 @@ export const GameNestApp = () => {
       id: 4,
       path: "/collection/edit/:gameSlug/:collectionId",
       element: <AddToCollection />,
+    },
+    {
+      id: 5,
+      path: "*",
+      element: <NotFound message="Oops" />,
+    },
+    {
+      id: 6,
+      path: "/changelogs",
+      element: <ChangelogsPage />,
     },
   ];
 
