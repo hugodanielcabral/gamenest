@@ -45,60 +45,35 @@ This project uses the following technologies/este proyecto usa las siguientes te
 
 **Home No Auth**
 
-<video controls>
-    <source src="./apps/frontend/src/assets/videos/home-page-noauth.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
+https://github.com/hugodanielcabral/gamenest/assets/126025811/7e23558b-5102-4cd2-81ad-6c64353f201d
 
 **Home Auth**
 
-<video controls>
-    <source src="./apps/frontend/src/assets/videos/home-page-auth.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
+https://github.com/hugodanielcabral/gamenest/assets/126025811/4b8ae265-35f4-4174-88c6-0e9f2a6750ff
 
 **Register**
 
-<video controls>
-    <source src="./apps/frontend/src/assets/videos/register-page.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
+https://github.com/hugodanielcabral/gamenest/assets/126025811/eacc409d-7e32-4b62-af83-e120f22a3647
 
 **Login**
 
-<video controls>
-    <source src="./apps/frontend/src/assets/videos/login-page.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
+https://github.com/hugodanielcabral/gamenest/assets/126025811/3adec6ef-e1ef-41dd-b2e7-51220408c75e
 
 **Games Finder**
 
-<video controls>
-    <source src="./apps/frontend/src/assets/videos/games-finder-page.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
+https://github.com/hugodanielcabral/gamenest/assets/126025811/91fa9706-3c9a-4bff-98c8-491780146d08
 
 **Games Details**
 
-<video controls>
-    <source src="./apps/frontend/src/assets/videos/games-details-page.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
+https://github.com/hugodanielcabral/gamenest/assets/126025811/5e6f433d-8fcf-4d3f-9200-a410a1e489c3
 
 **Add a game to the collection**
 
-<video controls>
-    <source src="./apps/frontend/src/assets/videos/add-to-collection-page.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
+https://github.com/hugodanielcabral/gamenest/assets/126025811/1f9735b9-64f1-4742-9b83-493eb72632d8
 
 **Collection**
 
-<video  controls>
-    <source src="./apps/frontend/src/assets/videos/collection-page.mp4" type="video/mp4">
-    Tu navegador no soporta el video.
-</video>
-
+https://github.com/hugodanielcabral/gamenest/assets/126025811/9c440f38-eadb-4d3c-a422-fed3c2510f8d
 
 ## What's next?/Qué sigue?
 
