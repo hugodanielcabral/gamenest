@@ -56,7 +56,7 @@ export const getAllGamesFromUser = async (req, res) => {
         : sql``
     } ${validatedSearch}
       ORDER BY ${sql.unsafe(validatedOrderBy)} ${sql.unsafe(validatedSort)} 
-      LIMIT 2 OFFSET ${(validatedPage - 1) * 2}
+      LIMIT 20 OFFSET ${(validatedPage - 1) * 20}
     `;
 
     const games = await getGamesFromUser(collection);

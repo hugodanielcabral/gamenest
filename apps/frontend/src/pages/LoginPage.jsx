@@ -35,7 +35,7 @@ export const LoginPage = () => {
 
           //* I use location.href instead of Navigate, because i had issues with the Navigate component.
           //* The navigate was not "rendering" the navbar, so i could not access private routes links.
-          window.location.href = "/profile";
+          window.location.href = "/";
         }, 2000);
       }
     } catch (error) {

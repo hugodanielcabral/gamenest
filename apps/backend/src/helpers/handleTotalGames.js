@@ -25,7 +25,7 @@ export const getTotalGames = async (req, query, validatedStatus) => {
     const totalGames = await sql`
     SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
 
-    const totalPage = Math.ceil(totalGamesFilters[0].count / 2);
+    const totalPage = Math.ceil(totalGamesFilters[0].count / 20);
 
     return {
       totalPage,

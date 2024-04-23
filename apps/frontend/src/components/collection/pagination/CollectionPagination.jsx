@@ -5,6 +5,7 @@ export const CollectionPagination = ({
   currentPage,
   totalPage,
 }) => {
+  console.log(currentPage, totalPage);
   return (
     <div
       className={`join col-span-4 mx-auto min-h-96 items-end ${
