@@ -6,7 +6,6 @@ import { RegisterPage } from "./pages/RegisterPage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { NotFound } from "./components/notfound/NotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
-import { AddToCollection } from "./components/collection/addToCollection/AddToCollection.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ChangelogsPage } from "./pages/ChangelogsPage.jsx";
@@ -61,16 +60,6 @@ export const GameNestApp = () => {
       id: 2,
       path: "/collection",
       element: <CollectionPage />,
-    },
-    {
-      id: 3,
-      path: "/collection/add/:gameSlug",
-      element: <AddToCollection />,
-    },
-    {
-      id: 4,
-      path: "/collection/edit/:gameSlug/:collectionId",
-      element: <AddToCollection />,
     },
     {
       id: 5,

@@ -14,11 +14,9 @@ export const useCollection = () => {
 };
 
 export const CollectionProvider = ({ children }) => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [collectionData, setCollectionData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [totalPage, setTotalPage] = useState(1);
-  const [totalGames, setTotalGames] = useState(0);
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const getAllGamesFromUser = async (queryParams) => {
     try {
@@ -35,7 +33,6 @@ export const CollectionProvider = ({ children }) => {
 
       if (!response.ok) {
         setCollectionData([]);
-        setTotalPage(1);
         setIsLoading(false);
         throw new Error("Something went wrong!");
       }
@@ -43,8 +40,6 @@ export const CollectionProvider = ({ children }) => {
       const data = await response.json();
 
       setCollectionData(data.fullData);
-      setTotalGames(data.totalGames);
-      setTotalPage(data.totalPage);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -95,13 +90,11 @@ export const CollectionProvider = ({ children }) => {
       value={{
         collectionData,
         setCollectionData,
-        totalPage,
         getAllGamesFromUser,
         getCollectionFromUser,
         deleteGameFromCollection,
         isLoading,
         setIsLoading,
-        totalGames,
       }}
     >
       {children}
