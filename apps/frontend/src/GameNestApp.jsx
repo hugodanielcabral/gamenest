@@ -9,6 +9,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ChangelogsPage } from "./pages/ChangelogsPage.jsx";
+import { CollectionManage } from "./components/collection/manage/CollectionManage.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -60,6 +61,16 @@ export const GameNestApp = () => {
       id: 2,
       path: "/collection",
       element: <CollectionPage />,
+    },
+    {
+      id: 3,
+      path: "/collection/add/:gameSlug",
+      element: <CollectionManage />,
+    },
+    {
+      id: 5,
+      path: "collection/update/:gameSlug",
+      element: <CollectionManage />,
     },
     {
       id: 5,

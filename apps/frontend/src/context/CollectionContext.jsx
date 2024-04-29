@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 export const CollectionContext = createContext();
 
@@ -17,8 +17,51 @@ export const CollectionProvider = ({ children }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [collectionData, setCollectionData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [errors, setErrors] = useState(null);
 
-  const deleteGameFromCollection = async (collectionId) => {
+  const getCollection = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/collection`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+
+      if (!response.ok) {
+        setErrors(response.statusText);
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      setCollectionData(data);
+      setIsLoading(false);
+      setErrors(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addToCollection = async (bodyData) => {
+    try {
+      const response = await fetch(`${BASE_URL}/collection`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+        body: JSON.stringify(bodyData),
+      });
+
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /* const deleteGameFromCollection = async (collectionId) => {
     try {
       const response = await fetch(`${BASE_URL}/collection/${collectionId}`, {
         method: "DELETE",
@@ -37,16 +80,21 @@ export const CollectionProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; */
+
+  useEffect(() => {
+    getCollection();
+  }, []);
 
   return (
     <CollectionContext.Provider
       value={{
         collectionData,
-        setCollectionData,
-        deleteGameFromCollection,
+        getCollection,
+        addToCollection,
         isLoading,
         setIsLoading,
+        errors,
       }}
     >
       {children}
