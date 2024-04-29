@@ -1,6 +1,7 @@
 import Router from "express";
 
 import {
+  getCollection,
   addGameToCollection,
   updateGameFromCollection,
   deleteGameFromCollection,
@@ -13,7 +14,7 @@ import {
 
 const router = Router();
 
-router.get("/collection", isAuth /* getAllGamesFromUser */);
+router.get("/collection", isAuth, getCollection);
 
 router.get("/collection/:id", isAuth /* getCollectionFromUser */);
 
