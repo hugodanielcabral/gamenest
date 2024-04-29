@@ -1,4 +1,5 @@
 import sql from "../db.js";
+import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js";
 
 export const getCollections = async (req, res) => {
   try {
@@ -16,13 +17,60 @@ export const getCollections = async (req, res) => {
   }
 };
 
+export const getCollection = async (req, res) => {
+  try {
+    const collection =
+      await sql`SELECT * FROM collection WHERE user_id = ${req.user_id}`;
+
+    if (!collection[0])
+      return res.status(404).json({ message: "Collection not found" });
+
+    const collectionWithGameInfo = await getGameInfoFromCollection(collection);
+
+    res.status(200).json(collectionWithGameInfo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const addGameToCollection = async (req, res) => {
-  const { game_id, game_slug, platform, ownership, status, progress_note } =
-    req.body;
+  const {
+    game_id,
+    game_slug,
+    game_name,
+    game_cover,
+    platform,
+    format,
+    ownership,
+    store,
+    status,
+    progress_note,
+  } = req.body;
+
+  const values = {
+    game_id,
+    game_slug,
+    game_name,
+    game_cover,
+    platform,
+    format,
+    ownership,
+    store,
+    status,
+    progress_note,
+    user_id: req.user_id,
+  };
+
+  for (const [key, value] of Object.entries(values)) {
+    if (value === undefined) {
+      console.log(`${key} is undefined`);
+    }
+  }
 
   try {
     const collection =
-      await sql`INSERT INTO collection (game_id, game_slug, platform, ownership, status, progress_note, user_id) VALUES (${game_id}, ${game_slug}, ${platform}, ${ownership}, ${status}, ${progress_note}, ${req.user_id}) RETURNING *`;
+      await sql`INSERT INTO collection (game_id, game_slug, game_name, game_cover, platform_name, format_name, ownership_name, store_name, status_name, progress_note, user_id) VALUES (${game_id}, ${game_slug}, ${game_name}, ${game_cover}, ${platform}, ${format}, ${ownership}, ${store}, ${status}, ${progress_note}, ${req.user_id}) RETURNING *`;
 
     res.status(201).json(collection);
   } catch (error) {

@@ -21,8 +21,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
-  "/static/avatars",
-  express.static(path.join(__dirname, "public", "avatars"))
+  "/resources/images/collection/icons",
+  express.static(path.join(__dirname, "resources/images/collection/icons"))
 );
 // CORS
 app.use(
