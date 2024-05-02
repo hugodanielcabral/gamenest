@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const CollectionContext = createContext();
 
@@ -61,7 +61,7 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
-  /* const deleteGameFromCollection = async (collectionId) => {
+  const deleteGameFromCollection = async (collectionId) => {
     try {
       const response = await fetch(`${BASE_URL}/collection/${collectionId}`, {
         method: "DELETE",
@@ -76,15 +76,17 @@ export const CollectionProvider = ({ children }) => {
         throw new Error("Something went wrong!");
       }
 
+      setCollectionData((prevData) =>
+        prevData.filter(
+          (collection) => collection.collection_id !== collectionId
+        )
+      );
+
       return response;
     } catch (error) {
       console.log(error);
     }
-  }; */
-
-  useEffect(() => {
-    getCollection();
-  }, []);
+  };
 
   return (
     <CollectionContext.Provider
@@ -92,6 +94,7 @@ export const CollectionProvider = ({ children }) => {
         collectionData,
         getCollection,
         addToCollection,
+        deleteGameFromCollection,
         isLoading,
         setIsLoading,
         errors,

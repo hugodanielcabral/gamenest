@@ -8,6 +8,7 @@ import { Toast } from "../components/ui/index.js";
 import { useNavigate } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
+import { Layout } from "../components/layout/Layout.jsx";
 
 export const RegisterPage = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -83,39 +84,44 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div
-      className="p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed bg-opacity-50 bg-blur-3xl bg-gradient-to-b from-base-100 to-base-300"
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(${backgroundImage})`,
-      }}
-    >
-      <Toast toastMessage="User created successfully!" showToast={showToast} />
-      <div className="flex items-center mt-5 justify-evenly">
-        <article className="flex flex-col items-center mt-3">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
-            Your Backlog Adventure begins today!
-          </h1>
-          <h3 className="mt-4 text-lg md:text-xl lg:text-2xl font-bold text-center text-white text-pretty">
-            Embark on a journey to conquer your gaming backlog with GameNest! .
-            Let the adventure begin!
-          </h3>
-        </article>
-      </div>
-      <AuthCard title="Register">
-        <RegisterForm
-          handleOnSubmit={handleOnSubmit}
-          handleOnChange={handleOnChange}
-          data={data}
-          isLoading={isLoading}
-          errors={errors}
-          username={username}
-          email={email}
-          country={country}
-          password={password}
-          repassword={repassword}
-          buttonDisabled={buttonDisabled}
+    <Layout>
+      <div
+        className="p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed bg-opacity-50 bg-blur-3xl bg-gradient-to-b from-base-100 to-base-300"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(${backgroundImage})`,
+        }}
+      >
+        <Toast
+          toastMessage="User created successfully!"
+          showToast={showToast}
         />
-      </AuthCard>
-    </div>
+        <div className="flex items-center mt-5 justify-evenly">
+          <article className="flex flex-col items-center mt-3">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
+              Your Backlog Adventure begins today!
+            </h1>
+            <h3 className="mt-4 text-lg md:text-xl lg:text-2xl font-bold text-center text-white text-pretty">
+              Embark on a journey to conquer your gaming backlog with GameNest!
+              . Let the adventure begin!
+            </h3>
+          </article>
+        </div>
+        <AuthCard title="Register">
+          <RegisterForm
+            handleOnSubmit={handleOnSubmit}
+            handleOnChange={handleOnChange}
+            data={data}
+            isLoading={isLoading}
+            errors={errors}
+            username={username}
+            email={email}
+            country={country}
+            password={password}
+            repassword={repassword}
+            buttonDisabled={buttonDisabled}
+          />
+        </AuthCard>
+      </div>
+    </Layout>
   );
 };

@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import { Layout } from "./components/layout/Layout";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { CollectionPage } from "./pages/CollectionPage.jsx";
 import { RegisterPage } from "./pages/RegisterPage.jsx";
@@ -85,7 +84,7 @@ export const GameNestApp = () => {
   ];
 
   return (
-    <Layout>
+    <>
       {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
       <Suspense fallback={<h1>Loading...</h1>}>
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
@@ -133,6 +132,6 @@ export const GameNestApp = () => {
           </Routes>
         </SkeletonTheme>
       </Suspense>
-    </Layout>
+    </>
   );
 };
