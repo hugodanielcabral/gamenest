@@ -7,7 +7,6 @@ export const GamesFinderSearch = ({ handleOnClearFilters }) => {
   const { searchParams, setParams, deleteParam } = useSearchParameters({
     search: "",
   });
-  useSearchParameters();
   const { search, setFormData, handleOnChange } = useForm({
     search: searchParams.get("search"),
   });
