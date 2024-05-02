@@ -16,8 +16,6 @@ export const CardActions = ({ game }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  console.log(game);
-
   const handleShowDropdown = () => {
     setShowDropdown(!showDropdown);
   };
