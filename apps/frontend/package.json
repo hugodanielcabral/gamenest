@@ -29,6 +29,7 @@
     "react-markdown": "^9.0.1",
     "react-player": "^2.14.1",
     "react-router-dom": "^6.21.3",
+    "sweetalert2": "^11.10.8",
     "tailwind-gradient-mask-image": "^1.2.0",
     "tailwind-merge": "^2.2.1"
   },
