@@ -1,13 +1,18 @@
 import Swal from "sweetalert2";
 
-const toast = (message, type, typeColor = "#fff") => {
+const toast = (
+  message,
+  type,
+  typeColor = "#fff",
+  backgroundColor = "#00A7EA"
+) => {
   Swal.mixin({
     toast: true,
     position: "bottom",
     showConfirmButton: false,
-    timer: 2000,
+    timer: 3000,
     timerProgressBar: true,
-    background: "#00A7EA",
+    background: backgroundColor,
     color: "#fff",
     width: "600px",
     iconColor: typeColor,

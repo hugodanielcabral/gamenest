@@ -14,9 +14,7 @@ export const ConfirmationMessage = ({
       {img && <img src={img} className="mx-auto my-2" />}
       <p className="text-white">{description}</p>
       <div className="flex gap-2 mt-5">
-        <Button onClick={onConfirm} className="bg-success hover:bg-success/60">
-          Confirm
-        </Button>
+        <Button onClick={onConfirm}>Confirm</Button>
         <Button className="bg-error hover:bg-error/60" onClick={onCancel}>
           Cancel
         </Button>

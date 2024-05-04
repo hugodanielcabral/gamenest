@@ -61,6 +61,28 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
+  const updateGameFromCollection = async (collectionId, bodyData) => {
+    console.log(collectionId, bodyData);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/collection/update/${collectionId}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": "true",
+          },
+          body: JSON.stringify(bodyData),
+        }
+      );
+
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteGameFromCollection = async (collectionId) => {
     try {
       const response = await fetch(`${BASE_URL}/collection/${collectionId}`, {
@@ -94,6 +116,7 @@ export const CollectionProvider = ({ children }) => {
         collectionData,
         getCollection,
         addToCollection,
+        updateGameFromCollection,
         deleteGameFromCollection,
         isLoading,
         setIsLoading,

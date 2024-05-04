@@ -2,7 +2,6 @@ import propTypes from "prop-types";
 import { useState } from "react";
 import { DropDown, Modal } from "../../../../ui/index.js";
 import { Menu } from "../../../../ui/menu/Menu.jsx";
-import { useCollection } from "../../../../../context/CollectionContext.jsx";
 import {
   getActions,
   getMenuGeneral,
@@ -10,9 +9,7 @@ import {
 import { ConfirmationMessage } from "../../../../ui/confirmationMessage/ConfirmationMessage.jsx";
 import toast from "../../../../../utils/toast.js";
 
-export const CardActions = ({ game }) => {
-  const { deleteGameFromCollection } = useCollection();
-
+export const CardActions = ({ gameData }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -25,10 +22,13 @@ export const CardActions = ({ game }) => {
   };
 
   const handleDeleteGame = async () => {
-    deleteGameFromCollection(game.collection_id).then((response) => {
-      console.log(game);
+    deleteGameFromCollection(gameData.collection_id).then((response) => {
       if (response.ok) {
-        toast(`${game.game_name} was deleted successfully!`, "success", "#fff");
+        toast(
+          `${gameData.game_name} was deleted successfully!`,
+          "success",
+          "#fff"
+        );
         setModalOpen(false);
       } else {
         toast("Error deleting game", "error");
@@ -40,12 +40,12 @@ export const CardActions = ({ game }) => {
     setModalOpen(false);
   };
 
-  const menuItemsActions = getActions(game, handleShowModal);
-  const menuItemsGeneral = getMenuGeneral(game);
+  const menuItemsActions = getActions(gameData, handleShowModal);
+  const menuItemsGeneral = getMenuGeneral(gameData);
 
   return (
-    <section className="flex md:flex-col w-full justify-evenly items-center md:w-32">
-      <article className="md:-order-1 order-3 self-end">
+    <article className="col-span-1 row-span-2 relative">
+      <section className="absolute bottom-0 md:top-0 right-0">
         <Modal
           isOpen={modalOpen}
           hasCloseBtn={true}
@@ -53,8 +53,8 @@ export const CardActions = ({ game }) => {
         >
           <ConfirmationMessage
             title="Are you sure?!"
-            img={game.game_cover}
-            description={`Do you want to delete the ${game.game_name} from your collection?`}
+            img={gameData.game_cover}
+            description={`Do you want to delete the ${gameData.game_name} from your collection?`}
             onConfirm={handleDeleteGame}
             onCancel={handleCancelDeleteGame}
           />
@@ -62,7 +62,7 @@ export const CardActions = ({ game }) => {
         <DropDown
           showDropdown={showDropdown}
           handleShowDropdown={handleShowDropdown}
-          dropdownId={`game-${game.game_id}`}
+          dropdownId={`game-${gameData.game_id}`}
           setShowDropdown={setShowDropdown}
         >
           <Menu
@@ -71,48 +71,15 @@ export const CardActions = ({ game }) => {
             showDropdown={showDropdown}
           />
         </DropDown>
-      </article>
-      {/* //! Crear Rating componente */}
-      <article className="rating md:order-1 order-2">
-        <input
-          type="radio"
-          name={"rating-" + game.game_id}
-          className="mask mask-star-2 bg-info"
-        />
-        <input
-          type="radio"
-          name={"rating-" + game.game_id}
-          className="mask mask-star-2 bg-info"
-        />
-        <input
-          type="radio"
-          name={"rating-" + game.game_id}
-          className="mask mask-star-2 bg-info"
-        />
-        <input
-          type="radio"
-          name={"rating-" + game.game_id}
-          className="mask mask-star-2 bg-info"
-        />
-        <input
-          type="radio"
-          name={"rating-" + game.game_id}
-          className="mask mask-star-2 bg-info"
-        />
-      </article>
-
-      <p className="text-white font-semibold">
-        Hours played:{" "}
-        <span>{game?.hours_played == null ? 0 : game.hours_played}</span>
-      </p>
-    </section>
+      </section>
+    </article>
   );
 };
 
 CardActions.propTypes = {
-  game: propTypes.object.isRequired,
+  gameData: propTypes.object.isRequired,
 };
 
 CardActions.defaultProps = {
-  game: {},
+  gameData: {},
 };
