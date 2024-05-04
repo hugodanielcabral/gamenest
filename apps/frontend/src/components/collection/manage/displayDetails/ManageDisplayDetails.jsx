@@ -125,7 +125,7 @@ export const ManageDisplayDetails = ({ data }) => {
             aria-label="Save changes"
             disabled={buttonDisabled}
           >
-            Save Changes
+            {buttonDisabled ? "Saving..." : "Save changes"}
           </Button>
           <Button
             className="font-bold md:text-lg uppercase bg-error hover:bg-error/80 text-base md:flex-grow-0 flex-grow disabled:bg-gray-400 disabled:cursor-not-allowed"
