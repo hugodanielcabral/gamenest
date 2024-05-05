@@ -8,10 +8,12 @@ import {
 } from "../../../../../utils/getCollectionMenuItems.js";
 import { ConfirmationMessage } from "../../../../ui/confirmationMessage/ConfirmationMessage.jsx";
 import toast from "../../../../../utils/toast.js";
+import { useCollection } from "../../../../../context/CollectionContext.jsx";
 
 export const CardActions = ({ gameData }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const { deleteGameFromCollection } = useCollection();
 
   const handleShowDropdown = () => {
     setShowDropdown(!showDropdown);

@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 export const ListCard = ({ gameData }) => {
   const GAME_PATH = `/collection/${gameData.game_slug}`;
   return (
-    <CardBackground className="grid grid-cols-3 gap-y-2 md:gap-y-0 group border-l-4 border-l-info hover:border-l-error transition-all duration-300 ease-in-out">
+    <CardBackground className="grid grid-cols-3 gap-y-2 md:gap-y-0 group border-l-4 border-l-info hover:border-l-error transition-all duration-300 ease-in-out md:max-h-44">
       <Link
         to={GAME_PATH}
         className="col-span-3 md:col-span-2 grid grid-cols-4 grid-rows-2"
