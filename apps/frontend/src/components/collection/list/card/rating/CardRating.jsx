@@ -2,39 +2,41 @@ import propTypes from "prop-types";
 import { useCollection } from "../../../../../context/CollectionContext";
 import toast from "../../../../../utils/toast";
 import { RatingStars } from "./stars/RatingStars";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, Button } from "../../../../ui";
 import clsx from "clsx";
 
 export const CardRating = ({ gameData }) => {
-  const { updateGameFromCollection } = useCollection();
+  const { updateRating } = useCollection();
 
   const [rating, setRating] = useState(gameData.rating);
   const [currentRating, setCurrentRating] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const GAME_NAME = gameData.game_name;
   const TOTAL_STARS = [1, 2, 3, 4, 5];
 
   const handleUpdateRating = async (rating) => {
-    updateGameFromCollection(gameData.collection_id, { rating }).then(
-      (response) => {
-        if (response.ok) {
-          toast(
-            `${gameData.game_name} was rated to ${rating}`,
-            "success",
-            "#fff"
-          );
-        } else {
-          toast(
-            `There was an error in the rating of ${gameData.game_name}`,
-            "error",
-            "#fff",
-            "#FF5861"
-          );
-        }
+    setButtonDisabled(true);
+    updateRating(gameData.collection_id, { rating }).then((response) => {
+      if (response.ok) {
+        setButtonDisabled(false);
+        toast(
+          `${gameData.game_name} was rated to ${rating}`,
+          "success",
+          "#fff"
+        );
+      } else {
+        setButtonDisabled(false);
+        toast(
+          `There was an error in the rating of ${gameData.game_name}`,
+          "error",
+          "#fff",
+          "#FF5861"
+        );
       }
-    );
+    });
   };
 
   const handleOnChange = (rating) => {
@@ -45,6 +47,10 @@ export const CardRating = ({ gameData }) => {
   const handleShowModal = () => {
     setModalOpen(true);
   };
+
+  useEffect(() => {
+    setRating(gameData.rating);
+  }, [gameData.rating]);
 
   return (
     <div className="col-span-2 row-span-1 mx-auto self-center">
@@ -100,7 +106,13 @@ export const CardRating = ({ gameData }) => {
             stars?
           </h3>
           <div className="space-x-4 mx-auto *:font-bold">
-            <Button onClick={() => handleUpdateRating(currentRating)}>
+            <Button
+              disabled={buttonDisabled}
+              onClick={() => {
+                handleUpdateRating(currentRating);
+                setModalOpen(false);
+              }}
+            >
               Confirm
             </Button>
             <Button
