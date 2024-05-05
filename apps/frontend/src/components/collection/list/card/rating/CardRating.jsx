@@ -7,7 +7,7 @@ import { Modal, Button } from "../../../../ui";
 import clsx from "clsx";
 
 export const CardRating = ({ gameData }) => {
-  const { updateRating } = useCollection();
+  const { updateGameFromCollection } = useCollection();
 
   const [rating, setRating] = useState(gameData.rating);
   const [currentRating, setCurrentRating] = useState(null);
@@ -19,24 +19,26 @@ export const CardRating = ({ gameData }) => {
 
   const handleUpdateRating = async (rating) => {
     setButtonDisabled(true);
-    updateRating(gameData.collection_id, { rating }).then((response) => {
-      if (response.ok) {
-        setButtonDisabled(false);
-        toast(
-          `${gameData.game_name} was rated to ${rating}`,
-          "success",
-          "#fff"
-        );
-      } else {
-        setButtonDisabled(false);
-        toast(
-          `There was an error in the rating of ${gameData.game_name}`,
-          "error",
-          "#fff",
-          "#FF5861"
-        );
+    updateGameFromCollection(gameData.collection_id, { rating }).then(
+      (response) => {
+        if (response.ok) {
+          setButtonDisabled(false);
+          toast(
+            `${gameData.game_name} was rated to ${rating}`,
+            "success",
+            "#fff"
+          );
+        } else {
+          setButtonDisabled(false);
+          toast(
+            `There was an error in the rating of ${gameData.game_name}`,
+            "error",
+            "#fff",
+            "#FF5861"
+          );
+        }
       }
-    });
+    );
   };
 
   const handleOnChange = (rating) => {

@@ -5,7 +5,6 @@ import {
   addGameToCollection,
   updateGameFromCollection,
   deleteGameFromCollection,
-  updateRating,
 } from "../controllers/collection.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
 import {
@@ -27,8 +26,6 @@ router.post(
 );
 
 router.patch("/collection/update/:id", isAuth, updateGameFromCollection);
-
-router.patch("/collection/update/rating/:id", isAuth, updateRating);
 
 router.delete("/collection/:id", isAuth, deleteGameFromCollection);
 
