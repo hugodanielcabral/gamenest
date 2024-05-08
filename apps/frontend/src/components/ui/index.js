@@ -6,5 +6,20 @@ import { Loading } from "./loading/Loading";
 import { InputSearch } from "./inputSearch/InputSearch";
 import { DropDown } from "./dropdown/Dropdown";
 import { Modal } from "./modal/Modal";
+import { Option } from "./option/Option";
+import { Select } from "./select/Select";
+import { Badge } from "./badge/Badge";
 
-export { Button, Input, Label, Toast, Loading, InputSearch, DropDown, Modal };
+export {
+  Button,
+  Input,
+  Label,
+  Toast,
+  Loading,
+  InputSearch,
+  DropDown,
+  Modal,
+  Option,
+  Select,
+  Badge,
+};

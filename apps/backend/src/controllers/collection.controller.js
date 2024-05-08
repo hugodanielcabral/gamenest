@@ -1,29 +1,47 @@
 import sql from "../db.js";
 import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js";
 
-export const getCollections = async (req, res) => {
-  try {
-    const collection = await sql`SELECT * FROM collection`;
-
-    console.log(collection);
-
-    if (!collection[0])
-      return res.status(404).json({ message: "Collection not found" });
-
-    res.status(200).json(collection);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error.message });
-  }
-};
-
 export const getCollection = async (req, res) => {
   try {
-    const collection =
-      await sql`SELECT * FROM collection WHERE user_id = ${req.user_id}`;
+    const { search, orderBy, sort } = req.query;
+
+    //* Because of Postgre.js works, I can't pass the sort value directly to the query, so I need to store it in a variable first.
+    const orderByValue = orderBy || "status_name";
+
+    if (search) {
+      const collection = await findCollectionByGameName(
+        search,
+        req.user_id,
+        orderByValue,
+        sort
+      );
+
+      if (!collection[0])
+        return res
+          .status(404)
+          .json({ message: "No games matches your current search parameters" });
+
+      const collectionWithGameInfo = await getGameInfoFromCollection(
+        collection
+      );
+
+      return res.status(200).json(collectionWithGameInfo);
+    }
+
+    let collection;
+
+    if (sort === "desc") {
+      collection = await sql`SELECT * FROM collection ${
+        req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
+      } ORDER BY ${sql(orderByValue)} DESC`;
+    } else {
+      collection = await sql`SELECT * FROM collection ${
+        req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
+      } ORDER BY ${sql(orderByValue)}`;
+    }
 
     if (!collection[0])
-      return res.status(404).json({ message: "Collection not found" });
+      return res.status(404).json({ message: "No games found" });
 
     const collectionWithGameInfo = await getGameInfoFromCollection(collection);
 
@@ -94,5 +112,33 @@ export const deleteGameFromCollection = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
+  }
+};
+
+const findCollectionByGameName = async (
+  gamename,
+  user_id,
+  orderByValue,
+  sortValue
+) => {
+  try {
+    const cleanGameName = gamename.replace(/[^a-zA-Z ]/g, "").toLowerCase();
+
+    let collection;
+
+    if (sortValue === "desc") {
+      collection =
+        await sql`SELECT * FROM collection WHERE user_id = ${user_id} AND ${sql`regexp_replace(lower(game_name),'[^a-zA-Z ]', '', 'g')`} LIKE ${
+          cleanGameName + "%"
+        } ORDER BY ${sql(orderByValue)} DESC`;
+    } else {
+      collection =
+        await sql`SELECT * FROM collection WHERE user_id = ${user_id} AND ${sql`regexp_replace(lower(game_name),'[^a-zA-Z ]', '', 'g')`} LIKE ${
+          cleanGameName + "%"
+        } ORDER BY ${sql(orderByValue)}`;
+    }
+    return collection;
+  } catch (error) {
+    console.error(error);
   }
 };

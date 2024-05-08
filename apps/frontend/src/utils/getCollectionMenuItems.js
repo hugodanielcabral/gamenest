@@ -7,7 +7,7 @@ export const getActions = (game, handleShowModal) => [
     icon: `${RESOURCE_URL}/images/collection/icons/update.webp`,
     link: `/collection/update/${game.game_slug}`,
     action: "",
-    className: "text-info hover:bg-white text-xs md:text-sm",
+    className: "text-info hover:text-blue-300 font-bold text-xs md:text-sm",
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ export const getActions = (game, handleShowModal) => [
     tooltip: "Delete",
     link: "#",
     action: () => handleShowModal(),
-    className: "text-error hover:bg-white text-xs md:text-sm",
+    className: "text-error hover:text-red-300 text-xs md:text-sm font-bold",
   },
 ];
 
@@ -27,7 +27,6 @@ export const getMenuGeneral = (game) => [
     icon: ``,
     link: `/games/${game.game_slug}`,
     action: "",
-    className:
-      "text-white hover:text-black hover:bg-white text-sm md:text-base",
+    className: "text-white hover:text-gray-400 text-sm md:text-base",
   },
 ];

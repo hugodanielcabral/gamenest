@@ -21,7 +21,7 @@ export const ListCard = ({ gameData }) => {
       >
         <CardCover gameData={gameData} />
         <div className="flex md:flex-row flex-col justify-evenly gap-x-5 col-span-2 md:col-span-3 row-span-2 md:row-span-1">
-          <h2 className="text-white font-semibold self-center md:text-xl text-pretty text-sm">
+          <h2 className="text-white font-bold self-center md:text-2xl text-balance text-lg text-ellipsis">
             {gameData?.game_name}
           </h2>
           <CardStatus gameData={gameData} />

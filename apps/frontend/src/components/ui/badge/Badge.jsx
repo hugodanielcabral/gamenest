@@ -2,13 +2,14 @@ import propTypes from "prop-types";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export const Badge = ({ children, className }) => {
+export const Badge = ({ children, className, ...props }) => {
   return (
     <div
       className={twMerge(
         "flex rounded-md items-center badge-error gap-2 text-white text-xs md:text-base p-1 w-fit h-fit bg-base-100",
         clsx(className)
       )}
+      {...props}
     >
       {children}
     </div>

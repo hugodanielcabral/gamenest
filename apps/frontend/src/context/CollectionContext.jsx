@@ -1,5 +1,6 @@
 import propTypes from "prop-types";
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export const CollectionContext = createContext();
 
@@ -15,23 +16,26 @@ export const useCollection = () => {
 
 export const CollectionProvider = ({ children }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const { search } = useLocation();
   const [collectionData, setCollectionData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
 
   const getCollection = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/collection`, {
+      const response = await fetch(`${BASE_URL}/collection${search}`, {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": "true",
         },
       });
-
       if (!response.ok) {
-        setErrors(response.statusText);
-        throw new Error(response.statusText);
+        const errorData = await response.json();
+        setErrors(errorData.message);
+        setIsLoading(false);
+        setCollectionData([]);
+        throw new Error(errorData.message);
       }
 
       const data = await response.json();
@@ -109,6 +113,10 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    getCollection();
+  }, [search]);
+
   return (
     <CollectionContext.Provider
       value={{
@@ -120,6 +128,7 @@ export const CollectionProvider = ({ children }) => {
         isLoading,
         setIsLoading,
         errors,
+        search,
       }}
     >
       {children}

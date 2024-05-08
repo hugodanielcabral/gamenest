@@ -133,3 +133,45 @@ export const GAME_STATUS = [
     iconId: `${RESOURCE_URL}/images/collection/icons/trash.webp`,
   },
 ];
+
+export const ORDERBY_VALUES = [
+  {
+    id: 1,
+    name: "Order By",
+    value: "",
+  },
+  { id: 2, name: "Status", value: "status_name" },
+  {
+    id: 3,
+    name: "Rating",
+    value: "rating",
+  },
+  {
+    id: 4,
+    name: "Hours Played",
+    value: "hours_played",
+  },
+  {
+    id: 5,
+    name: "Game Name",
+    value: "game_name",
+  },
+];
+
+export const SORT_VALUES = [
+  {
+    id: 1,
+    name: "Sort",
+    value: "",
+  },
+  {
+    id: 2,
+    name: "ASC",
+    value: "asc",
+  },
+  {
+    id: 3,
+    name: "DESC",
+    value: "desc",
+  },
+];
