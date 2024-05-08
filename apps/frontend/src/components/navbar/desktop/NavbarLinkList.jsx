@@ -17,10 +17,10 @@ export const NavbarLinkList = ({
               to={route.path}
               className={clsx(
                 {
-                  "decoration-info underline decoration-solid decoration-4 underline-offset-8":
+                  "decoration-info underline decoration-solid decoration-4 underline-offset-8 text-white":
                     pathname === route.path,
                 },
-                "uppercase font-bold md:text-base text-base lg:text-lg text-white hover:text-white/80"
+                "uppercase font-bold md:text-base text-base lg:text-lg text-gray-400 hover:text-gray-500"
               )}
             >
               {route.name}
@@ -32,10 +32,10 @@ export const NavbarLinkList = ({
               to={route.path}
               className={clsx(
                 {
-                  "decoration-info underline decoration-solid decoration-4 underline-offset-8":
+                  "decoration-info underline decoration-solid decoration-4 underline-offset-8 text-white":
                     pathname === route.path,
                 },
-                "uppercase font-bold md:text-base text-base lg:text-lg text-white hover:text-white/80"
+                "uppercase font-bold md:text-base text-base lg:text-lg text-gray-400 hover:text-gray-500"
               )}
             >
               {route.name}

@@ -45,7 +45,7 @@ export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
             </Link>
             <button
               onClick={signout}
-              className="self-start uppercase font-bold md:text-base text-base lg:text-lg text-info"
+              className="self-start uppercase font-bold md:text-base text-base lg:text-lg text-error"
             >
               Logout
             </button>

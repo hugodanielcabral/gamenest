@@ -11,9 +11,9 @@ export const CardStatus = ({ gameData }) => {
       <img
         src={STATUS_ICON?.iconId}
         alt={STATUS_NAME}
-        className="w-4 h-4 mr-1"
+        className="size-5 mr-1"
       />
-      <p className="text-white font-semibold">{STATUS_NAME}</p>
+      <p className="text-white">{STATUS_NAME}</p>
     </Badge>
   );
 };

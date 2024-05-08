@@ -6,9 +6,10 @@ export const CardHoursPlayed = ({ gameData }) => {
     gameData.hours_played == null ? 0 : gameData.hours_played;
 
   return (
-    <Badge className="col-span-2 row-span-1 mx-auto self-center bg-transparent before:content-['🕓']">
-      <p className="text-info text-base md:text-xl font-semibold">
-        Total played: <span className="text-white">{HOURS_PLAYED}</span>
+    <Badge className="col-span-2 row-span-1 mx-auto self-center bg-transparent">
+      <p className="text-white text-base md:text-lg">
+        <span className="text-white font-bold">{HOURS_PLAYED}</span> hours
+        played
       </p>
     </Badge>
   );

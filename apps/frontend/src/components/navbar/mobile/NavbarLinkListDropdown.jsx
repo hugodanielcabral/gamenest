@@ -38,8 +38,8 @@ export const NavbarLinkListDropdown = ({
                   to={route.path}
                   className={clsx(
                     {
-                      "text-white": pathname !== route.path,
-                      "text-error": pathname === route.path,
+                      "text-gray-400": pathname !== route.path,
+                      "text-white": pathname === route.path,
                     },
                     "uppercase font-bold md:text-base text-sm"
                   )}
@@ -53,8 +53,8 @@ export const NavbarLinkListDropdown = ({
                   to={route.path}
                   className={clsx(
                     {
-                      "text-white": pathname !== route.path,
-                      "text-error": pathname === route.path,
+                      "text-gray-400": pathname !== route.path,
+                      "text-white": pathname === route.path,
                     },
                     "uppercase font-bold md:text-base text-sm mt-1"
                   )}

@@ -9,7 +9,7 @@ export const CardPlatform = ({ gameData }) => {
 
   return (
     <Badge className="self-center bg-error">
-      <p className="font-semibold">{platformAbb}</p>
+      <p>{platformAbb}</p>
     </Badge>
   );
 };

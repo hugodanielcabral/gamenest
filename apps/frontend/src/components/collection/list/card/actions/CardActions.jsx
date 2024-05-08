@@ -54,9 +54,8 @@ export const CardActions = ({ gameData }) => {
           onClose={() => setModalOpen(false)}
         >
           <ConfirmationMessage
-            title="Are you sure?!"
-            img={gameData.game_cover}
-            description={`Do you want to delete the ${gameData.game_name} from your collection?`}
+            title="Delete game"
+            description={`Are you sure about deleting ${gameData.game_name} from your collection?`}
             onConfirm={handleDeleteGame}
             onCancel={handleCancelDeleteGame}
           />
