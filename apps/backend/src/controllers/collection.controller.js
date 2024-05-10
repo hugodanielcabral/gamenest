@@ -3,10 +3,11 @@ import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js
 
 export const getCollection = async (req, res) => {
   try {
-    const { search, orderBy, sort } = req.query;
+    const { search, orderBy, sort, page } = req.query;
 
     //* Because of Postgre.js works, I can't pass the sort value directly to the query, so I need to store it in a variable first.
     const orderByValue = orderBy || "status_name";
+    const pageValue = page || 0;
 
     if (search) {
       const collection = await findCollectionByGameName(
@@ -33,11 +34,15 @@ export const getCollection = async (req, res) => {
     if (sort === "desc") {
       collection = await sql`SELECT * FROM collection ${
         req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
-      } ORDER BY ${sql(orderByValue)} DESC`;
+      } ORDER BY ${sql(orderByValue)} DESC LIMIT 2 OFFSET ${
+        pageValue >= 1 ? (pageValue - 1) * 2 : 0
+      } `;
     } else {
       collection = await sql`SELECT * FROM collection ${
         req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
-      } ORDER BY ${sql(orderByValue)}`;
+      } ORDER BY ${sql(orderByValue)} LIMIT 2 OFFSET ${
+        pageValue >= 1 ? (pageValue - 1) * 2 : 0
+      } `;
     }
 
     if (!collection[0])
@@ -138,6 +143,36 @@ const findCollectionByGameName = async (
         } ORDER BY ${sql(orderByValue)}`;
     }
     return collection;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getTotalCollectionPages = async (req, res) => {
+  try {
+    const { search } = req.query;
+    console.log(search);
+
+    if (search) {
+      const cleanGameName = search?.replace(/[^a-zA-Z ]/g, "").toLowerCase();
+
+      const totalGames =
+        await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${
+          req.user_id
+        } AND ${sql`regexp_replace(lower(game_name),'[^a-zA-Z ]', '', 'g')`} LIKE ${
+          cleanGameName + "%"
+        }`;
+
+      const totalPages = Math.ceil(totalGames[0].count / 2);
+      console.log(totalPages, "totalPages");
+      res.status(200).json(totalPages);
+    }
+
+    const totalGames =
+      await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
+
+    const totalPages = Math.ceil(totalGames[0].count / 2);
+    res.status(200).json(totalPages);
   } catch (error) {
     console.error(error);
   }

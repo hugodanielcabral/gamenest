@@ -21,6 +21,7 @@ export const CollectionSearch = () => {
     updateUrlAndNavigate({
       search: search,
     });
+    clearQueryParamAndNavigate("page");
   };
 
   useEffect(() => {

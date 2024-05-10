@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "./useQuery";
+import { useUpdateUrlAndNavigate } from "./useUpdateUrlAndNavigate";
 
-const usePagination = (totalPageContext, initialPage = 1) => {
-  const { searchParams, setSearchParams } = useQuery();
-  const [currentPage, setCurrentPage] = useState(initialPage);
-  const [totalPage, setTotalPage] = useState(totalPageContext);
+export const usePagination = (totalPages = 0) => {
+  const { updateUrlAndNavigate, urlSearchParams } = useUpdateUrlAndNavigate();
 
-  const handlePage = (page) => {
-    setCurrentPage(page);
-    searchParams.set("page", page);
-    setSearchParams(searchParams);
-  };
+  const [currentPage, setCurrentPage] = useState(
+    urlSearchParams.get("page") || 1
+  );
+
+  //? This is if i want to change the way the pagination show numbers. So, instead of <= page >=, i can use pages for something like page 1, page 2, page 3,etc...
+  const pageNumberList = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   useEffect(() => {
-    setCurrentPage(parseInt(searchParams.get("page")) || initialPage);
-  }, []);
+    setCurrentPage(urlSearchParams.get("page") || 1);
+  }, [urlSearchParams]);
 
-  return {
-    currentPage,
-    setCurrentPage,
-    totalPage,
-    setTotalPage,
-    handlePage,
+  const handlePageChange = (page) => {
+    updateUrlAndNavigate({
+      page: page,
+    });
   };
-};
 
-export default usePagination;
+  return { currentPage, handlePageChange, pageNumberList };
+};

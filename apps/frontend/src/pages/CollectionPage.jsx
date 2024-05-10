@@ -4,9 +4,24 @@ import { Loading } from "../components/ui/index.js";
 import { CollectionSearch } from "../components/collection/search/CollectionSearch.jsx";
 import { CollectionList } from "../components/collection/list/CollectionList.jsx";
 import { Layout } from "../components/layout/Layout.jsx";
+import { CollectionPagination } from "../components/collection/pagination/CollectionPagination.jsx";
+import { useEffect } from "react";
 
 export const CollectionPage = () => {
-  const { collectionData, isLoading, errors } = useCollection();
+  const {
+    collectionData,
+    isLoading,
+    errors,
+    totalPages,
+    getCollection,
+    getTotalCollectionPages,
+    search,
+  } = useCollection();
+
+  useEffect(() => {
+    getCollection();
+    getTotalCollectionPages();
+  }, [search]);
 
   return isLoading ? (
     <Loading />
@@ -34,6 +49,8 @@ export const CollectionPage = () => {
             <article className="bg-black p-4 h-[100px] border-4 border-white"></article>
           </aside>
         </section>
+
+        <CollectionPagination totalPages={totalPages} />
       </article>
     </Layout>
   );

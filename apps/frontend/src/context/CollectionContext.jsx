@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext } from "react";
 import { useLocation } from "react-router-dom";
 
 export const CollectionContext = createContext();
@@ -18,6 +18,7 @@ export const CollectionProvider = ({ children }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { search } = useLocation();
   const [collectionData, setCollectionData] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
 
@@ -113,9 +114,31 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    getCollection();
-  }, [search]);
+  const getTotalCollectionPages = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/collection/totalPages${search}`,
+        {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": "true",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setTotalPages(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <CollectionContext.Provider
@@ -125,6 +148,8 @@ export const CollectionProvider = ({ children }) => {
         addToCollection,
         updateGameFromCollection,
         deleteGameFromCollection,
+        totalPages,
+        getTotalCollectionPages,
         isLoading,
         setIsLoading,
         errors,
