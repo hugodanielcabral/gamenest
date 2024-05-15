@@ -8,8 +8,8 @@ export const CardPlatform = ({ gameData }) => {
   const platformAbb = getPlaformAbbreviation(PLATFORM_NAME);
 
   return (
-    <Badge className="self-center bg-error">
-      <p>{platformAbb}</p>
+    <Badge className="self-center bg-transparent">
+      <p className="font-bold text-info text-base md:text-lg">{platformAbb}</p>
     </Badge>
   );
 };

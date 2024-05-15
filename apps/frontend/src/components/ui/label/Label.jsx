@@ -19,3 +19,7 @@ Label.propTypes = {
   children: propTypes.node.isRequired,
   className: propTypes.string.isRequired,
 };
+
+Label.defaultProps = {
+  className: "",
+};

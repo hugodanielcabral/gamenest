@@ -31,6 +31,7 @@ export const CardActions = ({ gameData }) => {
           "success",
           "#fff"
         );
+
         setModalOpen(false);
       } else {
         toast("Error deleting game", "error");
