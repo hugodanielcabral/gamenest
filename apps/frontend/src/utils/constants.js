@@ -106,31 +106,37 @@ export const GAME_STATUS = [
     id: 1,
     name: "No status",
     iconId: `${RESOURCE_URL}/images/collection/icons/xbox-x-button.webp`,
+    checked: false,
   },
   {
     id: 2,
     name: "Unplayed",
     iconId: `${RESOURCE_URL}/images/collection/icons/unplayed.webp`,
+    checked: false,
   },
   {
     id: 3,
     name: "Playing",
     iconId: `${RESOURCE_URL}/images/collection/icons/joystick.webp`,
+    checked: false,
   },
   {
     id: 4,
     name: "Completed",
     iconId: `${RESOURCE_URL}/images/collection/icons/fireworks.webp`,
+    checked: false,
   },
   {
     id: 5,
     name: "Plan to play",
     iconId: `${RESOURCE_URL}/images/collection/icons/think.webp`,
+    checked: false,
   },
   {
     id: 6,
     name: "Dropped",
     iconId: `${RESOURCE_URL}/images/collection/icons/trash.webp`,
+    checked: false,
   },
 ];
 

@@ -8,11 +8,15 @@ export const useUpdateUrlAndNavigate = () => {
 
   const updateUrlAndNavigate = (queryObject) => {
     for (const query in queryObject) {
-      if (queryObject[query] === "") {
-        clearQueryParamAndNavigate(query);
-        return;
+      if (queryObject[query].length === 0) {
+        urlSearchParams.delete(query);
+      } else {
+        if (Array.isArray(queryObject[query])) {
+          urlSearchParams.set(query, queryObject[query].join(","));
+        } else {
+          urlSearchParams.set(query, queryObject[query]);
+        }
       }
-      urlSearchParams.set(query, queryObject[query]);
     }
 
     navigate(`?${urlSearchParams.toString()}`);
@@ -23,9 +27,18 @@ export const useUpdateUrlAndNavigate = () => {
     navigate(`?${urlSearchParams.toString()}`);
   };
 
+  const clearAllQueryParamsAndNavigate = () => {
+    urlSearchParams.forEach((value, key) => {
+      urlSearchParams.delete(key);
+    });
+
+    navigate(`?${urlSearchParams.toString()}`);
+  };
+
   return {
     updateUrlAndNavigate,
     clearQueryParamAndNavigate,
+    clearAllQueryParamsAndNavigate,
     urlSearchParams,
   };
 };

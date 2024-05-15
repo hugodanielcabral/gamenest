@@ -46,7 +46,7 @@ export const CollectionSearch = () => {
           <InputSearch
             name="search"
             placeholder="Search for a game in the collection..."
-            className="border-t-info border-t-4 border-b-error border-b-4 round-md bg-base-200 focus:outline-none focus:ring-2 focus:ring-info focus:border-info focus:border-t-2 focus:border-b-2 transition-colors duration-500 p-2 mt-2 rounded-md"
+            className="border-t-info border-t-4 bg-base-200 focus:outline-none focus:ring-2 focus:ring-info focus:border-info focus:border-t-2 focus:border-b-2 transition-colors duration-500 p-2 mt-2 rounded-md"
             onChange={handleOnChange}
             value={search}
           ></InputSearch>

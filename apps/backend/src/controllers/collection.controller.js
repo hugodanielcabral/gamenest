@@ -1,20 +1,26 @@
 import sql from "../db.js";
 import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js";
 
+//TODO 1: Además de refactorizar getCollection, tendria que en lugar de enviar solamente la data de la collection, tambien deberia enviar un totalPages, la funcion getTotalCollectionPages deberia recibir un parametro para buscar acorde a la query que se le pase, y deberia devolver el total de paginas que se necesitan para mostrar la data de la query que se le pase. De esta forma no tendria que estar creando ifs para saber si estoy buscando por nombre de juego o por status, sino que simplemente le paso la query y me devuelve el total de paginas que necesito para mostrar la data de esa query.
+
 export const getCollection = async (req, res) => {
   try {
-    const { search, orderBy, sort, page } = req.query;
+    const { search, orderBy, sort, page, status, ownership } = req.query;
 
     //* Because of Postgre.js works, I can't pass the sort value directly to the query, so I need to store it in a variable first.
     const orderByValue = orderBy || "status_name";
     const pageValue = page || 0;
+    const statusValue = status?.split(",") || [];
+    const ownershipValue = ownership?.split(",") || [];
 
     if (search) {
       const collection = await findCollectionByGameName(
         search,
         req.user_id,
         orderByValue,
-        sort
+        sort,
+        statusValue,
+        ownershipValue
       );
 
       if (!collection[0])
@@ -34,12 +40,23 @@ export const getCollection = async (req, res) => {
     if (sort === "desc") {
       collection = await sql`SELECT * FROM collection ${
         req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
-      } ORDER BY ${sql(orderByValue)} DESC LIMIT 2 OFFSET ${
+      } 
+
+      ${ownership ? sql`AND ownership_name IN ${sql(ownershipValue)}` : sql``}
+
+      ${status ? sql`AND status_name IN ${sql(statusValue)}` : sql``}
+      ORDER BY ${sql(orderByValue)} DESC LIMIT 2 OFFSET ${
         pageValue >= 1 ? (pageValue - 1) * 2 : 0
       } `;
     } else {
       collection = await sql`SELECT * FROM collection ${
         req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
+      } 
+
+      ${ownership ? sql`AND ownership_name IN ${sql(ownershipValue)}` : sql``}
+      
+      ${
+        status ? sql`AND status_name IN ${sql(statusValue)}` : sql``
       } ORDER BY ${sql(orderByValue)} LIMIT 2 OFFSET ${
         pageValue >= 1 ? (pageValue - 1) * 2 : 0
       } `;
@@ -124,7 +141,9 @@ const findCollectionByGameName = async (
   gamename,
   user_id,
   orderByValue,
-  sortValue
+  sortValue,
+  statusValue,
+  ownershipValue
 ) => {
   try {
     const cleanGameName = gamename.replace(/[^a-zA-Z ]/g, "").toLowerCase();
@@ -135,11 +154,34 @@ const findCollectionByGameName = async (
       collection =
         await sql`SELECT * FROM collection WHERE user_id = ${user_id} AND ${sql`regexp_replace(lower(game_name),'[^a-zA-Z ]', '', 'g')`} LIKE ${
           cleanGameName + "%"
+        } 
+        
+        ${
+          ownershipValue.length
+            ? sql`AND ownership_name IN ${sql(ownershipValue)}`
+            : sql``
+        }
+        ${
+          statusValue.length
+            ? sql`AND status_name IN ${sql(statusValue)}`
+            : sql``
         } ORDER BY ${sql(orderByValue)} DESC`;
     } else {
       collection =
         await sql`SELECT * FROM collection WHERE user_id = ${user_id} AND ${sql`regexp_replace(lower(game_name),'[^a-zA-Z ]', '', 'g')`} LIKE ${
           cleanGameName + "%"
+        }
+
+        ${
+          ownershipValue.length
+            ? sql`AND ownership_name IN ${sql(ownershipValue)}`
+            : sql``
+        }
+        
+        ${
+          statusValue.length
+            ? sql`AND status_name IN ${sql(statusValue)}`
+            : sql``
         } ORDER BY ${sql(orderByValue)}`;
     }
     return collection;
@@ -150,8 +192,7 @@ const findCollectionByGameName = async (
 
 export const getTotalCollectionPages = async (req, res) => {
   try {
-    const { search } = req.query;
-    console.log(search);
+    const { search, status, ownership } = req.query;
 
     if (search) {
       const cleanGameName = search?.replace(/[^a-zA-Z ]/g, "").toLowerCase();
@@ -168,11 +209,37 @@ export const getTotalCollectionPages = async (req, res) => {
       res.status(200).json(totalPages);
     }
 
+    if (status || ownership) {
+      const statusValue = status?.split(",") || [];
+      const ownershipValue = ownership?.split(",") || [];
+
+      const totalGames =
+        await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${
+          req.user_id
+        } AND ownership_name IN ${sql(ownershipValue)} AND status_name IN ${sql(
+          statusValue
+        )}`;
+
+      const totalPages = Math.ceil(totalGames[0].count / 2);
+      res.status(200).json(totalPages);
+    }
+
     const totalGames =
       await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
 
     const totalPages = Math.ceil(totalGames[0].count / 2);
     res.status(200).json(totalPages);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getCollectionFilters = async (req, res) => {
+  try {
+    const status = await sql`SELECT DISTINCT status_name FROM collection`;
+    const ownership = await sql`SELECT DISTINCT ownership_name FROM collection`;
+
+    res.status(200).json({ status, ownership });
   } catch (error) {
     console.error(error);
   }

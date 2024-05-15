@@ -19,6 +19,7 @@ export const CollectionProvider = ({ children }) => {
   const { search } = useLocation();
   const [collectionData, setCollectionData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [filtersData, setFiltersData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errors, setErrors] = useState(null);
 
@@ -102,10 +103,8 @@ export const CollectionProvider = ({ children }) => {
         throw new Error("Something went wrong!");
       }
 
-      setCollectionData((prevData) =>
-        prevData.filter(
-          (collection) => collection.collection_id !== collectionId
-        )
+      setCollectionData(
+        collectionData.filter((game) => game.collection_id !== collectionId)
       );
 
       return response;
@@ -132,8 +131,29 @@ export const CollectionProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      console.log(data);
       setTotalPages(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCollectionFilters = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/collection/filters`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const data = await response.json();
+      setFiltersData(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -145,6 +165,7 @@ export const CollectionProvider = ({ children }) => {
       value={{
         collectionData,
         getCollection,
+        getCollectionFilters,
         addToCollection,
         updateGameFromCollection,
         deleteGameFromCollection,
@@ -154,6 +175,7 @@ export const CollectionProvider = ({ children }) => {
         setIsLoading,
         errors,
         search,
+        filtersData,
       }}
     >
       {children}

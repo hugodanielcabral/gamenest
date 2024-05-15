@@ -6,6 +6,7 @@ import {
   updateGameFromCollection,
   deleteGameFromCollection,
   getTotalCollectionPages,
+  getCollectionFilters,
 } from "../controllers/collection.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
 import {
@@ -20,6 +21,8 @@ router.get("/collection", isAuth, getCollection);
 router.get("/collection/:id", isAuth /* getCollectionFromUser */);
 
 router.get("/collection/totalPages", isAuth, getTotalCollectionPages);
+
+router.get("/collection/filters", isAuth, getCollectionFilters);
 
 router.post(
   "/collection",

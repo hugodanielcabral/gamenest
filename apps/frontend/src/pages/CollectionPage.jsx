@@ -1,11 +1,12 @@
 import collectionBackground from "../assets/backgrounds/collection-background.webp";
 import { useCollection } from "../context/CollectionContext";
-import { Loading } from "../components/ui/index.js";
+import { Button } from "../components/ui/index.js";
 import { CollectionSearch } from "../components/collection/search/CollectionSearch.jsx";
 import { CollectionList } from "../components/collection/list/CollectionList.jsx";
 import { Layout } from "../components/layout/Layout.jsx";
 import { CollectionPagination } from "../components/collection/pagination/CollectionPagination.jsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { CollectionFilters } from "../components/collection/filters/CollectionFilters.jsx";
 
 export const CollectionPage = () => {
   const {
@@ -16,42 +17,54 @@ export const CollectionPage = () => {
     getCollection,
     getTotalCollectionPages,
     search,
+    getCollectionFilters,
+    filtersData,
   } = useCollection();
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     getCollection();
     getTotalCollectionPages();
-  }, [search]);
+  }, [search, collectionData.length]);
+  //? I need to add collectionData.length to the dependency array to avoid an infinite loop. I'm using collectionData.length because I need to update the collectionData when a game is deleted from the collection
 
-  return isLoading ? (
-    <Loading />
-  ) : (
-    <Layout>
-      <img
-        src={collectionBackground}
-        className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_40%,rgb(0,0,0,0)]"
-      />
-      <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-y-5 gap-x-10">
-        <CollectionSearch collectionData={collectionData} />
+  useEffect(() => {
+    getCollectionFilters();
+  }, []);
 
-        {collectionData?.length > 0 ? (
-          <CollectionList collectionData={collectionData} />
-        ) : (
-          <p className="col-span-4 md:col-span-3 text-center text-white text-2xl">
-            {errors ? errors : "No games found in your collection"}
-          </p>
-        )}
+  return (
+    isLoading || (
+      <Layout>
+        <img
+          src={collectionBackground}
+          className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_40%,rgb(0,0,0,0)]"
+        />
+        <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-y-5 gap-x-10">
+          <CollectionSearch collectionData={collectionData} />
+          <section className="md:hidden block col-span-4 mx-auto font-bold">
+            <Button onClick={() => setModalOpen(true)}>Filters</Button>
+          </section>
 
-        <section className="hidden md:block p-4 md:col-span-1 h-[350px]">
-          <aside>
-            <article className="bg-black p-4 h-[100px] border-4 border-white"></article>
-            <article className="bg-black p-4 h-[100px] border-4 border-white"></article>
-            <article className="bg-black p-4 h-[100px] border-4 border-white"></article>
-          </aside>
-        </section>
+          {collectionData?.length > 0 ? (
+            <CollectionList collectionData={collectionData} />
+          ) : (
+            <p className="col-span-4 md:col-span-3 text-center text-white text-2xl">
+              {errors ? errors : "No games found in your collection"}
+            </p>
+          )}
 
-        <CollectionPagination totalPages={totalPages} />
-      </article>
-    </Layout>
+          <section className="md:col-span-1">
+            <CollectionFilters
+              filtersData={filtersData}
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
+            />
+          </section>
+
+          <CollectionPagination totalPages={totalPages} />
+        </article>
+      </Layout>
+    )
   );
 };
