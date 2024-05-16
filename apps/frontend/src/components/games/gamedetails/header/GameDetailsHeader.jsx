@@ -37,7 +37,7 @@ export const GameDetailsHeader = ({ data }) => {
           {data?.name}
         </h1>
         <h3 className="text-lg md:text-xl lg:text-2xl md:text-left text-center text-info font-semibold">
-          {involvedCompanies && involvedCompanies.company.name} -{" "}
+          {involvedCompanies && involvedCompanies.company.name + " -"}{" "}
           {formattedDate}
         </h3>
       </div>

@@ -1,9 +1,8 @@
-import propTypes from "prop-types";
 import { useForm } from "../../../../hooks/useForm";
 import { Button, InputSearch } from "../../../ui/index.js";
 import { useUpdateUrlAndNavigate } from "../../../../hooks/useUpdateUrlAndNavigate.js";
 
-export const GamesFinderSearch = ({ handleOnClearFilters }) => {
+export const GamesFinderSearch = () => {
   const { urlSearchParams, updateUrlAndNavigate, clearQueryParamAndNavigate } =
     useUpdateUrlAndNavigate();
 
@@ -48,8 +47,4 @@ export const GamesFinderSearch = ({ handleOnClearFilters }) => {
       </form>
     </>
   );
-};
-
-GamesFinderSearch.propTypes = {
-  handleOnClearFilters: propTypes.func.isRequired,
 };

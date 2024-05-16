@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 import { CardBackground } from "../../../../../ui/cardBackground/cardBackground.jsx";
 
 export const AdditionalInfoWebsites = ({ data }) => {
+  if (!data.websites)
+    return (
+      <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
+        <h2 className="text-center mt-2">No websites available</h2>
+      </CardBackground>
+    );
+
   return (
     <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
       <h2 className="text-center text-3xl md:text-4xl font-semibold mb-2 text-info">

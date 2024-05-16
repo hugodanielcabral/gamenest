@@ -2,6 +2,13 @@ import propTypes from "prop-types";
 import { CardBackground } from "../../../../../ui/cardBackground/cardBackground";
 
 export const AdditionalInfoSpecifications = ({ data }) => {
+  if (!data.specifications)
+    return (
+      <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
+        <h2 className="text-center mt-2">No specifications available.</h2>
+      </CardBackground>
+    );
+
   return (
     <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
       <h2 className="text-center text-3xl md:text-4xl font-semibold mb-2 text-info">

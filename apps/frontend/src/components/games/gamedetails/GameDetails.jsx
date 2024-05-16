@@ -6,6 +6,8 @@ import { Loading } from "../../ui";
 import { useState } from "react";
 import { GameDetailsMediaGallery } from "./gallery/GameDetailsMediaGallery";
 import { Layout } from "../../layout/Layout";
+import getImageUrl from "../../../utils/getImageUrl.js";
+import gameDetailsBg from "../../../assets/backgrounds/gamesdetails-background.webp";
 
 export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -17,16 +19,24 @@ export const GameDetails = () => {
     setActiveTab(tab);
   };
 
+  let gameScreenshot;
+
+  if (data?.screenshots?.length) {
+    gameScreenshot = getImageUrl(
+      data.screenshots[0]?.url,
+      "t_screenshot_huge",
+      "t_thumb"
+    );
+  } else {
+    gameScreenshot = gameDetailsBg;
+  }
+
   return !isLoading ? (
     <Layout>
       <div className="min-h-screen">
         <img
-          src={data?.screenshots[0]?.url.replace(
-            "t_thumb",
-            "t_screenshot_huge"
-          )}
+          src={gameScreenshot}
           className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_0%,rgb(0,0,0,0)]"
-          alt={`Background of ${data?.name}`}
         />
         <div className="relative z-10 p-4 container mx-auto">
           {/* Header */}

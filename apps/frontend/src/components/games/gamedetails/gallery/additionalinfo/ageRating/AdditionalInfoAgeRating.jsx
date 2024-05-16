@@ -6,6 +6,13 @@ import {
 import { CardBackground } from "../../../../../ui/cardBackground/cardBackground.jsx";
 
 export const AdditionalInfoAgeRating = ({ data }) => {
+  if (!data.age_ratings)
+    return (
+      <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
+        <h2 className="text-center mt-2">No age rating available.</h2>
+      </CardBackground>
+    );
+
   const excludedAgeRatings = data?.age_ratings
     .filter(
       (rating) =>

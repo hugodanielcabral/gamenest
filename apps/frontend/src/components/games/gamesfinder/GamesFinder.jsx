@@ -1,5 +1,4 @@
 import { useFetch } from "../../../hooks/useFetch.js";
-import { Loading } from "../../ui/index.js";
 import { BackgroundImage } from "../../ui/backgroundImage/backgroundImage";
 import backgroundImage from "../../../assets/backgrounds/games-finder-wallpaper.webp";
 import { GamesFinderCard } from "./card/GamesFinderCard";

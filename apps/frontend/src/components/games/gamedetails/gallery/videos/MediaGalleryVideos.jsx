@@ -2,6 +2,11 @@ import propTypes from "prop-types";
 import ReactPlayer from "react-player";
 
 export const MediaGalleryVideos = ({ videos }) => {
+  if (!videos)
+    return (
+      <p className="col-span-4 text-center text-3xl">No videos available.</p>
+    );
+
   const totalVideos = videos.slice(1, 5);
   return (
     <>

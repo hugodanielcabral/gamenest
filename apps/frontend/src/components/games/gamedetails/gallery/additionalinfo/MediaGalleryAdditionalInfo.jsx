@@ -18,3 +18,7 @@ export const MediaGalleryAdditionalInfo = ({ data }) => {
 MediaGalleryAdditionalInfo.propTypes = {
   data: propTypes.object,
 };
+
+MediaGalleryAdditionalInfo.defaultProps = {
+  data: {},
+};

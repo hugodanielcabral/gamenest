@@ -30,18 +30,18 @@ export const GameDetailsMediaGallery = ({ data, activeTab }) => {
   };
 
   const handleMediaData = () => {
-    if (typeOfMedia === "screenshots") {
+    if (typeOfMedia === "screenshots" && data?.screenshots) {
       setMediaData(
-        data?.screenshots.map((screenshot) => ({
+        data?.screenshots?.map((screenshot) => ({
           original: screenshot.url.replace("t_thumb", "t_1080p"),
           thumbnail: screenshot.url.replace("t_thumb", "t_720p"),
         }))
       );
     }
 
-    if (typeOfMedia === "artworks") {
+    if (typeOfMedia === "artworks" && data?.artworks) {
       setMediaData(
-        data?.artworks.map((artwork) => ({
+        data?.artworks?.map((artwork) => ({
           original: artwork.url.replace("t_thumb", "t_1080p"),
           thumbnail: artwork.url.replace("t_thumb", "t_720p"),
         }))
@@ -103,4 +103,9 @@ export const GameDetailsMediaGallery = ({ data, activeTab }) => {
 GameDetailsMediaGallery.propTypes = {
   data: propTypes.object.isRequired,
   activeTab: propTypes.number.isRequired,
+};
+
+GameDetailsMediaGallery.defaultProps = {
+  data: {},
+  activeTab: 1,
 };
