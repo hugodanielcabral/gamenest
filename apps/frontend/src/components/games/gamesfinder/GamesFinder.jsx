@@ -9,6 +9,7 @@ import { GamesFinderPagination } from "./pagination/GamesFinderPagination.jsx";
 import { GamesFinderFilters } from "./filters/GamesFinderFilters.jsx";
 import { Modal } from "../../ui/modal/Modal.jsx";
 import { useState } from "react";
+import { GamesFinderSkeleton } from "./skeleton/GamesFinderSkeleton.jsx";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GamesFinder = () => {
@@ -31,7 +32,9 @@ export const GamesFinder = () => {
     });
   };
 
-  return (
+  return isLoading ? (
+    <GamesFinderSkeleton />
+  ) : (
     <BackgroundImage backgroundImage={backgroundImage}>
       <div className="grid grid-cols-4 gap-6">
         <div className="col-span-4">

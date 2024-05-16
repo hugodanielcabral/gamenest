@@ -24,11 +24,11 @@ export const getGames = async (req, res) => {
         page ? (page - 1) * 10 : 0
       };`;
     } else {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 ${
+      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 & themes != (42) ${
         platforms ? `& platforms=(${platforms})` : ""
       } ${
         genres ? `& genres=(${genres})` : ""
-      }; sort follows desc;limit 10; offset ${page ? (page - 1) * 10 : 0};`;
+      }; sort rating desc;limit 10; offset ${page ? (page - 1) * 10 : 0};`;
     }
 
     const gamesResponse = await fetch("https://api.igdb.com/v4/games", {

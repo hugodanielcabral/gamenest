@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import { NoData } from "../../../notfound/NoData.jsx";
 import { Link } from "react-router-dom";
 import getImageUrl from "../../../../utils/getImageUrl.js";
+import { Badge } from "../../../ui/index.js";
 
 export const GamesFinderCard = ({ game }) => {
   const coverImage =
@@ -16,10 +17,7 @@ export const GamesFinderCard = ({ game }) => {
 
   return (
     <Link to={`/games/${game.slug}`}>
-      <CardBackground
-        key={game.id}
-        className="group flex gap-2 max-h-[200px] shadow-black border-l-4 border-l-info hover:border-l-error transition-all duration-300 ease-in-out"
-      >
+      <CardBackground className="group flex gap-2 max-h-[200px] shadow-black border-l-4 border-l-info hover:border-l-error transition-all duration-300 ease-in-out">
         <img
           src={getImageUrl(coverImage, "cover_big")}
           loading="lazy"
@@ -32,10 +30,8 @@ export const GamesFinderCard = ({ game }) => {
           </h2>
           <ul className="flex gap-x-2 flex-wrap *:p-1 *:bg-error *:text-white *:font-semibold my-2 *:md:text-sm *:text-xs *:lg:text-base line">
             {game?.platforms ? (
-              getPlatformAbbreviations(game).map((platform) => (
-                <li key={platform} className="p-1 bg-error text-white">
-                  {platform}
-                </li>
+              getPlatformAbbreviations(game).map((platform, i) => (
+                <Badge key={platform + i}>{platform}</Badge>
               ))
             ) : (
               <NoData message="No platforms available" />

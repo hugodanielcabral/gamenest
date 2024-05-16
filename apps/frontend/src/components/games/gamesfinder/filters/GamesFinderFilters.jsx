@@ -110,7 +110,7 @@ export const GamesFinderFilters = ({
   }, [checkedFilters]);
 
   return (
-    <CardBackground>
+    <CardBackground className="border-r-4 border-r-info">
       <button
         className={clsx(
           {
@@ -121,13 +121,13 @@ export const GamesFinderFilters = ({
               checkedFilters.platforms.length > 0 ||
               checkedFilters.genres.length > 0,
           },
-          "btn btn-error btn-outline btn-sm mt-2 self-auto w-full my-5"
+          "w-full bg-error text-white p-2 rounded-md mt-2 hover:bg-opacity-70 transition-all duration-200 ease-in-out"
         )}
         onClick={handleOnClearFilters}
       >
         Clear filters
       </button>
-      <h2 className="text-xl font-semibold">Platforms</h2>
+      <h2 className="text-2xl text-white text-center divider">Platforms</h2>
       {gamesPlatforms.map((platform) => (
         <div className="form-control" key={platform.id}>
           <label className="cursor-pointer label">
@@ -145,9 +145,8 @@ export const GamesFinderFilters = ({
           </label>
         </div>
       ))}
-      <div className="divider divider-start divider-info"></div>
       <div className="max-h-96 overflow-auto">
-        <h2 className="text-xl font-semibold">Genres</h2>
+        <h2 className="text-2xl text-white text-center divider">Genres</h2>
         {gamesGenres.map((genre, index) => (
           <div
             className={`form-control ${index > 5 && showMoreGenres}`}

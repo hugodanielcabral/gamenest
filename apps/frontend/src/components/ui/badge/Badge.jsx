@@ -17,7 +17,7 @@ export const Badge = ({ children, className, ...props }) => {
 };
 
 Badge.propTypes = {
-  children: propTypes.node.isRequired,
+  children: propTypes.node,
   className: propTypes.string,
 };
 
