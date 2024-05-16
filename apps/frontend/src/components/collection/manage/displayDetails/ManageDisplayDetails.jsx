@@ -5,10 +5,11 @@ import { CardBackground } from "../../../ui/cardBackground/CardBackground";
 import { Button, Toast } from "../../../ui";
 import propTypes from "prop-types";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCollection } from "../../../../context/CollectionContext.jsx";
+import { useEffect } from "react";
 
-export const ManageDisplayDetails = ({ data }) => {
+export const ManageDisplayDetails = ({ data, gameSlug }) => {
   const {
     platform,
     format,
@@ -27,7 +28,12 @@ export const ManageDisplayDetails = ({ data }) => {
     progress_note: "",
   });
 
-  const { addToCollection } = useCollection();
+  const { pathname } = useLocation();
+
+  const getActionType = pathname.includes("/update/");
+
+  const { getGameFromCollection, addToCollection, updateGameFromCollection } =
+    useCollection();
   const [errors, setErrors] = useState(null);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -38,11 +44,11 @@ export const ManageDisplayDetails = ({ data }) => {
     game_slug: data.slug,
     game_name: data.name,
     game_cover: data.cover.url,
-    platform,
-    format,
-    ownership,
-    store,
-    status,
+    platform_name: platform,
+    format_name: format,
+    ownership_name: ownership,
+    store_name: store,
+    status_name: status,
     progress_note,
   };
 
@@ -50,6 +56,27 @@ export const ManageDisplayDetails = ({ data }) => {
     try {
       e.preventDefault();
       setButtonDisabled(true);
+
+      if (getActionType) {
+        const response = await updateGameFromCollection(gameSlug, bodyData);
+
+        if (!response.ok) {
+          setErrors(response.statusText);
+          setButtonDisabled(false);
+        }
+
+        const collectionData = await response.json();
+        setButtonDisabled(true);
+        setShowToast(true);
+
+        setTimeout(() => {
+          setShowToast(false);
+          setButtonDisabled(false);
+          navigate("/collection");
+        }, 2000);
+
+        return;
+      }
 
       const response = await addToCollection(bodyData);
 
@@ -87,11 +114,28 @@ export const ManageDisplayDetails = ({ data }) => {
     navigate(`/games/${data.slug}`);
   };
 
+  useEffect(() => {
+    if (getActionType) {
+      getGameFromCollection(data.slug).then((gameData) => {
+        setFormData({
+          platform: gameData.platform_name,
+          format: gameData.format_name,
+          ownership: gameData.ownership_name,
+          store: gameData.store_name,
+          status: gameData.status_name,
+          progress_note: gameData.progress_note,
+        });
+      });
+    }
+  }, []);
+
   return (
     <section className="p-4 col-span-4">
       {showToast && (
         <Toast
-          toastMessage={`${data?.name} was added to your collection`}
+          toastMessage={`${data?.name} ${
+            getActionType ? "was updated" : "was added to your collection"
+          }`}
           showToast={showToast}
         />
       )}
@@ -144,8 +188,10 @@ export const ManageDisplayDetails = ({ data }) => {
 
 ManageDisplayDetails.propTypes = {
   data: propTypes.object.isRequired,
+  gameSlug: propTypes.string.isRequired,
 };
 
 ManageDisplayDetails.defaultProps = {
   data: {},
+  gameSlug: "",
 };

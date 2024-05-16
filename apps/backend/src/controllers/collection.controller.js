@@ -45,8 +45,8 @@ export const getCollection = async (req, res) => {
       ${ownership ? sql`AND ownership_name IN ${sql(ownershipValue)}` : sql``}
 
       ${status ? sql`AND status_name IN ${sql(statusValue)}` : sql``}
-      ORDER BY ${sql(orderByValue)} DESC LIMIT 2 OFFSET ${
-        pageValue >= 1 ? (pageValue - 1) * 2 : 0
+      ORDER BY ${sql(orderByValue)} DESC LIMIT 10 OFFSET ${
+        pageValue >= 1 ? (pageValue - 1) * 10 : 0
       } `;
     } else {
       collection = await sql`SELECT * FROM collection ${
@@ -57,8 +57,8 @@ export const getCollection = async (req, res) => {
       
       ${
         status ? sql`AND status_name IN ${sql(statusValue)}` : sql``
-      } ORDER BY ${sql(orderByValue)} LIMIT 2 OFFSET ${
-        pageValue >= 1 ? (pageValue - 1) * 2 : 0
+      } ORDER BY ${sql(orderByValue)} LIMIT 10 OFFSET ${
+        pageValue >= 1 ? (pageValue - 1) * 10 : 0
       } `;
     }
 
@@ -68,6 +68,27 @@ export const getCollection = async (req, res) => {
     const collectionWithGameInfo = await getGameInfoFromCollection(collection);
 
     res.status(200).json(collectionWithGameInfo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getGameFromCollection = async (req, res) => {
+  const { gameSlug } = req.params;
+
+  try {
+    const collection =
+      await sql`SELECT * FROM collection WHERE game_slug = ${gameSlug} AND user_id = ${req.user_id}`;
+
+    if (!collection[0])
+      return res
+        .status(404)
+        .json({ message: "Game not found in your collection" });
+
+    const collectionWithGameInfo = await getGameInfoFromCollection(collection);
+
+    res.status(200).json(collectionWithGameInfo[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
@@ -100,19 +121,22 @@ export const addGameToCollection = async (req, res) => {
 };
 
 export const updateGameFromCollection = async (req, res) => {
-  const { id } = req.params;
+  const { gameSlug } = req.params;
 
   //* I don't need to pass the body parts like "game_id, game_slug, game_name, etc. Because postgres will only update the fields that are passed in the body using the ${sql(req.body)} syntax."
 
   try {
-    const collection = await sql`
-      UPDATE collection 
-        SET ${sql(req.body)} 
-          WHERE collection_id = ${id} 
-      RETURNING *`;
+    const gameExists =
+      await sql`SELECT * FROM collection WHERE game_slug = ${gameSlug} AND user_id = ${req.user_id}`;
 
-    if (!collection[0])
-      return res.status(404).json({ message: "Collection not found" });
+    if (!gameExists[0])
+      return res
+        .status(404)
+        .json({ message: "Game not found in your collection" });
+
+    const collection = await sql`UPDATE collection SET ${sql(
+      req.body
+    )} WHERE game_slug = ${gameSlug} AND user_id = ${req.user_id} RETURNING *`;
 
     res.status(200).json(collection);
   } catch (error) {
@@ -204,7 +228,7 @@ export const getTotalCollectionPages = async (req, res) => {
           cleanGameName + "%"
         }`;
 
-      const totalPages = Math.ceil(totalGames[0].count / 2);
+      const totalPages = Math.ceil(totalGames[0].count / 10);
       console.log(totalPages, "totalPages");
       res.status(200).json(totalPages);
     }
@@ -220,14 +244,14 @@ export const getTotalCollectionPages = async (req, res) => {
           statusValue
         )}`;
 
-      const totalPages = Math.ceil(totalGames[0].count / 2);
+      const totalPages = Math.ceil(totalGames[0].count / 10);
       res.status(200).json(totalPages);
     }
 
     const totalGames =
       await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
 
-    const totalPages = Math.ceil(totalGames[0].count / 2);
+    const totalPages = Math.ceil(totalGames[0].count / 10);
     res.status(200).json(totalPages);
   } catch (error) {
     console.error(error);

@@ -19,7 +19,7 @@ export const CardRating = ({ gameData }) => {
 
   const handleUpdateRating = async (rating) => {
     setButtonDisabled(true);
-    updateGameFromCollection(gameData.collection_id, { rating }).then(
+    updateGameFromCollection(gameData.game_slug, { rating }).then(
       (response) => {
         if (response.ok) {
           setButtonDisabled(false);

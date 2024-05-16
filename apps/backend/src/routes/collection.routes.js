@@ -2,6 +2,7 @@ import Router from "express";
 
 import {
   getCollection,
+  getGameFromCollection,
   addGameToCollection,
   updateGameFromCollection,
   deleteGameFromCollection,
@@ -20,6 +21,8 @@ router.get("/collection", isAuth, getCollection);
 
 router.get("/collection/:id", isAuth /* getCollectionFromUser */);
 
+router.get("/collection/game/:gameSlug", isAuth, getGameFromCollection);
+
 router.get("/collection/totalPages", isAuth, getTotalCollectionPages);
 
 router.get("/collection/filters", isAuth, getCollectionFilters);
@@ -31,7 +34,7 @@ router.post(
   addGameToCollection
 );
 
-router.patch("/collection/update/:id", isAuth, updateGameFromCollection);
+router.patch("/collection/update/:gameSlug", isAuth, updateGameFromCollection);
 
 router.delete("/collection/:id", isAuth, deleteGameFromCollection);
 

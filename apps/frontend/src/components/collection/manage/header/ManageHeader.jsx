@@ -2,6 +2,7 @@ import propTypes from "prop-types";
 import { Button } from "../../../ui";
 import getImageUrl from "../../../../utils/getImageUrl";
 import { useLocation, useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 export const ManageHeader = ({ data }) => {
   const COVER_IMAGE =
@@ -37,7 +38,15 @@ export const ManageHeader = ({ data }) => {
         </div>
 
         <div className="flex flex-col gap-y-5 mt-5">
-          <h1 className="text-3xl md:text-6xl font-bold text-white">
+          <h1
+            className={clsx(
+              {
+                "text-error": determineActionType === "EDIT",
+                "text-success": determineActionType === "ADD",
+              },
+              "text-3xl md:text-6xl font-bold uppercase self-center"
+            )}
+          >
             {determineActionType} GAME
           </h1>
           <h2 className="text-2xl md:text-4xl font-bold text-slate-300 self-center">

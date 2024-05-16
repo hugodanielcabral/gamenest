@@ -1,6 +1,6 @@
 import collectionBackground from "../assets/backgrounds/collection-background.webp";
 import { useCollection } from "../context/CollectionContext";
-import { Button, Loading } from "../components/ui/index.js";
+import { Button } from "../components/ui/index.js";
 import { CollectionSearch } from "../components/collection/search/CollectionSearch.jsx";
 import { CollectionList } from "../components/collection/list/CollectionList.jsx";
 import { Layout } from "../components/layout/Layout.jsx";

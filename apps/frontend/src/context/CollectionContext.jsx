@@ -49,6 +49,28 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
+  const getGameFromCollection = async (gameSlug) => {
+    try {
+      const response = await fetch(`${BASE_URL}/collection/game/${gameSlug}`, {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addToCollection = async (bodyData) => {
     try {
       const response = await fetch(`${BASE_URL}/collection`, {
@@ -67,10 +89,10 @@ export const CollectionProvider = ({ children }) => {
     }
   };
 
-  const updateGameFromCollection = async (collectionId, bodyData) => {
+  const updateGameFromCollection = async (gameSlug, bodyData) => {
     try {
       const response = await fetch(
-        `${BASE_URL}/collection/update/${collectionId}`,
+        `${BASE_URL}/collection/update/${gameSlug}`,
         {
           method: "PATCH",
           credentials: "include",
@@ -165,6 +187,7 @@ export const CollectionProvider = ({ children }) => {
       value={{
         collectionData,
         getCollection,
+        getGameFromCollection,
         getCollectionFilters,
         addToCollection,
         updateGameFromCollection,
