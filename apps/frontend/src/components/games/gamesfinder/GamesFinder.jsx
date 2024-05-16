@@ -32,9 +32,7 @@ export const GamesFinder = () => {
     });
   };
 
-  return isLoading ? (
-    <GamesFinderSkeleton />
-  ) : (
+  return (
     <BackgroundImage backgroundImage={backgroundImage}>
       <div className="grid grid-cols-4 gap-6">
         <div className="col-span-4">
@@ -62,9 +60,9 @@ export const GamesFinder = () => {
             />
           </Modal>
         </div>
-        <div className="p-4 rounded shadow col-span-4 flex flex-col gap-5 md:col-span-3 mx-auto">
+        <div className="p-4 rounded shadow col-span-4 flex flex-col gap-5 md:col-span-3">
           {isLoading ? (
-            <Loading />
+            <GamesFinderSkeleton />
           ) : games?.length ? (
             games.map((game) => <GamesFinderCard game={game} key={game.id} />)
           ) : (
