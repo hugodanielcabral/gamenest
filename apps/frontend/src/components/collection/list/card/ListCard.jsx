@@ -10,6 +10,7 @@ import {
   CardStatus,
 } from "./index.js";
 import { Link } from "react-router-dom";
+import { CardOwnership } from "./ownership/CardOwnership.jsx";
 
 export const ListCard = ({ gameData }) => {
   const GAME_PATH = `/collection/${gameData.game_slug}`;
@@ -25,6 +26,7 @@ export const ListCard = ({ gameData }) => {
             {gameData?.game_name}
           </h2>
           <CardStatus gameData={gameData} />
+          <CardOwnership gameData={gameData} />
           <CardPlatform gameData={gameData} />
         </div>
         <CardProgressNotes gameData={gameData} />

@@ -29,6 +29,11 @@ const PLATFORM_ABBREVIATION = [
     fullName: "PC (Microsoft Windows)",
     abbreviation: "PC",
   },
+  {
+    id: 7,
+    fullName: "Super Nintendo Entertainment System",
+    abbreviation: "Super Nintendo",
+  },
 ];
 
 const getPlaformAbbreviation = (platformName) => {
