@@ -4,7 +4,9 @@ import ReactPlayer from "react-player";
 export const MediaGalleryVideos = ({ videos }) => {
   if (!videos)
     return (
-      <p className="col-span-4 text-center text-3xl">No videos available.</p>
+      <p className="col-span-4 text-center text-lg md:text-2xl text-white">
+        No videos available.
+      </p>
     );
 
   const totalVideos = videos.slice(1, 5);
@@ -15,7 +17,7 @@ export const MediaGalleryVideos = ({ videos }) => {
           return (
             <div
               key={video.id}
-              className="col-span-4 md:col-span-1 max-h-60 h-48 hover:scale-105 transform transition duration-300 ease-in-out cursor-pointer hover:grayscale"
+              className="col-span-4 md:col-span-1 max-h-60 h-48 hover:scale-95 transform transition duration-200 ease-in-out cursor-pointer hover:saturate-50"
             >
               <ReactPlayer
                 url={`https://www.youtube.com/watch?v=${video.video_id}`}
@@ -29,7 +31,9 @@ export const MediaGalleryVideos = ({ videos }) => {
           );
         })
       ) : (
-        <p className="col-span-4 text-center text-3xl">No videos available.</p>
+        <p className="col-span-4 text-center text-lg md:text-2xl text-white">
+          No videos available.
+        </p>
       )}
     </>
   );

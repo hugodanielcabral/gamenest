@@ -4,20 +4,13 @@ import { Link } from "react-router-dom";
 import { CardBackground } from "../../../../../ui/cardBackground/cardBackground.jsx";
 
 export const AdditionalInfoWebsites = ({ data }) => {
-  if (!data.websites)
-    return (
-      <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
-        <h2 className="text-center mt-2">No websites available</h2>
-      </CardBackground>
-    );
-
   return (
     <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
-      <h2 className="text-center text-3xl md:text-4xl font-semibold mb-2 text-info">
+      <h2 className="text-center text-xl md:text-2xl mb-2 text-info">
         Game Websites
       </h2>
       <ul className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-        {data?.websites.map((website) => {
+        {!data?.websites.map((website) => {
           const websiteIcon = websiteIcons.find(
             (icon) => icon.category === website.category
           );
@@ -38,7 +31,11 @@ export const AdditionalInfoWebsites = ({ data }) => {
               )}
             </li>
           );
-        }) || <p className="text-center col-span-4">No websites available.</p>}
+        }) || (
+          <p className="text-center col-span-4 text-white">
+            No websites available.
+          </p>
+        )}
       </ul>
     </CardBackground>
   );
