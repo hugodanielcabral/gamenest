@@ -8,10 +8,10 @@ import { GameDetailsMediaGallery } from "./gallery/GameDetailsMediaGallery";
 import { Layout } from "../../layout/Layout";
 import getImageUrl from "../../../utils/getImageUrl.js";
 import gameDetailsBg from "../../../assets/backgrounds/gamesdetails-background.webp";
+import { GameDetailsSkeleton } from "./skeleton/GameDetailsSkeleton.jsx";
 
 export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-
   const { gameId: gameSlug } = useParams();
   const { data, isLoading } = useFetch(`${BASE_URL}/games/${gameSlug}`);
   const [activeTab, setActiveTab] = useState(1);
@@ -59,8 +59,6 @@ export const GameDetails = () => {
       </div>
     </Layout>
   ) : (
-    <div className="container mx-auto h-screen flex items-center justify-center">
-      <Loading />
-    </div>
+    <GameDetailsSkeleton />
   );
 };
