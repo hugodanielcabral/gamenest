@@ -33,16 +33,16 @@ export const GameDetailsHeader = ({ data }) => {
   return (
     <div className="flex gap-y-2 md:flex-row flex-col items-center gap-x-20">
       <div className="grow">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl text-center md:text-left text-white">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl text-center md:text-left text-white font-bold">
           {data?.name}
         </h1>
-        <h3 className="text-lg md:text-xl lg:text-2xl md:text-left text-center text-info font-semibold">
+        <h3 className="text-lg md:text-xl lg:text-2xl md:text-left text-center text-info">
           {involvedCompanies && involvedCompanies.company.name + " -"}{" "}
           {formattedDate}
         </h3>
       </div>
       <div className="flex gap-3 justify-center grow flex-col items-center">
-        <h2 className="text-white text-base md:text-1xl lg:text-2xl">
+        <h2 className="text-gray-200 text-base md:text-1xl lg:text-2xl">
           Buy this game on:
         </h2>
         <div className="flex gap-3">

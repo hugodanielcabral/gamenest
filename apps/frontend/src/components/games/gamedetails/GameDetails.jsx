@@ -49,6 +49,7 @@ export const GameDetails = () => {
               data={data}
               handleOnClick={handleOnClick}
               activeTab={activeTab}
+              gameSlug={gameSlug}
             />
           </div>
           {/* Screenshots, Videos, Artworks and Additional info */}
