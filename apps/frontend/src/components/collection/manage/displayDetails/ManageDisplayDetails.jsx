@@ -1,13 +1,13 @@
 import { useForm } from "../../../../hooks/useForm.js";
 import { DisplayDetailsGameInformation } from "./gameInformation/DisplayDetailsGameInformation";
 import { DisplayDetailsProgress } from "./progress/DisplayDetailsProgress";
-import { CardBackground } from "../../../ui/cardBackground/CardBackground";
 import { Button, Toast } from "../../../ui";
 import propTypes from "prop-types";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCollection } from "../../../../context/CollectionContext.jsx";
 import { useEffect } from "react";
+import { CardBackground } from "../../../ui/cardBackground/cardBackground.jsx";
 
 export const ManageDisplayDetails = ({ data, gameSlug }) => {
   const {
@@ -66,6 +66,7 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
         }
 
         const collectionData = await response.json();
+        console.log(collectionData);
         setButtonDisabled(true);
         setShowToast(true);
 
@@ -76,24 +77,24 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
         }, 2000);
 
         return;
+      } else {
+        const response = await addToCollection(bodyData);
+
+        if (!response.ok) {
+          setErrors(response.statusText);
+          setButtonDisabled(false);
+        }
+
+        const collectionData = await response.json();
+        setButtonDisabled(true);
+        setShowToast(true);
+
+        setTimeout(() => {
+          setShowToast(false);
+          setButtonDisabled(false);
+          navigate("/collection");
+        }, 2000);
       }
-
-      const response = await addToCollection(bodyData);
-
-      if (!response.ok) {
-        setErrors(response.statusText);
-        setButtonDisabled(false);
-      }
-
-      const collectionData = await response.json();
-      setButtonDisabled(true);
-      setShowToast(true);
-
-      setTimeout(() => {
-        setShowToast(false);
-        setButtonDisabled(false);
-        navigate("/collection");
-      }, 2000);
     } catch (error) {
       console.log(error);
       setButtonDisabled(false);
@@ -127,7 +128,7 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
         });
       });
     }
-  }, []);
+  }, [getActionType, data.slug]);
 
   return (
     <section className="p-4 col-span-4">

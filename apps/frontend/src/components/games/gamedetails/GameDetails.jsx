@@ -2,7 +2,6 @@ import { useFetch } from "../../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { GameDetailsHeader } from "./header/GameDetailsHeader";
 import { GameDetailsMedia } from "./media/GameDetailsMedia";
-import { Loading } from "../../ui";
 import { useState } from "react";
 import { GameDetailsMediaGallery } from "./gallery/GameDetailsMediaGallery";
 import { Layout } from "../../layout/Layout";

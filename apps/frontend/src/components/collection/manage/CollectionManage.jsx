@@ -6,6 +6,7 @@ import getImageUrl from "../../../utils/getImageUrl";
 import { CollectionManageSkeleton } from "./skeleton/CollectionManageSkeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Layout } from "../../layout/Layout";
+import gameDetailsBg from "../../../assets/backgrounds/gamesdetails-background.webp";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -13,9 +14,17 @@ export const CollectionManage = () => {
   const { gameSlug } = useParams();
   const { data, isLoading } = useFetch(`${BASE_URL}/games/${gameSlug}`);
 
-  const BACKGROUND_IMAGE =
-    data?.screenshots[0]?.url ||
-    "https://via.placeholder.com/300x400?text=No+Cover+Available";
+  let gameScreenshot;
+
+  if (data?.screenshots?.length) {
+    gameScreenshot = getImageUrl(
+      data.screenshots[0]?.url,
+      "t_screenshot_huge",
+      "t_thumb"
+    );
+  } else {
+    gameScreenshot = gameDetailsBg;
+  }
 
   return isLoading ? (
     <CollectionManageSkeleton />
@@ -23,7 +32,7 @@ export const CollectionManage = () => {
     <Layout>
       <div className="min-h-screen">
         <img
-          src={getImageUrl(BACKGROUND_IMAGE, "screenshot_huge")}
+          src={gameScreenshot}
           className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_0%,rgb(0,0,0,0)]"
           alt={`Background of ${data?.name}`}
         />

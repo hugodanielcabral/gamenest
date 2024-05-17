@@ -27,12 +27,7 @@ router.get("/collection/totalPages", isAuth, getTotalCollectionPages);
 
 router.get("/collection/filters", isAuth, getCollectionFilters);
 
-router.post(
-  "/collection",
-  isAuth,
-  addGameToCollectionValidator,
-  addGameToCollection
-);
+router.post("/collection/add/game", isAuth, addGameToCollection);
 
 router.patch("/collection/update/:gameSlug", isAuth, updateGameFromCollection);
 
