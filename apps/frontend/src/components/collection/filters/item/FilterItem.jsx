@@ -9,7 +9,10 @@ export const FilterItem = ({
   className,
 }) => {
   return (
-    <Label htmlFor={value} className={className + "flex justify-between"}>
+    <Label
+      htmlFor={value}
+      className={className + "flex justify-between bg-transparent"}
+    >
       {value}
       <Checkbox
         name={name}

@@ -29,7 +29,7 @@ export const FiltersCard = ({
             value={statusValue.name}
             handleOnChange={handleOnChange}
             isChecked={selectedOptions.status.includes(statusValue.name)}
-            className="border-transparent text-gray-300"
+            className="border-transparent  text-gray-300"
           />
         </Fragment>
       ))}
