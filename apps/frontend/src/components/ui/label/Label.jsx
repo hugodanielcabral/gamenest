@@ -5,9 +5,7 @@ import { twMerge } from "tailwind-merge";
 export const Label = ({ children, className, ...props }) => {
   return (
     <label
-      className={twMerge(
-        clsx("flex items-center gap-2 input input-bordered", className)
-      )}
+      className={twMerge(clsx("flex items-center gap-2", className))}
       {...props}
     >
       {children}

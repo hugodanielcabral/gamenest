@@ -9,7 +9,7 @@ export const Toast = ({ toastMessage, showToast }) => {
           block: showToast,
           hidden: !showToast,
         },
-        "toast toast-center toast-middle" /* "toast toast-center toast-top toast-success fixed top-4 z-50 w-full max-w-md mx-auto" */
+        "toast toast-center toast-middle z-20" /* "toast toast-center toast-top toast-success fixed top-4 z-50 w-full max-w-md mx-auto" */
       )}
     >
       <div className="alert alert-success text-white">

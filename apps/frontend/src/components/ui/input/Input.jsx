@@ -4,12 +4,7 @@ import propTypes from "prop-types";
 
 export const Input = ({ className, ...props }) => {
   return (
-    <input
-      className={twMerge(
-        clsx("w-full max-w-xs input input-bordered", className)
-      )}
-      {...props}
-    />
+    <input className={twMerge(clsx("w-full max-w-xs", className))} {...props} />
   );
 };
 

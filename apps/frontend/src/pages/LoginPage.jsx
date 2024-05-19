@@ -13,36 +13,41 @@ export const LoginPage = () => {
     username: "",
     password: "",
   });
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [status, setStatus] = useState("");
   const [showToast, setShowToast] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      setButtonDisabled(true);
+      setStatus("submitting");
       const userData = await signin(formData);
-      setButtonDisabled(false);
 
       //* Because setIsAuth is set to true, the page reloads automatically. This caused
       //* the inability to execute any message with the "data" return variable. I resolved this by moving
       //* setIsAuth to the handleSubmit function in the LoginPage component.
       if (userData) {
         setShowToast(true);
-        setButtonDisabled(true);
+        setStatus("success");
         setTimeout(() => {
           setShowToast(false);
-          setButtonDisabled(false);
+          setStatus("");
           setIsAuth(true);
-
           //* I use location.href instead of Navigate, because i had issues with the Navigate component.
           //* The navigate was not "rendering" the navbar, so i could not access private routes links.
           window.location.href = "/";
         }, 2000);
       }
+
+      setStatus("");
     } catch (error) {
       console.log(error);
-      setButtonDisabled(false);
+      setStatus("");
     }
+  };
+
+  const handleOnPasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -60,10 +65,10 @@ export const LoginPage = () => {
 
         <div className="flex items-center mt-5 justify-evenly">
           <article className="flex flex-col items-center mt-3">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
               Unlock Your Gaming Realm
             </h1>
-            <h3 className="mt-4 text-lg md:text-xl lg:text-2xl font-bold text-center text-white text-balance">
+            <h3 className="mt-4 text-base md:lg lg:text-xl font-bold text-center text-gray-300">
               Continue Your Backlog Adventure with GameNest! Ready to Dive Back
               In?
             </h3>
@@ -75,9 +80,11 @@ export const LoginPage = () => {
             handleSubmit={handleSubmit}
             handleOnChange={handleOnChange}
             errors={errors}
-            buttonDisabled={buttonDisabled}
+            status={status}
             username={username}
             password={password}
+            showPassword={showPassword}
+            handleOnPasswordVisibility={handleOnPasswordVisibility}
           />
         </AuthCard>
       </div>
