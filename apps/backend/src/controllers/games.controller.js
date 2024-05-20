@@ -137,7 +137,7 @@ export const getPopularGames = async (req, res) => {
       },
       body: `fields first_release_date, slug,name, aggregated_rating, cover.url, release_dates.y;
       where aggregated_rating > 85 & rating_count > 60 & first_release_date >= ${YEAR_2021} ;
-      limit 20;
+      limit 18;
       ;
       `,
     });

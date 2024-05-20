@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
 import { CardBackground } from "../../../ui/cardBackground/cardBackground.jsx";
+import { useAuth } from "../../../../context/AuthContext.jsx";
 
 export const GameDetailsMedia = ({
   data,
@@ -15,6 +16,8 @@ export const GameDetailsMedia = ({
 }) => {
   const navigate = useNavigate();
   const { gameInCollection, isLoading } = useCheckGameInCollection(gameSlug);
+  const { isAuth } = useAuth();
+
   const gameCover =
     data?.cover?.url.replace("t_thumb", "t_1080p") ||
     "https://via.placeholder.com/300x400?text=No+Cover+Available";
@@ -34,18 +37,20 @@ export const GameDetailsMedia = ({
           src={gameCover}
           alt={`Cover of ${data?.name}`}
         />
-        <Button
-          className={clsx(
-            "w-full font-semibold text-lg transition-all duration-300 ease-in-out disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed",
-            gameInCollection
-              ? "bg-success hover:bg-success hover:bg-opacity-70 text-white"
-              : "bg-info hover:bg-info hover:bg-opacity-70 text-white"
-          )}
-          disabled={isLoading}
-          onClick={() => navigate(navigateTo)}
-        >
-          {isLoading ? "Loading..." : buttonText}
-        </Button>
+        {isAuth && (
+          <Button
+            className={clsx(
+              "w-full font-semibold text-lg transition-all duration-300 ease-in-out disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed",
+              gameInCollection
+                ? "bg-success hover:bg-success hover:bg-opacity-70 text-white"
+                : "bg-info hover:bg-info hover:bg-opacity-70 text-white"
+            )}
+            disabled={isLoading}
+            onClick={() => navigate(navigateTo)}
+          >
+            {isLoading ? "Loading..." : buttonText}
+          </Button>
+        )}
       </div>
       <div className="col-span-4 md:col-span-3 flex flex-col gap-3">
         {data?.videos ? (

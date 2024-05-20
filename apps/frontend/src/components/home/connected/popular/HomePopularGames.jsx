@@ -21,11 +21,11 @@ export const HomePopularGames = () => {
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold uppercase text-center mt-10 bg-clip-text text-transparent bg-gradient-to-r from-error to-white">
           Popular Games
         </h2>
-        <p className="text-base md:text-xl lg:text-2xl text-balance text-center text-white">
+        <p className="text-base md:text-xl lg:text-2xl text-balance text-center text-gray-300">
           The most popular games right now
         </p>
       </article>
-      <ul className="flex flex-wrap justify-center gap-3">
+      <ul className="flex flex-wrap justify-center gap-x-3 gap-y-5">
         {isLoading && <Loading />}
         {popularGames}
       </ul>

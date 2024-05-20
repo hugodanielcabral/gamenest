@@ -11,7 +11,9 @@ export const FilterItem = ({
   return (
     <Label
       htmlFor={value}
-      className={className + "flex justify-between bg-transparent"}
+      className={
+        className + "flex justify-between bg-transparent input-bordered input"
+      }
     >
       {value}
       <Checkbox

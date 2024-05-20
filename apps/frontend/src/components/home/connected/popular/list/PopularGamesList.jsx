@@ -11,9 +11,9 @@ export const PopularGamesList = ({ game }) => {
         </p>
         <Link to={`/games/${game.slug}`}>
           <img
-            src={getImageUrl(game.cover.url, "cover_big")}
+            src={getImageUrl(game.cover.url, "cover_big_2x", "thumb")}
             alt={game.name}
-            className="mx-auto border-2 border-info hover:border-error transition duration-300 ease-in-out rounded-lg object-cover"
+            className="mx-auto border border-info hover:border-error transition duration-300 ease-in-out rounded-lg object-cover hover:scale-95 w-full "
           />
         </Link>
       </li>

@@ -1,8 +1,9 @@
-import { customizeFeatures } from "../../../../utils/homeUtils";
-
+import { customizeFeatures } from "../../../../constants/home/homeConstants";
 export const HomeCustomize = () => {
   return (
     <section className="container mx-auto my-8 p-5">
+      <div className="divider"></div>
+
       <div className="flex justify-center items-center md:gap-y-0 gap-y-5 gap-x-10 flex-wrap">
         <figure className="grid grid-cols-2 gap-3 basis-3/4 md:basis-1/3 flex-shrink-0 md:order-0 order-1">
           {customizeFeatures.map((feature) => (
@@ -21,9 +22,9 @@ export const HomeCustomize = () => {
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold  uppercase text-center bg-clip-text text-transparent bg-gradient-to-r from-info to-error">
             Full control over your collection
           </h2>
-          <p className="text-base md:text-xl lg:text-2xl text-balance text-center">
+          <p className="text-base md:text-xl lg:text-2xl text-balance text-center text-gray-300">
             Customize your collection with the platform, progress notes, status,
-            and ownership.
+            ownership and store.
           </p>
         </article>
       </div>
