@@ -1,6 +1,5 @@
-import gameNestLogo2 from "../../../assets/logos/gamenest-logo-2.png";
-import { mySocialLinks } from "../../../utils/mySocialLinks";
-
+import gameNestLogo2 from "../../../assets/logos/gamenest-logo-2.webp";
+import { mySocialLinks } from "../../../constants/footer/footerConstants";
 export const Footer = () => {
   return (
     <footer className="bg-base-300 border-t-2 border-black shadow-lg">

@@ -24,7 +24,7 @@ export const GamesFinderCard = ({ game }) => {
           alt={`${game?.name} cover`}
           className="flex-grow-0 w-28 border border-info group-hover:border-error transition-all duration-300 ease-in-out"
         />
-        <div className="flex-grow basis-[600px]">
+        <div className="flex-grow basis-[600px] space-y-3">
           <h2 className="text-lg md:text-1xl lg:text-2xl font-bold text-white">
             {game?.name || <NoData message="No name available" />}
           </h2>

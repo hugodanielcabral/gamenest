@@ -6,7 +6,7 @@ import { GamesFinderSearch } from "./search/GamesFinderSearch.jsx";
 import { NoData } from "../../notfound/NoData.jsx";
 import { GamesFinderPagination } from "./pagination/GamesFinderPagination.jsx";
 import { GamesFinderFilters } from "./filters/GamesFinderFilters.jsx";
-import { Modal } from "../../ui/modal/Modal.jsx";
+import { Modal, Button } from "../../ui/index.js";
 import { useState } from "react";
 import { GamesFinderSkeleton } from "./skeleton/GamesFinderSkeleton.jsx";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -34,16 +34,16 @@ export const GamesFinder = () => {
   return (
     <BackgroundImage backgroundImage={backgroundImage}>
       <div className="grid grid-cols-4 gap-6">
-        <div className="col-span-4">
+        <div className="col-span-4 md:col-span-3">
           <GamesFinderSearch handleOnClearFilters={handleOnClearFilters} />
         </div>
         <div className="col-span-4 md:hidden block mx-auto">
-          <button
+          <Button
             onClick={() => setModalOpen(true)}
-            className="btn btn-info text-white text-xl btn-wide"
+            className="text-white text-xl"
           >
-            Filters ({activeFiltersCount})
-          </button>
+            Filters <span className="font-bold">({activeFiltersCount})</span>
+          </Button>
           <Modal
             isOpen={modalOpen}
             hasCloseBtn={true}

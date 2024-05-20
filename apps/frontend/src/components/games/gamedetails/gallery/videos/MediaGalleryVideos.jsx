@@ -17,7 +17,7 @@ export const MediaGalleryVideos = ({ videos }) => {
           return (
             <div
               key={video.id}
-              className="col-span-4 md:col-span-1 max-h-60 h-48 hover:scale-95 transform transition duration-200 ease-in-out cursor-pointer hover:saturate-50"
+              className="col-span-4 sm:col-span-2 md:col-span-1 max-h-60 h-48 hover:scale-95 transform transition duration-200 ease-in-out cursor-pointer hover:saturate-50"
             >
               <ReactPlayer
                 url={`https://www.youtube.com/watch?v=${video.video_id}`}

@@ -9,18 +9,20 @@ export const LatestGamesList = ({ game }) => {
   const formattedDate = date.toFormat("LL/dd/yyyy");
   return (
     <>
-      <li key={game.id} className="basis-[160px] *:mx-auto *:text-center">
+      <li key={game.id} className="basis-[160px] *:mx-auto *:text-center mb-4">
         <Link to={`/games/${game.slug}`} className="relative">
           <img
             src={getImageUrl(game?.cover.url, "cover_big")}
             alt={game.name}
-            className="w-30 h-32 md:h-40 md:w-36 mx-auto border border-info border-opacity-50 hover:border-error transition duration-300 ease-in-out"
+            width={264}
+            height={352}
+            className="mx-auto border border-info border-opacity-50 hover:border-error transition duration-300 ease-in-out md:h-72 h-52 md:w-full w-48"
           />
           <p className="text-white line-clamp-1 text-sm md:text-base">
             {game.name}
           </p>
         </Link>
-        <p className="font-semibold text-xs md:text-sm">{formattedDate}</p>
+        <p className="text-xs md:text-base text-gray-300">{formattedDate}</p>
       </li>
     </>
   );

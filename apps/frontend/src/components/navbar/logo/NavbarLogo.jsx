@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import gameNestLogo1 from "../../../assets/logos/gamenest-logo-1.png";
+import gameNestLogo1 from "../../../assets/logos/gamenest-logo-1.webp";
 
 export const NavbarLogo = () => {
   return (

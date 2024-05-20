@@ -31,7 +31,7 @@ export const GameDetailsMedia = ({
 
   return (
     <div className="grid grid-cols-4 gap-4 items-stretch">
-      <div className="col-span-4 md:col-span-1 flex flex-col gap-3">
+      <div className="col-span-4 sm:col-span-1 md:col-span-1 flex flex-col gap-3">
         <img
           className="flex-grow"
           src={gameCover}
@@ -40,7 +40,7 @@ export const GameDetailsMedia = ({
         {isAuth && (
           <Button
             className={clsx(
-              "w-full font-semibold text-lg transition-all duration-300 ease-in-out disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed",
+              "font-semibold text-sm sm:text-sm md:text-lg transition-all duration-300 ease-in-out disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed",
               gameInCollection
                 ? "bg-success hover:bg-success hover:bg-opacity-70 text-white"
                 : "bg-info hover:bg-info hover:bg-opacity-70 text-white"
@@ -52,7 +52,7 @@ export const GameDetailsMedia = ({
           </Button>
         )}
       </div>
-      <div className="col-span-4 md:col-span-3 flex flex-col gap-3">
+      <div className="col-span-4 sm:col-span-3 md:col-span-3 flex flex-col gap-3">
         {data?.videos ? (
           <div className="flex-grow min-h-[200px] max-h-[600px]">
             <ReactPlayer
@@ -79,7 +79,7 @@ export const GameDetailsMedia = ({
           <h3 className="text-center text-lg md:text-xl font-semibold text-error">
             Summary
           </h3>
-          <p className="text-pretty text-base md:text-xl text-white">
+          <p className="text-pretty text-base sm:text-xl md:text-2xl text-white">
             {data?.summary?.length > 0 ? (
               data.summary
             ) : (

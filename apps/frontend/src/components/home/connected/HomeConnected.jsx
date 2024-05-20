@@ -4,7 +4,9 @@ import { HomePopularGames } from "./popular/HomePopularGames";
 export const HomeConnected = () => {
   return (
     <>
-      <HomeLatestGames />
+      <div className="bg-base-300">
+        <HomeLatestGames />
+      </div>
       <HomePopularGames />
     </>
   );

@@ -1,6 +1,6 @@
-import linkedinIcon from "../assets/icons/linkedin.webp";
-import githubIcon from "../assets/icons/github.webp";
-import portfolioIcon from "../assets/icons/portfolio.webp";
+import linkedinIcon from "../../assets/icons/linkedin.webp";
+import githubIcon from "../../assets/icons/github.webp";
+import portfolioIcon from "../../assets/icons/portfolio.webp";
 
 export const mySocialLinks = [
   {

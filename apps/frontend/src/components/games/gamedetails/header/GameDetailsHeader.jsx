@@ -33,17 +33,17 @@ export const GameDetailsHeader = ({ data }) => {
   return (
     <div className="flex gap-y-2 md:flex-row flex-col items-center gap-x-20">
       <div className="grow">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl text-center md:text-left text-white font-bold">
+        <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-center md:text-left text-white font-bold">
           {data?.name}
         </h1>
-        <h3 className="text-lg md:text-xl lg:text-2xl md:text-left text-center text-info">
+        <h3 className="text-base sm:text-lg md:text-xl lg:text-xl md:text-left text-center text-info">
           {involvedCompanies && involvedCompanies.company.name + " -"}{" "}
           {formattedDate}
         </h3>
       </div>
-      <div className="flex gap-3 justify-center grow flex-col items-center">
-        <h2 className="text-gray-200 text-base md:text-1xl lg:text-2xl">
-          Buy this game on:
+      <div className="flex gap-3 justify-center grow flex-row md:flex-col items-center">
+        <h2 className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl">
+          {filteredExternalStores.length > 1 && "Available on:"}
         </h2>
         <div className="flex gap-3">
           {filteredExternalStores.map((game) => {

@@ -11,10 +11,6 @@ export const privateRoutes = [
     name: "Collection",
     path: "/collection",
   },
-  {
-    name: "Reviews",
-    path: "/reviews",
-  },
 ];
 
 export const publicRoutes = [

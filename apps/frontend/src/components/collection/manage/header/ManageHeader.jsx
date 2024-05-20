@@ -44,12 +44,12 @@ export const ManageHeader = ({ data }) => {
                 "text-error": determineActionType === "EDIT",
                 "text-success": determineActionType === "ADD",
               },
-              "text-3xl md:text-6xl font-bold uppercase self-center"
+              "text-xl md:text-4xl lg:text-5xl font-bold uppercase self-center"
             )}
           >
             {determineActionType} GAME
           </h1>
-          <h2 className="text-2xl md:text-4xl font-bold text-slate-300 self-center">
+          <h2 className="text-lg md:text-3xl lg:text-4xl text-gray-300 self-center">
             {data?.name}
           </h2>
         </div>
