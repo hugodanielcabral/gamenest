@@ -17,7 +17,7 @@ export const ManageHeader = ({ data }) => {
 
   return (
     <section className="col-span-4">
-      <header className=" p-4 flex justify-around items-center md:flex-row flex-col">
+      <header className="p-4 flex justify-around items-center md:flex-row flex-col">
         <div className="flex flex-col gap-y-3">
           <figure className="order-last md:order-first">
             <img
@@ -44,12 +44,12 @@ export const ManageHeader = ({ data }) => {
                 "text-error": determineActionType === "EDIT",
                 "text-success": determineActionType === "ADD",
               },
-              "text-xl md:text-4xl lg:text-5xl font-bold uppercase self-center"
+              "text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase self-center"
             )}
           >
             {determineActionType} GAME
           </h1>
-          <h2 className="text-lg md:text-3xl lg:text-4xl text-gray-300 self-center">
+          <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-gray-300 self-center">
             {data?.name}
           </h2>
         </div>

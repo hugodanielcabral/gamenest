@@ -173,7 +173,7 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
             {buttonDisabled ? "Saving..." : "Save changes"}
           </Button>
           <Button
-            className="font-bold md:text-lg uppercase bg-error hover:bg-error/80 text-sm md:flex-grow-0  disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="font-bold md:text-lg uppercase bg-error hover:bg-error/80 text-sm md:flex-grow-0 disabled:bg-gray-400 disabled:cursor-not-allowed"
             type="reset"
             onClick={handleOnReset}
             aria-label="Cancel changes"

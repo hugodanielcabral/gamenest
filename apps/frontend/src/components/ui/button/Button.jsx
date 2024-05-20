@@ -7,8 +7,8 @@ export const Button = ({ children, className, ...props }) => {
     <button
       className={twMerge(
         clsx(
-          className,
-          "inline-block rounded bg-info md:px-8 md:py-3 px-4 py-2 text-white hover:bg-info/90"
+          "inline-block rounded bg-info md:px-8 md:py-3 px-4 py-2 text-white hover:bg-info/90",
+          className
         )
       )}
       {...props}

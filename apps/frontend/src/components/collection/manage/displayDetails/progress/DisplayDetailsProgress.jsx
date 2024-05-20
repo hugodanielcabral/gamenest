@@ -10,11 +10,13 @@ export const DisplayDetailsProgress = ({
 }) => {
   return (
     <section className="grid grid-cols-4 *:mt-2">
-      <h2 className="mb-2 uppercase col-span-4 text-2xl md:text-3xl font-semibold text-white md:text-left text-center">
+      <h2 className="mb-2 uppercase col-span-6 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-white md:text-left text-center">
         PROGRESS
       </h2>
       <article className="col-span-4 md:col-span-2 space-y-2">
-        <h3 className="text-lg text-white">Status</h3>
+        <h3 className="text-base text-center md:text-left sm:text-lg md:text-xl text-white">
+          Status
+        </h3>
         <div className="flex gap-2 justify-center md:justify-start max-w-[30rem] flex-wrap">
           {GAME_STATUS.map((gameStatus) => (
             <Radio
@@ -28,8 +30,11 @@ export const DisplayDetailsProgress = ({
         </div>
       </article>
       <article className="col-span-4 md:col-span-2 space-y-2">
-        <h3 className="text-lg text-white">Progress Notes</h3>
+        <h3 className="text-base text-center md:text-left sm:text-lg md:text-xl text-white">
+          Progress Notes
+        </h3>
         <Textarea
+          placeholder="I am currently playing this game and I am at level 5."
           name="progress_note"
           value={progress_note}
           onChange={handleOnChange}
