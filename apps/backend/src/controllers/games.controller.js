@@ -1,53 +1,18 @@
 import env from "dotenv";
+import { getGamesBySearch, getCount } from "../utils/igdbApiUtils.js";
 
 env.config();
 
-// TODO Improve this controller, it's too big. Maybe split it into smaller functions.
 export const getGames = async (req, res) => {
-  const { search } = req.query || "";
-  const { page } = req.query;
-  const { platforms } = req.query;
-  const { genres } = req.query;
+  const { search, page, genres, platforms } = req.query;
 
-  try {
-    const headers = {
-      "Client-ID": process.env.CLIENT_ID,
-      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
-    };
-
-    let body = "";
-
-    if (search) {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; search "${search}"; where rating > 1 ${
-        platforms ? `& platforms=(${platforms})` : ""
-      }  ${genres ? `& genres=(${genres})` : ""}; limit 10; offset ${
-        page ? (page - 1) * 10 : 0
-      };`;
-    } else {
-      body = `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 & themes != (42) ${
-        platforms ? `& platforms=(${platforms})` : ""
-      } ${
-        genres ? `& genres=(${genres})` : ""
-      }; sort rating desc;limit 10; offset ${page ? (page - 1) * 10 : 0};`;
-    }
-
-    const gamesResponse = await fetch("https://api.igdb.com/v4/games", {
-      method: "POST",
-      headers,
-      body,
-    });
-    const gamesData = await gamesResponse.json();
-
-    let countBody = search
-      ? `search "${search}"; where rating > 1;`
-      : `where rating > 1;`;
-
-    const countResponse = await fetch("https://api.igdb.com/v4/games/count", {
-      method: "POST",
-      headers,
-      body: countBody,
-    });
-    const countData = await countResponse.json();
+  if (search) {
+    const { gamesData, countData } = await getGamesBySearch(
+      search,
+      platforms,
+      genres,
+      page
+    );
 
     const data = {
       games: gamesData,
@@ -56,10 +21,37 @@ export const getGames = async (req, res) => {
       totalPages: Math.ceil(countData.count / 10),
     };
 
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.json(data);
   }
+
+  const response = await fetch("https://api.igdb.com/v4/games", {
+    method: "POST",
+    headers: {
+      "Client-ID": process.env.CLIENT_ID,
+      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+    },
+    body: `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 & themes != (42) ${
+      platforms ? `& platforms=(${platforms})` : ""
+    } ${
+      genres ? `& genres=(${genres})` : ""
+    }; sort rating desc;limit 10; offset ${page ? (page - 1) * 10 : 0};`,
+  });
+
+  if (!response.ok) {
+    throw new Error("Oops");
+  }
+
+  const gamesData = await response.json();
+  const countData = await getCount();
+
+  console.log(countData);
+
+  res.json({
+    games: gamesData,
+    count: countData,
+    currentPage: parseInt(page, 10) || 1,
+    totalPages: Math.ceil(countData.count / 10),
+  });
 };
 
 export const getGame = async (req, res) => {
