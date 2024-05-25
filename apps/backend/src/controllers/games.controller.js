@@ -1,5 +1,10 @@
 import env from "dotenv";
-import { getGamesBySearch, getCount } from "../utils/igdbApiUtils.js";
+import {
+  getGamesBySearch,
+  getCount,
+  getSteamGame,
+  getGamesFromUser,
+} from "../utils/igdbApiUtils.js";
 
 env.config();
 
@@ -44,8 +49,6 @@ export const getGames = async (req, res) => {
   const gamesData = await response.json();
   const countData = await getCount();
 
-  console.log(countData);
-
   res.json({
     games: gamesData,
     count: countData,
@@ -56,43 +59,25 @@ export const getGames = async (req, res) => {
 
 export const getGame = async (req, res) => {
   try {
-    const headers = {
-      "Client-ID": process.env.CLIENT_ID,
-      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
-    };
-
-    const body = `fields *, summary,storyline, cover.url, genres.name, platforms.abbreviation, platforms.name, screenshots.url, videos.video_id, artworks.url, websites.*, involved_companies.company.name, involved_companies.developer, game_modes.name, player_perspectives.name, franchises.name, release_dates.*, age_ratings.*, age_ratings.content_descriptions.*, external_games.*; where slug = "${req.params.id}";`;
-    const response = await fetch("https://api.igdb.com/v4/games", {
-      method: "POST",
-      headers,
-      body,
-    });
-
-    const data = await response.json();
-    res.json(data[0]);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
-export const getGamesFromUser = async (collection) => {
-  const collections_id = collection.map((game) => game.game_id).join(",");
-
-  try {
     const response = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
       headers: {
         "Client-ID": process.env.CLIENT_ID,
         Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
       },
-      body: `fields name, cover.url; where id = (${collections_id});`,
+      body: `fields *, summary,storyline, cover.url, genres.name, platforms.abbreviation, platforms.name, screenshots.url, videos.video_id, artworks.url, websites.*, involved_companies.company.name, involved_companies.developer, game_modes.name, player_perspectives.name, franchises.name, release_dates.*, age_ratings.*, age_ratings.content_descriptions.*, external_games.uid, external_games.category; where slug = "${req.params.id}";`,
     });
 
     const data = await response.json();
-    return data;
+
+    const steamData = await getSteamGame(data);
+
+    data[0].steamData = steamData;
+
+    res.json(data[0]);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -141,27 +126,3 @@ export const getPopularGames = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-//* I should use this function to get the token and save it in a .env file
-//? I should also use a cron job to update the token every 60 days
-
-/* const getIGDBToken = async () => {
-  try {
-    const response = await fetch(
-      `https://id.twitch.tv/oauth2/token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&grant_type=client_credentials`,
-      {
-        method: "POST",
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log(data);
-    return data.access_token;
-  } catch (error) {
-    console.log(error);
-  }
-};
- */
