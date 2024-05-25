@@ -8,8 +8,8 @@ export const CardHoursPlayed = ({ gameData }) => {
   return (
     <Badge className="col-span-2 row-span-1 mx-auto self-center bg-transparent">
       <p className="text-white text-base md:text-lg">
-        <span className="text-white font-bold">{HOURS_PLAYED}</span> hours
-        played
+        <span className="text-white font-bold">{HOURS_PLAYED}</span> horas
+        jugadas
       </p>
     </Badge>
   );

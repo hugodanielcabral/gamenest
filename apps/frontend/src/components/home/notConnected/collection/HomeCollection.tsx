@@ -7,10 +7,10 @@ export const HomeCollection = () => {
       <div className="flex justify-center items-center md:gap-y-0 gap-y-5 gap-x-10 flex-wrap">
         <article className="flex-grow md:basis-1/4">
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold  uppercase text-center bg-clip-text text-transparent bg-gradient-to-r from-info to-error">
-            Keep track of your collection
+            Mantén tu colección organizada
           </h2>
           <p className="text-base md:text-xl lg:text-2xl text-balance text-center text-gray-300">
-            Add games to your collection and keep track of your progress.
+            Agrega tus juegos favoritos a tu colección y mantén un seguimiento de ellos
           </p>
         </article>
         <figure className="md:basis-2/4">

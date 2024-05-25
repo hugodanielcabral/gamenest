@@ -59,23 +59,22 @@ export const LoginPage = () => {
         }}
       >
         <Toast
-          toastMessage="You've Logged In Successfully. Welcome!"
+          toastMessage="Inicio de sesión exitoso! Bienvenido de vuelta!"
           showToast={showToast}
         />
 
         <div className="flex items-center mt-5 justify-evenly">
           <article className="flex flex-col items-center mt-3">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
-              Unlock Your Gaming Realm
+              Praise the Sun!
             </h1>
             <h3 className="mt-4 text-base md:lg lg:text-xl font-bold text-center text-gray-300">
-              Continue Your Backlog Adventure with GameNest! Ready to Dive Back
-              In?
+              Bienvenido de vuelta, guerrero.
             </h3>
           </article>
         </div>
 
-        <AuthCard title="Login">
+        <AuthCard title="Inicio de sesión">
           <LoginForm
             handleSubmit={handleSubmit}
             handleOnChange={handleOnChange}

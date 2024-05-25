@@ -109,17 +109,16 @@ export const RegisterPage = () => {
         <div className="flex items-center mt-5 justify-evenly">
           <article className="flex flex-col items-center mt-3">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
-              Your Backlog Adventure begins today!
+              Tu aventura comienza aquí!
             </h1>
             <h3 className="mt-4 text-base md:lg lg:text-xl font-bold text-center text-gray-300">
-              Embark on a journey to conquer your gaming backlog with GameNest!.{" "}
-              <br /> Let the adventure begin!
+              Regístrate para comenzar tu viaje.
             </h3>
           </article>
         </div>
 
         <AuthCard
-          title={hasUserBeenCreated ? "Success! 🎉" : "Register"}
+          title={hasUserBeenCreated ? "Exito! 🎉" : "Registro"}
           className={clsx(
             {
               "bg-base-300": !hasUserBeenCreated,
@@ -131,13 +130,13 @@ export const RegisterPage = () => {
           {hasUserBeenCreated ? (
             <div className="flex flex-col items-center mt-5 space-y-5">
               <p className="text-center text-white text-xl">
-                You have successfully registered. Please login to continue.
+                Tu cuenta ha sido creada exitosamente! 🎉
               </p>
               <Button
                 className="bg-white text-black font-bold hover:bg-opacity-80 hover:bg-white"
                 onClick={() => navigate("/login")}
               >
-                Login now
+                Iniciar sesión
               </Button>
             </div>
           ) : (

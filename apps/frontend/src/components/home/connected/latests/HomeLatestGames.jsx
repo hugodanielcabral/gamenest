@@ -24,10 +24,10 @@ export const HomeLatestGames = () => {
     <section className="flex flex-col justify-around p-4 items-center min-h-[500px] container mx-auto space-y-4">
       <article>
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold  uppercase text-center mt-10 bg-clip-text text-transparent bg-gradient-to-r from-error to-white sm:text-4xl">
-          Latest Games
+          Últimos lanzamientos
         </h2>
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-balance text-center text-gray-300">
-          The most recent games released
+          Los últimos juegos lanzados en las plataformas más populares
         </p>
       </article>
       {

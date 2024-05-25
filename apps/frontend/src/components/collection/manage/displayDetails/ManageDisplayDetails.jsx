@@ -21,10 +21,10 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
     setFormData,
   } = useForm({
     platform: data.platforms[0].name,
-    format: "Physical",
-    ownership: "Owned",
+    format: "Físico",
+    ownership: "Comprado",
     store: "Steam",
-    status: "No status",
+    status: "Sin estado",
     progress_note: "",
   });
 
@@ -66,7 +66,6 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
         }
 
         const collectionData = await response.json();
-        console.log(collectionData);
         setButtonDisabled(true);
         setShowToast(true);
 
@@ -106,10 +105,10 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
     setButtonDisabled(false);
     setFormData({
       platform: data?.platforms[0].name,
-      format: "Physical",
-      ownership: "Owned",
+      format: "Físico",
+      ownership: "Comprado",
       store: "Steam",
-      status: "No status",
+      status: "Sin estado",
       progress_note: "",
     });
     navigate(`/games/${data.slug}`);
@@ -135,7 +134,7 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
       {showToast && (
         <Toast
           toastMessage={`${data?.name} ${
-            getActionType ? "was updated" : "was added to your collection"
+            getActionType ? "fue actualizado" : "fue añadido a tu colección"
           }`}
           showToast={showToast}
         />
@@ -170,7 +169,7 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
             aria-label="Save changes"
             disabled={buttonDisabled}
           >
-            {buttonDisabled ? "Saving..." : "Save changes"}
+            {buttonDisabled ? "Guardando..." : "Guardar cambios"}
           </Button>
           <Button
             className="font-bold md:text-lg uppercase bg-error hover:bg-error/80 text-sm md:flex-grow-0 disabled:bg-gray-400 disabled:cursor-not-allowed"
@@ -179,7 +178,7 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
             aria-label="Cancel changes"
             disabled={buttonDisabled}
           >
-            Cancel
+            Cancelar
           </Button>
         </article>
       </form>

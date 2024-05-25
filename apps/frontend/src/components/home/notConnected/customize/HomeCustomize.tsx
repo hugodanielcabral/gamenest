@@ -20,11 +20,10 @@ export const HomeCustomize = () => {
         </figure>
         <article className="flex-grow md:basis-1/3 order-0 md:order-1">
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold  uppercase text-center bg-clip-text text-transparent bg-gradient-to-r from-info to-error">
-            Full control over your collection
+           Control total de tu colección
           </h2>
           <p className="text-base md:text-xl lg:text-2xl text-balance text-center text-gray-300">
-            Customize your collection with the platform, progress notes, status,
-            ownership and store.
+            Personaliza tu colección por medio de plataformas, notas, estado, y más
           </p>
         </article>
       </div>

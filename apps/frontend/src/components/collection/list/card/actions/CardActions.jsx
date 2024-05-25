@@ -27,14 +27,14 @@ export const CardActions = ({ gameData }) => {
     deleteGameFromCollection(gameData.collection_id).then((response) => {
       if (response.ok) {
         toast(
-          `${gameData.game_name} was deleted successfully!`,
+          `${gameData.game_name} fue eliminado de tu colección con éxito`,
           "success",
           "#fff"
         );
 
         setModalOpen(false);
       } else {
-        toast("Error deleting game", "error");
+        toast("Error al intentar borrar el juego", "error");
       }
     });
   };
@@ -55,8 +55,8 @@ export const CardActions = ({ gameData }) => {
           onClose={() => setModalOpen(false)}
         >
           <ConfirmationMessage
-            title="Delete game"
-            description={`Are you sure about deleting ${gameData.game_name} from your collection?`}
+            title="Eliminar juego"
+            description={`¿Estás seguro que deseas eliminar ${gameData.game_name} de tu colección?`}
             onConfirm={handleDeleteGame}
             onCancel={handleCancelDeleteGame}
           />

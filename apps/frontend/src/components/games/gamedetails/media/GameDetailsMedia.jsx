@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
 import { CardBackground } from "../../../ui/cardBackground/cardBackground.jsx";
 import { useAuth } from "../../../../context/AuthContext.jsx";
+import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
 
 export const GameDetailsMedia = ({
   data,
@@ -14,28 +15,31 @@ export const GameDetailsMedia = ({
   activeTab,
   gameSlug,
 }) => {
-  const navigate = useNavigate();
   const { gameInCollection, isLoading } = useCheckGameInCollection(gameSlug);
   const { isAuth } = useAuth();
+  const navigate = useNavigate();
 
-  const gameCover =
+  const steam_short_description = data?.steamData?.short_description;
+  const igdb_summary = data?.summary;
+
+  const largeCoverUrl =
     data?.cover?.url.replace("t_thumb", "t_1080p") ||
     "https://via.placeholder.com/300x400?text=No+Cover+Available";
 
   let navigateTo = gameInCollection
     ? `/collection/`
     : `/collection/add/${gameSlug}`;
-  let buttonText = gameInCollection
-    ? "Already on collection"
-    : "Add to Collection";
+  let gameCollectionButtonLabel = gameInCollection
+    ? "Ya en la colección"
+    : "Agregar a la colección";
 
   return (
     <div className="grid grid-cols-4 gap-4 items-stretch">
       <div className="col-span-4 sm:col-span-1 md:col-span-1 flex flex-col gap-3">
         <img
           className="flex-grow"
-          src={gameCover}
-          alt={`Cover of ${data?.name}`}
+          src={largeCoverUrl}
+          alt={`Cover de ${data?.name}`}
         />
         {isAuth && (
           <Button
@@ -48,7 +52,7 @@ export const GameDetailsMedia = ({
             disabled={isLoading}
             onClick={() => navigate(navigateTo)}
           >
-            {isLoading ? "Loading..." : buttonText}
+            {isLoading ? "Cargando..." : gameCollectionButtonLabel}
           </Button>
         )}
       </div>
@@ -77,13 +81,11 @@ export const GameDetailsMedia = ({
       <div className="col-span-4 my-2">
         <CardBackground className="overflow-auto max-h-44 rounded-md">
           <h3 className="text-center text-lg md:text-xl font-semibold text-error">
-            Summary
+            Resumen
           </h3>
-          <p className="text-pretty text-base sm:text-xl md:text-2xl text-white">
-            {data?.summary?.length > 0 ? (
-              data.summary
-            ) : (
-              <p className="text-center mt-2">No description available.</p>
+          <p className="text-balance text-base sm:text-xl md:text-2xl text-white">
+            {retrieveGameSummary(steam_short_description, igdb_summary) ?? (
+              <p className="text-center mt-2">No hay resumen disponible.</p>
             )}
           </p>
         </CardBackground>

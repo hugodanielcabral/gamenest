@@ -27,7 +27,7 @@ export const Radio = ({
             alt={`${option.name} icon`}
             className="w-8 h-8 object-cover"
           />
-          <p className="text-nowrap text-sm">{option.name}</p>
+          <p className="text-nowrap text-sm">{option.title}</p>
         </span>
         <input
           type="radio"

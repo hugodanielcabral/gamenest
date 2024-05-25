@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (formData) => {
     try {
-      console.log(formData);
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",
         credentials: "include",

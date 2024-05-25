@@ -11,7 +11,9 @@ export const ManageHeader = ({ data }) => {
 
   const { pathname } = useLocation();
 
-  const determineActionType = pathname.includes("/add/") ? "ADD" : "EDIT";
+  const determineActionType = pathname.includes("/add/")
+    ? "AGREGAR"
+    : "ACTUALIZAR";
 
   const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ export const ManageHeader = ({ data }) => {
             aria-label={`View ${data?.name} game page`}
             onClick={() => navigate(`/games/${data?.slug}`)}
           >
-            View game page
+            Ver página del juego
           </Button>
         </div>
 
@@ -41,13 +43,13 @@ export const ManageHeader = ({ data }) => {
           <h1
             className={clsx(
               {
-                "text-error": determineActionType === "EDIT",
-                "text-success": determineActionType === "ADD",
+                "text-error": determineActionType === "ACTUALIZAR",
+                "text-success": determineActionType === "AGREGAR",
               },
               "text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase self-center"
             )}
           >
-            {determineActionType} GAME
+            {determineActionType} JUEGO
           </h1>
           <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-gray-300 self-center">
             {data?.name}

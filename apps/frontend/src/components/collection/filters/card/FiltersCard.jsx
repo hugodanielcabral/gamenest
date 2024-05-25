@@ -18,10 +18,10 @@ export const FiltersCard = ({
           className="w-full bg-error text-white p-2 rounded-md mt-2 hover:bg-opacity-70 transition-all duration-200 ease-in-out"
           onClick={clearAll}
         >
-          Clear filters
+          Limpiar filtros
         </button>
       ) : null}
-      <h2 className="text-2xl text-white text-center divider">Status</h2>
+      <h2 className="text-2xl text-white text-center divider">Estado</h2>
       {GAME_STATUS.map((statusValue) => (
         <Fragment key={statusValue.id}>
           <FilterItem
@@ -36,7 +36,7 @@ export const FiltersCard = ({
 
       {filtersData.ownership.length > 0 && (
         <>
-          <h2 className="text-2xl text-white text-center divider">Ownership</h2>
+          <h2 className="text-2xl text-white text-center divider">Propiedad</h2>
           {filtersData?.ownership.map((ownershipValue) => (
             <Fragment key={ownershipValue.ownership_name}>
               <FilterItem

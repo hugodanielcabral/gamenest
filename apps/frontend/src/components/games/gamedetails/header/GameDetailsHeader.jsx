@@ -41,7 +41,7 @@ export const GameDetailsHeader = ({ data }) => {
           {formattedDate}
         </h3>
       </div>
-      <div className="flex gap-3 justify-center grow flex-row md:flex-col items-center">
+      {/*  <div className="flex gap-3 justify-center grow flex-row md:flex-col items-center">
         <h2 className="text-gray-200 text-base sm:text-lg md:text-xl lg:text-2xl">
           {filteredExternalStores.length > 1 && "Available on:"}
         </h2>
@@ -71,7 +71,7 @@ export const GameDetailsHeader = ({ data }) => {
             );
           }) || <p>No stores available.</p>}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

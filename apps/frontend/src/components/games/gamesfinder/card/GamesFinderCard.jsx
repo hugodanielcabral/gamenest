@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import getPlatformAbbreviations from "../../../../utils/getPlatformAbbreviations.js";
 import ratingLabel from "../../../../utils/ratingLabel.js";
-import { CardBackground } from "../../../ui/cardBackground/CardBackground";
+import { CardBackground } from "../../../ui/index.js";
 import { clsx } from "clsx";
 import { NoData } from "../../../notfound/NoData.jsx";
 import { Link } from "react-router-dom";

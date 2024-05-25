@@ -11,11 +11,11 @@ export const DisplayDetailsProgress = ({
   return (
     <section className="grid grid-cols-4 *:mt-2">
       <h2 className="mb-2 uppercase col-span-6 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-white md:text-left text-center">
-        PROGRESS
+        Progreso
       </h2>
       <article className="col-span-4 md:col-span-2 space-y-2">
         <h3 className="text-base text-center md:text-left sm:text-lg md:text-xl text-white">
-          Status
+          Estado
         </h3>
         <div className="flex gap-2 justify-center md:justify-start max-w-[30rem] flex-wrap">
           {GAME_STATUS.map((gameStatus) => (
@@ -31,10 +31,10 @@ export const DisplayDetailsProgress = ({
       </article>
       <article className="col-span-4 md:col-span-2 space-y-2">
         <h3 className="text-base text-center md:text-left sm:text-lg md:text-xl text-white">
-          Progress Notes
+          Notas de progreso
         </h3>
         <Textarea
-          placeholder="I am currently playing this game and I am at level 5."
+          placeholder="Notas de progreso..."
           name="progress_note"
           value={progress_note}
           onChange={handleOnChange}

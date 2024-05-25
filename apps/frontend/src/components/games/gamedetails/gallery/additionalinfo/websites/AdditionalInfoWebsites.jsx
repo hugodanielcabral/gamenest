@@ -7,10 +7,10 @@ export const AdditionalInfoWebsites = ({ data }) => {
   return (
     <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
       <h2 className="text-center text-xl md:text-2xl mb-2 text-info">
-        Game Websites
+        Sitios web del juego
       </h2>
       <ul className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-        {!data?.websites.map((website) => {
+        {data?.websites.map((website) => {
           const websiteIcon = websiteIcons.find(
             (icon) => icon.category === website.category
           );
@@ -33,7 +33,7 @@ export const AdditionalInfoWebsites = ({ data }) => {
           );
         }) || (
           <p className="text-center col-span-4 text-white">
-            No websites available.
+            No hay sitios web disponibles.
           </p>
         )}
       </ul>

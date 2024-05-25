@@ -19,6 +19,6 @@ export const tabsGameDetailsMediaData = [
   {
     id: 4,
     icon: <FaInfo size={25} className="text-gray-400" />,
-    name: "Additional info",
+    name: "Información adicional",
   },
 ];

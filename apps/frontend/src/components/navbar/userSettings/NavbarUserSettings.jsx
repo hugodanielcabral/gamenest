@@ -35,19 +35,19 @@ export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
               to="/profile"
               className="uppercase font-bold md:text-base text-base lg:text-lg text-white"
             >
-              Profile
+              Perfil
             </Link>
             <Link
               to="/settings"
               className="uppercase font-bold md:text-base text-base lg:text-lg text-white"
             >
-              Settings
+              Configuración
             </Link>
             <button
               onClick={signout}
               className="self-start uppercase font-bold md:text-base text-base lg:text-lg text-error"
             >
-              Logout
+              Cerrar sesión
             </button>
           </ul>
         </div>

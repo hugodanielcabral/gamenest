@@ -24,14 +24,14 @@ export const CardRating = ({ gameData }) => {
         if (response.ok) {
           setButtonDisabled(false);
           toast(
-            `${gameData.game_name} was rated to ${rating}`,
+            `${gameData.game_name} fue calificado con ${rating} estrellas`,
             "success",
             "#fff"
           );
         } else {
           setButtonDisabled(false);
           toast(
-            `There was an error in the rating of ${gameData.game_name}`,
+            `Ocurrió un error al intentar calificar ${gameData.game_name}`,
             "error",
             "#fff",
             "#FF5861"
@@ -91,8 +91,8 @@ export const CardRating = ({ gameData }) => {
             ))}
           </div>
           <h3 className="text-white text-xl font-semibold text-center">
-            Are you sure you want to rate{" "}
-            <span className="text-info">{GAME_NAME}</span> with{" "}
+            ¿Estás seguro de querer calificar a{" "}
+            <span className="text-info">{GAME_NAME}</span> con{" "}
             <span
               className={clsx(
                 {
@@ -105,7 +105,7 @@ export const CardRating = ({ gameData }) => {
             >
               {currentRating}
             </span>{" "}
-            stars?
+            estrellas?
           </h3>
           <div className="space-x-4 mx-auto *:font-bold">
             <Button
@@ -115,7 +115,7 @@ export const CardRating = ({ gameData }) => {
                 setModalOpen(false);
               }}
             >
-              Confirm
+              Confirmar
             </Button>
             <Button
               className="bg-error hover:bg-error/70"
@@ -124,7 +124,7 @@ export const CardRating = ({ gameData }) => {
                 setRating(gameData.rating);
               }}
             >
-              Cancel
+              Cancelar
             </Button>
           </div>
         </section>

@@ -1,57 +1,32 @@
 import propTypes from "prop-types";
-import {
-  esrbRatingsData,
-  pegiRatingsData,
-} from "../../../../../../utils/getGameDetailsAgeRatingCover.js";
-import { CardBackground } from "../../../../../ui/cardBackground/cardBackground.jsx";
+import { CardBackground } from "../../../../../ui/index.js";
+
+import { getFormattedRatings } from "../../../../../../utils/gameDetailsUtils.js";
+import { AgeRatingImage } from "./image/ageRatingImage.jsx";
 
 export const AdditionalInfoAgeRating = ({ data }) => {
-  let excludedAgeRatings = [];
-  let esrbRating = {};
-  let pegiRating = {};
+  const ageRatings = data?.age_ratings;
 
-  if (data.age_ratings) {
-    excludedAgeRatings = data?.age_ratings
-      .filter(
-        (rating) =>
-          rating.category !== 3 &&
-          rating.category !== 4 &&
-          rating.category !== 5 &&
-          rating.category !== 6 &&
-          rating.category !== 7
-      )
-      .sort((a, b) => a.category - b.category);
-
-    esrbRating = esrbRatingsData.find(
-      (rating) => rating.igdbRating === excludedAgeRatings[0].rating
-    );
-
-    pegiRating = pegiRatingsData.find(
-      (rating) => rating.igdbRating === excludedAgeRatings[1].rating
-    );
-  }
+  const { formattedEsrbRating, formattedPegiRating } =
+    getFormattedRatings(ageRatings);
 
   return (
     <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
       <h2 className="text-center text-xl md:text-2xl mb-2 text-info">
-        Age Rating
+        Clasificación por edades
       </h2>
-      {!data.age_ratings ? (
+      {!ageRatings ? (
         <p className="text-center col-span-4 text-white">
-          No age rating available.
+          No hay clasificación por edades disponible.
         </p>
       ) : (
         <div className="flex flex-wrap gap-4 justify-center">
-          <img
-            src={esrbRating.image}
-            alt={`ESRB Rating ${esrbRating.rating}`}
-            className="w-20 h-28 md:w-24 md:h-32"
-          />
-          <img
-            src={pegiRating.image}
-            alt={`PEGI Rating ${pegiRating.rating}`}
-            className="w-20 h-28 md:w-24 md:h-32"
-          />
+          {formattedEsrbRating && (
+            <AgeRatingImage src={formattedEsrbRating.image} alt="ESRB Rating" />
+          )}
+          {formattedPegiRating && (
+            <AgeRatingImage src={formattedPegiRating.image} alt="PEGI Rating" />
+          )}
         </div>
       )}
     </CardBackground>

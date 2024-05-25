@@ -24,7 +24,7 @@ export const GamesFinderSearch = () => {
         <div className="w-full relative">
           <InputSearch
             name="search"
-            placeholder="Search for a game..."
+            placeholder="Buscar juegos..."
             onChange={handleOnChange}
             value={search}
             className="border-t-info border-t-4 bg-base-200 focus:outline-none focus:ring-2 focus:ring-info focus:border-info focus:border-t-2 focus:border-b-2 transition-colors duration-500 p-2 mt-2 rounded-md"

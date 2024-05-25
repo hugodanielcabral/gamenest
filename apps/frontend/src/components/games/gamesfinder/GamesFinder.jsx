@@ -42,7 +42,7 @@ export const GamesFinder = () => {
             onClick={() => setModalOpen(true)}
             className="text-white text-xl"
           >
-            Filters <span className="font-bold">({activeFiltersCount})</span>
+            Filtros <span className="font-bold">({activeFiltersCount})</span>
           </Button>
           <Modal
             isOpen={modalOpen}
@@ -65,10 +65,12 @@ export const GamesFinder = () => {
           ) : games?.length ? (
             games.map((game) => <GamesFinderCard game={game} key={game.id} />)
           ) : (
-            <NoData
-              className="p-5 bg-base-100/90 text-center w-96"
-              message={error?.statusText || "No games found"}
-            />
+            <div className="mx-auto">
+              <NoData
+                className="p-5 bg-base-100/90 text-center w-96"
+                message={error?.statusText || "No se encontraron juegos."}
+              />
+            </div>
           )}
         </div>
         <div className="p-4 col-span-4 md:col-span-1 md:block hidden">

@@ -9,11 +9,13 @@ export const EXCLUDED_AGE_RATINGS_CATEGORY_ID = [3, 4, 5, 6, 7];
 export const GAME_FORMATS = [
   {
     id: 1,
-    name: "Physical",
+    title: "Físico",
+    name: "Físico",
     iconId: `${RESOURCE_URL}/images/collection/icons/physical.webp`,
   },
   {
     id: 2,
+    title: "Digital",
     name: "Digital",
     iconId: `${RESOURCE_URL}/images/collection/icons/cloud.webp`,
   },
@@ -22,32 +24,38 @@ export const GAME_FORMATS = [
 export const GAME_OWNERSHIP = [
   {
     id: 1,
-    name: "Owned",
+    title: "Comprado",
+    name: "Comprado",
     iconId: `${RESOURCE_URL}/images/collection/icons/owned.webp`,
   },
   {
     id: 2,
-    name: "Shared",
+    title: "Compartido",
+    name: "Compartido",
     iconId: `${RESOURCE_URL}/images/collection/icons/shared.webp`,
   },
   {
     id: 3,
-    name: "Subscription",
+    title: "Suscripción",
+    name: "Suscripción",
     iconId: `${RESOURCE_URL}/images/collection/icons/subscription.webp`,
   },
   {
     id: 4,
-    name: "Rented",
+    title: "Alquilado",
+    name: "Alquilado",
     iconId: `${RESOURCE_URL}/images/collection/icons/rented.webp`,
   },
   {
     id: 5,
-    name: "Unlicensed",
+    title: "Sin licencia",
+    name: "Sin licencia",
     iconId: `${RESOURCE_URL}/images/collection/icons/unlicensed.webp`,
   },
   {
     id: 6,
-    name: "Other",
+    title: "Otro",
+    name: "Otro",
     iconId: `${RESOURCE_URL}/images/collection/icons/other.webp`,
   },
 ];
@@ -55,47 +63,56 @@ export const GAME_OWNERSHIP = [
 export const GAME_STORES = [
   {
     id: 1,
+    title: "Steam",
     name: "Steam",
     iconId: `${RESOURCE_URL}/images/collection/icons/steam.webp`,
   },
   {
     id: 2,
+    title: "Epic Games",
     name: "Epic Games Store",
     iconId: `${RESOURCE_URL}/images/collection/icons/epic-games.webp`,
   },
   {
     id: 3,
+    title: "Ubisoft",
     name: "Ubisoft Store",
     iconId: `${RESOURCE_URL}/images/collection/icons/ubisoft.webp`,
   },
 
   {
     id: 5,
+    title: "GOG",
     name: "GOG",
     iconId: `${RESOURCE_URL}/images/collection/icons/gog.webp`,
   },
   {
     id: 6,
+    title: "Xbox",
     name: "Xbox Store",
     iconId: `${RESOURCE_URL}/images/collection/icons/xbox.webp`,
   },
   {
     id: 7,
+    title: "PlayStation",
     name: "PlayStation Store",
     iconId: `${RESOURCE_URL}/images/collection/icons/playstation.webp`,
   },
   {
     id: 8,
+    title: "Nintendo",
     name: "Nintendo eShop",
     iconId: `${RESOURCE_URL}/images/collection/icons/nintendo.webp`,
   },
   {
     id: 9,
+    title: "Play Store",
     name: "Play Store",
     iconId: `${RESOURCE_URL}/images/collection/icons/play-store.webp`,
   },
   {
     id: 10,
+    title: "App Store",
     name: "Other",
     iconId: `${RESOURCE_URL}/images/collection/icons/other.webp`,
   },
@@ -104,37 +121,43 @@ export const GAME_STORES = [
 export const GAME_STATUS = [
   {
     id: 1,
-    name: "No status",
+    title: "Sin estado",
+    name: "Sin estado",
     iconId: `${RESOURCE_URL}/images/collection/icons/xbox-x-button.webp`,
     checked: false,
   },
   {
     id: 2,
-    name: "Unplayed",
+    title: "Sin jugar",
+    name: "Sin jugar",
     iconId: `${RESOURCE_URL}/images/collection/icons/unplayed.webp`,
     checked: false,
   },
   {
     id: 3,
-    name: "Playing",
+    title: "Jugando",
+    name: "Jugando",
     iconId: `${RESOURCE_URL}/images/collection/icons/joystick.webp`,
     checked: false,
   },
   {
     id: 4,
-    name: "Completed",
+    title: "Completado",
+    name: "Completado",
     iconId: `${RESOURCE_URL}/images/collection/icons/fireworks.webp`,
     checked: false,
   },
   {
     id: 5,
-    name: "Plan to play",
+    title: "Pensando en jugar",
+    name: "Pensando en jugar",
     iconId: `${RESOURCE_URL}/images/collection/icons/think.webp`,
     checked: false,
   },
   {
     id: 6,
-    name: "Dropped",
+    title: "Abandonado",
+    name: "Abandonado",
     iconId: `${RESOURCE_URL}/images/collection/icons/trash.webp`,
     checked: false,
   },
@@ -143,23 +166,23 @@ export const GAME_STATUS = [
 export const ORDERBY_VALUES = [
   {
     id: 1,
-    name: "Order By",
+    name: "Ordenar por",
     value: "",
   },
-  { id: 2, name: "Status", value: "status_name" },
+  { id: 2, name: "Estado", value: "status_name" },
   {
     id: 3,
-    name: "Rating",
+    name: "Valoración",
     value: "rating",
   },
   {
     id: 4,
-    name: "Hours Played",
+    name: "Horas jugadas",
     value: "hours_played",
   },
   {
     id: 5,
-    name: "Game Name",
+    name: "Nombre del juego",
     value: "game_name",
   },
 ];
@@ -167,7 +190,7 @@ export const ORDERBY_VALUES = [
 export const SORT_VALUES = [
   {
     id: 1,
-    name: "Sort",
+    name: "Orden",
     value: "",
   },
   {

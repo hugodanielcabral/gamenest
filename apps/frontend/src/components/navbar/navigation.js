@@ -1,36 +1,36 @@
 export const privateRoutes = [
   {
-    name: "Home",
+    name: "Inicio",
     path: "/",
   },
   {
-    name: "Games",
+    name: "Juegos",
     path: "/games",
   },
   {
-    name: "Collection",
+    name: "Colección",
     path: "/collection",
   },
 ];
 
 export const publicRoutes = [
   {
-    name: "Home",
+    name: "Inicio",
     path: "/",
   },
   {
-    name: "Games",
+    name: "Juegos",
     path: "/games",
   },
 ];
 
 export const authRoutes = [
   {
-    name: "Login",
+    name: "Iniciar sesión",
     path: "/login",
   },
   {
-    name: "Register",
+    name: "Registro",
     path: "/register",
   },
 ];

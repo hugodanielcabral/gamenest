@@ -1,21 +1,21 @@
 //? Function to return the rating label based on the rating percentage
 const ratingLabel = (ratingPercentage) => {
   if (ratingPercentage > 90) {
-    return "Excellent";
+    return "Excelente";
   }
 
   if (ratingPercentage > 70) {
-    return "Very Good";
+    return "Muy bueno";
   }
   if (ratingPercentage >= 40 && ratingPercentage <= 70) {
-    return "Good";
+    return "Bueno";
   }
 
   if (ratingPercentage < 40) {
-    return "Low";
+    return "Bajo";
   }
 
-  return "No rating";
+  return "Sin calificación";
 };
 
 export default ratingLabel;

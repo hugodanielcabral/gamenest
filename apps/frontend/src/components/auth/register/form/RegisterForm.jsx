@@ -35,7 +35,7 @@ export const RegisterForm = ({
         <FaUser className="w-4 h-4 opacity-70" />
         <Input
           className="grow"
-          placeholder="Username"
+          placeholder="Nombre de usuario"
           value={username}
           name="username"
           onChange={handleOnChange}
@@ -86,7 +86,7 @@ export const RegisterForm = ({
         value={country}
       >
         <option disabled value="">
-          Choose your country
+          Seleccione un país
         </option>
         {!isLoading &&
           data.map((country) => (
@@ -118,7 +118,7 @@ export const RegisterForm = ({
             value={password}
             name="password"
             onChange={handleOnChange}
-            placeholder="Password"
+            placeholder="Contraseña"
             autoComplete="password"
           />
           {showPasswords.password ? (
@@ -157,7 +157,7 @@ export const RegisterForm = ({
             value={repassword}
             name="repassword"
             onChange={handleOnChange}
-            placeholder="Repeat password"
+            placeholder="Repetir contraseña"
             autoComplete="password"
           />
           {showPasswords.repassword ? (
@@ -181,9 +181,9 @@ export const RegisterForm = ({
       )}
 
       <p className="my-3 text-base text-center text-white">
-        Already have an account? {""}
+        ¿Ya tienes una cuenta? {""}
         <Link to={"/login"} className="font-bold text-info">
-          Sign in.
+          Inicia sesión.
         </Link>
       </p>
       <Button
@@ -191,7 +191,7 @@ export const RegisterForm = ({
         disabled={status === "submitting"}
         className="transition-all duration-500 ease-in-out  disabled:pointer-events-none disabled:opacity-15"
       >
-        Sign up
+        Registrarse
       </Button>
     </form>
   );

@@ -4,7 +4,17 @@ import statusImg from "../../assets/home/collection-manage-status.webp";
 import ownershipImg from "../../assets/home/collection-manage-ownership.webp";
 import storesImg from "../../assets/home/collection-manage-stores.webp";
 
-export const customizeFeatures = [
+interface CustomizeFeature {
+  id: number;
+  img: string;
+  height: number;
+  width: number;
+  alt: string;
+  gridColSpan: number;
+}
+
+
+export const customizeFeatures:CustomizeFeature[] = [
   {
     id: 1,
     img: platformImg,

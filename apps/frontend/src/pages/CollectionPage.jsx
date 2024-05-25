@@ -45,7 +45,7 @@ export const CollectionPage = () => {
       <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-y-5 gap-x-10">
         <CollectionSearch collectionData={collectionData} />
         <section className="md:hidden block col-span-4 mx-auto font-bold">
-          <Button onClick={() => setModalOpen(true)}>Filters</Button>
+          <Button onClick={() => setModalOpen(true)}>Filtros</Button>
         </section>
 
         {collectionData?.length > 0 ? (

@@ -63,9 +63,9 @@ export const LoginForm = ({
         </div>
       </Label>
       <p className="my-3 text-base text-center text-white">
-        Don&apos;t have an account? {""}
+        ¿No tienes una cuenta? {""}
         <Link to={"/register"} className="font-bold text-info">
-          Sign up.
+          Registrate.
         </Link>
       </p>
 
@@ -74,7 +74,7 @@ export const LoginForm = ({
         disabled={status === "submitting" || status === "success"}
         className="transition-all duration-500 ease-in-out  disabled:pointer-events-none disabled:opacity-15"
       >
-        Sign in
+        Iniciar sesión
       </Button>
     </form>
   );

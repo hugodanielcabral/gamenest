@@ -8,7 +8,7 @@ export const Menu = ({ menuItemsActions, menuItemsGeneral }) => {
       role="menu"
     >
       <MenuSection title="General" items={menuItemsGeneral} />
-      <MenuSection title="Actions" items={menuItemsActions} />
+      <MenuSection title="Acciones" items={menuItemsActions} />
     </div>
   );
 };

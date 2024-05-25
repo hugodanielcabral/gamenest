@@ -73,7 +73,6 @@ export const CollectionProvider = ({ children }) => {
 
   const addToCollection = async (bodyData) => {
     try {
-      console.log(bodyData);
       const response = await fetch(`${BASE_URL}/collection/add/game`, {
         method: "POST",
         credentials: "include",

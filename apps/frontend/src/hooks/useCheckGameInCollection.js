@@ -4,7 +4,6 @@ export const useCheckGameInCollection = (param) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [gameInCollection, setGameInCollection] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(gameInCollection);
 
   useEffect(() => {
     const checkIfGameInCollection = async () => {

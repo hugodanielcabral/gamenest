@@ -5,7 +5,7 @@ export const MediaGalleryVideos = ({ videos }) => {
   if (!videos)
     return (
       <p className="col-span-4 text-center text-lg md:text-2xl text-white">
-        No videos available.
+        No hay videos disponibles.
       </p>
     );
 
@@ -32,7 +32,7 @@ export const MediaGalleryVideos = ({ videos }) => {
         })
       ) : (
         <p className="col-span-4 text-center text-lg md:text-2xl text-white">
-          No videos available.
+          No hay videos disponibles.
         </p>
       )}
     </>
@@ -41,4 +41,8 @@ export const MediaGalleryVideos = ({ videos }) => {
 
 MediaGalleryVideos.propTypes = {
   videos: propTypes.array.isRequired,
+};
+
+MediaGalleryVideos.defaultProps = {
+  videos: [],
 };

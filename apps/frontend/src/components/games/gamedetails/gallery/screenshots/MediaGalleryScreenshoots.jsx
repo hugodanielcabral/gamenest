@@ -8,7 +8,7 @@ export const MediaGalleryScreenshoots = ({
   if (!screenshots)
     return (
       <p className="col-span-4 text-center text-lg md:text-2xl text-white">
-        No screenshots available.
+        No hay screenshots disponibles.
       </p>
     );
 
@@ -39,4 +39,8 @@ MediaGalleryScreenshoots.propTypes = {
   handleOpenModal: propTypes.func.isRequired,
   handleTypeOfMedia: propTypes.func.isRequired,
   setStartIndex: propTypes.func.isRequired,
+};
+
+MediaGalleryScreenshoots.defaultProps = {
+  screenshots: [],
 };

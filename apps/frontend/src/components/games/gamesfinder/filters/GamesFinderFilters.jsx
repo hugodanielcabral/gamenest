@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSearchParameters } from "../../../../hooks/useSearchParameters";
 import { gamesPlatforms } from "../../../../data/gamesPlatforms.js";
 import { gamesGenres } from "../../../../data/gamesGenres.js";
-import { CardBackground } from "../../../ui/cardBackground/CardBackground";
+import { CardBackground } from "../../../ui/index.js";
 import clsx from "clsx";
 
 export const GamesFinderFilters = ({
@@ -125,9 +125,9 @@ export const GamesFinderFilters = ({
         )}
         onClick={handleOnClearFilters}
       >
-        Clear filters
+        Limpiar filtros
       </button>
-      <h2 className="text-2xl text-white text-center divider">Platforms</h2>
+      <h2 className="text-2xl text-white text-center divider">Plataformas</h2>
       {gamesPlatforms.map((platform) => (
         <div className="form-control" key={platform.id}>
           <label className="cursor-pointer label">
@@ -146,7 +146,7 @@ export const GamesFinderFilters = ({
         </div>
       ))}
       <div className="max-h-96 overflow-auto">
-        <h2 className="text-2xl text-white text-center divider">Genres</h2>
+        <h2 className="text-2xl text-white text-center divider">Generos</h2>
         {gamesGenres.map((genre, index) => (
           <div
             className={`form-control ${index > 5 && showMoreGenres}`}
@@ -172,7 +172,7 @@ export const GamesFinderFilters = ({
             setShowMoreGenres(showMoreGenres === "hidden" ? "block" : "hidden");
           }}
         >
-          {showMoreGenres === "hidden" ? "Show more" : "Show less"}
+          {showMoreGenres === "hidden" ? "Mostrar más" : "Mostrar menos"}
         </button>
       </div>
     </CardBackground>

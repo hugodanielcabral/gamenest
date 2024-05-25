@@ -9,7 +9,7 @@ export const MediaGalleryArtworks = ({
   if (!artworks)
     return (
       <p className="col-span-4 text-center text-lg md:text-2xl text-white">
-        No artworks available.
+        No hay artworks disponible.
       </p>
     );
 
@@ -40,4 +40,8 @@ MediaGalleryArtworks.propTypes = {
   handleOpenModal: propTypes.func.isRequired,
   handleTypeOfMedia: propTypes.func.isRequired,
   setStartIndex: propTypes.func.isRequired,
+};
+
+MediaGalleryArtworks.defaultProps = {
+  artworks: [],
 };

@@ -12,10 +12,10 @@ import { CollectionManage } from "./components/collection/manage/CollectionManag
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
-  const HomePage = lazy(() => import("./pages/HomePage.jsx"));
+  const HomePage = lazy(() => import("./pages/HomePage.tsx"));
   const GamesPage = lazy(() => import("./pages/GamesPage.jsx"));
   const GameDetails = lazy(() =>
-    import("./components/games/gamedetails/GameDetails").then((module) => ({
+    import("./components/games/gamedetails/GameDetails.jsx").then((module) => ({
       default: module.GameDetails,
     }))
   );
