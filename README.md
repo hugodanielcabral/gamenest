@@ -18,7 +18,7 @@
 
 <div align="center">
 <a href="#">
-<img src="https://i.imgur.com/lPRVdVi.png">
+<img src="https://i.imgur.com/KoDkUBn.png">
 </a>
 <p></p>
 </div>
@@ -43,47 +43,53 @@ This project uses the following technologies/este proyecto usa las siguientes te
 
 ## Project's Preview/Vista previa del proyecto
 
-**Home No Auth**
+**Home No Auth / Inicio no conectado**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/7e23558b-5102-4cd2-81ad-6c64353f201d
+https://github.com/hugodanielcabral/gamenest/assets/126025811/5709764b-cf0b-40a5-8e1c-3fc67310fbdd
 
-**Home Auth**
+**Home Auth / Inicio conectado**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/4b8ae265-35f4-4174-88c6-0e9f2a6750ff
+https://github.com/hugodanielcabral/gamenest/assets/126025811/b64236ca-5424-46aa-8952-cc5fd82646c8
 
-**Register**
+**Register/Registro**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/eacc409d-7e32-4b62-af83-e120f22a3647
+https://github.com/hugodanielcabral/gamenest/assets/126025811/66ffdadc-b9ac-4069-9c64-4842658ccede
 
-**Login**
+**Login/Iniciar sesión**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/3adec6ef-e1ef-41dd-b2e7-51220408c75e
+https://github.com/hugodanielcabral/gamenest/assets/126025811/3f5775a5-92d2-48c6-be76-5ccaef91c7e7
 
-**Games Finder**
+**Games Finder / Buscador de juegos**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/91fa9706-3c9a-4bff-98c8-491780146d08
+https://github.com/hugodanielcabral/gamenest/assets/126025811/d15cfdd0-f041-43ad-9f91-33426fc39e9a
 
-**Games Details**
+**Games Details / Detalles del juego**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/5e6f433d-8fcf-4d3f-9200-a410a1e489c3
+https://github.com/hugodanielcabral/gamenest/assets/126025811/56c35673-a21c-40e5-9a20-07a9512ddb06
 
-**Add a game to the collection**
+**Add a game to the collection / Agregar juego a la colección**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/1f9735b9-64f1-4742-9b83-493eb72632d8
+https://github.com/hugodanielcabral/gamenest/assets/126025811/365a069a-66c5-4d6b-8fc3-61a5da38717d
 
-**Collection**
+**Collection / Colección**
 
-https://github.com/hugodanielcabral/gamenest/assets/126025811/9c440f38-eadb-4d3c-a422-fed3c2510f8d
+https://github.com/hugodanielcabral/gamenest/assets/126025811/f506b1f2-8798-48ef-8195-045ff69f5524
+
+**Mobile / Móvil**
+
+https://github.com/hugodanielcabral/gamenest/assets/126025811/3e02eea6-3985-4d92-b46d-cb64e57b2324
+
+
 
 ## What's next?/Qué sigue?
 
-1. Implement testing and improve accessibility.
+1. Migrate from JavaScript to TypeScript.
 2. Improve existing features (Collection, Games finder, etc.).
-3. Create a Reviews and a List feature.
+3. Implement email verification.
 
 <br>
 
-1. Implementar pruebas y mejorar accesibilidad.
+1. Migrar de JavaScript a TypeScript.
 2. Mejorar las características existentes (Colección, Buscador de juegos, etc.).
-3. Crear una función de Reseñas y una de Listas.
+3. Implementar validación de correo electrónico.
 
