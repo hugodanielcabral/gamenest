@@ -112,8 +112,8 @@ export const GAME_STORES = [
   },
   {
     id: 10,
-    title: "App Store",
-    name: "Other",
+    title: "Otros",
+    name: "Otros",
     iconId: `${RESOURCE_URL}/images/collection/icons/other.webp`,
   },
 ];

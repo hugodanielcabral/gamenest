@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 const HomePage = () => {
   const { isAuth } = useAuth();
 
-  return <Layout>{isAuth ? <HomeConnected /> : <HomeNotConnected />}</Layout>;
+  return <Layout>{isAuth ? <HomeConnected/> : <HomeNotConnected />}</Layout>;
 };
 
 export default HomePage;

@@ -52,7 +52,12 @@ export const LoginPage = () => {
 
   return (
     <Layout>
-      <BackgroundImage backgroundImage={backgroundImage} endOpacity={20}>
+      <BackgroundImage
+        backgroundImage={backgroundImage}
+        startOpacity={"0"}
+        middleOpacity={"0"}
+        endOpacity={"80"}
+      >
         <Toast
           toastMessage="Inicio de sesión exitoso! Bienvenido de vuelta!"
           showToast={showToast}

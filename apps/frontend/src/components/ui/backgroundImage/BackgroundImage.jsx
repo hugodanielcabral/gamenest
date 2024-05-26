@@ -3,9 +3,9 @@ import propTypes from "prop-types";
 export const BackgroundImage = ({
   children,
   backgroundImage,
-  startOpacity = "0",
-  middleOpacity = "0",
-  endOpacity = "80",
+  startOpacity,
+  middleOpacity,
+  endOpacity,
 }) => {
   return (
     <div className="min-h-screen">
@@ -24,4 +24,10 @@ BackgroundImage.propTypes = {
   startOpacity: propTypes.string,
   middleOpacity: propTypes.string,
   endOpacity: propTypes.string,
+};
+
+BackgroundImage.defaultProps = {
+  startOpacity: "0",
+  middleOpacity: "0",
+  endOpacity: "80",
 };
