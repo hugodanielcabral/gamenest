@@ -6,14 +6,14 @@ export const PopularGamesList = ({ game }) => {
   return (
     <>
       <li className="*:mx-auto *:text-center">
-        <p className="text-white line-clamp-1 text-sm sm:text-lg md:text-xl lg:text-2xl font-bold">
+        <p className="text-white line-clamp-1 text-sm sm:text-base md:text-base lg:text-lg font-bold">
           {game.name}
         </p>
         <Link to={`/games/${game.slug}`}>
           <img
             src={getImageUrl(game.cover.url, "cover_big_2x", "thumb")}
             alt={game.name}
-            className="mx-auto border border-info hover:border-error transition duration-300 ease-in-out rounded-lg object-cover hover:scale-95 w-full"
+            className="mx-auto border border-white border-opacity-25 hover:border-error transition duration-300 ease-in-out rounded-lg hover:translate-y-2 w-40 h-fit sm:w-48 sm:h-fit md:w-56 md:h-fit lg:w-64 lg:h-fit hover:object-fill"
           />
         </Link>
       </li>

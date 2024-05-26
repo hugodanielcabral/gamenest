@@ -11,11 +11,12 @@ export const AdditionalInfoStoryline = ({ data }) => {
       <h2 className="text-center text-xl md:text-2xl mb-2 text-error">
         Historia
       </h2>
-      <p className="text-lg text-pretty md:text-xl text-white">
-        {retrieveGameStoryline(steam_detailed_description, igdb_storyline) ?? (
-          <p className="text-center mt-2">Historia no disponible.</p>
-        )}
-      </p>
+
+      {(
+        <p className="text-lg text-balance md:text-xl text-white">
+          {retrieveGameStoryline(steam_detailed_description, igdb_storyline)}
+        </p>
+      ) ?? <p className="mt-2">Historia no disponible.</p>}
     </CardBackground>
   );
 };

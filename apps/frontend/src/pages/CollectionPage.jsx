@@ -27,7 +27,7 @@ export const CollectionPage = () => {
   useEffect(() => {
     getCollection();
     getTotalCollectionPages();
-  }, [search, collectionData.length]);
+  }, [search, collectionData?.length]);
   //? I need to add collectionData.length to the dependency array to avoid an infinite loop. I'm using collectionData.length because I need to update the collectionData when a game is deleted from the collection
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const CollectionPage = () => {
           <CollectionList collectionData={collectionData} />
         ) : (
           <p className="col-span-4 md:col-span-3 text-center text-white text-2xl">
-            {errors ? errors : "No games found in your collection"}
+            {errors ? errors : "No tienes juegos en tu colección"}
           </p>
         )}
 

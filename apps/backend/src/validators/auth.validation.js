@@ -7,35 +7,35 @@ import { check } from "express-validator";
 export const signupValidator = [
   existsAndNotEmpty("username", "Username")
     .isString()
-    .withMessage("Username must be a string")
+    .withMessage("El nombre de usuario debe ser texto")
     .isLength({ min: 5 })
-    .withMessage("Username must be at least 5 characters long")
+    .withMessage("El nombre de usuario debe tener al menos 5 caracteres")
     .isLength({ max: 20 })
-    .withMessage("Username must be at most 20 characters long")
+    .withMessage("El nombre de usuario debe tener como máximo 20 caracteres")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
       if (user.length > 0) {
-        throw new Error("Username already in use");
+        throw new Error("El nombre de usuario ya está en uso");
       }
     }),
   existsAndNotEmpty("email", "Email")
     .isEmail()
-    .withMessage("Email must be a valid email")
+    .withMessage("El email debe ser un email válido")
     .isLength({ max: 60 })
-    .withMessage("Email must be at most 60 characters long")
+    .withMessage("El email debe tener como máximo 60 caracteres")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE email = ${value}`;
       if (user.length > 0) {
-        throw new Error("Email already in use");
+        throw new Error("El email ya está en uso");
       }
     }),
   existsAndNotEmpty("pass", "Password")
     .isString()
-    .withMessage("Password must be a string")
+    .withMessage("La contraseña debe ser texto")
     .isLength({ min: 5 })
-    .withMessage("Password must be at least 5 characters long")
+    .withMessage("La contraseña debe tener al menos 5 caracteres")
     .isLength({ max: 30 })
-    .withMessage("Password must be at most 30 characters long"),
+    .withMessage("La contraseña debe tener como máximo 30 caracteres"),
   check("birthday").optional(),
   /* .isDate()
     .withMessage("Birthday must be a valid date") */ existsAndNotEmpty(
@@ -44,27 +44,29 @@ export const signupValidator = [
   )
     .optional()
     .isString()
-    .withMessage("Avatar must be a string")
+    .withMessage("El avatar debe ser una url válida")
     .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png)/)
-    .withMessage("Avatar must be a valid url"),
+    .withMessage(
+      "El avatar debe ser una url válida que termine en .jpg, .jpeg o .png"
+    ),
   check("title")
     .optional()
     .isString()
-    .withMessage("Title must be a string")
+    .withMessage("El título debe ser texto")
     .isLength({ min: 3 })
-    .withMessage("Title must be at least 3 characters long")
+    .withMessage("El título debe tener al menos 3 caracteres")
     .isLength({ max: 30 })
-    .withMessage("Title must be at most 30 characters long"),
+    .withMessage("El título debe tener como máximo 30 caracteres"),
   check("status_lock")
     .optional()
     .isBoolean()
-    .withMessage("Status lock must be a boolean"),
+    .withMessage("El estado de bloqueo debe ser un booleano"),
   existsAndNotEmpty("country", "Country")
     .isInt()
     .withMessage("Oops something went wrong, please try again later"),
   existsAndNotEmpty("repass", "Repeat password").custom((value, { req }) => {
     if (value !== req.body.pass) {
-      throw new Error("Passwords must match");
+      throw new Error("Las contraseñas no coinciden");
     }
     return true;
   }),
@@ -76,27 +78,27 @@ export const signupValidator = [
 export const signinValidator = [
   check("username")
     .isString()
-    .withMessage("Invalid username or password.")
+    .withMessage("Nombre de usuario o contraseña invalidos.")
     .isLength({ min: 5, max: 30 })
-    .withMessage("Invalid username or password.")
+    .withMessage("Nombre de usuario o contraseña invalidos.")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
       if (!user[0]) {
-        throw new Error("Invalid username or password.");
+        throw new Error("Nombre de usuario o contraseña invalidos.");
       }
     }),
   check("pass")
     .isString()
-    .withMessage("Invalid username or password.")
+    .withMessage("Nombre de usuario o contraseña invalidos.")
     .isLength({ min: 5, max: 20 })
-    .withMessage("Invalid username or password.")
+    .withMessage("Nombre de usuario o contraseña invalidos.")
     .custom(async (value, { req }) => {
       const user =
         await sql`SELECT * FROM users WHERE username = ${req.body.username}`;
       if (user.length > 0) {
         const match = await comparePassword(value, user[0].pass);
         if (!match) {
-          throw new Error("Invalid username or password.");
+          throw new Error("Nombre de usuario o contraseña invalidos.");
         }
       }
     }),

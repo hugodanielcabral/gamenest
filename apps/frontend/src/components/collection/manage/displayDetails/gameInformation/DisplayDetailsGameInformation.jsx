@@ -30,7 +30,7 @@ export const DisplayDetailsGameInformation = ({
       />
 
       <OptionRadioGroup
-        title="Stores"
+        title="Tienda"
         options={GAME_STORES}
         selectedOption={store}
         handleOnChange={handleOnChange}

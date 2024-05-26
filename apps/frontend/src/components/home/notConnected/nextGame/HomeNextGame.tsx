@@ -9,7 +9,7 @@ export const HomeNextGame = () => {
       <p className="text-base md:text-xl lg:text-2xl text-balance text-center text-gray-300">
        Explora nuestra colección de juegos y encuentra tu próximo favorito
       </p>
-      <img src={gamesPageImage} alt="" className="next-game-image mt-5" />
+      <img src={gamesPageImage} alt="Imagen de la página Juegos" className="next-game-image mt-5" />
     </section>
   );
 };

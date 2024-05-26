@@ -6,7 +6,7 @@ export const CardOwnership = ({ gameData }) => {
 
   return (
     <Badge className="self-center bg-transparent">
-      <p className="text-success  text-sm">{OWNERSHIP_NAME}</p>
+      <p className="text-success text-sm md:text-base">{OWNERSHIP_NAME}</p>
     </Badge>
   );
 };

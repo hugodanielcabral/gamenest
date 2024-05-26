@@ -7,6 +7,7 @@ import { CollectionManageSkeleton } from "./skeleton/CollectionManageSkeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Layout } from "../../layout/Layout";
 import gameDetailsBg from "../../../assets/backgrounds/gamesdetails-background.webp";
+import { BackgroundImage } from "../../ui/index.js";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -30,17 +31,12 @@ export const CollectionManage = () => {
     <CollectionManageSkeleton />
   ) : (
     <Layout>
-      <div className="min-h-screen">
-        <img
-          src={gameScreenshot}
-          className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_0%,rgb(0,0,0,0)]"
-          alt={`Fondo de ${data?.name}`}
-        />
+      <BackgroundImage backgroundImage={gameScreenshot} endOpacity={60}>
         <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-5">
           <ManageHeader data={data} />
           <ManageDisplayDetails data={data} gameSlug={gameSlug} />
         </article>
-      </div>
+      </BackgroundImage>
     </Layout>
   );
 };

@@ -11,6 +11,7 @@ import { Select } from "./select/Select";
 import { Badge } from "./badge/Badge";
 import { Checkbox } from "./checkbox/Checkbox";
 import { CardBackground } from "./cardBackground/cardBackground";
+import { BackgroundImage } from "./backgroundImage/BackgroundImage";
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   Badge,
   Checkbox,
   CardBackground,
+  BackgroundImage,
 };

@@ -149,8 +149,8 @@ export const GAME_STATUS = [
   },
   {
     id: 5,
-    title: "Pensando en jugar",
-    name: "Pensando en jugar",
+    title: "En espera",
+    name: "En espera",
     iconId: `${RESOURCE_URL}/images/collection/icons/think.webp`,
     checked: false,
   },

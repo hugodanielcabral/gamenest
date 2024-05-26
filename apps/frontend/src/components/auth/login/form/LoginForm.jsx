@@ -29,7 +29,7 @@ export const LoginForm = ({
         <Input
           type="text"
           className="grow"
-          placeholder="Username"
+          placeholder="Nombre de usuario"
           value={username}
           name="username"
           onChange={handleOnChange}
@@ -46,7 +46,7 @@ export const LoginForm = ({
             value={password}
             name="password"
             onChange={handleOnChange}
-            placeholder="Password"
+            placeholder="Contraseña"
             autoComplete="password"
           />
           {showPassword ? (

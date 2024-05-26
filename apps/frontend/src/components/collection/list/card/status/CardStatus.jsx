@@ -13,7 +13,7 @@ export const CardStatus = ({ gameData }) => {
         alt={STATUS_NAME}
         className="size-5 mr-1"
       /> */}
-      <p className="text-error text-sm">{STATUS_NAME}</p>
+      <p className="text-error text-sm md:text-base">{STATUS_NAME}</p>
     </Badge>
   );
 };

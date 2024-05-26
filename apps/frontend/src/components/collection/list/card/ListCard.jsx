@@ -22,7 +22,7 @@ export const ListCard = ({ gameData }) => {
       >
         <CardCover gameData={gameData} />
         <div className="flex md:flex-row flex-col justify-evenly gap-x-5 col-span-2 md:col-span-3 row-span-2 md:row-span-1">
-          <h2 className="text-white font-bold self-center md:text-2xl text-balance text-lg text-ellipsis">
+          <h2 className="text-white font-bold self-center text-xs sm:text-base md:text-lg text-pretty text-ellipsis">
             {gameData?.game_name}
           </h2>
           <CardStatus gameData={gameData} />
@@ -31,7 +31,7 @@ export const ListCard = ({ gameData }) => {
         </div>
         <CardProgressNotes gameData={gameData} />
       </Link>
-      <section className="col-span-3 md:col-span-1 grid grid-cols-3 grid-rows-2">
+      <section className="col-span-3 md:col-span-1 grid grid-cols-3 grid-rows-2 ">
         <CardHoursPlayed gameData={gameData} />
         <CardActions gameData={gameData} />
         <CardRating gameData={gameData} />

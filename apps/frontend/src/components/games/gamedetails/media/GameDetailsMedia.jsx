@@ -1,13 +1,13 @@
 import propTypes from "prop-types";
 import ReactPlayer from "react-player";
 import { Button } from "../../../ui/index.js";
-import { tabsGameDetailsMediaData } from "../../../../utils/getGameDetailsMediaIcons.jsx";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
 import { CardBackground } from "../../../ui/cardBackground/cardBackground.jsx";
 import { useAuth } from "../../../../context/AuthContext.jsx";
 import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
+import { tabsGameDetailsMediaData } from "../../../../constants/gamedetails/websiteicons.js";
 
 export const GameDetailsMedia = ({
   data,
@@ -83,11 +83,12 @@ export const GameDetailsMedia = ({
           <h3 className="text-center text-lg md:text-xl font-semibold text-error">
             Resumen
           </h3>
-          <p className="text-balance text-base sm:text-xl md:text-2xl text-white">
-            {retrieveGameSummary(steam_short_description, igdb_summary) ?? (
-              <p className="text-center mt-2">No hay resumen disponible.</p>
-            )}
-          </p>
+
+          {(
+            <p className="text-base sm:text-xl md:text-2xl text-white">
+              {retrieveGameSummary(steam_short_description, igdb_summary)}
+            </p>
+          ) ?? <p className="text-center mt-2">No hay resumen disponible.</p>}
         </CardBackground>
       </div>
       <div className="col-span-4 my-2">
@@ -100,12 +101,18 @@ export const GameDetailsMedia = ({
               key={tab.id}
               role="tab"
               onClick={() => handleOnClick(tab.id)}
-              className={`tab flex-grow text-base md:text-xl  ${
-                tab.id === activeTab ? "tab-active text-white" : "text-gray-400"
+              className={`tab flex-grow ${
+                tab.id === activeTab
+                  ? "tab-active text-white font-bold"
+                  : "text-gray-400"
               } transition-all duration-300 ease-in-out hover:text-white hover:text-opacity-70`}
             >
-              {tab.icon}
-              <span className="ml-2">{tab.name}</span>
+              <img
+                src={tab.icon}
+                alt={`${tab.name} tab`}
+                className={tab.iconClassName}
+              />
+              <span className={tab.textClassName}>{tab.name}</span>
             </a>
           ))}
         </div>

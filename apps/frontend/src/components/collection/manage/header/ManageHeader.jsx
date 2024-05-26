@@ -51,7 +51,7 @@ export const ManageHeader = ({ data }) => {
           >
             {determineActionType} JUEGO
           </h1>
-          <h2 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl text-gray-300 self-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white self-center">
             {data?.name}
           </h2>
         </div>

@@ -4,7 +4,7 @@ import { useFetch } from "../hooks/useFetch.js";
 import { useForm } from "../hooks/useForm";
 import { RegisterForm } from "../components/auth/register/form/RegisterForm.jsx";
 import { AuthCard } from "../components/auth/AuthCard.jsx";
-import { Button } from "../components/ui/index.js";
+import { BackgroundImage, Button } from "../components/ui/index.js";
 import { useNavigate } from "react-router-dom";
 /* import emailjs from "@emailjs/browser";
  */ import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
@@ -100,12 +100,7 @@ export const RegisterPage = () => {
  */
   return (
     <Layout>
-      <div
-        className="p-4 min-h-[100vh] bg-no-repeat bg-cover bg-center bg-fixed bg-opacity-50 bg-blur-3xl bg-gradient-to-b from-base-100 to-base-300"
-        style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%), url(${backgroundImage})`,
-        }}
-      >
+      <BackgroundImage backgroundImage={backgroundImage} endOpacity={20}>
         <div className="flex items-center mt-5 justify-evenly">
           <article className="flex flex-col items-center mt-3">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
@@ -157,7 +152,7 @@ export const RegisterPage = () => {
             />
           )}
         </AuthCard>
-      </div>
+      </BackgroundImage>
     </Layout>
   );
 };
