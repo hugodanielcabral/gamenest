@@ -23,7 +23,7 @@ export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
             role="button"
             className="btn btn-ghost btn-circle avatar size-12 md:size-20 hover:scale-105 transition-transform duration-300 ease-in-out"
           >
-            <div className="rounded-full size-12 md:size-20">
+            <div className="rounded-full border-2 border-t-error border-x-info border-y-error size-12 md:size-20 hover:border-y-info hover:border-x-error transition-all duration-500 ease-in-out ">
               <img alt="User Profile Picture" src={user?.avatar} />
             </div>
           </div>

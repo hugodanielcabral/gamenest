@@ -23,7 +23,7 @@ export const Footer = () => {
                   <img
                     src={socialLink.icon}
                     alt={socialLink.name}
-                    className="size-8 md:size-11"
+                    className={socialLink.className}
                   />
                 </a>
               </li>
