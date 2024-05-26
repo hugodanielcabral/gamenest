@@ -34,7 +34,7 @@ export const FiltersCard = ({
         </Fragment>
       ))}
 
-      {filtersData.ownership.length > 0 && (
+      {filtersData?.ownership.length > 0 && (
         <>
           <h2 className="text-2xl text-white text-center divider">Propiedad</h2>
           {filtersData?.ownership.map((ownershipValue) => (

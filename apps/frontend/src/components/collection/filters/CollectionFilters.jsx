@@ -26,7 +26,7 @@ export const CollectionFilters = ({ filtersData, modalOpen, setModalOpen }) => {
         <FiltersCard
           selectedOptions={selectedOptions}
           handleOnChange={handleOnChange}
-          filtersData={filtersData}
+          filtersData={filtersData || []}
           clearAll={clearAll}
         />
       </div>
@@ -40,7 +40,7 @@ export const CollectionFilters = ({ filtersData, modalOpen, setModalOpen }) => {
             <FiltersCard
               selectedOptions={selectedOptions}
               handleOnChange={handleOnChange}
-              filtersData={filtersData}
+              filtersData={filtersData || []}
               clearAll={clearAll}
             />
           </Modal>
