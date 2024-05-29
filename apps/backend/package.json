@@ -19,6 +19,7 @@
     "jsdom": "^24.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "postgres": "^3.4.3"
+    "postgres": "^3.4.3",
+    "uuid": "^9.0.1"
   }
 }

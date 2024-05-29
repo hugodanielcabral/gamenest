@@ -4,6 +4,7 @@ import {
   signin,
   signout,
   profile,
+  verifyUser,
 } from "../controllers/auth.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
 import {
@@ -20,5 +21,7 @@ router.post("/signup", signupValidator, signup);
 router.post("/signout", signout);
 
 router.get("/profile", isAuth, profile);
+
+router.get("/user/validate/:token", verifyUser);
 
 export default router;
