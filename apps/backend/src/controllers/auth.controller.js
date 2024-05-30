@@ -2,7 +2,10 @@ import sql from "../db.js";
 import { encryptPassword, comparePassword } from "../helpers/handleBcrypt.js";
 import { handleJwt } from "../helpers/handleJwt.js";
 import { v4 as uuidv4 } from "uuid";
+import { Resend } from "resend";
 import jwt from "jsonwebtoken";
+import { emailTemplate } from "../utils/email.js";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signup = async (req, res) => {
   const { username, email, pass, country } = req.body;
@@ -27,16 +30,15 @@ export const signup = async (req, res) => {
     const newUser =
       await sql`INSERT INTO users (username, email, pass, birthday, avatar, title, status_lock, verified, role_id, country_id, verificationToken) VALUES (${username}, ${email}, ${hashedPass}, ${birthday}, ${avatar}, ${title}, ${status_lock}, ${verified}, ${role_id}, ${country}, ${verificationToken}) RETURNING *`;
 
-    const token = await handleJwt({ email, verificationToken });
-    //! Enviar por email el token
-    console.log(token);
+    const token = await handleJwt({ email, verificationToken }, "1d");
 
-    /* res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "none",
-      secure: true,
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-    }); */
+    const { data, error } = await resend.emails.send(
+      emailTemplate(username, token)
+    );
+
+    if (error) {
+      return console.error({ error });
+    }
 
     res.status(201).json({
       message: "User created",
