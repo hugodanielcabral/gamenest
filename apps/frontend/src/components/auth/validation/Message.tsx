@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../../components/ui/index.js";
+import { Button } from "../../ui/index.js";
 
 export const Message = ({ messagePayload }) => {
   const navigate = useNavigate();

@@ -8,6 +8,7 @@ import getImageUrl from "../../../utils/getImageUrl.js";
 import gameDetailsBg from "../../../assets/backgrounds/gamesdetails-background.webp";
 import { GameDetailsSkeleton } from "./skeleton/GameDetailsSkeleton.jsx";
 import { useFetch } from "../../../hooks/useFetch.ts";
+import { BackgroundImage } from "../../ui/index.js";
 
 export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -32,11 +33,7 @@ export const GameDetails = () => {
 
   return !isLoading ? (
     <Layout>
-      <div className="min-h-screen">
-        <img
-          src={gameScreenshot}
-          className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_0%,rgb(0,0,0,0)]"
-        />
+      <BackgroundImage backgroundImage={gameScreenshot} endOpacity={60}>
         <div className="relative z-10 p-4 container mx-auto">
           {/* Header */}
           <div className="my-2">
@@ -56,7 +53,7 @@ export const GameDetails = () => {
             <GameDetailsMediaGallery data={data} activeTab={activeTab} />
           </div>
         </div>
-      </div>
+      </BackgroundImage>
     </Layout>
   ) : (
     <GameDetailsSkeleton />

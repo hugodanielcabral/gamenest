@@ -31,7 +31,11 @@ export const CollectionManage = () => {
     <CollectionManageSkeleton />
   ) : (
     <Layout>
-      <BackgroundImage backgroundImage={gameScreenshot} endOpacity={"80"}>
+      <BackgroundImage
+        backgroundImage={gameScreenshot}
+        endOpacity={60}
+        className="grayscale"
+      >
         <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-5">
           <ManageHeader data={data} />
           <ManageDisplayDetails data={data} gameSlug={gameSlug} />

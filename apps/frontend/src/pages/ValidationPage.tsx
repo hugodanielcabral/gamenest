@@ -13,11 +13,8 @@ export const ValidationPage = () => {
 const {data, isLoading} = useFetch(`http://localhost:3000/api/user/validate/${token}`);
 
 
-  // TODO 2: Crear el componente 404.
-  // TODO 3: Crear bien el mensaje de respuesta del backend.
-  // TODO 4: Si el usuario no esta validado, en el login, mostrar un mensaje de que el usuario no esta validado.
 
-  return <BackgroundImage backgroundImage={validationPageBG} endOpacity={"80"}>
+  return <BackgroundImage backgroundImage={validationPageBG}>
     <div className="flex justify-center flex-col items-center">
       <Link to="/">
         <img src={gamenestLogo2} alt="GameNest Logo" className="transition-all duration-500 ease-in-out hover:scale-95"  />

@@ -1,4 +1,4 @@
-import { BackgroundImage } from "../../ui/backgroundImage/backgroundImage";
+import { BackgroundImage } from "../../ui/index.js";
 import backgroundImage from "../../../assets/backgrounds/games-finder-wallpaper.webp";
 import { GamesFinderCard } from "./card/GamesFinderCard";
 import { GamesFinderSearch } from "./search/GamesFinderSearch.jsx";

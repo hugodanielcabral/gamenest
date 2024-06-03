@@ -49,11 +49,7 @@ export const GameNestApp = () => {
       path: "/changelogs",
       element: <ChangelogsPage />,
     },
-    {
-      id: 8,
-      path: "/user/validate/:token",
-      element: <ValidationPage />,
-    }
+   
   ];
 
   const privateRoutes = [
@@ -100,6 +96,7 @@ export const GameNestApp = () => {
             >
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/user/validate/:token" element={<ValidationPage />} />
             </Route>
             <Route>
               {publicRoutes.map((route) => {

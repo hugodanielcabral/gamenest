@@ -75,12 +75,7 @@ export const RegisterPage = () => {
 
   return (
     <Layout>
-      <BackgroundImage
-        backgroundImage={backgroundImage}
-        startOpacity={"0"}
-        middleOpacity={"0"}
-        endOpacity={"80"}
-      >
+      <BackgroundImage backgroundImage={backgroundImage}>
         <div className="flex items-center mt-5 justify-evenly">
           <article className="flex flex-col items-center mt-3">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
