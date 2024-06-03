@@ -17,7 +17,11 @@ export const RatingStars = ({
           checked={star === rating}
           disabled={rating === star}
           onChange={() => handleOnChange(star)}
-          className="mask mask-star disabled:cursor-not-allowed"
+          className={
+            rating === 0
+              ? "mask mask-star opacity-30"
+              : "mask mask-star disabled:cursor-not-allowed"
+          }
         />
       ))}
     </div>

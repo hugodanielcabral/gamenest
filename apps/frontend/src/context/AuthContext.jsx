@@ -32,9 +32,10 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({
           username: formData.username,
           email: formData.email,
-          pass: formData.password,
-          repass: formData.repassword,
-          country: formData.country,
+          password: formData.password,
+          repassword: formData.repassword,
+          country_id: formData.country_id,
+          gender: formData.gender,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({
           username: formData.username,
-          pass: formData.password,
+          password: formData.password,
         }),
       });
 

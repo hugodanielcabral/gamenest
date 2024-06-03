@@ -14,9 +14,9 @@ import {
 
 const router = Router();
 
-router.post("/signin", signinValidator, signin);
+router.post("/signin", signin);
 
-router.post("/signup", signupValidator, signup);
+router.post("/signup", signup);
 
 router.post("/signout", signout);
 

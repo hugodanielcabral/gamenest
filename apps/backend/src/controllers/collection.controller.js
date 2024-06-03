@@ -109,8 +109,6 @@ export const addGameToCollection = async (req, res) => {
     progress_note,
   } = req.body;
 
-  console.log(req.body, "req.body");
-
   try {
     const collection =
       await sql`INSERT INTO collection (game_id, game_slug, game_name, game_cover, platform_name, format_name, ownership_name, store_name, status_name, progress_note, user_id) VALUES (${game_id}, ${game_slug}, ${game_name}, ${game_cover}, ${platform_name}, ${format_name}, ${ownership_name}, ${store_name}, ${status_name}, ${progress_note}, ${req.user_id}) RETURNING *`;

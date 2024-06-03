@@ -5,8 +5,7 @@ import { RegisterForm } from "../components/auth/register/form/RegisterForm.jsx"
 import { AuthCard } from "../components/auth/AuthCard.jsx";
 import { BackgroundImage, Button } from "../components/ui/index.js";
 import { useNavigate } from "react-router-dom";
-/* import emailjs from "@emailjs/browser";
- */ import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
+import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 import { Layout } from "../components/layout/Layout.jsx";
 import clsx from "clsx";
 import { useFetch } from "../hooks/useFetch.ts";
@@ -21,13 +20,15 @@ export const RegisterPage = () => {
     email,
     password,
     repassword,
-    country,
+    country_id,
+    gender,
   } = useForm({
     username: "",
     email: "",
-    country: "",
+    country_id: "",
     password: "",
     repassword: "",
+    gender: "",
   });
   const navigate = useNavigate();
   const { data, isLoading } = useFetch(`${BASE_URL}/country`);
@@ -47,12 +48,10 @@ export const RegisterPage = () => {
 
       if (userData) {
         setUserCreated(true);
-        /*         sendWelcomeEmail();
-         */
+
         setStatus("success");
         setTimeout(() => {
           setStatus("");
-          /* navigate("/login"); */
         }, 2000);
       }
 
@@ -73,31 +72,7 @@ export const RegisterPage = () => {
         repassword: !showPasswords.repassword,
       });
   };
-  /* const templateParams = {
-    user_name: username,
-    destination: email,
-  }; */
 
-  /*   const sendWelcomeEmail = () => {
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        {
-          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-        }
-      )
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-        },
-        (error) => {
-          console.log("FAILED...", error);
-        }
-      );
-  };
- */
   return (
     <Layout>
       <BackgroundImage
@@ -151,12 +126,13 @@ export const RegisterPage = () => {
               errors={errors}
               username={username}
               email={email}
-              country={country}
+              country_id={country_id}
               password={password}
               repassword={repassword}
               status={status}
               handleOnPasswordVisibility={handleOnPasswordVisibility}
               showPasswords={showPasswords}
+              gender={gender}
             />
           )}
         </AuthCard>

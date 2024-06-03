@@ -10,6 +10,7 @@ export const CardRating = ({ gameData }) => {
   const { updateGameFromCollection } = useCollection();
 
   const [rating, setRating] = useState(gameData.rating);
+  console.log(rating);
   const [currentRating, setCurrentRating] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);

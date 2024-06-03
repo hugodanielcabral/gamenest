@@ -4,6 +4,7 @@ import { Button, Label, Input, Option } from "../../../ui/index.js";
 import { clsx } from "clsx";
 import { FaUser, FaMailBulk, FaEye, FaEyeSlash } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { genderList } from "../../../../constants/auth/constantsAuth.js";
 
 export const RegisterForm = ({
   handleOnSubmit,
@@ -13,12 +14,13 @@ export const RegisterForm = ({
   errors,
   username,
   email,
-  country,
+  country_id,
   password,
   repassword,
   status,
   handleOnPasswordVisibility,
   showPasswords,
+  gender,
 }) => {
   return (
     <form onSubmit={handleOnSubmit} className="space-y-3 mt-5">
@@ -73,17 +75,18 @@ export const RegisterForm = ({
         </p>
       )}
       <select
-        name="country"
+        name="country_id"
         className={clsx(
           {
             "border-2 border-error":
-              errors && errors.some((err) => err.path == "country"),
-            "border-0": errors && !errors.some((err) => err.path == "country"),
+              errors && errors.some((err) => err.path == "country_id"),
+            "border-0":
+              errors && !errors.some((err) => err.path == "country_id"),
           },
           "w-full max-w-xs mb-2 select select-bordered select-md"
         )}
         onChange={handleOnChange}
-        value={country}
+        value={country_id}
       >
         <option disabled value="">
           Seleccione un país
@@ -91,13 +94,40 @@ export const RegisterForm = ({
         {!isLoading &&
           data.map((country) => (
             <Option key={country.country_id} value={country.country_id}>
-              {country.country_name}
+              {country.name}
             </Option>
           ))}
       </select>
-      {errors && errors.find((err) => err.path == "country") && (
+      {errors && errors.find((err) => err.path == "country_id") && (
         <p className="mb-4 text-sm font-bold text-center text-error">
-          {errors.find((err) => err.path == "country").msg}
+          {errors.find((err) => err.path == "country_id").msg}
+        </p>
+      )}
+      <select
+        name="gender"
+        className={clsx(
+          {
+            "border-2 border-error":
+              errors && errors.some((err) => err.path == "gender"),
+            "border-0": errors && !errors.some((err) => err.path == "gender"),
+          },
+          "w-full max-w-xs mb-2 select select-bordered select-md"
+        )}
+        onChange={handleOnChange}
+        value={gender}
+      >
+        <option disabled value="">
+          Seleccione un genero
+        </option>
+        {genderList.map((gen) => (
+          <Option key={gen.id} value={gen.id}>
+            {gen.name}
+          </Option>
+        ))}
+      </select>
+      {errors && errors.find((err) => err.path == "country_id") && (
+        <p className="mb-4 text-sm font-bold text-center text-error">
+          {errors.find((err) => err.path == "country_id").msg}
         </p>
       )}
       <Label
@@ -205,12 +235,13 @@ RegisterForm.propTypes = {
   errors: propTypes.array,
   username: propTypes.string.isRequired,
   email: propTypes.string.isRequired,
-  country: propTypes.string.isRequired,
+  country_id: propTypes.string.isRequired,
   password: propTypes.string.isRequired,
   repassword: propTypes.string.isRequired,
   status: propTypes.string,
   handleOnPasswordVisibility: propTypes.func.isRequired,
   showPasswords: propTypes.object.isRequired,
+  gender: propTypes.string.isRequired,
 };
 
 RegisterForm.defaultProps = {
