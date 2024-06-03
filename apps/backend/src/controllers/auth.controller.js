@@ -3,8 +3,7 @@ import { encryptPassword, comparePassword } from "../helpers/handleBcrypt.js";
 import { handleJwt } from "../helpers/handleJwt.js";
 import { v4 as uuidv4 } from "uuid";
 import { Resend } from "resend";
-import jwt from "jsonwebtoken";
-import { emailTemplate } from "../utils/email.js";
+import { emailTemplate, tokenValidation } from "../utils/email.js";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signup = async (req, res) => {
@@ -123,14 +122,11 @@ export const profile = async (req, res) => {
 export const verifyUser = async (req, res) => {
   const { token } = req.params;
 
-  const decode = jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid token" });
-    }
-    return decoded;
-  });
+  const decodedToken = await tokenValidation(token);
 
-  const { email, verificationToken } = decode;
+  if (!decodedToken) return res.status(401).json({ message: "Invalid token" });
+
+  const { email, verificationToken } = decodedToken;
 
   try {
     const userExists =
@@ -139,11 +135,14 @@ export const verifyUser = async (req, res) => {
     if (!userExists[0])
       return res.status(404).json({ message: "Invalid Token" });
 
-    await sql`UPDATE users SET verified = true, verificationToken = null WHERE email = ${email} AND verificationToken = ${verificationToken}`;
+    const result =
+      await sql`UPDATE users SET verified = true, verificationToken = null WHERE email = ${email} AND verificationToken = ${verificationToken}`;
 
-    res.status(200).json({ message: "User verified" });
+    return res
+      .status(200)
+      .json({ message: "El email fue validado correctamente!" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };

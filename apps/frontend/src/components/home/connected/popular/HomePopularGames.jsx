@@ -1,4 +1,4 @@
-import { useFetch } from "../../../../hooks/useFetch";
+import { useFetch } from "../../../../hooks/useFetch.ts";
 import { Loading } from "../../../ui";
 import { PopularGamesList } from "./list/PopularGamesList";
 

@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 export const emailTemplate = (username, token) => {
   return {
     from: "onboarding@resend.dev",
@@ -14,4 +16,23 @@ export const emailTemplate = (username, token) => {
     </p>
       `,
   };
+};
+
+export const tokenValidation = async (token) => {
+  try {
+    const decodedToken = jwt.verify(
+      token,
+      process.env.JWT_SECRET,
+      (err, decoded) => {
+        if (err) {
+          return null;
+        }
+        return decoded;
+      }
+    );
+
+    return decodedToken;
+  } catch (error) {
+    console.log(error);
+  }
 };

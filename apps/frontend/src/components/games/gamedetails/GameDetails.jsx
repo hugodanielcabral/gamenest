@@ -1,4 +1,3 @@
-import { useFetch } from "../../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { GameDetailsHeader } from "./header/GameDetailsHeader";
 import { GameDetailsMedia } from "./media/GameDetailsMedia";
@@ -8,6 +7,7 @@ import { Layout } from "../../layout/Layout";
 import getImageUrl from "../../../utils/getImageUrl.js";
 import gameDetailsBg from "../../../assets/backgrounds/gamesdetails-background.webp";
 import { GameDetailsSkeleton } from "./skeleton/GameDetailsSkeleton.jsx";
+import { useFetch } from "../../../hooks/useFetch.ts";
 
 export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;

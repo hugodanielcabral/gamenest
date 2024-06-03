@@ -1,4 +1,3 @@
-import { useFetch } from "../../../hooks/useFetch.js";
 import { BackgroundImage } from "../../ui/backgroundImage/backgroundImage";
 import backgroundImage from "../../../assets/backgrounds/games-finder-wallpaper.webp";
 import { GamesFinderCard } from "./card/GamesFinderCard";
@@ -9,6 +8,7 @@ import { GamesFinderFilters } from "./filters/GamesFinderFilters.jsx";
 import { Modal, Button } from "../../ui/index.js";
 import { useState } from "react";
 import { GamesFinderSkeleton } from "./skeleton/GamesFinderSkeleton.jsx";
+import { useFetch } from "../../../hooks/useFetch.ts";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GamesFinder = () => {

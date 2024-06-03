@@ -6,3 +6,5 @@ node_modules/
 .sql
 
 /sql/
+database-query.sql
+.sql

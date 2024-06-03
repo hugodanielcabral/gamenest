@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useFetch } from "../../../hooks/useFetch";
 import { ManageHeader } from "./header/ManageHeader";
 import { ManageDisplayDetails } from "./displayDetails/ManageDisplayDetails";
 import getImageUrl from "../../../utils/getImageUrl";
@@ -8,6 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Layout } from "../../layout/Layout";
 import gameDetailsBg from "../../../assets/backgrounds/gamesdetails-background.webp";
 import { BackgroundImage } from "../../ui/index.js";
+import { useFetch } from "../../../hooks/useFetch.ts";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 

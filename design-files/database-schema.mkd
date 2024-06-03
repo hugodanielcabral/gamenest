@@ -1,115 +1,92 @@
-# GAMENEST 
+<sub>Ultima actualización: 3/6/2024</sub>
+# <span style="color:yellow"> Glosario </span>
 
-## ABOUT
-### This project is going to be a "Game backlog tracker and a blog". 
+- **PK** - _LLAVE PRIMARIA_.
+- **FK** - _LLAVE FORÁNEA._
+- **UQ** - _ATRIBUTO ÚNICO._
+- **ED** - _ENTIDAD DE DATOS._
+- **EP** - _ENTIDAD PIVOTE_.
+- **EC** - _ENTIDAD CATALOGO._
 
-## OBJECTIVE
+## <span style="color:orange"> Entidades </span>
 
-### This project objective is to offer gamers a way where they can track their games, but also, their achievements.
+### 👤 <span style="color:white"> users </span>**(ED)**
 
-## DESIGNING THE DATABASE
-
-### GLOSSARY
-- **PK**: _PRIMARY KEY_
-- **FK**: _FOREIGN KEY_
-- **UQ**: _UNIQUE ATTRIBUTE_
-- **DE**: _DATA ENTITY_
-- **PE**: _PIVOT ENTITY_
-- **CE**: _CATALOGUE ENTITY_
-
-### ENTITIES
-
-#### USERS **(DE)**
-
-- user_id **(PK)**
-- username **(UNIQUE)**
-- email **(UNIQUE)**
-- pass
-- birthday
-- avatar
-- title
-- status_lock
-- verified
-- role **(FK)**
-- country **(FK)**
-
-### ROLES **(CE)**
-
-- role_id **(PK)**
-- name
+- <u>user_id</u> *INT IDENTITY-ALWAYS* **(PK)**
+- username *VARCHAR(50) UNIQUE NOT NULL* **(UQ)**
+- email *VARCHAR(150) UNIQUE NOT NULL* **(UQ)**
+- password *VARCHAR(150) NOT NULL*
+- birthday *DATE*
+- gender *ENUM*
+- avatar *VARCHAR(255)*
+- title *VARCHAR(50)*
+- active *BOOL DEFAULT TRUE NOT NULL*
+- role_id *INT DEFAULT 3 NOT NULL* **(FK)** *
+- country_id *INT* **(FK)**
+- created_on *TIMESTAMP*  **
+- updated_on *TIMESTAMP*  **
+- verified *BOOL DEFAULT FALSE NOT NULL*
 
 
-<!-- #### COLLECTION **(DE)**
+> * Por defecto el rol será con el id 3, que es usuario.
+> **  Deberá tener la hora del momento de la creación ( NOW() ).
 
-- collection_id **(PK)**
-- user_id **(FK)**
-- ownership
-- status
-- progress
-- note -->
+### 👨‍🏭<span style="color:white"> roles </span>**(EC)**
 
-### COLLECTION **(DE)** *NEW*
+- <u>role_id</u> *INT IDENTITY-ALWAYS* **(PK)**
+- name *VARCHAR(150) NOT NULL*
+### 📚 <span style="color:white"> collection </span>**(ED)**
 
-- collection_id  **(PK)**
-- game_id **(EXTERNAL ID FROM API)**
-- platform **(EXTERNAL ID FROM API)**
-- ownership
-- status
-- progress
-- progress_note
-- user_id **(FK)**
+- <u>collection_id</u> *INT IDENTITY-ALWAYS* **(PK)**
+- game_id *VARCHAR(100) NOT NULL*
+- game_slug *VARCHAR(255) NOT NULL*
+- game_name *VARCHAR(255) NOT NULL*
+- game_cover *VARCHAR(255) NOT NULL*
+- platform_name *VARCHAR(255) NOT NULL*
+- format_name *VARCHAR(255) NOT NULL*
+- ownership_name *VARCHAR(255)  NOT NULL*
+- store_name *VARCHAR(255) NOT NULL*
+- status_name *VARCHAR(255) NOT NULL*
+- start_date *DATE* *
+- finish_date DATE *
+- progress_note *VARCHAR(255)*
+- rating *INT DEFAULT 0*
+- amount_paid *DECIMAL(5, 2)*
+- is_favorite *BOLEAN DEFAULT FALSE*
+- user_id *INT* **(FK)**
 
-#### COUNTRY **(CE)**
+> * Agregar un constraint/check que no permita que el start_date sea mayor que el finish_date.
 
-- country_id **(PK)**
-- name
-- domain **(UNIQUE)**
+### ❤️<span style="color:white"> hearts </span>**(EC)**
 
-### RELATIONSHIPS
+- <u>heart_id</u> *INT IDENTITY-ALWAYS* **(PK)**
+- game_slug *VARCHAR(255) NOT NULL*
+- user_id *INT* **(FK)**
 
-1. A **User** has a **Collection** (1 - 1).
-1. A **User** has a **Country** (1 - 1).
-1. A **User** has a **Role** (1 - 1).
-1. A **Collection** has **Games_Collection** (1 - M).
+### 🇦🇷<span style="color:white"> country </span>**(EC)**
 
- 
-### RELATIONAL DATABASE MODEL
+- <u>country_id</u> *INT IDENTITY-ALWAYS* **(PK)**
+- name *VARCHAR(150) NOT NULL*
+- domain *VARCHAR(2) UNIQUE NOT NULL*  **(UQ)**
 
-![](./relational-model-v2.webp)
+### 🔑<span style="color:white"> verification_tokens </span>**(ED)**
 
-### BUSINESS RULES
+- token_id *INT IDENTITY-ALWAYS* **(PK)**
+- user_id *INT* **(FK)**
+- token *VARCHAR(255) NOT NULL*
+- created_on *TIME_STAMP DEFAULT NOW*
+- used *BOOL DEFAULT FALSE NOT NULL*
 
-#### USERS
+> En el momento de la creación será usado para la validación del email, pero luego solamente será usado para verificar el cambio de contraseña.
 
-1. Create a user.
-1. Read all users.
-1. Read a user.
-1. Update a user.
-1. Block a user.
+## <span style="color:orange"> Relaciones </span>
 
-#### ROLES
+1. Un **user** tiene una **collection** _(1 a 1)_.
+2. Un **user** pertenece a un **country** _(1 a 1)_.
+3. Un **user** tiene un **role** _(1 a 1)_.
+4. Una **collection** pertenece a un **user** _(1 a 1)._
+5. Un **user** puede dar **heart** a varios juegos. _(1 a M)._
 
-1. Create a role.
-1. Read all roles.
-1. Read a role.
-1. Update a role.
+## <span style="color:orange"> Modelo relacional de la base de datos </span>
 
-#### COLLECTIONS
-
-1. Create a collection.
-1. Read all collection.
-1. Read a collection.
-1. Read a user collection.
-1. Update a collection.
-1. Delete a collection.
-1. Add Games to a collection
-1. Delete Games from a collection.
-
-#### COUNTRY
-
-1. Create a Country.
-1. Read all Country.
-1. Read a Country.
-1. Update a Country.
-1. Delete a Country.
-
+![Modelo relacional de la base de datos GameNest](/modelo-relacional-db-gamenest.png)

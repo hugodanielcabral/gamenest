@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useFetch } from "../hooks/useFetch.js";
 import { useForm } from "../hooks/useForm";
 import { RegisterForm } from "../components/auth/register/form/RegisterForm.jsx";
 import { AuthCard } from "../components/auth/AuthCard.jsx";
@@ -10,6 +9,7 @@ import { useNavigate } from "react-router-dom";
  */ import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 import { Layout } from "../components/layout/Layout.jsx";
 import clsx from "clsx";
+import { useFetch } from "../hooks/useFetch.ts";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const RegisterPage = () => {
@@ -129,14 +129,17 @@ export const RegisterPage = () => {
         >
           {hasUserBeenCreated ? (
             <div className="flex flex-col items-center mt-5 space-y-5">
-              <p className="text-center text-white text-xl">
-                Tu cuenta ha sido creada exitosamente! 🎉
+              <p className="text-center text-gray-200 text-xl">
+                Tu cuenta ha sido creada exitosamente!
+              </p>
+              <p className="text-center text-white text-lg font-bold">
+                Por favor verifica tu email para continuar.
               </p>
               <Button
                 className="bg-white text-black font-bold hover:bg-opacity-80 hover:bg-white"
                 onClick={() => navigate("/login")}
               >
-                Iniciar sesión
+                Ya verifiqué mi email
               </Button>
             </div>
           ) : (

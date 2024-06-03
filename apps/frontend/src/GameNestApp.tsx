@@ -9,6 +9,7 @@ import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ChangelogsPage } from "./pages/ChangelogsPage.jsx";
 import { CollectionManage } from "./components/collection/manage/CollectionManage.jsx";
+import { ValidationPage } from "./pages/ValidationPage.tsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -48,6 +49,11 @@ export const GameNestApp = () => {
       path: "/changelogs",
       element: <ChangelogsPage />,
     },
+    {
+      id: 8,
+      path: "/user/validate/:token",
+      element: <ValidationPage />,
+    }
   ];
 
   const privateRoutes = [

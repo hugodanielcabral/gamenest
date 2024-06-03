@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import { LatestGamesList } from "./list/LatestGamesList.jsx";
 import { Loading } from "../../../ui/index.js";
-import { useFetch } from "../../../../hooks/useFetch.js";
+import { useFetch } from "../../../../hooks/useFetch.ts";
 
 export const HomeLatestGames = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
