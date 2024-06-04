@@ -1,106 +1,85 @@
-import { existsAndNotEmpty } from "../helpers/handleExistsAndNotEmpty.js";
 import { validateResult } from "../helpers/handleValidateResult.js";
-import { comparePassword } from "../helpers/handleBcrypt.js";
 import sql from "../db.js";
-import { check } from "express-validator";
+import { body } from "express-validator";
+import { comparePassword } from "../helpers/handleBcrypt.js";
 
 export const signupValidator = [
-  existsAndNotEmpty("username", "Username")
-    .isString()
-    .withMessage("El nombre de usuario debe ser texto")
-    .isLength({ min: 5 })
-    .withMessage("El nombre de usuario debe tener al menos 5 caracteres")
-    .isLength({ max: 20 })
-    .withMessage("El nombre de usuario debe tener como máximo 20 caracteres")
+  body("username")
+    .trim()
+    .notEmpty()
+    .withMessage("Debes ingresar un nombre de usuario.")
+    .isLength({ min: 6, max: 30 })
+    .withMessage("El nombre de usuario debe tener entre 6 a 30 caracteres.")
+    .matches("^[a-zA-Z0-9]+$")
+    .withMessage("El nombre de usuario solo permite letras y números.")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
-      if (user.length > 0) {
-        throw new Error("El nombre de usuario ya está en uso");
+
+      if (user.length) {
+        throw new Error("El nombre de usuario ya esta en uso.");
       }
     }),
-  existsAndNotEmpty("email", "Email")
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Debes ingresar un email.")
     .isEmail()
-    .withMessage("El email debe ser un email válido")
-    .isLength({ max: 60 })
-    .withMessage("El email debe tener como máximo 60 caracteres")
+    .withMessage("Debes ingresar un email valido")
     .custom(async (value) => {
-      const user = await sql`SELECT * FROM users WHERE email = ${value}`;
-      if (user.length > 0) {
-        throw new Error("El email ya está en uso");
-      }
+      const email = await sql`SELECT email FROM users WHERE email = ${value}`;
+      console.log(email);
+
+      if (email.length) throw new Error("El email ya está en uso.");
     }),
-  existsAndNotEmpty("pass", "Password")
-    .isString()
-    .withMessage("La contraseña debe ser texto")
-    .isLength({ min: 5 })
-    .withMessage("La contraseña debe tener al menos 5 caracteres")
-    .isLength({ max: 30 })
-    .withMessage("La contraseña debe tener como máximo 30 caracteres"),
-  check("birthday").optional(),
-  /* .isDate()
-    .withMessage("Birthday must be a valid date") */ existsAndNotEmpty(
-    "avatar",
-    "Avatar"
-  )
-    .optional()
-    .isString()
-    .withMessage("El avatar debe ser una url válida")
-    .matches(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|png)/)
-    .withMessage(
-      "El avatar debe ser una url válida que termine en .jpg, .jpeg o .png"
-    ),
-  check("title")
-    .optional()
-    .isString()
-    .withMessage("El título debe ser texto")
-    .isLength({ min: 3 })
-    .withMessage("El título debe tener al menos 3 caracteres")
-    .isLength({ max: 30 })
-    .withMessage("El título debe tener como máximo 30 caracteres"),
-  check("status_lock")
-    .optional()
-    .isBoolean()
-    .withMessage("El estado de bloqueo debe ser un booleano"),
-  existsAndNotEmpty("country", "Country")
-    .isInt()
-    .withMessage("Oops something went wrong, please try again later"),
-  existsAndNotEmpty("repass", "Repeat password").custom((value, { req }) => {
-    if (value !== req.body.pass) {
-      throw new Error("Las contraseñas no coinciden");
-    }
-    return true;
-  }),
+  body("country_id")
+    .trim()
+    .notEmpty()
+    .withMessage("Debes seleccionar un país."),
+  body("gender").trim().notEmpty().withMessage("Debes seleccionar un genero."),
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Debes ingresar una contraseña")
+    .isLength({
+      min: 6,
+      max: 20,
+    })
+    .withMessage("La contraseña debe tener entre 6 y 20 caracteres.")
+    .custom((value, { req }) => value === req.body.repassword)
+    .withMessage("Las contraseñas no coinciden."),
+  body("repassword")
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage("Las contraseñas no coinciden."),
+
   (req, res, next) => {
     validateResult(req, res, next);
   },
 ];
 
 export const signinValidator = [
-  check("username")
-    .isString()
-    .withMessage("Nombre de usuario o contraseña invalidos.")
-    .isLength({ min: 5, max: 30 })
-    .withMessage("Nombre de usuario o contraseña invalidos.")
+  body("username")
+    .trim()
+    .notEmpty()
+    .withMessage("Debes ingresar un nombre de usuario.")
     .custom(async (value) => {
-      const user = await sql`SELECT * FROM users WHERE username = ${value}`;
-      if (!user[0]) {
-        throw new Error("Nombre de usuario o contraseña invalidos.");
-      }
+      const username = await sql`SELECT * FROM users WHERE username = ${value}`;
+      if (!username.length) throw new Error("El usuario no existe.");
     }),
-  check("pass")
-    .isString()
-    .withMessage("Nombre de usuario o contraseña invalidos.")
-    .isLength({ min: 5, max: 20 })
-    .withMessage("Nombre de usuario o contraseña invalidos.")
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Debes ingresar una contraseña.")
     .custom(async (value, { req }) => {
-      const user =
+      const userPassword =
         await sql`SELECT * FROM users WHERE username = ${req.body.username}`;
-      if (user.length > 0) {
-        const match = await comparePassword(value, user[0].pass);
-        if (!match) {
-          throw new Error("Nombre de usuario o contraseña invalidos.");
-        }
-      }
+
+      console.log(userPassword);
+
+      if (userPassword.length <= 0) throw new Error("Contraseña incorrecta.");
+
+      const match = await comparePassword(value, userPassword[0].password);
+
+      if (!match) throw new Error("Contraseña incorrecta.");
     }),
   (req, res, next) => {
     validateResult(req, res, next);

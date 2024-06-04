@@ -8,7 +8,7 @@ import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 import { Layout } from "../components/layout/Layout.jsx";
 
 export const LoginPage = () => {
-  const { signin, errors, setIsAuth } = useAuth();
+  const { signin, errors, setIsAuth, setErrors } = useAuth();
   const { formData, handleOnChange, username, password } = useForm({
     username: "",
     password: "",
@@ -27,16 +27,17 @@ export const LoginPage = () => {
       //* the inability to execute any message with the "data" return variable. I resolved this by moving
       //* setIsAuth to the handleSubmit function in the LoginPage component.
       if (userData) {
+        setErrors([]);
         setShowToast(true);
-        setStatus("success");
         setTimeout(() => {
           setShowToast(false);
-          setStatus("");
           setIsAuth(true);
           //* I use location.href instead of Navigate, because i had issues with the Navigate component.
           //* The navigate was not "rendering" the navbar, so i could not access private routes links.
           window.location.href = "/";
         }, 2000);
+
+        return;
       }
 
       setStatus("");

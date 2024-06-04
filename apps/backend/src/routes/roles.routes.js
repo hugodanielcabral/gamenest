@@ -7,7 +7,6 @@ import {
   deleteRole,
 } from "../controllers/roles.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
-import { roleValidator } from "../validators/roles.validation.js";
 
 const router = Router();
 
@@ -15,9 +14,9 @@ router.get("/roles", getRoles);
 
 router.get("/roles/:id", getRole);
 
-router.post("/roles", isAuth, roleValidator, createRole);
+router.post("/roles", isAuth, createRole);
 
-router.patch("/roles/:id", isAuth, roleValidator, updateRole);
+router.patch("/roles/:id", isAuth, updateRole);
 
 router.delete("/roles/:id", isAuth, deleteRole);
 

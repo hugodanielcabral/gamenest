@@ -1,4 +1,3 @@
-import propTypes from "prop-types";
 import { LatestGamesList } from "./list/LatestGamesList.jsx";
 import { Loading } from "../../../ui/index.js";
 import { useFetch } from "../../../../hooks/useFetch.ts";
@@ -7,7 +6,7 @@ export const HomeLatestGames = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { data, isLoading } = useFetch(`${BASE_URL}/games/latest/released`);
 
-  let latestGames;
+  let latestGames: JSX.Element[] = [];
 
   if (data) {
     latestGames = data
@@ -38,9 +37,4 @@ export const HomeLatestGames = () => {
       }
     </section>
   );
-};
-
-HomeLatestGames.propTypes = {
-  data: propTypes.array.isRequired,
-  isLoading: propTypes.bool.isRequired,
 };

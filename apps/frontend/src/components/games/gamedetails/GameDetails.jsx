@@ -33,7 +33,7 @@ export const GameDetails = () => {
 
   return !isLoading ? (
     <Layout>
-      <BackgroundImage backgroundImage={gameScreenshot} endOpacity={60}>
+      <BackgroundImage backgroundImage={gameScreenshot}>
         <div className="relative z-10 p-4 container mx-auto">
           {/* Header */}
           <div className="my-2">

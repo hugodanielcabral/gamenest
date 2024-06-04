@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const useFetch = (url:string) => {
+
+   
+
   const localCache = {};
   const { search } = useLocation();
 

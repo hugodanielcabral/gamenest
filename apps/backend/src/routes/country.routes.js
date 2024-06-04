@@ -7,7 +7,6 @@ import {
   deleteCountry,
 } from "../controllers/country.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
-import { countryValidator } from "../validators/country.validation.js";
 
 const router = Router();
 
@@ -15,9 +14,9 @@ router.get("/country", getCountries);
 
 router.get("/country/:id", getCountry);
 
-router.post("/country", isAuth, countryValidator, createCountry);
+router.post("/country", isAuth, createCountry);
 
-router.patch("/country/:id", isAuth, countryValidator, updateCountry);
+router.patch("/country/:id", isAuth, updateCountry);
 
 router.delete("/country/:id", isAuth, deleteCountry);
 

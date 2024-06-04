@@ -53,6 +53,8 @@ export const RegisterPage = () => {
         setTimeout(() => {
           setStatus("");
         }, 2000);
+
+        return;
       }
 
       setStatus("error");

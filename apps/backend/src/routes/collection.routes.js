@@ -10,10 +10,6 @@ import {
   getCollectionFilters,
 } from "../controllers/collection.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
-import {
-  addGameToCollectionValidator,
-  updateGameFromCollectionValidator,
-} from "../validators/collection.validation.js";
 
 const router = Router();
 

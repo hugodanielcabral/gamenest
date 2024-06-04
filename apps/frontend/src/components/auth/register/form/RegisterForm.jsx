@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import { FaUser, FaMailBulk, FaEye, FaEyeSlash } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { genderList } from "../../../../constants/auth/constantsAuth.js";
+import { AuthErrors } from "../../error/AuthErrors.tsx";
 
 export const RegisterForm = ({
   handleOnSubmit,
@@ -22,14 +23,16 @@ export const RegisterForm = ({
   showPasswords,
   gender,
 }) => {
+  console.log(errors);
   return (
     <form onSubmit={handleOnSubmit} className="space-y-3 mt-5">
       <Label
         className={clsx(
           {
             "border-2 border-error":
-              errors && errors.some((err) => err.path == "username"),
-            "border-0": errors && !errors.some((err) => err.path == "username"),
+              errors && errors.some((err) => err.path === "username"),
+            "border-0":
+              errors && !errors.some((err) => err.path === "username"),
           },
           "mb-2 input input-bordered"
         )}
@@ -44,17 +47,14 @@ export const RegisterForm = ({
           autoComplete="name"
         />
       </Label>
-      {errors && errors.find((err) => err.path == "username") && (
-        <p className="mb-4 text-sm font-bold text-center text-error">
-          {errors.find((err) => err.path == "username").msg}
-        </p>
-      )}
+      <AuthErrors errors={errors} inputField="username" />
+
       <Label
         className={clsx(
           {
             "border-2 border-error":
-              errors && errors.some((err) => err.path == "email"),
-            "border-0": errors && !errors.some((err) => err.path == "email"),
+              errors && errors.some((err) => err.path === "email"),
+            "border-0": errors && !errors.some((err) => err.path === "email"),
           },
           "mb-2 input input-bordered"
         )}
@@ -69,11 +69,7 @@ export const RegisterForm = ({
           onChange={handleOnChange}
         />
       </Label>
-      {errors && errors.find((err) => err.path == "email") && (
-        <p className="mb-4 text-sm font-bold text-center text-error">
-          {errors.find((err) => err.path == "email").msg}
-        </p>
-      )}
+      <AuthErrors errors={errors} inputField="email" />
       <select
         name="country_id"
         className={clsx(
@@ -98,11 +94,7 @@ export const RegisterForm = ({
             </Option>
           ))}
       </select>
-      {errors && errors.find((err) => err.path == "country_id") && (
-        <p className="mb-4 text-sm font-bold text-center text-error">
-          {errors.find((err) => err.path == "country_id").msg}
-        </p>
-      )}
+      <AuthErrors errors={errors} inputField="country_id" />
       <select
         name="gender"
         className={clsx(
@@ -125,17 +117,14 @@ export const RegisterForm = ({
           </Option>
         ))}
       </select>
-      {errors && errors.find((err) => err.path == "country_id") && (
-        <p className="mb-4 text-sm font-bold text-center text-error">
-          {errors.find((err) => err.path == "country_id").msg}
-        </p>
-      )}
+      <AuthErrors errors={errors} inputField="gender" />
+
       <Label
         className={clsx(
           {
             "border-2 border-error":
-              errors && errors.some((err) => err.path == "pass"),
-            "border-0": errors && !errors.some((err) => err.path == "pass"),
+              errors && errors.some((err) => err.path == "password"),
+            "border-0": errors && !errors.some((err) => err.path == "password"),
           },
           "mb-2 input input-bordered"
         )}
@@ -164,17 +153,14 @@ export const RegisterForm = ({
           )}
         </div>
       </Label>
-      {errors && errors.find((err) => err.path == "pass") && (
-        <p className="mb-4 text-sm font-bold text-center text-error">
-          {errors.find((err) => err.path == "pass").msg}
-        </p>
-      )}
+      <AuthErrors errors={errors} inputField="password" />
       <Label
         className={clsx(
           {
             "border-2 border-error":
-              errors && errors.some((err) => err.path == "repass"),
-            "border-0": errors && !errors.some((err) => err.path == "repass"),
+              errors && errors.some((err) => err.path == "repassword"),
+            "border-0":
+              errors && !errors.some((err) => err.path == "repassword"),
           },
           "mb-2 input input-bordered"
         )}
@@ -204,11 +190,7 @@ export const RegisterForm = ({
           )}
         </div>
       </Label>
-      {errors && errors.find((err) => err.path == "repass") && (
-        <p className="mb-4 text-sm font-bold text-center text-error">
-          {errors.find((err) => err.path == "repass").msg}
-        </p>
-      )}
+      <AuthErrors errors={errors} inputField="repassword" />
 
       <p className="my-3 text-base text-center text-white">
         ¿Ya tienes una cuenta? {""}

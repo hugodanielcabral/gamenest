@@ -4,6 +4,7 @@ import { Label, Button, Input } from "../../../ui/index.js";
 import { clsx } from "clsx";
 import { FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { AuthErrors } from "../../error/AuthErrors.tsx";
 
 export const LoginForm = ({
   handleSubmit,
@@ -17,14 +18,15 @@ export const LoginForm = ({
 }) => {
   return (
     <form className="*:my-3" onSubmit={handleSubmit}>
-      <h3>
-        {errors && (
-          <p className="py-2 my-2 text-sm font-bold text-center text-red-500 bg-red-100">
-            {errors[0].msg}
-          </p>
+      <Label
+        className={clsx(
+          {
+            "border-error":
+              errors && errors.some((err) => err.path === "username"),
+          },
+          "my-2 input input-bordered"
         )}
-      </h3>
-      <Label className={clsx("my-2 input input-bordered")}>
+      >
         <FaUser className="w-4 h-4 opacity-70" />
         <Input
           type="text"
@@ -36,7 +38,16 @@ export const LoginForm = ({
           autoComplete="name"
         />
       </Label>
-      <Label className={clsx("mb-2 input input-bordered")}>
+      <AuthErrors errors={errors} inputField="username" />
+      <Label
+        className={clsx(
+          {
+            "border-error":
+              errors && errors.some((err) => err.path === "password"),
+          },
+          "my-2 input input-bordered"
+        )}
+      >
         <RiLockPasswordFill className="w-4 h-4 opacity-70" />
 
         <div className="w-full relative flex">
@@ -62,6 +73,7 @@ export const LoginForm = ({
           )}
         </div>
       </Label>
+      <AuthErrors errors={errors} inputField="password" />
       <p className="my-3 text-base text-center text-white">
         ¿No tienes una cuenta? {""}
         <Link to={"/register"} className="font-bold text-info">
@@ -71,7 +83,7 @@ export const LoginForm = ({
 
       <Button
         type="submit"
-        disabled={status === "submitting" || status === "success"}
+        disabled={status === "submitting"}
         className="transition-all duration-500 ease-in-out  disabled:pointer-events-none disabled:opacity-15"
       >
         Iniciar sesión

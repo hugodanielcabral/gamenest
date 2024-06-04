@@ -1,6 +1,6 @@
-import { BackgroundImage } from "../../ui/index.js";
-import { HomeLatestGames } from "./latests/HomeLatestGames";
-import { HomePopularGames } from "./popular/HomePopularGames";
+import { BackgroundImage } from "../../ui/backgroundImage/BackgroundImage.jsx";
+import { HomeLatestGames } from "./latests/HomeLatestGames.tsx";
+import { HomePopularGames } from "./popular/HomePopularGames.jsx";
 import homeLatestGamesBg from "../../../assets/backgrounds/home-connected-latest-games.webp";
 
 export const HomeConnected = () => {

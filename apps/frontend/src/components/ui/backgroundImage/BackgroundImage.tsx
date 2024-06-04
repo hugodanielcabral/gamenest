@@ -12,7 +12,6 @@ interface BackgroundImageProps {
 export const BackgroundImage = ({
   children,
   backgroundImage,
-  endOpacity = 80,
   className,
 }: BackgroundImageProps
 ) => {
@@ -22,7 +21,7 @@ export const BackgroundImage = ({
         src={backgroundImage}
        
         className={twMerge(clsx(
-          `w-full h-full object-cover absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1)_0%,rgb(0,0,0,0.4)_0%,rgb(0,0,0,0.5)_${endOpacity}%]`,
+          `w-full h-full object-cover absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1)_0%,rgb(0,0,0,0.4)_0%,rgb(0,0,0,0.5)_80%]`,
           className,
         ))}
       />
