@@ -41,7 +41,7 @@ export const GameDetailsMedia = ({
           src={largeCoverUrl}
           alt={`Cover de ${data?.name}`}
         />
-        {isAuth && (
+        {isAuth ? (
           <Button
             className={clsx(
               "font-semibold text-sm sm:text-sm md:text-lg transition-all duration-300 ease-in-out disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed",
@@ -53,6 +53,13 @@ export const GameDetailsMedia = ({
             onClick={() => navigate(navigateTo)}
           >
             {isLoading ? "Cargando..." : gameCollectionButtonLabel}
+          </Button>
+        ) : (
+          <Button
+            className="bg-warning hover:bg-warning hover:bg-opacity-90 text-zinc-600 text-sm sm:text-sm md:text-lg font-semibold transition-all duration-300 ease-in-out"
+            onClick={() => navigate("/login")}
+          >
+            Agrega a tu colección (Inicia sesión)
           </Button>
         )}
       </div>
