@@ -49,7 +49,6 @@ export const AuthProvider = ({ children }) => {
         setErrors(data.errors);
         throw new Error(data.errors ? data.errors[0].msg : "An error occurred");
       }
-      setUser(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -100,9 +99,50 @@ export const AuthProvider = ({ children }) => {
           "Access-Control-Allow-Credentials": true,
         },
       });
-      removeUser();
+
+      if (!response.ok) {
+        throw new Error("An error occurred");
+      }
+
       removeIsAuth();
-      window.location.href = "/";
+      setTimeout(() => {
+        removeUser();
+        window.location.href = "/";
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateProfile = async (formData, username) => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/user/update/profile/${username}`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify({
+            gender: formData.gender,
+            country_id: formData.country_id,
+            birthday: formData.birthday,
+            title: formData.title,
+            avatar: formData.avatar,
+            user_edit_credits: 0,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("An error occurred");
+      }
+
+      const data = await response.json();
+      setUser(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -147,6 +187,7 @@ export const AuthProvider = ({ children }) => {
         signout,
         setIsAuth,
         setErrors,
+        updateProfile,
       }}
     >
       {children}

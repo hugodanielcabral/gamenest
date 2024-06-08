@@ -23,7 +23,6 @@ export const RegisterForm = ({
   showPasswords,
   gender,
 }) => {
-  console.log(errors);
   return (
     <form onSubmit={handleOnSubmit} className="space-y-3 mt-5">
       <Label
@@ -109,7 +108,7 @@ export const RegisterForm = ({
         value={gender}
       >
         <option disabled value="">
-          Seleccione un genero
+          Seleccione un género
         </option>
         {genderList.map((gen) => (
           <Option key={gen.id} value={gen.id}>

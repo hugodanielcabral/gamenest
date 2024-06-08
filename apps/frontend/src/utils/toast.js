@@ -4,11 +4,12 @@ const toast = (
   message,
   type,
   typeColor = "#fff",
-  backgroundColor = "#00A7EA"
+  backgroundColor = "#00A7EA",
+  position = "bottom"
 ) => {
   Swal.mixin({
     toast: true,
-    position: "bottom",
+    position,
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,

@@ -1,0 +1,24 @@
+.profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (width > 768px) {
+  .profile-form {
+    width: 600px;
+  }
+}
+
+@media screen and (640px >= width <= 768px) {
+  .profile-form {
+    width: auto;
+    order: 1;
+  }
+}
+
+@media screen and (width < 640px) {
+  .profile-form {
+    width: auto;
+    order: 1;
+  }
+}

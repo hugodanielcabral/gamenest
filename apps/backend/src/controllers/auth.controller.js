@@ -74,7 +74,7 @@ export const signin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
 
-    res.status(200).json({ message: "SignIn successful" });
+    res.status(200).json({ username });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
@@ -88,15 +88,16 @@ export const signout = (req, res) => {
 
 export const profile = async (req, res) => {
   try {
-    const userExists =
-      await sql`SELECT * FROM users WHERE user_id = ${req.user_id}`;
+    const checkUserExists =
+      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.gender, a.title, a.active, b."name" AS country, a.user_edit_credits FROM users a 
+      INNER JOIN country b
+      ON a.country_id = b.country_id
+      WHERE user_id = ${req.user_id};`;
 
-    if (!userExists[0])
+    if (!checkUserExists[0])
       return res.status(404).json({ message: "User not found" });
 
-    res.status(200).json({
-      avatar: userExists[0].avatar,
-    });
+    res.status(200).json(checkUserExists[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
@@ -131,6 +132,37 @@ export const verifyUser = async (req, res) => {
     return res
       .status(200)
       .json({ message: "El email fue validado correctamente!" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { username } = req.params;
+
+    const checkIfUserExists =
+      await sql`SELECT * FROM users WHERE username = ${username}`;
+
+    if (!checkIfUserExists[0]) throw new Error("No se encontró el usuario.");
+
+    const userRecord = await sql`UPDATE users SET ${sql(
+      req.body
+    )} WHERE username = ${username} RETURNING *`;
+
+    if (!userRecord[0])
+      throw new Error(
+        "Ocurrió un error al intentar actualizar el perfil del usuario."
+      );
+
+    const updatedUserProfile =
+      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.gender, a.title, a.active, b."name" AS country, user_edit_credits FROM users a 
+      INNER JOIN country b
+      ON a.country_id = b.country_id
+      WHERE username = ${username};`;
+
+    res.status(200).json(updatedUserProfile[0]);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: error.message });

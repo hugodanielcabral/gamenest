@@ -10,6 +10,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import { ChangelogsPage } from "./pages/ChangelogsPage.jsx";
 import { CollectionManage } from "./components/collection/manage/CollectionManage.jsx";
 import { ValidationPage } from "./pages/ValidationPage.tsx";
+import { UsersProvider } from "./context/UsersContext.tsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -18,6 +19,11 @@ export const GameNestApp = () => {
   const GameDetails = lazy(() =>
     import("./components/games/gamedetails/GameDetails.jsx").then((module) => ({
       default: module.GameDetails,
+    }))
+  );
+  const ProfilePage = lazy(() =>
+    import("./pages/ProfilePage.tsx").then((module) => ({
+      default: module.ProfilePage,
     }))
   );
 
@@ -49,7 +55,6 @@ export const GameNestApp = () => {
       path: "/changelogs",
       element: <ChangelogsPage />,
     },
-   
   ];
 
   const privateRoutes = [
@@ -83,6 +88,11 @@ export const GameNestApp = () => {
       path: "/changelogs",
       element: <ChangelogsPage />,
     },
+    {
+      id: 7,
+      path: "/profile",
+      element: <ProfilePage />,
+    },
   ];
 
   return (
@@ -96,7 +106,10 @@ export const GameNestApp = () => {
             >
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/user/validate/:token" element={<ValidationPage />} />
+              <Route
+                path="/user/validate/:token"
+                element={<ValidationPage />}
+              />
             </Route>
             <Route>
               {publicRoutes.map((route) => {
@@ -116,9 +129,11 @@ export const GameNestApp = () => {
             >
               <Route
                 element={
-                  <CollectionProvider>
-                    <Outlet />
-                  </CollectionProvider>
+                  <UsersProvider>
+                    <CollectionProvider>
+                      <Outlet />
+                    </CollectionProvider>
+                  </UsersProvider>
                 }
               >
                 {privateRoutes.map((route) => {

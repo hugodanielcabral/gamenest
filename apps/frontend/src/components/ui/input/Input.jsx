@@ -9,5 +9,5 @@ export const Input = ({ className, ...props }) => {
 };
 
 Input.propTypes = {
-  className: propTypes.string.isRequired,
+  className: propTypes.string,
 };
