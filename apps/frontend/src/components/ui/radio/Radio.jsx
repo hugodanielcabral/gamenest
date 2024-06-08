@@ -13,9 +13,9 @@ export const Radio = ({
       className={clsx(
         `form-control w-24 md:w-32 h-20 bg-base-200 rounded-md ${className}`,
         {
-          "border-b-error border-t-info border-b-4 border-r-2 border-t-4 border-gray-500/50 border-l-2 transition-colors duration-700":
+          "border-2 border-info transition-colors duration-700":
             selectedOption === option.name,
-          "border-gray-400 border-2 hover:border-2 hover:border-error/45 transition-colors duration-500 hover:border-info":
+          "border-gray-500 border-2 hover:border-2 transition-colors duration-500 hover:border-info":
             selectedOption !== option.name,
         }
       )}

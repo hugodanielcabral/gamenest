@@ -137,6 +137,8 @@ export const AuthProvider = ({ children }) => {
       );
 
       if (!response.ok) {
+        const errors = await response.json();
+        setErrors(errors.errors);
         throw new Error("An error occurred");
       }
 

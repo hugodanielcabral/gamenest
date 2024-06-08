@@ -20,9 +20,13 @@ export const ProfileAvatar = ({
 }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
+
   const handleShowModal = () => {
     setModalOpen(true);
   };
+
+  console.log(user.user_edit_credits);
+  
 
   return (
     <div className="avatar-container">

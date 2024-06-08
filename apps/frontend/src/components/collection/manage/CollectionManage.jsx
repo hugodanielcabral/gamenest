@@ -20,7 +20,7 @@ export const CollectionManage = () => {
   if (data?.screenshots?.length) {
     gameScreenshot = getImageUrl(
       data.screenshots[0]?.url,
-      "t_screenshot_huge",
+      "t_screenshot_med_2x",
       "t_thumb"
     );
   } else {
@@ -31,7 +31,7 @@ export const CollectionManage = () => {
     <CollectionManageSkeleton />
   ) : (
     <Layout>
-      <BackgroundImage backgroundImage={gameScreenshot} className="grayscale">
+      <BackgroundImage backgroundImage={gameScreenshot}>
         <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-5">
           <ManageHeader data={data} />
           <ManageDisplayDetails data={data} gameSlug={gameSlug} />

@@ -8,7 +8,7 @@ const EDIT_PROFILE = "Editar perfil";
 const SAVE_PROFILE = "Guardar perfil";
 
 export const useProfile = () => {
-  const { user, updateProfile, getProfileStats } = useAuth();
+  const { user, updateProfile, getProfileStats, errors, setErrors } = useAuth();
   const { data, isLoading } = useFetch(`${BASE_URL}/country`);
   const { formData, handleOnChange, setFormData } = useForm({
     country_id: user.country_id,
@@ -27,6 +27,7 @@ export const useProfile = () => {
     setEditButton((prevState) =>
       prevState === EDIT_PROFILE ? SAVE_PROFILE : EDIT_PROFILE
     );
+    
   };
 
   const handleCancelEdit = () => {
@@ -39,6 +40,7 @@ export const useProfile = () => {
       avatar: user.avatar,
     });
     setSelectedAvatar(user.avatar);
+    setErrors(null);
   };
 
   const handleOnSubmit = async (e:Event) => {
@@ -47,6 +49,7 @@ export const useProfile = () => {
       const response = await updateProfile(formData, user.username);
       if (response) {
         setEditButton(EDIT_PROFILE);
+        setErrors(null);
         toast(
           `Perfil actualizado correctamente`,
           "success",
@@ -80,5 +83,6 @@ export const useProfile = () => {
     getProfileStats,
     selectedAvatar,
     setSelectedAvatar,
+    errors
   };
 };

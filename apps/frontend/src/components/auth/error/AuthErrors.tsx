@@ -4,6 +4,9 @@ interface AuthErrorsProps {
 }
 
 export const AuthErrors = ({ errors,  inputField }:AuthErrorsProps) => {
+
+  console.log(errors, inputField);
+  
   return (
     <>
       {errors && errors.find((err) => err.path === inputField) && (

@@ -85,3 +85,19 @@ export const signinValidator = [
     validateResult(req, res, next);
   },
 ];
+
+export const updateProfileValidator = [
+  body("birthday").custom((value) => {
+    const date = new Date(value).getFullYear();
+    const currentDate = new Date().getFullYear();
+    if (currentDate - date < 7) throw new Error("Debes ser mayor de 7 años.");
+
+    if (currentDate - date > 100)
+      throw new Error("Debes ser menor de 100 años.");
+
+    return true;
+  }),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];

@@ -11,6 +11,7 @@ import { isAuth } from "../middlewares/auth.middleware.js";
 import {
   signupValidator,
   signinValidator,
+  updateProfileValidator,
 } from "../validators/auth.validation.js";
 
 const router = Router();
@@ -25,6 +26,10 @@ router.get("/profile", isAuth, profile);
 
 router.get("/user/validate/:token", verifyUser);
 
-router.patch("/user/update/profile/:username", updateProfile);
+router.patch(
+  "/user/update/profile/:username",
+  updateProfileValidator,
+  updateProfile
+);
 
 export default router;

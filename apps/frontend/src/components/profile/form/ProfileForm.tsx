@@ -10,6 +10,7 @@ import {
 import { DateTime } from "luxon";
 import "./ProfileForm.css";
 import { FormSelect } from "./select/FormSelect.js";
+import { AuthErrors } from "../../auth/error/AuthErrors.js";
 
 const EDIT_PROFILE = "Editar perfil";
 const SAVE_PROFILE = "Guardar perfil";
@@ -26,6 +27,7 @@ export const ProfileForm = ({
   handleOnChange,
   handleOnSubmit,
   handleCancelEdit,
+  errors,
 }) => {
   return (
     <form onSubmit={handleOnSubmit} className="profile-form">
@@ -73,7 +75,15 @@ export const ProfileForm = ({
         </select>
       )}
 
-      <Label className={"mb-2 input input-bordered"}>
+      <Label
+        className={clsx(
+          {
+            "border-error border-2":
+              errors && errors.some((err) => err.path === "birthday"),
+          },
+          "mb-2 input input-bordered"
+        )}
+      >
         Fecha de nacimiento:
         {editButton === EDIT_PROFILE ? (
           <span className="text-white">
@@ -94,6 +104,7 @@ export const ProfileForm = ({
           />
         )}
       </Label>
+      <AuthErrors errors={errors} inputField="birthday" />
 
       <FormSelect
         editMode={editButton === EDIT_PROFILE}

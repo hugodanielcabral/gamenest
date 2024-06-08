@@ -21,7 +21,8 @@ export const ProfilePage = () => {
     user,
     setFormData,
     selectedAvatar,
-    setSelectedAvatar
+    setSelectedAvatar,
+    errors
   } = useProfile();
   const { profileStats } = useProfileStats();
   const { country_id, avatar, gender, birthday, title } = formData;
@@ -55,6 +56,7 @@ export const ProfilePage = () => {
               handleOnChange={handleOnChange}
               handleOnSubmit={handleOnSubmit}
               handleCancelEdit={handleCancelEdit}
+              errors={errors}
             />
             <ProfileStats profileStats={profileStats} />
           </div>
