@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch ./src/index.js"
+    "start": "node --watch ./src/index.js",
+    "build": "xcopy /E /I src dist"
+
+    
   },
   "author": "Daniel Cabral",
   "license": "ISC",
