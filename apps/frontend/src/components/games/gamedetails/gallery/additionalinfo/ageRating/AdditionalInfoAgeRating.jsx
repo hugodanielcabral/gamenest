@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 import { CardBackground } from "../../../../../ui/index.js";
 
 import { getFormattedRatings } from "../../../../../../utils/gameDetailsUtils.js";
-import { AgeRatingImage } from "./image/ageRatingImage.jsx";
+import { AgeRatingImage } from "./image/AgeRatingImage.jsx";
 
 export const AdditionalInfoAgeRating = ({ data }) => {
   const ageRatings = data?.age_ratings;
