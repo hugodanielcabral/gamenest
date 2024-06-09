@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch ./src/index.js",
-    "start": "node ./src/index.js",
-    "build": "cp -R src dist"
+    "start": "node ./src/index.js"
   },
   "author": "Daniel Cabral",
   "license": "ISC",
