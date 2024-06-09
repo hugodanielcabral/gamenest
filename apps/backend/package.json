@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch ./src/index.js",
-    "build": "cp -R src dist && npm install --production"
+    "dev": "node --watch ./src/index.js",
+    "start": "node ./src/index.js",
+    "build": "cp -R src dist"
   },
   "author": "Daniel Cabral",
   "license": "ISC",
