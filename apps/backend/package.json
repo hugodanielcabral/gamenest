@@ -6,9 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node --watch ./src/index.js",
-    "build": "xcopy /E /I src dist"
-
-    
+    "build": "cp -R src dist"
   },
   "author": "Daniel Cabral",
   "license": "ISC",
