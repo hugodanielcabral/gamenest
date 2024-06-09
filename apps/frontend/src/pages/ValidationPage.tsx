@@ -4,15 +4,11 @@ import { BackgroundImage, CardBackground } from "../components/ui/index.js";
 import validationPageBG from "../assets/backgrounds/validation-page-background.webp";
 import gamenestLogo2 from "../assets/logos/gamenest-logo-2.webp";
 import { Message } from "../components/auth/validation/Message.tsx";
-import {
-  invalidEmailValidation,
-  successEmailValidation,
-} from "../constants/auth/constantsValidation.ts";
 
 export const ValidationPage = () => {
   const { token } = useParams<{ token: string }>();
 
-  const { data, isLoading, error, hasError } = useFetch(
+  const { data, isLoading, error } = useFetch(
     `http://localhost:3000/api/user/validate/${token}`
   );
 
