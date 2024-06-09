@@ -10,7 +10,7 @@ import { Option } from "./option/Option";
 import { Select } from "./select/Select";
 import { Badge } from "./badge/Badge";
 import { Checkbox } from "./checkbox/Checkbox";
-import { CardBackground } from "./cardBackground/cardBackground";
+import { CardBackground } from "./cardBackground/CardBackground";
 import { BackgroundImage } from "./backgroundImage/BackgroundImage";
 
 export {
