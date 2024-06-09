@@ -34,7 +34,7 @@ app.use(
 // CORS
 app.use(
   cors({
-    origin: "https://gamenest.onrender.com/",
+    origin: "https://gamenest.onrender.com",
     credentials: true,
   })
 );
