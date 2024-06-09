@@ -33,17 +33,17 @@ export const useFetch = (url:string) => {
       setLoadingState();
 
       const response = await fetch(`${url}${search}`);
+      
 
-      if (!response.ok) {
+      if (!response.ok) {        
+        const errorResponse = await response.json();
         setState({
           data: null,
           isLoading: false,
           hasError: true,
-          error: {
-            code: response.status,
-            message: response.statusText,
-          },
+          error: errorResponse?.errors || response.statusText,
         });
+
         return;
       }
 

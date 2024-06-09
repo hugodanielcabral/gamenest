@@ -12,6 +12,7 @@ import {
   signupValidator,
   signinValidator,
   updateProfileValidator,
+  verifyUserValidator,
 } from "../validators/auth.validation.js";
 
 const router = Router();
@@ -24,7 +25,7 @@ router.post("/signout", signout);
 
 router.get("/profile", isAuth, profile);
 
-router.get("/user/validate/:token", verifyUser);
+router.get("/user/validate/:token", verifyUserValidator, verifyUser);
 
 router.patch(
   "/user/update/profile/:username",

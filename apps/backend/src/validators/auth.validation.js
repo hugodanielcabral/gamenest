@@ -1,7 +1,8 @@
 import { validateResult } from "../helpers/handleValidateResult.js";
 import sql from "../db.js";
-import { body } from "express-validator";
+import { body, check, param, query } from "express-validator";
 import { comparePassword } from "../helpers/handleBcrypt.js";
+import { tokenValidation } from "../utils/email.js";
 
 export const signupValidator = [
   body("username")
@@ -51,6 +52,29 @@ export const signupValidator = [
     .custom((value, { req }) => value === req.body.password)
     .withMessage("Las contraseñas no coinciden."),
 
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+export const verifyUserValidator = [
+  param("token").custom(async (value) => {
+    const decodedToken = await tokenValidation(value);
+
+    if (!decodedToken) throw new Error("Token invalido.");
+
+    const { email, verificationToken } = decodedToken;
+
+    const verifyUserExistence =
+      await sql`SELECT * FROM users WHERE email = ${email}`;
+
+    if (!verifyUserExistence[0]) throw new Error("El usuario no existe.");
+
+    const verifyTokenExistence =
+      await sql`SELECT * FROM verification_tokens WHERE token = ${verificationToken} AND used = FALSE`;
+
+    if (!verifyTokenExistence[0]) throw new Error("El token ya fue usado.");
+  }),
   (req, res, next) => {
     validateResult(req, res, next);
   },

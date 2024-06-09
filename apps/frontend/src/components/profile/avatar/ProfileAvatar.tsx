@@ -25,9 +25,6 @@ export const ProfileAvatar = ({
     setModalOpen(true);
   };
 
-  console.log(user.user_edit_credits);
-  
-
   return (
     <div className="avatar-container">
       <h1 className="avatar-player-name text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-300">

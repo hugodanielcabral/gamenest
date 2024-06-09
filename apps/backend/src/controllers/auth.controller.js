@@ -17,7 +17,7 @@ export const signup = async (req, res) => {
     if (userExists[0])
       return res.status(400).json({ message: "User already exist" });
 
-    const title = "Novato";
+    const title = "Nuevo";
     const avatar = "https://via.placeholder.com/300x300?text=No+Avatar";
     const encryptedPassword = await encryptPassword(password);
 
@@ -28,7 +28,7 @@ export const signup = async (req, res) => {
         country_id
       )}) RETURNING *`;
 
-    await sql`INSERT INTO verification_tokens (user_id, token, created_on, used) VALUES (${newUser[0].user_id}, ${verificationToken}, current_timestamp, FALSE)`;
+    await sql`INSERT INTO verification_tokens (user_id, email, token, created_on, used) VALUES (${newUser[0].user_id}, ${email},${verificationToken}, current_timestamp, FALSE)`;
 
     const token = await handleJwt({ email, verificationToken }, "1d");
 
@@ -107,31 +107,32 @@ export const profile = async (req, res) => {
 export const verifyUser = async (req, res) => {
   const { token } = req.params;
 
+  /*   const decodedToken = await tokenValidation(token);
+
+  if (!decodedToken) return res.status(401).json({ message: "Invalid token" }); */
+
   const decodedToken = await tokenValidation(token);
-
-  if (!decodedToken) return res.status(401).json({ message: "Invalid token" });
-
   const { email, verificationToken } = decodedToken;
 
   try {
-    const verifyUserExistence =
-      await sql`SELECT * FROM users WHERE email = ${email}`;
+    /* const verifyUserExistence =
+      await sql`SELECT * FROM users WHERE email = ${email}`; */
 
-    const verifyTokenExistence =
-      await sql`SELECT * FROM verification_tokens WHERE token = ${verificationToken} AND used = FALSE`;
+    /* const verifyTokenExistence =
+      await sql`SELECT * FROM verification_tokens WHERE token = ${verificationToken} AND used = FALSE`; */
 
-    if (!verifyUserExistence[0] || !verifyTokenExistence[0])
-      return res.status(404).json({ message: "Invalid Token" });
+    /* if (!verifyUserExistence[0] || !verifyTokenExistence[0])
+      return res.status(404).json({ message: "Invalid Token" }); */
 
     const updateUserVerificationStatus =
       await sql`UPDATE users SET verified = true WHERE email = ${email}`;
 
     const updateVerificationTokens =
-      await sql`UPDATE verification_tokens SET used = true WHERE token = ${verificationToken} AND user_id = ${verifyUserExistence[0].user_id}`;
+      await sql`UPDATE verification_tokens SET used = true WHERE token = ${verificationToken} AND email = ${email}`;
 
     return res
       .status(200)
-      .json({ message: "El email fue validado correctamente!" });
+      .json({ message: "El email fue validado correctamente." });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: error.message });
