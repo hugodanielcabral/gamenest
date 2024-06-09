@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { CardBackground } from "../../../../../ui/cardBackground/cardBackground";
+import { CardBackground } from "../../../../../ui/cardBackground/CardBackground";
 import { SpecificationsList } from "./list/SpecificationsList";
 
 export const AdditionalInfoSpecifications = ({ data }) => {

@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { CardBackground } from "../../../../../ui/cardBackground/cardBackground.jsx";
+import { CardBackground } from "../../../../../ui/cardBackground/CardBackground.jsx";
 import { websiteIcons } from "../../../../../../constants/gamedetails/websiteicons.js";
 
 export const AdditionalInfoWebsites = ({ data }) => {

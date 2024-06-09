@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCollection } from "../../../../context/CollectionContext.jsx";
 import { useEffect } from "react";
-import { CardBackground } from "../../../ui/cardBackground/cardBackground.jsx";
+import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
 
 export const ManageDisplayDetails = ({ data, gameSlug }) => {
   const {

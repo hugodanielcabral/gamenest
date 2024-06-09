@@ -4,7 +4,7 @@ import { Button } from "../../../ui/index.js";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
-import { CardBackground } from "../../../ui/cardBackground/cardBackground.jsx";
+import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
 import { useAuth } from "../../../../context/AuthContext.jsx";
 import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
 import { tabsGameDetailsMediaData } from "../../../../constants/gamedetails/websiteicons.js";
