@@ -9,6 +9,8 @@ import backgroundImage from "../assets/backgrounds/register-wallpaper.webp";
 import { Layout } from "../components/layout/Layout.jsx";
 import clsx from "clsx";
 import { useFetch } from "../hooks/useFetch.ts";
+import { useAuthValidate } from "../hooks/useAuthValidate.ts";
+import { useShowPassword } from "../hooks/useShowPassword.ts";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const RegisterPage = () => {
@@ -30,14 +32,16 @@ export const RegisterPage = () => {
     repassword: "",
     gender: "",
   });
-  const navigate = useNavigate();
-  const { data, isLoading } = useFetch(`${BASE_URL}/country`);
-  const [hasUserBeenCreated, setUserCreated] = useState(false);
-  const [status, setStatus] = useState("");
-  const [showPasswords, setShowPasswords] = useState({
+  const { data, isLoading: isCountryLoading } = useFetch(`${BASE_URL}/country`);
+  const { handleOnValidate, registerErrors } = useAuthValidate();
+  const { handleOnPasswordVisibility, showPasswords } = useShowPassword({
     password: false,
     repassword: false,
   });
+  const navigate = useNavigate();
+
+  const [hasUserBeenCreated, setHasUserCreated] = useState(false);
+  const [status, setStatus] = useState("");
 
   const handleOnSubmit = async (e) => {
     try {
@@ -47,7 +51,7 @@ export const RegisterPage = () => {
       const userData = await signup(formData);
 
       if (userData) {
-        setUserCreated(true);
+        setHasUserCreated(true);
 
         setStatus("success");
         setTimeout(() => {
@@ -64,26 +68,15 @@ export const RegisterPage = () => {
     }
   };
 
-  const handleOnPasswordVisibility = (pass) => {
-    if (pass === "password")
-      setShowPasswords({ ...showPasswords, password: !showPasswords.password });
-
-    if (pass === "repassword")
-      setShowPasswords({
-        ...showPasswords,
-        repassword: !showPasswords.repassword,
-      });
-  };
-
   return (
     <Layout>
       <BackgroundImage backgroundImage={backgroundImage}>
-        <div className="flex items-center mt-5 justify-evenly">
-          <article className="flex flex-col items-center mt-3">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-error uppercase text-pretty text-center">
+        <div className="mt-5 flex items-center justify-evenly">
+          <article className="mt-3 flex flex-col items-center">
+            <h1 className="text-pretty text-center text-2xl font-bold uppercase text-error md:text-3xl lg:text-4xl">
               Tu aventura comienza aquí!
             </h1>
-            <h3 className="mt-4 text-base md:lg lg:text-xl font-bold text-center text-gray-300">
+            <h3 className="md:lg mt-4 text-center text-base font-bold text-gray-300 lg:text-xl">
               Regístrate para comenzar tu viaje.
             </h3>
           </article>
@@ -96,19 +89,19 @@ export const RegisterPage = () => {
               "bg-base-300": !hasUserBeenCreated,
               "bg-success": hasUserBeenCreated,
             },
-            "min-h-fit"
+            "min-h-fit",
           )}
         >
           {hasUserBeenCreated ? (
-            <div className="flex flex-col items-center mt-5 space-y-5">
-              <p className="text-center text-gray-200 text-xl">
+            <div className="mt-5 flex flex-col items-center space-y-5">
+              <p className="text-center text-xl text-gray-200">
                 Tu cuenta ha sido creada exitosamente!
               </p>
-              <p className="text-center text-white text-lg font-bold">
+              <p className="text-center text-lg font-bold text-white">
                 Por favor verifica tu email para continuar.
               </p>
               <Button
-                className="bg-white text-black font-bold hover:bg-opacity-80 hover:bg-white"
+                className="bg-white font-bold text-black hover:bg-white hover:bg-opacity-80"
                 onClick={() => navigate("/login")}
               >
                 Ya verifiqué mi email
@@ -119,7 +112,7 @@ export const RegisterPage = () => {
               handleOnSubmit={handleOnSubmit}
               handleOnChange={handleOnChange}
               data={data}
-              isLoading={isLoading}
+              isCountryLoading={isCountryLoading}
               errors={errors}
               username={username}
               email={email}
@@ -130,6 +123,8 @@ export const RegisterPage = () => {
               handleOnPasswordVisibility={handleOnPasswordVisibility}
               showPasswords={showPasswords}
               gender={gender}
+              handleOnValidate={handleOnValidate}
+              registerErrors={registerErrors}
             />
           )}
         </AuthCard>
