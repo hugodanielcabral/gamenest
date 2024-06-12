@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -15,6 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 import "./cronJobs/deleteUnverifiedUsers.js";
 import "./cronJobs/restartUserEditCredits.js";
+dotenv.config({ path: ".env.development" });
 
 const app = express();
 
@@ -34,7 +36,7 @@ app.use(
 // CORS
 app.use(
   cors({
-    origin: "https://gamenest.onrender.com",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
