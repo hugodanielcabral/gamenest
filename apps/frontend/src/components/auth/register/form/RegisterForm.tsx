@@ -10,11 +10,11 @@ import { Button } from "../../../ui/button/Button";
 
 type RegisterFormProps = {
   formValues: {
-    username: string;
-    email: string;
-    country_id: string;
-    password: string;
-    repassword: string;
+    username?: string;
+    email?: string;
+    country_id?: string;
+    password?: string;
+    repassword?: string;
   };
   handleOnChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -72,7 +72,6 @@ export const RegisterForm = ({
           maxLength={30}
         />
       </label>
-
       {clientErrors?.username && (
         <p className="text-center text-xs text-red-500 md:text-sm">
           {clientErrors.username}
@@ -107,6 +106,7 @@ export const RegisterForm = ({
           {clientErrors.email}
         </p>
       )}
+
       <select
         className="select select-bordered w-full valid:border-2 valid:border-green-500"
         name="country_id"
@@ -209,7 +209,7 @@ export const RegisterForm = ({
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Registrarse"}
       </Button>
-      <p className="text-center text-xs">
+      <p className="text-center text-xs md:text-sm">
         ¿Ya tienes una cuenta?{" "}
         <a href="#" className="text-primary">
           Inicia sesión
