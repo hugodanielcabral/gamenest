@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }) => {
           password: formData.password,
           repassword: formData.repassword,
           country_id: formData.country_id,
-          gender: formData.gender,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +132,7 @@ export const AuthProvider = ({ children }) => {
             avatar: formData.avatar,
             user_edit_credits: 0,
           }),
-        }
+        },
       );
 
       if (!response.ok) {

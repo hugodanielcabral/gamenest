@@ -15,7 +15,6 @@ export const signupValidator = [
     .withMessage("El nombre de usuario solo permite letras y números.")
     .custom(async (value) => {
       const user = await sql`SELECT * FROM users WHERE username = ${value}`;
-
       if (user.length) {
         throw new Error("El nombre de usuario ya esta en uso.");
       }
