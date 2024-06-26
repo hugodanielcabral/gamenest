@@ -12,9 +12,10 @@ type FormValues = {
 export const useAuthForm = (initialFormValue: FormValues) => {
   const [formValues, setFormValues] = useState(initialFormValue);
   const [buttonStatus, setButtonStatus] = useState("disabled");
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false); // Paso 1
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-  const { validateAuth, clientErrors } = useAuthValidate(formValues);
+  const { validateAuth, clientErrors } =
+    useAuthValidate(formValues);
 
   const handleOnChange = ({
     target,
@@ -29,20 +30,9 @@ export const useAuthForm = (initialFormValue: FormValues) => {
     });
   };
 
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setButtonStatus("submitting");
-    setIsFormSubmitted(true); // Paso 2
-
-    setTimeout(() => {
-      setButtonStatus("success");
-      setFormValues(initialFormValue);
-      alert("Usuario registrado correctamente");
-    }, 3000);
-  };
 
   useEffect(() => {
-    if (!isFormSubmitted) { 
+    if (!isFormSubmitted) {
       const { username, email, country_id, password, repassword } = formValues;
 
       if (
@@ -64,8 +54,9 @@ export const useAuthForm = (initialFormValue: FormValues) => {
     formValues,
     handleOnChange,
     clientErrors,
-    handleOnSubmit,
     buttonStatus,
     setButtonStatus,
+    setIsFormSubmitted,
+    setFormValues
   };
 };

@@ -20,7 +20,6 @@ export const useAuthValidate = (formValues) => {
             ...clientErrors,
             username: "",
           });
-
           return;
         }
 
@@ -64,7 +63,6 @@ export const useAuthValidate = (formValues) => {
             ...clientErrors,
             email: "",
           });
-
           return;
         }
 
@@ -73,7 +71,6 @@ export const useAuthValidate = (formValues) => {
             ...clientErrors,
             email: "El correo electrónico no es válido",
           });
-
           return;
         }
 
@@ -83,7 +80,6 @@ export const useAuthValidate = (formValues) => {
             email:
               "El correo electrónico debe tener como máximo 150 caracteres",
           });
-
           return;
         }
 
@@ -91,7 +87,6 @@ export const useAuthValidate = (formValues) => {
           ...clientErrors,
           email: "",
         });
-
         break;
 
       case "country_id":

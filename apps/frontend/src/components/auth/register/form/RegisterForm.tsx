@@ -7,6 +7,16 @@ import {
   MdVisibilityOff,
 } from "react-icons/md";
 import { Button } from "../../../ui/button/Button";
+import { Progress } from "../../progress/Progress";
+import { Link } from "react-router-dom";
+
+type SignupError = {
+  type: string;
+  value: string;
+  msg: string;
+  path: string;
+  location: string;
+};
 
 type RegisterFormProps = {
   formValues: {
@@ -35,6 +45,7 @@ type RegisterFormProps = {
     password: boolean;
     repassword: boolean;
   };
+  signupErrors?: SignupError[] | undefined;
 };
 
 export const RegisterForm = ({
@@ -45,15 +56,30 @@ export const RegisterForm = ({
   clientErrors,
   handleShowPassword,
   showPassword,
+  signupErrors,
 }: RegisterFormProps) => {
+  console.log(signupErrors);
+
   return (
     <form className="w-96 space-y-2 rounded-md p-5" onSubmit={handleOnSubmit}>
+      <div className="divider mb-6"></div>
+      <Progress formValues={formValues} clientErrors={clientErrors} />
+      {signupErrors?.map((err) => (
+        <p
+          key={err.value}
+          className="text-center text-xs text-red-500 md:text-sm"
+        >
+          {err.msg}
+        </p>
+      ))}
       <label
         className={clsx(
           {
             "border-2 border-green-500":
               clientErrors?.username === "" && formValues.username.length >= 6,
-            "border-2 border-red-500": clientErrors?.username,
+            "border-2 border-red-500":
+              clientErrors?.username ||
+              signupErrors?.find((err) => err.path === "username"),
             border: clientErrors?.username === "",
           },
           "[:invalid]:border-2 input input-bordered flex items-center gap-2",
@@ -83,7 +109,9 @@ export const RegisterForm = ({
           {
             "border-2 border-green-500":
               clientErrors?.email === "" && formValues.email.length >= 6,
-            "border-2 border-red-500": clientErrors?.email,
+            "border-2 border-red-500":
+              clientErrors?.email ||
+              signupErrors?.find((err) => err.path === "email"),
             border: clientErrors?.email === "",
           },
           "input input-bordered flex items-center gap-2",
@@ -205,15 +233,15 @@ export const RegisterForm = ({
 
       <Button
         disabled={buttonStatus === "submitting" || buttonStatus === "disabled"}
-        className="w-full disabled:cursor-not-allowed disabled:bg-opacity-25"
+        className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25"
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Registrarse"}
       </Button>
-      <p className="text-center text-xs md:text-sm">
+      <p className="text-center text-sm text-gray-300 md:text-base">
         ¿Ya tienes una cuenta?{" "}
-        <a href="#" className="text-primary">
+        <Link to="/login" className="text-info">
           Inicia sesión
-        </a>
+        </Link>
       </p>
     </form>
   );

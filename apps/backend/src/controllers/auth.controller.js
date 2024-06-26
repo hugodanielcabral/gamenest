@@ -7,7 +7,7 @@ import { emailTemplate, tokenValidation } from "../utils/email.js";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const signup = async (req, res) => {
-  const { username, email, password, country_id, gender } = req.body;
+  const { username, email, password, country_id } = req.body;
 
   try {
     const userExists = await sql`SELECT * FROM users WHERE username LIKE ${
@@ -19,6 +19,7 @@ export const signup = async (req, res) => {
 
     const title = "Nuevo";
     const avatar = "https://via.placeholder.com/300x300?text=No+Avatar";
+    const gender = "Hombre";
     const encryptedPassword = await encryptPassword(password);
 
     const verificationToken = uuidv4();

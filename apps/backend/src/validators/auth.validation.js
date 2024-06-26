@@ -35,7 +35,6 @@ export const signupValidator = [
     .trim()
     .notEmpty()
     .withMessage("Debes seleccionar un país."),
-  body("gender").trim().notEmpty().withMessage("Debes seleccionar un genero."),
   body("password")
     .trim()
     .notEmpty()
