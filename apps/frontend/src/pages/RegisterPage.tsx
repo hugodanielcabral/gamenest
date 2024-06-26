@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { RegisterForm } from "../components/auth/register/form/RegisterForm";
 import { useAuthForm } from "../hooks/useAuthForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { Button } from "../components/ui/button/Button";
 import registerBG from "../assets/backgrounds/register-wallpaper.webp";
 import gamenestLogo from "../assets/logos/gamenest-logo-1.webp";
 
@@ -31,6 +32,8 @@ export const RegisterPage = () => {
 
   const { signup, errors: signupErrors } = useAuth();
 
+  const navigate = useNavigate();
+
   const handleShowPassword = ({ currentTarget }) => {
     const { id } = currentTarget;
 
@@ -39,7 +42,6 @@ export const RegisterPage = () => {
       [id]: !showPassword[id],
     });
   };
-  
 
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,17 +49,14 @@ export const RegisterPage = () => {
 
     const newUser = await signup(formValues);
 
-    if (!newUser){
+    if (!newUser) {
       setButtonStatus("error");
       return;
-    } 
+    }
 
     setIsFormSubmitted(true);
-
-    setTimeout(() => {
-      setButtonStatus("success");
-      setFormValues(initialFormValue);
-    }, 2000);
+    setButtonStatus("success");
+    setFormValues(initialFormValue);
   };
 
   return (
@@ -89,9 +88,22 @@ export const RegisterPage = () => {
           />
         </Link>
         {buttonStatus === "success" ? (
-          <p className="text-green-500">Usuario registrado correctamente</p>
-        ) : (
+          <div className="mt-5 flex flex-col items-center gap-2">
+            <h2 className="text-2xl font-bold text-success">
+              ¡Registro exitoso!
+            </h2>
+            <p className="text-sm text-white">
+              Por favor, revisa tu correo electrónico para confirmar tu cuenta.
+            </p>
 
+            <Button
+              className="bg-info text-white"
+              onClick={() => navigate("/login")}
+            >
+              Iniciar sesión
+            </Button>
+          </div>
+        ) : (
           <RegisterForm
             formValues={formValues}
             handleOnChange={handleOnChange}
