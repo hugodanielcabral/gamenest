@@ -1,8 +1,8 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { CollectionPage } from "./pages/CollectionPage.jsx";
-import { RegisterPage } from "./pages/RegisterPage.jsx";
-import { LoginPage } from "./pages/LoginPage.jsx";
+import { RegisterPage } from "./pages/RegisterPage.tsx";
+import { LoginPage } from "./pages/LoginPage.tsx";
 import { NotFound } from "./components/notfound/NotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";

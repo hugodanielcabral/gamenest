@@ -17,15 +17,12 @@ export const signup = async (req, res) => {
     if (userExists[0])
       return res.status(400).json({ message: "User already exist" });
 
-    const title = "Nuevo";
-    const avatar = "https://via.placeholder.com/300x300?text=No+Avatar";
-    const gender = "Hombre";
     const encryptedPassword = await encryptPassword(password);
 
     const verificationToken = uuidv4();
 
     const newUser =
-      await sql`INSERT INTO users (username, email, password, avatar, gender, title, country_id) VALUES (${username}, ${email}, ${encryptedPassword}, ${avatar}, ${gender}, ${title}, ${parseInt(
+      await sql`INSERT INTO users (username, email, password, country_id) VALUES (${username}, ${email}, ${encryptedPassword}, ${parseInt(
         country_id
       )}) RETURNING *`;
 
@@ -90,7 +87,7 @@ export const signout = (req, res) => {
 export const profile = async (req, res) => {
   try {
     const checkUserExists =
-      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.gender, a.title, a.active, b."name" AS country, a.user_edit_credits FROM users a 
+      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.title, a.active, b."name" AS country, a.user_edit_credits FROM users a 
       INNER JOIN country b
       ON a.country_id = b.country_id
       WHERE user_id = ${req.user_id};`;
@@ -159,7 +156,7 @@ export const updateProfile = async (req, res) => {
       );
 
     const updatedUserProfile =
-      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.gender, a.title, a.active, b."name" AS country, user_edit_credits FROM users a 
+      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.title, a.active, b."name" AS country, user_edit_credits FROM users a 
       INNER JOIN country b
       ON a.country_id = b.country_id
       WHERE username = ${username};`;

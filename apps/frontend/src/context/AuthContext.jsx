@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const signup = async (formData) => {
+    console.log(formData);
     try {
       const response = await fetch(`${BASE_URL}/signup`, {
         method: "POST",

@@ -1,38 +1,32 @@
-import { useState } from "react";
-import { RegisterForm } from "../components/auth/register/form/RegisterForm";
-import { useAuthForm } from "../hooks/useAuthForm";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { LoginForm } from "../components/auth/login/form/LoginForm.js";
 import { useAuth } from "../context/AuthContext.jsx";
-import { Button } from "../components/ui/button/Button";
+import { useEffect, useState } from "react";
 import registerBG from "../assets/backgrounds/register-wallpaper.webp";
 import gamenestLogo from "../assets/logos/gamenest-logo-1.webp";
+import { useAuthForm } from "../hooks/useAuthForm.ts";
 
-export const RegisterPage = () => {
+export const LoginPage = () => {
   const initialFormValue = {
     username: "",
-    email: "",
-    country_id: "",
     password: "",
-    repassword: "",
   };
 
   const {
     formValues,
     handleOnChange,
-    clientErrors,
     buttonStatus,
     setButtonStatus,
     setIsFormSubmitted,
-    setFormValues,
   } = useAuthForm(initialFormValue);
   const [showPassword, setShowPassword] = useState({
     password: false,
     repassword: false,
   });
 
-  const { signup, errors: signupErrors } = useAuth();
+  const { signin, errors: signinErrors, setIsAuth} = useAuth();
+  
 
-  const navigate = useNavigate();
 
   const handleShowPassword = ({ currentTarget }) => {
     const { id } = currentTarget;
@@ -47,17 +41,26 @@ export const RegisterPage = () => {
     e.preventDefault();
     setButtonStatus("submitting");
 
-    const newUser = await signup(formValues);
+    const signedInUser = await signin(formValues);
 
-    if (!newUser) {
+    if (!signedInUser) {
       setButtonStatus("error");
       return;
     }
 
     setIsFormSubmitted(true);
-    setButtonStatus("success");
-    setFormValues(initialFormValue);
+    setButtonStatus("disabled");
+    setIsAuth(true);
+    window.location.href = "/profile";
   };
+
+  useEffect(() => {
+    if (formValues.username !== "" && formValues.password !== "") {
+      setButtonStatus("enabled");
+    } else {
+      setButtonStatus("disabled");
+    }
+  }, [formValues]);
 
   return (
     <div className="flex h-screen bg-[conic-gradient(at_right,_var(--tw-gradient-stops))] from-blue-700 via-blue-800 to-gray-900">
@@ -74,8 +77,8 @@ export const RegisterPage = () => {
             <span className="font-semibold text-red-500">Nest</span>
           </h2>
           <p className="text-pretty text-sm text-gray-100 sm:text-base md:text-lg lg:text-xl">
-            Crea tu cuenta y empieza a disfrutar de todas las funcionalidades
-            que te ofrecemos.
+            Inicia sesión para disfrutar de todas las funcionalidades de
+            GameNest.
           </p>
         </div>
       </aside>
@@ -87,34 +90,16 @@ export const RegisterPage = () => {
             className="w-32 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-95"
           />
         </Link>
-        {buttonStatus === "success" ? (
-          <div className="mt-5 flex flex-col items-center gap-2">
-            <h2 className="text-2xl font-bold text-success">
-              ¡Registro exitoso!
-            </h2>
-            <p className="text-sm text-white">
-              Por favor, revisa tu correo electrónico para confirmar tu cuenta.
-            </p>
 
-            <Button
-              className="bg-info text-white"
-              onClick={() => navigate("/login")}
-            >
-              Iniciar sesión
-            </Button>
-          </div>
-        ) : (
-          <RegisterForm
-            formValues={formValues}
-            handleOnChange={handleOnChange}
-            handleOnSubmit={handleOnSubmit}
-            buttonStatus={buttonStatus}
-            clientErrors={clientErrors}
-            showPassword={showPassword}
-            handleShowPassword={handleShowPassword}
-            signupErrors={signupErrors}
-          />
-        )}
+        <LoginForm
+          formValues={formValues}
+          handleOnChange={handleOnChange}
+          handleOnSubmit={handleOnSubmit}
+          buttonStatus={buttonStatus}
+          showPassword={showPassword}
+          handleShowPassword={handleShowPassword}
+          signinErrors={signinErrors}
+        />
       </div>
     </div>
   );
