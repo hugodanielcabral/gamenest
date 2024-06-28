@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+
+dotenv.config();
+
 //* I should use this function to get the token and save it in a .env file
 //? I should also use a cron job to update the token every 60 days
 
@@ -86,6 +90,24 @@ export const fetchSteamGame = async (steamUID) => {
   }
 };
 
+const getSteamGameAchievements = async (steamUID) => {
+  if (!steamUID) {
+    return null;
+  }
+
+  try {
+    const response = await fetch(
+      `https://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${process.env.STEAM_API_KEY}&appid=${steamUID}&l=spanish`
+    );
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getSteamGame = async (gameData) => {
   if (!gameData[0]?.external_games) {
     return null;
@@ -95,11 +117,15 @@ export const getSteamGame = async (gameData) => {
     (game) => game.category === 1
   )?.uid;
 
-  const steamData = await fetchSteamGame(steamUID);
-
-  if (!steamData) {
+  if (!steamUID) {
     return null;
   }
+
+  const steamData = await fetchSteamGame(steamUID);
+  const steamAchievements = await getSteamGameAchievements(steamUID);
+
+  steamData[steamUID].data.achievements =
+    steamAchievements.game.availableGameStats.achievements;
 
   return steamData[steamUID].data;
 };
