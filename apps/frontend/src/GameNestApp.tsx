@@ -26,6 +26,10 @@ export const GameNestApp = () => {
       default: module.ProfilePage,
     }))
   );
+  const CollectionGamePage = lazy(() => import("./pages/CollectionGamePage.tsx").then((module) => ({
+    default: module.CollectionGamePage,
+  })));
+
 
   const isAuth = localStorage.getItem("isAuth") === "true";
 
@@ -93,12 +97,17 @@ export const GameNestApp = () => {
       path: "/profile",
       element: <ProfilePage />,
     },
+    {
+      id: 8,
+      path: "/collection/:gameSlug",
+      element: <CollectionGamePage />,
+    },
   ];
 
   return (
     <>
       {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={""}>
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
           <Routes>
             <Route
