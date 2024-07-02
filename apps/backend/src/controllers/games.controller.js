@@ -5,6 +5,7 @@ import {
   getSteamGame,
   getGamesFromUser,
 } from "../utils/igdbApiUtils.js";
+import sql from "../db.js";
 
 env.config();
 
@@ -121,6 +122,45 @@ export const getPopularGames = async (req, res) => {
 
     const data = await response.json();
     res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getSteamGameAchievement = async (req, res) => {
+  try {
+    const response =
+      await sql`SELECT * FROM user_game_achievement WHERE game_slug = ${req.params.id} AND user_id = ${req.user_id}`;
+
+    if (!response[0])
+      return res.status(404).json({ error: "Achievement not found" });
+
+    res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const createSteamGameAchievement = async (req, res) => {
+  const { gameSlug, achievements } = req.body;
+
+  try {
+    const achievementsExist =
+      await sql`SELECT * FROM user_game_achievement WHERE game_slug = ${gameSlug} AND user_id = ${req.user_id}`;
+
+    if (achievementsExist[0]) {
+      const updateAchievement =
+        await sql`UPDATE user_game_achievement SET achievement_name = ${achievements} WHERE game_slug = ${gameSlug} AND user_id = ${req.user_id} RETURNING *`;
+
+      return res.status(200).json(updateAchievement);
+    }
+
+    const newAchievement =
+      await sql`INSERT INTO user_game_achievement (game_slug, achievement_name, user_id) VALUES (${gameSlug}, ${achievements}, ${req.user_id}) RETURNING *`;
+
+    res.status(201).json(newAchievement);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
