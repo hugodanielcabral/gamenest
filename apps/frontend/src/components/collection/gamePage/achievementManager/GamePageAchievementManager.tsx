@@ -1,5 +1,9 @@
-import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { AchievementManagerList } from "./list/AchievementManagerList.js";
+import { Button } from "../../../ui/button/Button";
+import toast from "../../../../utils/toast.js";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import { useSteamAchievement } from "../../../../hooks/useSteamAchievement.js";
 
 type SteamAchievement = {
   name: string;
@@ -15,25 +19,21 @@ type GamePageAchievementManagerProps = {
       achievements: SteamAchievement[];
     };
   };
+  gameSlug: string;
 };
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GamePageAchievementManager = ({
   gameData,
+  gameSlug,
 }: GamePageAchievementManagerProps) => {
-  const [unachievedAchievements, setUnachievedAchievements] = useState<
-    SteamAchievement[]
-  >([]);
-  const [achievedAchievements, setAchievedAchievements] = useState<
-    SteamAchievement[]
-  >([]);
   const [selectedAchievement, setSelectedAchievement] =
     useState<SteamAchievement | null>(null);
+  const [buttonHidden, setButtonHidden] = useState(true);
 
-  useEffect(() => {
-    if (gameData?.steamData?.achievements) {
-      setUnachievedAchievements(gameData.steamData.achievements);
-    }
-  }, [gameData]);
+  const { achievedAchievements, isLoading, unachievedAchievements,setAchievedAchievements,setUnachievedAchievements } =
+    useSteamAchievement(gameData, gameSlug);
 
   const handleOnMoveToAchievedAchievements = () => {
     if (!selectedAchievement) return;
@@ -47,8 +47,8 @@ export const GamePageAchievementManager = ({
       return;
     }
 
-    setAchievedAchievements((prev) =>
-      [...prev, selectedAchievement].sort((a, b) => {
+    setAchievedAchievements(
+      [...achievedAchievements, selectedAchievement].sort((a, b) => {
         if (a.name < b.name) return -1;
 
         if (a.name > b.name) return 1;
@@ -76,8 +76,8 @@ export const GamePageAchievementManager = ({
       return;
     }
 
-    setUnachievedAchievements((prev) =>
-      [...prev, selectedAchievement].sort((a, b) => {
+    setUnachievedAchievements(
+      [...unachievedAchievements, selectedAchievement].sort((a, b) => {
         if (a.name < b.name) return -1;
 
         if (a.name > b.name) return 1;
@@ -92,63 +92,114 @@ export const GamePageAchievementManager = ({
     setSelectedAchievement(null);
   };
 
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setButtonHidden(true);
+    try {
+      await fetch(`${BASE_URL}/achievement`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+        body: JSON.stringify({
+          gameSlug,
+          achievements: achievedAchievements.map(
+            (achievement) => achievement.name,
+          ),
+        }),
+      });
+
+      toast(`Cambios guardados correctamente`, "success", "#fff");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const enableButton = () => {
+    if (!selectedAchievement) return;
+
+    setButtonHidden(false);
+  };
+
   return (
-    <>
-      <div className="flex bg-base-200 bg-opacity-50 p-6 rounded-md">
-        <div className="flex-1">
-          <h2 className="text-center text-xl text-white">No obtenidos</h2>
-          <ul className="h-96 overflow-auto">
-            {unachievedAchievements.map((achievement: SteamAchievement) => (
-              <div
-                key={achievement.name}
-                className={clsx(
-                  { "bg-base-300": selectedAchievement === achievement },
-                  "border border-gray-700 bg-base-100 p-4 first:rounded-t-md last:rounded-b-md hover:bg-base-100 hover:bg-opacity-50 h-42 space-y-2 cursor-pointer",
-                )}
-                onClick={() => setSelectedAchievement(achievement)}
-              >
-                <h3 className="text-sm sm:text-base md:text-lg">{achievement.displayName}</h3>
-                <img src={achievement.icongray} alt={achievement.name} className="rounded-md"/>
-                <p className="text-xs sm:text-sm md:text-base italic">{achievement.description}</p>
+    <form onSubmit={handleOnSubmit}>
+      {!isLoading ? (
+        <div className="flex flex-col gap-y-2 rounded-md bg-base-200 bg-opacity-50 p-6 md:flex-row md:gap-x-2">
+          <div className="flex-1 space-y-2">
+            <h2 className="text-center text-base text-white sm:text-lg md:text-xl">
+              No obtenidos: {" "}
+              <span className="text-red-500">
+                {unachievedAchievements.length}
+              </span>
+            </h2>
+            {unachievedAchievements.length > 0 ? (
+              <AchievementManagerList
+                achievements={unachievedAchievements}
+                selectedAchievement={selectedAchievement}
+                setSelectedAchievement={setSelectedAchievement}
+                isAchieved={false}
+              />
+            ) : (
+              <div className="text-center text-white">
+                Ya desbloqueaste todos los logros.
               </div>
-            ))}
-          </ul>
-        </div>
-        <div className="flex items-center flex-col justify-center">
-          <button
-            className="btn btn-accent"
-            onClick={handleOnMoveToUnachievedAchievements}
-          >
-            ⬅️
-          </button>
-          <button
-            className="btn btn-warning"
-            onClick={handleOnMoveToAchievedAchievements}
-          >
-            ➡️
-          </button>
-        </div>
-        <div className="flex-1">
-          <h2 className="text-center text-xl text-white">Obtenidos</h2>
-          <ul className="h-96 overflow-auto">
-            {achievedAchievements.map((achievement: SteamAchievement) => (
-              <div
-                key={achievement.name}
-                className={clsx(
-                  { "bg-blue-400 bg-opacity-50": selectedAchievement === achievement },
-                  "border border-gray-700 bg-blue-500 p-4 first:rounded-t-md last:rounded-b-md hover:bg-blue-400 hover:bg-opacity-50 h-42 space-y-2 cursor-pointer",
-                )}
-                onClick={() => setSelectedAchievement(achievement)}
-              >
-                <h3 className="text-sm sm:text-base md:text-lg text-white">{achievement.displayName}</h3>
-                <img src={achievement.icon} alt={achievement.name} className="rounded-md"/>
-                <p className="text-xs sm:text-sm md:text-base italic text-white">{achievement.description}</p>
+            )}
+          </div>
+          <div className="flex items-center justify-center md:flex-col">
+            <span
+              className="rotate-90 cursor-pointer text-2xl md:rotate-0"
+              onClick={() => {
+                handleOnMoveToUnachievedAchievements();
+                enableButton();
+              }}
+            >
+              <FaAngleLeft size={40} className="hover:text-white" />
+            </span>
+            <span
+              className="rotate-90 cursor-pointer text-2xl md:rotate-0"
+              onClick={() => {
+                handleOnMoveToAchievedAchievements();
+                enableButton();
+              }}
+            >
+              <FaAngleRight size={40} className="hover:text-white" />
+            </span>
+          </div>
+          <div className="flex-1 space-y-2">
+            <h2 className="text-center text-base text-white sm:text-lg md:text-xl">
+              Obtenidos: {" "}
+              <span className="text-blue-500">
+                {achievedAchievements.length}
+              </span>
+            </h2>
+            {achievedAchievements.length > 0 ? (
+              <AchievementManagerList
+                achievements={achievedAchievements}
+                selectedAchievement={selectedAchievement}
+                setSelectedAchievement={setSelectedAchievement}
+                isAchieved={true}
+              />
+            ) : (
+              <div className="text-center text-white">
+                Aún no desbloqueaste ningún logro.
               </div>
-            ))}
-          </ul>
+            )}
+          </div>
         </div>
-      </div>
-      <button className="btn btn-accent mt-5">Guardar cambios</button>
-    </>
+      ) : (
+        <div className="mx-auto w-full">
+          <h2 className="text-center text-white text-5xl animate-pulse">Cargando gestor de logros...
+          </h2>
+        </div>
+      )}
+      <Button
+        className={`${buttonHidden ? "hidden" : ""} w-full md:w-52`}
+        type="submit"
+      >
+        Guardar cambios
+      </Button>
+    </form>
   );
 };
