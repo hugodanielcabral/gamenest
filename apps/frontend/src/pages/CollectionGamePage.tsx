@@ -19,7 +19,6 @@ export const CollectionGamePage = () => {
   const { data: gameData, isLoading: isLoadingGameData } = useFetch(
     `${BASE_URL}/games/${gameSlug}`,
   );
-  
   const [tabAchievement, setTabAchievement] = useState("achievement");
 
   if (isLoadingGameData) {
