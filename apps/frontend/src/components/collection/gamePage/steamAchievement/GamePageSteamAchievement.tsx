@@ -25,7 +25,7 @@ export const GamePageSteamAchievement = ({
   const { achievedAchievements } = useSteamAchievement(gameData, gameSlug);
 
   return (
-    <div className="grid max-h-screen gap-1 overflow-auto rounded-md bg-base-200 bg-opacity-50 p-6 md:grid-cols-2">
+    <div className="max-h-screen gap-1 overflow-auto rounded-md bg-base-100 bg-opacity-50 p-6">
       <h2 className="col-span-2 text-center text-base text-white sm:text-lg md:text-xl">
         Logros obtenidos:{" "}
         <span className="text-blue-500">{achievedAchievements?.length}</span> de{" "}
@@ -33,15 +33,17 @@ export const GamePageSteamAchievement = ({
           {gameData?.steamData?.achievements.length}
         </span>
       </h2>
-      {gameData?.steamData?.achievements.map(
-        (achievement: SteamAchievement) => (
-          <SteamAchievementList
-            key={achievement.name}
-            achievement={achievement}
-            achievedAchievements={achievedAchievements}
-          />
-        ),
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        {gameData?.steamData?.achievements.map(
+          (achievement: SteamAchievement) => (
+            <SteamAchievementList
+              key={achievement.name}
+              achievement={achievement}
+              achievedAchievements={achievedAchievements}
+            />
+          ),
+        )}
+      </div>
     </div>
   );
 };

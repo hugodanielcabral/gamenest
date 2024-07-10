@@ -126,7 +126,7 @@ export const GamePageAchievementManager = ({
   return (
     <form onSubmit={handleOnSubmit}>
       {!isLoading ? (
-        <div className="flex flex-col gap-y-2 rounded-md bg-base-200 bg-opacity-50 p-6 md:flex-row md:gap-x-2">
+        <div className="flex flex-col gap-y-2 rounded-md bg-base-100 bg-opacity-50 p-6 md:flex-row md:gap-x-2">
           <div className="flex-1 space-y-2">
             <h2 className="text-center text-base text-white sm:text-lg md:text-xl">
               No obtenidos: {" "}
@@ -189,9 +189,10 @@ export const GamePageAchievementManager = ({
           </div>
         </div>
       ) : (
-        <div className="mx-auto w-full">
-          <h2 className="text-center text-white text-5xl animate-pulse">Cargando gestor de logros...
-          </h2>
+        <div className="mx-auto w-full h-screen">
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="loader"></div>
+          </div>
         </div>
       )}
       <Button

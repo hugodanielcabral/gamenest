@@ -60,11 +60,12 @@ export const CollectionProvider = ({ children }) => {
       });
 
       if (!response.ok) {
+        setIsLoading(false);
         throw new Error("Something went wrong!");
       }
 
       const data = await response.json();
-      console.log(data);
+      setIsLoading(false);
       return data;
     } catch (error) {
       console.log(error);
@@ -101,7 +102,7 @@ export const CollectionProvider = ({ children }) => {
             "Access-Control-Allow-Credentials": "true",
           },
           body: JSON.stringify(bodyData),
-        }
+        },
       );
 
       return response;
@@ -126,7 +127,7 @@ export const CollectionProvider = ({ children }) => {
       }
 
       setCollectionData(
-        collectionData.filter((game) => game.collection_id !== collectionId)
+        collectionData.filter((game) => game.collection_id !== collectionId),
       );
 
       return response;
@@ -145,7 +146,7 @@ export const CollectionProvider = ({ children }) => {
             "Content-Type": "application/json",
             "Access-Control-Allow-Credentials": "true",
           },
-        }
+        },
       );
 
       if (!response.ok) {
