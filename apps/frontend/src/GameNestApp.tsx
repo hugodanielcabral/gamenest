@@ -3,7 +3,6 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import { CollectionPage } from "./pages/CollectionPage.jsx";
 import { RegisterPage } from "./pages/RegisterPage.tsx";
 import { LoginPage } from "./pages/LoginPage.tsx";
-import { NotFound } from "./components/notfound/NotFound.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
@@ -11,6 +10,7 @@ import { ChangelogsPage } from "./pages/ChangelogsPage.jsx";
 import { CollectionManage } from "./components/collection/manage/CollectionManage.jsx";
 import { ValidationPage } from "./pages/ValidationPage.tsx";
 import { UsersProvider } from "./context/UsersContext.tsx";
+import { ErrorPage } from "./pages/ErrorPage.tsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -52,7 +52,7 @@ export const GameNestApp = () => {
     {
       id: 6,
       path: "*",
-      element: <NotFound message="Oops" />,
+      element: <ErrorPage />,
     },
     {
       id: 7,
@@ -85,7 +85,7 @@ export const GameNestApp = () => {
     {
       id: 5,
       path: "*",
-      element: <NotFound message="Oops" />,
+      element: <ErrorPage />,
     },
     {
       id: 6,

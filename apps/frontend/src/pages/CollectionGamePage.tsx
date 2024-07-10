@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch";
 import { Layout } from "../components/layout/Layout";
 import { BackgroundImage } from "../components/ui/backgroundImage/BackgroundImage";
@@ -20,9 +20,15 @@ export const CollectionGamePage = () => {
     `${BASE_URL}/games/${gameSlug}`,
   );
   const [tabAchievement, setTabAchievement] = useState("achievement");
+  const navigate = useNavigate();
 
   if (isLoadingGameData) {
     return <CollectionGamePageSkeleton />;
+  }
+
+  if (!gameData) {
+    navigate("/404");
+    return null;
   }
 
   let backgroundImg = gameData?.steamData?.background;
