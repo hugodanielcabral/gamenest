@@ -1,13 +1,15 @@
 import { useForm } from "../../../../hooks/useForm.js";
 import { DisplayDetailsGameInformation } from "./gameInformation/DisplayDetailsGameInformation";
 import { DisplayDetailsProgress } from "./progress/DisplayDetailsProgress";
-import { Button, Toast } from "../../../ui";
+import { Button } from "../../../ui";
 import propTypes from "prop-types";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCollection } from "../../../../context/CollectionContext.jsx";
 import { useEffect } from "react";
 import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
+import toast from "../../../../utils/toast.js";
+import { DateTime } from "luxon";
 
 export const ManageDisplayDetails = ({ data, gameSlug }) => {
   const {
@@ -17,6 +19,10 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
     store,
     status,
     progress_note,
+    total_played,
+    start_date,
+    finish_date,
+    amount_paid,
     handleOnChange,
     setFormData,
   } = useForm({
@@ -26,6 +32,10 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
     store: "Steam",
     status: "Sin estado",
     progress_note: "",
+    total_played: "",
+    start_date: "",
+    finish_date: "",
+    amount_paid: "",
   });
 
   const { pathname } = useLocation();
@@ -36,7 +46,6 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
     useCollection();
   const [errors, setErrors] = useState(null);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
 
   const bodyData = {
@@ -50,6 +59,10 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
     store_name: store,
     status_name: status,
     progress_note,
+    total_played,
+    start_date,
+    finish_date,
+    amount_paid,
   };
 
   const handleOnSubmit = async (e) => {
@@ -67,10 +80,15 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
 
         const collectionData = await response.json();
         setButtonDisabled(true);
-        setShowToast(true);
+        toast(
+          `${data?.name} fue actualizado correctamente`,
+          "success",
+          "#fff",
+          "#00A7EA",
+          "top",
+        );
 
         setTimeout(() => {
-          setShowToast(false);
           setButtonDisabled(false);
           navigate("/collection");
         }, 2000);
@@ -86,10 +104,15 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
 
         const collectionData = await response.json();
         setButtonDisabled(true);
-        setShowToast(true);
+        toast(
+          `${data?.name} fue agregado correctamente`,
+          "success",
+          "#fff",
+          "#00A7EA",
+          "top",
+        );
 
         setTimeout(() => {
-          setShowToast(false);
           setButtonDisabled(false);
           navigate("/collection");
         }, 2000);
@@ -110,6 +133,10 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
       store: "Steam",
       status: "Sin estado",
       progress_note: "",
+      total_played: "",
+      start_date: "",
+      finish_date: "",
+      amount_paid: "",
     });
     navigate(`/games/${data.slug}`);
   };
@@ -117,6 +144,14 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
   useEffect(() => {
     if (getActionType) {
       getGameFromCollection(data.slug).then((gameData) => {
+        const formattedStartDate = DateTime.fromISO(gameData.start_date, {
+          zone: "utc",
+        }).toISODate();
+
+        const formattedFinishDate = DateTime.fromISO(gameData.finish_date, {
+          zone: "utc",
+        }).toISODate();
+
         setFormData({
           platform: gameData.platform_name,
           format: gameData.format_name,
@@ -124,22 +159,17 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
           store: gameData.store_name,
           status: gameData.status_name,
           progress_note: gameData.progress_note,
+          total_played: gameData.total_played,
+          start_date: formattedStartDate || "",
+          finish_date: formattedFinishDate || "",
+          amount_paid: gameData.amount_paid,
         });
       });
     }
   }, [getActionType, data.slug]);
 
   return (
-    <section className="p-4 col-span-4">
-      {showToast && (
-        <Toast
-          toastMessage={`${data?.name} ${
-            getActionType ? "fue actualizado" : "fue añadido a tu colección"
-          }`}
-          showToast={showToast}
-        />
-      )}
-
+    <section className="col-span-4 p-4">
       <form className="space-y-6" onSubmit={handleOnSubmit}>
         <article>
           <CardBackground className="p-4">
@@ -154,17 +184,21 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
           </CardBackground>
         </article>
         <article>
-          <CardBackground className="p-4">
+          <CardBackground className="bg-base-300 p-4">
             <DisplayDetailsProgress
               status={status}
               progress_note={progress_note}
               handleOnChange={handleOnChange}
+              total_played={total_played}
+              start_date={start_date}
+              finish_date={finish_date}
+              amount_paid={amount_paid}
             />
           </CardBackground>
         </article>
         <article className="flex gap-4">
           <Button
-            className="font-bold text-sm md:text-lg uppercase disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="text-sm font-bold uppercase disabled:cursor-not-allowed disabled:bg-gray-400 md:text-lg"
             type="submit"
             aria-label="Save changes"
             disabled={buttonDisabled}
@@ -172,7 +206,7 @@ export const ManageDisplayDetails = ({ data, gameSlug }) => {
             {buttonDisabled ? "Guardando..." : "Guardar cambios"}
           </Button>
           <Button
-            className="font-bold md:text-lg uppercase bg-error hover:bg-error/80 text-sm md:flex-grow-0 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="bg-error text-sm font-bold uppercase hover:bg-error/80 disabled:cursor-not-allowed disabled:bg-gray-400 md:flex-grow-0 md:text-lg"
             type="reset"
             onClick={handleOnReset}
             aria-label="Cancel changes"

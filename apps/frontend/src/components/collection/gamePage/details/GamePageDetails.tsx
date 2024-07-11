@@ -3,6 +3,7 @@ import { useCollection } from "../../../../context/CollectionContext.jsx";
 import getImageUrl from "../../../../utils/getImageUrl.js";
 import { Button } from "../../../ui/button/Button.jsx";
 import { useNavigate } from "react-router-dom";
+import { CardImage } from "../../../ui/card/image/CardImage.js";
 
 type GameCollectionData = {
   amount_paid: number | null;
@@ -70,11 +71,7 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
   return (
     <div className="mt-10 flex flex-col items-center justify-around gap-x-4 md:flex-row">
       <div className="flex flex-col gap-y-2">
-        <img
-          src={GAME_IMAGE_URL}
-          alt={`Cover de ${gameCollectionData?.game_name}`}
-          className="h-72 rounded-md sm:h-80 md:h-96"
-        />
+        <CardImage src={GAME_IMAGE_URL} alt={`Cover de ${gameCollectionData?.game_name}`} />
         <Button
           className="font-bold uppercase"
           onClick={() => navigate(`/games/${gameSlug}`)}

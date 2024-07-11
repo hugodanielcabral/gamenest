@@ -96,7 +96,7 @@ export const getGameFromCollection = async (req, res) => {
 };
 
 export const addGameToCollection = async (req, res) => {
-  const {
+  let {
     game_id,
     game_slug,
     game_name,
@@ -107,11 +107,20 @@ export const addGameToCollection = async (req, res) => {
     store_name,
     status_name,
     progress_note,
+    total_played,
+    start_date,
+    finish_date,
+    amount_paid,
   } = req.body;
+
+  total_played = total_played === "" ? null : total_played;
+  amount_paid = amount_paid === "" ? null : amount_paid;
+  start_date = start_date === "" ? null : start_date;
+  finish_date = finish_date === "" ? null : finish_date;
 
   try {
     const collection =
-      await sql`INSERT INTO collection (game_id, game_slug, game_name, game_cover, platform_name, format_name, ownership_name, store_name, status_name, progress_note, user_id) VALUES (${game_id}, ${game_slug}, ${game_name}, ${game_cover}, ${platform_name}, ${format_name}, ${ownership_name}, ${store_name}, ${status_name}, ${progress_note}, ${req.user_id}) RETURNING *`;
+      await sql`INSERT INTO collection (game_id, game_slug, game_name, game_cover, platform_name, format_name, ownership_name, store_name, status_name, progress_note, total_played, start_date, finish_date, amount_paid, user_id) VALUES (${game_id}, ${game_slug}, ${game_name}, ${game_cover}, ${platform_name}, ${format_name}, ${ownership_name}, ${store_name}, ${status_name}, ${progress_note}, ${total_played}, ${start_date}, ${finish_date}, ${amount_paid}, ${req.user_id}) RETURNING *`;
 
     res.status(201).json(collection);
   } catch (error) {
@@ -133,6 +142,10 @@ export const updateGameFromCollection = async (req, res) => {
       return res
         .status(404)
         .json({ message: "Game not found in your collection" });
+
+    if (req.body.start_date === "") req.body.start_date = null;
+
+    if (req.body.finish_date === "") req.body.finish_date = null;
 
     const collection = await sql`UPDATE collection SET ${sql(
       req.body

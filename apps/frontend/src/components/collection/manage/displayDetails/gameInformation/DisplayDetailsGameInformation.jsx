@@ -16,9 +16,9 @@ export const DisplayDetailsGameInformation = ({
   handleOnChange,
 }) => {
   return (
-    <section className="grid grid-cols-6 *:mt-2 ">
-      <h2 className="mb-2 uppercase col-span-6 text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-white md:text-left text-center">
-        Información del juego
+    <section className="grid grid-cols-6 space-y-8">
+      <h2 className="col-span-6 mb-2 text-center text-lg font-semibold uppercase text-red-500 sm:text-xl md:text-left md:text-2xl lg:text-3xl">
+        Información
       </h2>
 
       <OptionRadioGroup
@@ -36,7 +36,7 @@ export const DisplayDetailsGameInformation = ({
         handleOnChange={handleOnChange}
         name="store"
       />
-      <div className="col-span-6 sm:col-span-5 md:col-span-2 space-y-5">
+      <div className="col-span-6 space-y-5 sm:col-span-5 md:col-span-2">
         <OptionRadioGroup
           title="Formato"
           options={GAME_FORMATS}

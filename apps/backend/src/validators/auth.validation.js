@@ -1,6 +1,6 @@
 import { validateResult } from "../helpers/handleValidateResult.js";
 import sql from "../db.js";
-import { body, check, param, query } from "express-validator";
+import { body, param } from "express-validator";
 import { comparePassword } from "../helpers/handleBcrypt.js";
 import { tokenValidation } from "../utils/email.js";
 

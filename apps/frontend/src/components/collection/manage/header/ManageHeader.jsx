@@ -1,7 +1,8 @@
 import propTypes from "prop-types";
 import { Button } from "../../../ui";
-import getImageUrl from "../../../../utils/getImageUrl";
+import { CardImage } from "../../../ui/card/image/CardImage";
 import { useLocation, useNavigate } from "react-router-dom";
+import getImageUrl from "../../../../utils/getImageUrl";
 import clsx from "clsx";
 
 export const ManageHeader = ({ data }) => {
@@ -19,39 +20,37 @@ export const ManageHeader = ({ data }) => {
 
   return (
     <section className="col-span-4">
-      <header className="p-4 flex justify-around items-center md:flex-row flex-col">
+      <header className="flex flex-col items-center justify-around p-4 md:flex-row">
         <div className="flex flex-col gap-y-3">
           <figure className="order-last md:order-first">
-            <img
+            <CardImage
               src={getImageUrl(COVER_IMAGE, "cover_big")}
-              loading="lazy"
               alt={`${data?.name} cover`}
-              className="flex-grow shadow-2xl shadow-black"
             />
           </figure>
 
           <Button
-            className="w-full font-bold text-lg uppercase"
+            className="w-full text-lg font-bold uppercase"
             aria-label={`View ${data?.name} game page`}
             onClick={() => navigate(`/games/${data?.slug}`)}
           >
-            Ver página del juego
+            Página del juego
           </Button>
         </div>
 
-        <div className="flex flex-col gap-y-5 mt-5">
+        <div className="mt-5 flex flex-col gap-y-5">
           <h1
             className={clsx(
               {
                 "text-error": determineActionType === "ACTUALIZAR",
                 "text-success": determineActionType === "AGREGAR",
               },
-              "text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase self-center"
+              "self-center text-xl font-bold uppercase sm:text-3xl md:text-4xl lg:text-5xl",
             )}
           >
             {determineActionType} JUEGO
           </h1>
-          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-white self-center">
+          <h2 className="mb-5 text-center text-2xl text-blue-400 sm:text-3xl md:mb-10 md:text-4xl">
             {data?.name}
           </h2>
         </div>
