@@ -26,7 +26,7 @@ export const CardRating = ({ gameData }) => {
           toast(
             `${gameData.game_name} fue calificado con ${rating} estrellas`,
             "success",
-            "#fff"
+            "#fff",
           );
         } else {
           setButtonDisabled(false);
@@ -34,10 +34,10 @@ export const CardRating = ({ gameData }) => {
             `Ocurrió un error al intentar calificar ${gameData.game_name}`,
             "error",
             "#fff",
-            "#FF5861"
+            "#FF5861",
           );
         }
-      }
+      },
     );
   };
 
@@ -70,7 +70,7 @@ export const CardRating = ({ gameData }) => {
         onClose={() => setModalOpen(false)}
       >
         <section className="flex flex-col gap-5">
-          <h2 className="text-info text-2xl font-semibold text-center">
+          <h2 className="text-center text-2xl font-semibold text-info">
             {GAME_NAME}
           </h2>
           <div className="self-center">
@@ -83,14 +83,14 @@ export const CardRating = ({ gameData }) => {
                     "text-error": currentRating < 3,
                     "text-success": currentRating === 3,
                   },
-                  "text-2xl"
+                  "text-2xl",
                 )}
               >
                 ★
               </span>
             ))}
           </div>
-          <h3 className="text-white text-xl font-semibold text-center">
+          <h3 className="text-center text-xl font-semibold text-white">
             ¿Estás seguro de querer calificar a{" "}
             <span className="text-info">{GAME_NAME}</span> con{" "}
             <span
@@ -100,14 +100,14 @@ export const CardRating = ({ gameData }) => {
                   "text-error": currentRating < 3,
                   "text-success": currentRating === 3,
                 },
-                "text-xl"
+                "text-xl",
               )}
             >
               {currentRating}
             </span>{" "}
             estrellas?
           </h3>
-          <div className="space-x-4 mx-auto *:font-bold">
+          <div className="mx-auto space-x-4 *:font-bold">
             <Button
               disabled={buttonDisabled}
               onClick={() => {

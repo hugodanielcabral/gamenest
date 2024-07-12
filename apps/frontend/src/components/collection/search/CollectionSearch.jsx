@@ -36,24 +36,24 @@ export const CollectionSearch = () => {
   return (
     <section
       aria-label="Collection Search"
-      className="col-span-4 md:col-span-3 text-xl"
+      className="col-span-4 text-xl md:col-span-4"
     >
       <form
         onSubmit={handleSearchSubmit}
         className="flex items-center justify-center"
       >
-        <div className="w-full relative">
+        <div className="relative w-full">
           <InputSearch
             name="search"
             placeholder="Buscar juegos..."
-            className="border-t-info border-t-4 bg-base-200 focus:outline-none focus:ring-2 focus:ring-info focus:border-info focus:border-t-2 focus:border-b-2 transition-colors duration-500 p-2 mt-2 rounded-md"
+            className="mt-2 rounded-md bg-base-100 p-2 transition-colors duration-500"
             onChange={handleOnChange}
             value={search}
           ></InputSearch>
           {urlSearchParams.get("search") && (
             <Button
               type="button"
-              className="absolute bottom-0 right-5 bg-transparent hover:bg-transparent px-0 text-error font-bold"
+              className="absolute bottom-0 right-5 bg-transparent px-0 font-bold text-error hover:bg-transparent"
               onClick={() => {
                 clearQueryParamAndNavigate("search");
                 setFormData({

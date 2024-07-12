@@ -19,7 +19,7 @@ export const RatingStars = ({
           onChange={() => handleOnChange(star)}
           className={
             rating === 0
-              ? "mask mask-star opacity-30"
+              ? "mask mask-star bg-gray-500"
               : "mask mask-star disabled:cursor-not-allowed"
           }
         />

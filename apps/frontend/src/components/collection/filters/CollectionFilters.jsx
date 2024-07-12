@@ -22,7 +22,7 @@ export const CollectionFilters = ({ filtersData, modalOpen, setModalOpen }) => {
 
   return (
     <>
-      <div className="md:block hidden">
+      <div className="hidden sm:hidden md:block">
         <FiltersCard
           selectedOptions={selectedOptions}
           handleOnChange={handleOnChange}
@@ -31,7 +31,7 @@ export const CollectionFilters = ({ filtersData, modalOpen, setModalOpen }) => {
         />
       </div>
       {modalOpen && (
-        <div className="md:hidden block">
+        <div className="block md:hidden">
           <Modal
             isOpen={modalOpen}
             hasCloseBtn={true}

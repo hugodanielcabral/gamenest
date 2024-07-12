@@ -1,4 +1,3 @@
-import collectionBackground from "../assets/backgrounds/collection-background.webp";
 import { useCollection } from "../context/CollectionContext";
 import { Button } from "../components/ui/index.js";
 import { CollectionSearch } from "../components/collection/search/CollectionSearch.jsx";
@@ -37,34 +36,49 @@ export const CollectionPage = () => {
   return isLoading ? (
     <CollectionPageSkeleton />
   ) : (
-    <Layout>
-      <img
-        src={collectionBackground}
-        className="w-full absolute left-0 right-0 gradient-mask-b-[rgb(0,0,0,1),rgb(0,0,0,0.4)_40%,rgb(0,0,0,0)]"
-      />
-      <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-y-5 gap-x-10">
+    <Layout className="bg-gradient-to-bl from-indigo-700 via-blue-800 to-cyan-900">
+      <article className="container relative z-10 mx-auto grid grid-cols-4 gap-x-10 gap-y-5 p-4">
         <CollectionSearch collectionData={collectionData} />
-        <section className="md:hidden block col-span-4 mx-auto font-bold">
+        <section className="col-span-4 mx-auto block font-bold md:hidden">
           <Button onClick={() => setModalOpen(true)}>Filtros</Button>
         </section>
+        <div className="drawer z-10">
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+          <div className="drawer-content">
+            {/* Page content here */}
+            <label
+              htmlFor="my-drawer"
+              className="btn btn-primary drawer-button"
+            >
+              Filtros
+            </label>
+          </div>
+          <div className="drawer-side overflow-hidden">
+            <label
+              htmlFor="my-drawer"
+              aria-label="close sidebar"
+              className="drawer-overlay"
+            ></label>
+            <ul className="menu mt-28 min-h-full w-80 bg-base-200 p-4 text-base-content">
+              {/* Sidebar content here */}
+              <CollectionFilters
+                filtersData={filtersData}
+                modalOpen={modalOpen}
+                setModalOpen={setModalOpen}
+              />
+            </ul>
+          </div>
+        </div>
 
         {collectionData.length && collectionData?.length > 0 ? (
           <CollectionList collectionData={collectionData} />
         ) : (
-          <p className="col-span-4 md:col-span-3 text-center text-white text-2xl">
+          <p className="col-span-4 text-center text-2xl text-white md:col-span-3">
             {errors ? errors : "No tienes juegos en tu colección"}
           </p>
         )}
 
-        <section className="md:col-span-1">
-          <CollectionFilters
-            filtersData={filtersData}
-            modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
-          />
-        </section>
-
-        <CollectionPagination totalPages={totalPages} />
+        {totalPages > 1 && <CollectionPagination totalPages={totalPages} />}
       </article>
     </Layout>
   );

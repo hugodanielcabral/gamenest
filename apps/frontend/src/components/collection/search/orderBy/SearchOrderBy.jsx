@@ -10,7 +10,7 @@ export const SearchOrderBy = ({ handleOnChange, orderBy }) => {
         name="orderBy"
         onChange={handleOnChange}
         value={orderBy}
-        className="border-b-0"
+        className="border-b-0 text-xs text-gray-300"
       >
         {ORDERBY_VALUES.map((orderValue) => (
           <Option

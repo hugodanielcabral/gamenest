@@ -4,6 +4,9 @@ import getImageUrl from "../../../../utils/getImageUrl.js";
 import { Button } from "../../../ui/button/Button.jsx";
 import { useNavigate } from "react-router-dom";
 import { CardImage } from "../../../ui/card/image/CardImage.js";
+import {CardRating} from "../../list/card/rating/CardRating.jsx";
+import { DateTime } from "luxon";
+import { CardActions } from "../../list/card/actions/CardActions.jsx";
 
 type GameCollectionData = {
   amount_paid: number | null;
@@ -52,12 +55,18 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
     { id: 3, name: "Tienda", value: gameCollectionData?.store_name },
     { id: 4, name: "Propiedad", value: gameCollectionData?.ownership_name },
     { id: 5, name: "Estado", value: gameCollectionData?.status_name },
-    { id: 6, name: "Fecha de comienzo", value: gameCollectionData?.start_date },
-    { id: 7, name: "Total pagado", value: gameCollectionData?.amount_paid },
+    { id: 6, name: "Fecha de comienzo", value: DateTime.fromISO(gameCollectionData?.start_date ?? "").toFormat("dd/MM/yyyy")},
+    { id: 7, name: "Total pagado", value: Intl.NumberFormat("es-ES", {
+      style: "currency",
+      currency: "ARS",
+    }).format(gameCollectionData?.amount_paid ?? 0)
+    },
     {
       id: 8,
       name: "Fecha de finalización",
-      value: gameCollectionData?.finish_date,
+      value: DateTime.fromISO(gameCollectionData?.finish_date ?? "").toFormat(
+        "dd/MM/yyyy"
+        ),
     },
   ];
 
@@ -71,6 +80,8 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
   return (
     <div className="mt-10 flex flex-col items-center justify-around gap-x-4 md:flex-row">
       <div className="flex flex-col gap-y-2">
+        <CardRating gameData={gameCollectionData} />
+        <CardActions gameData={gameCollectionData} />
         <CardImage src={GAME_IMAGE_URL} alt={`Cover de ${gameCollectionData?.game_name}`} />
         <Button
           className="font-bold uppercase"

@@ -5,7 +5,13 @@ import { SORT_VALUES } from "../../../../utils/constants";
 export const SearchSort = ({ sort, handleOnChange }) => {
   return (
     <div className="basis-32 text-white">
-      <Select id="sort" name="sort" onChange={handleOnChange} value={sort}>
+      <Select
+        id="sort"
+        name="sort"
+        onChange={handleOnChange}
+        value={sort}
+        className="text-xs text-gray-300"
+      >
         {SORT_VALUES.map((sortValue) => (
           <Option
             key={sortValue.id}

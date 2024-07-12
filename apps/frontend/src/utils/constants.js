@@ -178,7 +178,7 @@ export const ORDERBY_VALUES = [
   {
     id: 4,
     name: "Horas jugadas",
-    value: "hours_played",
+    value: "total_played",
   },
   {
     id: 5,
