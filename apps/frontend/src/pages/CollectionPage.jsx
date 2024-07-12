@@ -32,7 +32,7 @@ export const CollectionPage = () => {
     getCollectionFilters();
   }, []);
 
-  return !isLoading ? (
+  return isLoading ? (
     <CollectionPageSkeleton />
   ) : (
     <Layout className="bg-gradient-to-bl from-indigo-700 via-blue-800 to-cyan-900">
