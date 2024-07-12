@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import propTypes from "prop-types";
 export const RatingStars = ({
   TOTAL_STARS,
@@ -17,11 +18,15 @@ export const RatingStars = ({
           checked={star === rating}
           disabled={rating === star}
           onChange={() => handleOnChange(star)}
-          className={
-            rating === 0
-              ? "mask mask-star bg-gray-500"
-              : "mask mask-star disabled:cursor-not-allowed"
-          }
+          className={clsx(
+            {
+              "bg-gray-500 opacity-75": rating === 0,
+              "bg-red-500": rating === 1 || rating === 2,
+              "bg-green-500": rating === 3 || rating === 4,
+              "bg-yellow-500": rating === 5,
+            },
+            "mask mask-star disabled:cursor-not-allowed",
+          )}
         />
       ))}
     </div>

@@ -9,22 +9,22 @@ export const ConfirmationMessage = ({
   onCancel,
 }) => {
   return (
-    <div className="modal-content bg-dark-1 text-white space-y-5">
-      <h2 className="text-white font-bold text-2xl text-center">{title}</h2>
+    <div className="modal-content bg-dark-1 space-y-5 text-white">
+      <h2 className="text-center text-2xl font-bold text-red-500">{title}</h2>
       {img && <img src={img} className="mx-auto my-2" />}
       <p className="text-gray-300">{description}</p>
-      <div className="flex gap-2 justify-end">
+      <div className="flex justify-end gap-2">
         <Button
-          className="bg-error hover:bg-red-400 font-bold"
+          className="bg-red-500 font-bold hover:bg-red-400"
           onClick={onConfirm}
         >
-          Confirm
+          Confirmar
         </Button>
         <Button
-          className="bg-transparent font-bold hover:bg-transparent text-gray-300"
+          className="bg-transparent font-bold text-gray-300 hover:bg-transparent"
           onClick={onCancel}
         >
-          Cancel
+          Cancelar
         </Button>
       </div>
     </div>

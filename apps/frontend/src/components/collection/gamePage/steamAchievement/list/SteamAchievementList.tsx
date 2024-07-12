@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { FaTrophy } from "react-icons/fa6";
 
 type SteamAchievement = {
   name: string;
@@ -22,9 +23,9 @@ export const SteamAchievementList = ({
   return (
     <div className={clsx(
         {
-            "bg-blue-600 hover:bg-blue-500": isAchieved
+            "bg-base-100 hover:bg-blue-400 hover:bg-opacity-30": isAchieved
         },
-        "h-42 cursor space-y-2 rounded-md border border-gray-700 bg-base-100 p-4 hover:bg-gray-700 hover:bg-opacity-50 transition-colors duration-300 ease-in-out"
+        "h-42 cursor space-y-2 rounded-md border border-gray-700 bg-base-100 p-4 hover:bg-gray-700 hover:bg-opacity-50 transition-colors duration-300 ease-in-out relative"
     )}>
       <h3
         className={clsx(
@@ -46,6 +47,11 @@ export const SteamAchievementList = ({
       }, "text-sx sm:text-sm md:text-base")}>
         {achievement.description}
       </p>
+      {isAchieved ? (<p className="absolute top-0 right-3 text-yellow-300">
+        <FaTrophy size={30}/>
+      </p>) : <p className="absolute top-0 right-3 text-gray-400">
+        <FaTrophy size={30}/>
+        </p>}
     </div>
   );
 };

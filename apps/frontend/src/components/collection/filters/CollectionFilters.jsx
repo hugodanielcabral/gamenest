@@ -45,7 +45,7 @@ export const CollectionFilters = ({ filtersData }) => {
       <div className="drawer-content">
         <label
           htmlFor="filters-drawer"
-          className="btn btn-info drawer-button btn-wide"
+          className="btn drawer-button btn-wide bg-blue-600 text-white hover:bg-blue-600 hover:bg-opacity-70"
         >
           Filtros{" "}
           {selectedOptions.status.length + selectedOptions.ownership.length >

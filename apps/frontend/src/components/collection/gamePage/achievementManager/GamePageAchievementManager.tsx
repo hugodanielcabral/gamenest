@@ -128,9 +128,9 @@ export const GamePageAchievementManager = ({
       {!isLoading ? (
         <div className="flex flex-col gap-y-2 rounded-md bg-base-100 bg-opacity-50 p-6 md:flex-row md:gap-x-2">
           <div className="flex-1 space-y-2">
-            <h2 className="text-center text-base text-white sm:text-lg md:text-xl">
+            <h2 className="text-center text-base text-red-500 sm:text-lg md:text-xl">
               No obtenidos: {" "}
-              <span className="text-red-500">
+              <span className="">
                 {unachievedAchievements.length}
               </span>
             </h2>
@@ -143,7 +143,7 @@ export const GamePageAchievementManager = ({
               />
             ) : (
               <div className="text-center text-white">
-                Ya desbloqueaste todos los logros.
+                Ya desbloqueaste todos los logros. ¡Felicidades!
               </div>
             )}
           </div>
@@ -168,9 +168,9 @@ export const GamePageAchievementManager = ({
             </span>
           </div>
           <div className="flex-1 space-y-2">
-            <h2 className="text-center text-base text-white sm:text-lg md:text-xl">
+            <h2 className="text-center text-base sm:text-lg md:text-xl text-yellow-500">
               Obtenidos: {" "}
-              <span className="text-blue-500">
+              <span className="">
                 {achievedAchievements.length}
               </span>
             </h2>
@@ -183,7 +183,7 @@ export const GamePageAchievementManager = ({
               />
             ) : (
               <div className="text-center text-white">
-                Aún no desbloqueaste ningún logro.
+                Aún no desbloqueaste ningún logro. 
               </div>
             )}
           </div>

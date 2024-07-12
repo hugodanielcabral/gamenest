@@ -35,7 +35,7 @@ export const CollectionPage = () => {
   return isLoading ? (
     <CollectionPageSkeleton />
   ) : (
-    <Layout className="bg-gradient-to-bl from-indigo-700 via-blue-800 to-cyan-900">
+    <Layout className="bg-gradient-to-r from-blue-900 from-25% via-black via-60% to-blue-900">
       <article className="container relative z-10 mx-auto grid grid-cols-4 gap-x-10 gap-y-5 p-4">
         <CollectionSearch collectionData={collectionData} />
         <section className="col-span-4 mx-auto">

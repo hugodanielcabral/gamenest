@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useCollection } from "../../../../context/CollectionContext.jsx";
-import getImageUrl from "../../../../utils/getImageUrl.js";
-import { Button } from "../../../ui/button/Button.jsx";
-import { useNavigate } from "react-router-dom";
 import { CardImage } from "../../../ui/card/image/CardImage.js";
-import {CardRating} from "../../list/card/rating/CardRating.jsx";
+import { CardRating } from "../../list/card/rating/CardRating.jsx";
 import { DateTime } from "luxon";
-import { CardActions } from "../../list/card/actions/CardActions.jsx";
+import { DetailsAction } from "./actions/DetailsAction.js";
+import getImageUrl from "../../../../utils/getImageUrl.js";
 
 type GameCollectionData = {
   amount_paid: number | null;
@@ -41,7 +39,18 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
   const { isLoading: isLoadingCollection, getGameFromCollection } =
     useCollection();
 
-  const navigate = useNavigate();
+
+  const formattedStartDate = gameCollectionData?.start_date
+    ? DateTime.fromISO(gameCollectionData.start_date, {
+        zone: "utc",
+      }).toFormat("dd/MM/yyyy")
+    : "Sin fecha";
+
+  const formattedFinishDate = gameCollectionData?.finish_date
+    ? DateTime.fromISO(gameCollectionData.finish_date, {
+        zone: "utc",
+      }).toFormat("dd/MM/yyyy")
+    : "Sin fecha";
 
   const COVER_IMAGE =
     gameCollectionData?.game_cover ||
@@ -55,18 +64,19 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
     { id: 3, name: "Tienda", value: gameCollectionData?.store_name },
     { id: 4, name: "Propiedad", value: gameCollectionData?.ownership_name },
     { id: 5, name: "Estado", value: gameCollectionData?.status_name },
-    { id: 6, name: "Fecha de comienzo", value: DateTime.fromISO(gameCollectionData?.start_date ?? "").toFormat("dd/MM/yyyy")},
-    { id: 7, name: "Total pagado", value: Intl.NumberFormat("es-ES", {
-      style: "currency",
-      currency: "ARS",
-    }).format(gameCollectionData?.amount_paid ?? 0)
+    { id: 6, name: "Fecha de comienzo", value: formattedStartDate },
+    {
+      id: 7,
+      name: "Total pagado",
+      value: Intl.NumberFormat("es-ES", {
+        style: "currency",
+        currency: "ARS",
+      }).format(gameCollectionData?.amount_paid ?? 0),
     },
     {
       id: 8,
       name: "Fecha de finalización",
-      value: DateTime.fromISO(gameCollectionData?.finish_date ?? "").toFormat(
-        "dd/MM/yyyy"
-        ),
+      value: formattedFinishDate,
     },
   ];
 
@@ -76,37 +86,34 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
     });
   }, [gameSlug]);
 
-
   return (
-    <div className="mt-10 flex flex-col items-center justify-around gap-x-4 md:flex-row">
+    <div className="flex flex-col items-center justify-around gap-x-4 md:flex-row">
       <div className="flex flex-col gap-y-2">
-        <CardRating gameData={gameCollectionData} />
-        <CardActions gameData={gameCollectionData} />
-        <CardImage src={GAME_IMAGE_URL} alt={`Cover de ${gameCollectionData?.game_name}`} />
-        <Button
-          className="font-bold uppercase"
-          onClick={() => navigate(`/games/${gameSlug}`)}
-        >
-          Página del juego
-        </Button>
-        <Button
-          className="bg-green-500 font-bold uppercase hover:bg-green-500 hover:bg-opacity-70"
-          onClick={() => navigate(`/collection/update/${gameSlug}`)}
-        >
-          Actualizar info
-        </Button>
+        <CardRating gameSlug={gameSlug} />
+        <CardImage
+          src={GAME_IMAGE_URL}
+          alt={`Cover de ${gameCollectionData?.game_name}`}
+        />
+        <DetailsAction
+          gameSlug={gameSlug}
+          gameCollectionData={gameCollectionData}
+        />
       </div>
       <div className="w-full flex-grow self-end md:w-0">
-        <h3 className="mt-5 text-center text-base italic text-gray-400 sm:text-lg md:text-xl">
+        <h3 className="mt-5 text-center text-base italic text-gray-400 sm:text-lg md:text-xl font-medium uppercase tracking-tight">
           Información de la colección
         </h3>
-        <h2 className="mb-5 text-center text-3xl text-blue-400 sm:text-4xl md:mb-10 md:text-5xl">
+        <h2 className="mb-5 text-center text-3xl text-white sm:text-4xl md:mb-10 md:text-5xl">
           {gameCollectionData?.game_name ?? "Sin nombre"}
         </h2>
-        <div className="grid grid-cols-2 gap-2 rounded-md bg-base-100 bg-opacity-50 p-4 *:col-span-2 *:md:col-span-1">
+        <div className="grid grid-cols-2 gap-2 rounded-md bg-base-100 bg-opacity-50 p-4 *:col-span-2 *:md:col-span-1 border-2 border-gray-700">
           {GAME_DETAILS.map((detail) => (
-            <p key={detail.id} className="text-lg text-gray-400 sm:text-xl md:text-2xl">
-              {detail.name}: <span className="text-white">{detail.value ?? "Sin valor"}</span>
+            <p
+              key={detail.id}
+              className="text-sm text-gray-400 sm:text-base md:text-lg font-medium uppercase tracking-widest"
+            >
+              {detail.name}:{" "}
+              <span className="text-white">{detail.value ?? "Sin valor"}</span>
             </p>
           ))}
         </div>

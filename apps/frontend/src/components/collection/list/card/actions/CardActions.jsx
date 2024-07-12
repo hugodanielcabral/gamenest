@@ -29,7 +29,7 @@ export const CardActions = ({ gameData }) => {
         toast(
           `${gameData.game_name} fue eliminado de tu colección con éxito`,
           "success",
-          "#fff"
+          "#fff",
         );
 
         setModalOpen(false);
@@ -47,8 +47,8 @@ export const CardActions = ({ gameData }) => {
   const menuItemsGeneral = getMenuGeneral(gameData);
 
   return (
-    <article className="col-span-1 row-span-2 relative">
-      <section className="absolute bottom-0 md:top-0 right-0">
+    <article className="relative col-span-1 row-span-2">
+      <section className="absolute bottom-0 right-0 md:top-0">
         <Modal
           isOpen={modalOpen}
           hasCloseBtn={true}

@@ -15,7 +15,7 @@ export const CardCover = ({ gameData }) => {
       src={getImageUrl(gameData?.game_cover, "cover_big") || GAME_IMAGE_URL}
       loading="lazy"
       alt={`${GAME_NAME} cover`}
-      className="absolute inset-0 h-full w-full rounded-md opacity-30 transition-opacity group-hover:opacity-15"
+      className="absolute inset-0 h-full w-full rounded-md border-2 border-gray-700 transition-opacity group-hover:opacity-25"
     />
   );
 };
