@@ -37,19 +37,25 @@ export const CollectionFilters = ({ filtersData }) => {
   return (
     <div className="drawer z-10">
       <input
-        id="my-drawer"
+        id="filters-drawer"
         type="checkbox"
         className="drawer-toggle"
         onChange={() => setDrawerOpen(!drawerOpen)}
       />
       <div className="drawer-content">
-        <label htmlFor="my-drawer" className="btn btn-primary drawer-button">
-          Filtros
+        <label
+          htmlFor="filters-drawer"
+          className="btn btn-info drawer-button btn-wide"
+        >
+          Filtros{" "}
+          {selectedOptions.status.length + selectedOptions.ownership.length >
+            0 &&
+            `(${selectedOptions.status.length + selectedOptions.ownership.length})`}
         </label>
       </div>
-      <div className="drawer-side overflow-hidden">
+      <div className="drawer-side overflow-auto">
         <label
-          htmlFor="my-drawer"
+          htmlFor="filters-drawer"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>

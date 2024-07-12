@@ -2,35 +2,31 @@ import Skeleton from "react-loading-skeleton";
 
 export const CollectionPageSkeleton = () => {
   return (
-    <div className="min-h-screen mt-20">
-      <article className="relative z-10 p-4 container mx-auto grid-cols-4 grid gap-y-5 gap-x-10">
+    <div className="mt-20 min-h-screen">
+      <article className="container relative z-10 mx-auto grid grid-cols-4 gap-x-10 gap-y-5 p-4">
         {/* CollectionSearch */}
-        <section className="col-span-4 md:col-span-3">
+        <section className="col-span-4 md:col-span-4">
           <Skeleton height={50} />
         </section>
 
-        {/* CollectionFilters Mobile */}
-        <section className="col-span-4 md:hidden block mx-auto">
+        {/* CollectionFilters */}
+        <section className="col-span-4 mx-auto">
           <Skeleton height={50} width={120} />
         </section>
 
         {/* CollectionList */}
 
-        <section className="col-span-4 md:col-span-3 grid grid-cols-1 gap-2 h-fit">
-          <Skeleton height={150} />
-          <Skeleton height={150} />
-          <Skeleton height={150} />
-          <Skeleton height={150} />
-        </section>
-
-        {/* CollectionFilters */}
-        <section className="md:col-span-1 md:block hidden">
-          <Skeleton height={500} />
-        </section>
-
-        {/* CollectionPagination */}
-        <section className="col-span-4 mx-auto">
-          <Skeleton height={50} width={120} />
+        <section className="col-span-4 grid h-fit grid-cols-2 gap-2 sm:grid-cols-3 md:col-span-4 md:grid-cols-5">
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
+          <Skeleton height={300} />
         </section>
       </article>
     </div>

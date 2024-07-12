@@ -26,7 +26,10 @@ export const getCollection = async (req, res) => {
       if (!collection[0])
         return res
           .status(404)
-          .json({ message: "No games matches your current search parameters" });
+          .json({
+            message:
+              "Ningún juego coincide con los parámetros de búsqueda actuales.",
+          });
 
       const collectionWithGameInfo = await getGameInfoFromCollection(
         collection
@@ -45,8 +48,8 @@ export const getCollection = async (req, res) => {
       ${ownership ? sql`AND ownership_name IN ${sql(ownershipValue)}` : sql``}
 
       ${status ? sql`AND status_name IN ${sql(statusValue)}` : sql``}
-      ORDER BY ${sql(orderByValue)} DESC LIMIT 10 OFFSET ${
-        pageValue >= 1 ? (pageValue - 1) * 10 : 0
+      ORDER BY ${sql(orderByValue)} DESC LIMIT 20 OFFSET ${
+        pageValue >= 1 ? (pageValue - 1) * 20 : 0
       } `;
     } else {
       collection = await sql`SELECT * FROM collection ${
@@ -57,13 +60,13 @@ export const getCollection = async (req, res) => {
       
       ${
         status ? sql`AND status_name IN ${sql(statusValue)}` : sql``
-      } ORDER BY ${sql(orderByValue)} LIMIT 10 OFFSET ${
-        pageValue >= 1 ? (pageValue - 1) * 10 : 0
+      } ORDER BY ${sql(orderByValue)} LIMIT 20 OFFSET ${
+        pageValue >= 1 ? (pageValue - 1) * 20 : 0
       } `;
     }
 
     if (!collection[0])
-      return res.status(404).json({ message: "No games found" });
+      return res.status(404).json({ message: "No se encontraron juegos." });
 
     const collectionWithGameInfo = await getGameInfoFromCollection(collection);
 
@@ -241,7 +244,7 @@ export const getTotalCollectionPages = async (req, res) => {
           cleanGameName + "%"
         }`;
 
-      const totalPages = Math.ceil(totalGames[0].count / 10);
+      const totalPages = Math.ceil(totalGames[0].count / 20);
       console.log(totalPages, "totalPages");
       res.status(200).json(totalPages);
     }
@@ -257,14 +260,14 @@ export const getTotalCollectionPages = async (req, res) => {
           statusValue
         )}`;
 
-      const totalPages = Math.ceil(totalGames[0].count / 10);
+      const totalPages = Math.ceil(totalGames[0].count / 20);
       res.status(200).json(totalPages);
     }
 
     const totalGames =
       await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
 
-    const totalPages = Math.ceil(totalGames[0].count / 10);
+    const totalPages = Math.ceil(totalGames[0].count / 20);
     res.status(200).json(totalPages);
   } catch (error) {
     console.error(error);

@@ -45,8 +45,8 @@ export const CollectionSearch = () => {
         <div className="relative w-full">
           <InputSearch
             name="search"
-            placeholder="Buscar juegos..."
-            className="mt-2 rounded-md bg-base-100 p-2 transition-colors duration-500"
+            placeholder="Buscar juegos en tu colección"
+            className="mt-2 rounded-md bg-base-100 p-2 text-xs transition-colors duration-500 sm:text-base md:text-xl"
             onChange={handleOnChange}
             value={search}
           ></InputSearch>

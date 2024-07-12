@@ -6,6 +6,7 @@ import { CollectionPagination } from "../components/collection/pagination/Collec
 import { useEffect } from "react";
 import { CollectionPageSkeleton } from "../components/collection/skeleton/CollectionPageSkeleton.jsx";
 import { CollectionFilters } from "../components/collection/filters/CollectionFilters.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const CollectionPage = () => {
   const {
@@ -19,6 +20,7 @@ export const CollectionPage = () => {
     getCollectionFilters,
     filtersData,
   } = useCollection();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCollection();
@@ -30,7 +32,7 @@ export const CollectionPage = () => {
     getCollectionFilters();
   }, []);
 
-  return isLoading ? (
+  return !isLoading ? (
     <CollectionPageSkeleton />
   ) : (
     <Layout className="bg-gradient-to-bl from-indigo-700 via-blue-800 to-cyan-900">
@@ -43,8 +45,20 @@ export const CollectionPage = () => {
         {collectionData.length && collectionData?.length > 0 ? (
           <CollectionList collectionData={collectionData} />
         ) : (
-          <p className="col-span-4 text-center text-2xl text-white md:col-span-3">
-            {errors ? errors : "No tienes juegos en tu colección"}
+          <p className="col-span-4 text-center text-2xl text-white md:col-span-4">
+            {errors ? (
+              errors
+            ) : (
+              <>
+                <span>Aún no agregaste ningún juego.</span>{" "}
+                <span
+                  className="cursor-pointer font-bold text-error hover:underline"
+                  onClick={() => navigate("/games")}
+                >
+                  Comienza ahora
+                </span>
+              </>
+            )}
           </p>
         )}
 

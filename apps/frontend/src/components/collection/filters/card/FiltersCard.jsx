@@ -1,7 +1,6 @@
-import { Fragment } from "react";
-import { CardBackground } from "../../list/card";
-import { FilterItem } from "../item/FilterItem";
 import propTypes from "prop-types";
+import { Fragment } from "react";
+import { FilterItem } from "../item/FilterItem";
 import { GAME_STATUS } from "../../../../utils/constants";
 
 export const FiltersCard = ({
@@ -11,17 +10,17 @@ export const FiltersCard = ({
   clearAll,
 }) => {
   return (
-    <CardBackground className="h-fit border-r-4 border-r-info overflow-auto">
+    <div className="h-fit overflow-auto">
       {selectedOptions.status.length > 0 ||
       selectedOptions.ownership.length > 0 ? (
         <button
-          className="w-full bg-error text-white p-2 rounded-md mt-2 hover:bg-opacity-70 transition-all duration-200 ease-in-out"
+          className="mt-2 w-full rounded-md bg-error p-2 text-white transition-all duration-200 ease-in-out hover:bg-opacity-70"
           onClick={clearAll}
         >
           Limpiar filtros
         </button>
       ) : null}
-      <h2 className="text-2xl text-white text-center divider">Estado</h2>
+      <h2 className="divider text-center text-2xl text-white">Estado</h2>
       {GAME_STATUS.map((statusValue) => (
         <Fragment key={statusValue.id}>
           <FilterItem
@@ -29,14 +28,14 @@ export const FiltersCard = ({
             value={statusValue.name}
             handleOnChange={handleOnChange}
             isChecked={selectedOptions.status.includes(statusValue.name)}
-            className="border-transparent  text-gray-300"
+            className="border-transparent text-gray-300"
           />
         </Fragment>
       ))}
 
       {filtersData?.ownership?.length > 0 && (
         <>
-          <h2 className="text-2xl text-white text-center divider">Propiedad</h2>
+          <h2 className="divider text-center text-2xl text-white">Propiedad</h2>
           {filtersData?.ownership.map((ownershipValue) => (
             <Fragment key={ownershipValue.ownership_name}>
               <FilterItem
@@ -44,7 +43,7 @@ export const FiltersCard = ({
                 value={ownershipValue.ownership_name}
                 handleOnChange={handleOnChange}
                 isChecked={selectedOptions.ownership.includes(
-                  ownershipValue.ownership_name
+                  ownershipValue.ownership_name,
                 )}
                 className="border-transparent text-gray-300"
               />
@@ -52,7 +51,7 @@ export const FiltersCard = ({
           ))}
         </>
       )}
-    </CardBackground>
+    </div>
   );
 };
 

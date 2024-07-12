@@ -4,13 +4,13 @@ import { ORDERBY_VALUES } from "../../../../utils/constants";
 
 export const SearchOrderBy = ({ handleOnChange, orderBy }) => {
   return (
-    <div className="basis-32 text-white">
+    <div className="flex-grow basis-44 text-white">
       <Select
         id="orderBy"
         name="orderBy"
         onChange={handleOnChange}
         value={orderBy}
-        className="border-b-0 text-xs text-gray-300"
+        className="border-0 text-xs text-gray-300"
       >
         {ORDERBY_VALUES.map((orderValue) => (
           <Option

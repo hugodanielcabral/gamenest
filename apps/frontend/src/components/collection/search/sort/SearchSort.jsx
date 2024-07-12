@@ -10,7 +10,7 @@ export const SearchSort = ({ sort, handleOnChange }) => {
         name="sort"
         onChange={handleOnChange}
         value={sort}
-        className="text-xs text-gray-300"
+        className="border-0 text-xs text-gray-300"
       >
         {SORT_VALUES.map((sortValue) => (
           <Option
