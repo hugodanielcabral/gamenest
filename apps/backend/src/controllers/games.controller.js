@@ -11,6 +11,9 @@ env.config();
 
 export const getGames = async (req, res) => {
   const { search, page, genres, platforms } = req.query;
+  if (page && isNaN(page)) {
+    return res.status(400).json({ error: "Invalid page number" });
+  }
 
   if (search) {
     const { gamesData, countData } = await getGamesBySearch(
@@ -23,8 +26,8 @@ export const getGames = async (req, res) => {
     const data = {
       games: gamesData,
       count: countData,
-      currentPage: parseInt(page, 10) || 1,
-      totalPages: Math.ceil(countData.count / 10),
+      currentPage: parseInt(page, 20) || 1,
+      totalPages: Math.ceil(countData.count / 20),
     };
 
     return res.json(data);
@@ -40,7 +43,7 @@ export const getGames = async (req, res) => {
       platforms ? `& platforms=(${platforms})` : ""
     } ${
       genres ? `& genres=(${genres})` : ""
-    }; sort rating desc;limit 10; offset ${page ? (page - 1) * 10 : 0};`,
+    }; sort rating desc;limit 20; offset ${page ? (page - 1) * 20 : 0};`,
   });
 
   if (!response.ok) {
@@ -53,8 +56,8 @@ export const getGames = async (req, res) => {
   res.json({
     games: gamesData,
     count: countData,
-    currentPage: parseInt(page, 10) || 1,
-    totalPages: Math.ceil(countData.count / 10),
+    currentPage: parseInt(page, 20) || 1,
+    totalPages: Math.ceil(countData.count / 20),
   });
 };
 

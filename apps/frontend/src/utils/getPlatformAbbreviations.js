@@ -9,7 +9,7 @@ const getPlatformAbbreviations = (game) => {
 
     const remainingPlatforms = totalPlatforms - 3;
 
-    return [...platforms, `+${remainingPlatforms} more`];
+    return [...platforms, `+${remainingPlatforms} más`];
   }
 
   return game.platforms.map((platform) => platform.abbreviation);

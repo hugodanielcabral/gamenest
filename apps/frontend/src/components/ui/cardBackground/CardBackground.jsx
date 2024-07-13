@@ -7,9 +7,9 @@ export const CardBackground = ({ children, className }) => {
     <div
       className={twMerge(
         clsx(
-          "bg-base-200 bg-opacity-90 shadow-lg border-2 border-gray-700 p-3 rounded-md",
-          className
-        )
+          "rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-3 shadow-md shadow-black",
+          className,
+        ),
       )}
     >
       {children}
