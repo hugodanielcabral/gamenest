@@ -43,7 +43,9 @@ export const getGames = async (req, res) => {
       platforms ? `& platforms=(${platforms})` : ""
     } ${
       genres ? `& genres=(${genres})` : ""
-    }; sort rating desc;limit 20; offset ${page ? (page - 1) * 20 : 0};`,
+    }; sort aggregated_rating desc;limit 20; offset ${
+      page ? (page - 1) * 20 : 0
+    };`,
   });
 
   if (!response.ok) {
