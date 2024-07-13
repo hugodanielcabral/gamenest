@@ -46,7 +46,9 @@ export const ListCard = ({ gameData }) => {
                 </div>
               </div>
               <p className="mt-5 h-fit text-center text-xs italic text-white md:text-sm">
-                {gameData?.progress_notes ?? "Sin notas de progreso"}
+                {gameData?.progress_note
+                  ? gameData?.progress_note
+                  : "Sin notas de progreso"}
               </p>
             </div>
           </div>
