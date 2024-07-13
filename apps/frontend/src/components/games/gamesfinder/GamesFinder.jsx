@@ -6,6 +6,7 @@ import { GamesFinderFilters } from "./filters/GamesFinderFilters.jsx";
 import { useState } from "react";
 import { GamesFinderSkeleton } from "./skeleton/GamesFinderSkeleton.jsx";
 import { useFetch } from "../../../hooks/useFetch.ts";
+import notFoundImg from "../../../assets/images/fortnite-confused.webp";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GamesFinder = () => {
@@ -47,24 +48,31 @@ export const GamesFinder = () => {
               activeFiltersCount={activeFiltersCount}
             />
           </div>
-          <div className="col-span-4 grid grid-cols-1 gap-4 rounded p-4 shadow lg:grid-cols-2">
+          <div className="col-span-4 grid grid-cols-1 gap-4 rounded p-4 lg:grid-cols-2">
             {games?.length ? (
               games.map((game) => <GamesFinderCard game={game} key={game.id} />)
             ) : (
-              <div className="mx-auto">
+              <div className="col-span-4 mx-auto flex flex-col items-center sm:flex-row">
+                <img
+                  src={notFoundImg}
+                  alt="No se encontraron juegos"
+                  className="h-48"
+                />
                 <NoData
-                  className="w-96 bg-base-100/90 p-5 text-center"
-                  message={error?.statusText || "No se encontraron juegos."}
+                  className="text-2xl text-red-500"
+                  message={error?.statusText || "No se encontraron juegos"}
                 />
               </div>
             )}
           </div>
-          <div className={`col-span-4 mx-auto p-4`}>
-            <GamesFinderPagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-            />
-          </div>
+          {totalPages > 1 && (
+            <div className={`col-span-4 mx-auto p-4`}>
+              <GamesFinderPagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+              />
+            </div>
+          )}
         </>
       )}
     </div>

@@ -34,7 +34,7 @@ export const GamesFinderSearch = () => {
             <div className="mt-4 flex items-center justify-center gap-x-8">
               <Button
                 type="button"
-                className="ml-2 bg-red-500 hover:bg-red-600"
+                className="ml-2 rounded-md bg-red-500 hover:bg-red-600"
                 onClick={() => {
                   clearQueryParamAndNavigate("search");
                   setFormData({
