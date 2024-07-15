@@ -1,13 +1,20 @@
 import propTypes from "prop-types";
-import ReactPlayer from "react-player";
 import { Button } from "../../../ui/index.js";
-import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
+import { Link, useNavigate } from "react-router-dom";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
 import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
 import { useAuth } from "../../../../context/AuthContext.jsx";
 import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
 import { tabsGameDetailsMediaData } from "../../../../constants/gamedetails/websiteicons.js";
+import { CardImage } from "../../../ui/card/image/CardImage.tsx";
+import clsx from "clsx";
+import Plyr from "plyr-react";
+import "plyr-react/plyr.css";
+import "./GameDetailsMedia.css";
+import { MediaList } from "./list/MediaList.tsx";
+import { Tooltip } from "../../../ui/tooltip/Tooltip.tsx";
+import { getWebSiteIcons } from "../../../../utils/getWebSiteIcons.js";
+import { getPlatformsIcons } from "../../../../utils/getPlatformsIcons.js";
 
 export const GameDetailsMedia = ({
   data,
@@ -30,78 +37,117 @@ export const GameDetailsMedia = ({
     ? `/collection/`
     : `/collection/add/${gameSlug}`;
   let gameCollectionButtonLabel = gameInCollection
-    ? "Ya en la colección"
+    ? "En tu colección"
     : "Agregar a la colección";
 
+  const videoSrc = {
+    type: "video",
+    sources: [
+      {
+        src:
+          `${data?.videos[0]?.video_id}` || "https://www.youtube.com/watch?v=0",
+        provider: "youtube",
+      },
+    ],
+  };
+
+  console.log(data);
+
   return (
-    <div className="grid grid-cols-4 gap-4 items-stretch">
-      <div className="col-span-4 sm:col-span-1 md:col-span-1 flex flex-col gap-3">
-        <img
-          className="flex-grow"
-          src={largeCoverUrl}
-          alt={`Cover de ${data?.name}`}
-        />
-        {isAuth ? (
-          <Button
-            className={clsx(
-              "font-semibold text-sm sm:text-sm md:text-lg transition-all duration-300 ease-in-out disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed",
-              gameInCollection
-                ? "bg-success hover:bg-success hover:bg-opacity-70 text-white"
-                : "bg-info hover:bg-info hover:bg-opacity-70 text-white"
-            )}
-            disabled={isLoading}
-            onClick={() => navigate(navigateTo)}
-          >
-            {isLoading ? "Cargando..." : gameCollectionButtonLabel}
-          </Button>
-        ) : (
-          <Button
-            className="bg-warning hover:bg-warning hover:bg-opacity-90 text-zinc-600 text-sm sm:text-sm md:text-lg font-semibold transition-all duration-300 ease-in-out"
-            onClick={() => navigate("/login")}
-          >
-            Agrega a tu colección (Inicia sesión)
-          </Button>
-        )}
-      </div>
-      <div className="col-span-4 sm:col-span-3 md:col-span-3 flex flex-col gap-3">
-        {data?.videos ? (
-          <div className="flex-grow min-h-[200px] max-h-[600px]">
-            <ReactPlayer
-              url={`https://www.youtube.com/watch?v=${data.videos[0].video_id}`}
-              light={true}
-              width="100%"
-              height="100%"
-              controls={true}
-              muted={true}
-            />
+    <div className="mx-auto grid grid-cols-4 gap-4">
+      <div className="col-span-4 flex flex-col gap-4 md:flex-row">
+        <div className="flex flex-col items-center gap-y-1">
+          <CardImage
+            src={largeCoverUrl}
+            alt={`Cover de ${data?.name}`}
+            className="h-56 w-40 sm:h-64 sm:w-48 md:h-72 md:w-56"
+          />
+          {isAuth && (
+            <Button
+              className={clsx(
+                {
+                  "bg-blue-400 text-black hover:bg-blue-500 hover:bg-opacity-90":
+                    !gameInCollection,
+                  "bg-success text-white hover:bg-success hover:bg-opacity-70":
+                    gameInCollection,
+                },
+                "w-40 text-xs font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50 sm:w-48 sm:text-sm md:w-56 md:text-base",
+              )}
+              disabled={isLoading}
+              onClick={() => navigate(navigateTo)}
+            >
+              {isLoading ? "Cargando..." : gameCollectionButtonLabel}
+            </Button>
+          )}
+        </div>
+        <Plyr source={videoSrc} />
+        <div className="flex flex-grow flex-col rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black">
+          <div className="flex-grow justify-center space-y-2 rounded-md">
+            <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg">
+              Sitios web
+            </h3>
+            <ul className="flex flex-wrap justify-center gap-4">
+              {data?.websites ? (
+                data.websites.map((website) => (
+                  <Link key={website.id} to={website?.url} target="_blank">
+                    <Tooltip text={getWebSiteIcons(website.category).name}>
+                      <MediaList
+                        key={website.id}
+                        id={website.id}
+                        url={website.url}
+                        className={getWebSiteIcons(website.category).icon}
+                      />
+                    </Tooltip>
+                  </Link>
+                ))
+              ) : (
+                <p>No hay sitios web disponibles</p>
+              )}
+            </ul>
           </div>
-        ) : (
-          <div className="flex-grow min-h-[200px] md:min-h-[300px] shadow-2xl shadow-black">
-            <img
-              src="https://via.placeholder.com/600x200?text=No+Video+Available"
-              alt="No Video Available"
-              className="w-full h-full object-cover"
-            />
+          <div className="divider"></div>
+          <div className="flex-grow justify-center space-y-2 rounded-md">
+            <h3 className="text-center text-base tracking-wider text-blue-300 sm:text-sm md:text-lg">
+              PLATAFORMAS
+            </h3>
+            <ul className="flex flex-wrap justify-center gap-4">
+              {data?.platforms ? (
+                data.platforms.map((platform) => (
+                  <Tooltip key={platform.id} text={platform.name}>
+                    <MediaList
+                      id={platform.id}
+                      name={platform.name}
+                      className={getPlatformsIcons(platform.id).icon}
+                    />
+                  </Tooltip>
+                ))
+              ) : (
+                <p>No hay plataformas disponibles</p>
+              )}
+            </ul>
           </div>
-        )}
+        </div>
       </div>
+
       <div className="col-span-4 my-2">
-        <CardBackground className="overflow-auto max-h-44 rounded-md">
-          <h3 className="text-center text-lg md:text-xl font-semibold text-error">
+        <CardBackground className="max-h-60 space-y-2 overflow-auto rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black">
+          <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-lg md:text-xl">
             Resumen
           </h3>
 
           {(
-            <p className="text-base sm:text-xl md:text-2xl text-white">
-              {retrieveGameSummary(steam_short_description, igdb_summary)}
+            <p className="text-sm text-white sm:text-lg md:text-xl">
+              {steam_short_description
+                ? retrieveGameSummary(steam_short_description, igdb_summary)
+                : igdb_summary}
             </p>
-          ) ?? <p className="text-center mt-2">No hay resumen disponible.</p>}
+          ) ?? <p className="mt-2 text-center">No hay resumen disponible.</p>}
         </CardBackground>
       </div>
       <div className="col-span-4 my-2">
         <div
           role="tablist"
-          className="tabs tabs-bordered gap-4 flex flex-wrap justify-center items-center *:w-[150px] md:w-auto"
+          className="tabs tabs-bordered flex flex-wrap items-center justify-center gap-4 *:w-[150px] md:w-auto"
         >
           {tabsGameDetailsMediaData.map((tab) => (
             <a
@@ -110,15 +156,11 @@ export const GameDetailsMedia = ({
               onClick={() => handleOnClick(tab.id)}
               className={`tab flex-grow ${
                 tab.id === activeTab
-                  ? "tab-active text-white font-bold"
-                  : "text-gray-400"
-              } transition-all duration-300 ease-in-out hover:text-white hover:text-opacity-70`}
+                  ? "tab-active font-bold text-white"
+                  : "text-gray-300"
+              } transition-all duration-200 ease-in-out hover:text-white hover:text-opacity-70`}
             >
-              <img
-                src={tab.icon}
-                alt={`${tab.name} tab`}
-                className={tab.iconClassName}
-              />
+              <span className={tab.icon} />
               <span className={tab.textClassName}>{tab.name}</span>
             </a>
           ))}

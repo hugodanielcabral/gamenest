@@ -6,7 +6,6 @@ dotenv.config();
 //? I should also use a cron job to update the token every 60 days
 
 /* const getIGDBToken = async () => {
-
   try {
     const response = await fetch(
       `https://id.twitch.tv/oauth2/token?client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}&grant_type=client_credentials`,
@@ -25,8 +24,8 @@ dotenv.config();
   } catch (error) {
     console.log(error);
   }
-}; */
-
+};
+ */
 export const getGamesBySearch = async (search, platforms, genres, page) => {
   try {
     const response = await fetch("https://api.igdb.com/v4/games", {

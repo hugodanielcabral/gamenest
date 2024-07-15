@@ -25,7 +25,7 @@ export const GameDetails = () => {
     gameScreenshot = getImageUrl(
       data.screenshots[0]?.url,
       "t_screenshot_huge",
-      "t_thumb"
+      "t_thumb",
     );
   } else {
     gameScreenshot = gameDetailsBg;
@@ -34,13 +34,13 @@ export const GameDetails = () => {
   return !isLoading ? (
     <Layout>
       <BackgroundImage backgroundImage={gameScreenshot}>
-        <div className="relative z-10 p-4 container mx-auto">
+        <div className="container relative z-10 mx-auto p-4">
           {/* Header */}
           <div className="my-2">
             <GameDetailsHeader data={data} />
           </div>
           {/* Cover, Trailer, Add to Collection button, Brief description and Tabs */}
-          <div className="my-2 mx-auto">
+          <div className="mx-auto my-2">
             <GameDetailsMedia
               data={data}
               handleOnClick={handleOnClick}
@@ -49,7 +49,7 @@ export const GameDetails = () => {
             />
           </div>
           {/* Screenshots, Videos, Artworks and Additional info */}
-          <div className="my-2 mx-auto grid grid-cols-4 gap-3">
+          <div className="mx-auto my-2 grid grid-cols-4 gap-3">
             <GameDetailsMediaGallery data={data} activeTab={activeTab} />
           </div>
         </div>
