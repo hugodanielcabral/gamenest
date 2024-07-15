@@ -1,108 +1,87 @@
-import officialIcon from "../../assets/icons/website.webp";
-import wikiaIcon from "../../assets/icons/wikia.webp";
-import wikipediaIcon from "../../assets/icons/wikipedia.webp";
-import facebookIcon from "../../assets/icons/facebook.webp";
-import twitterIcon from "../../assets/icons/twitter.webp";
-import twitchIcon from "../../assets/icons/twitch.webp";
-import instagramIcon from "../../assets/icons/instagram.webp";
-import youtubeIcon from "../../assets/icons/youtube.webp";
-import steamIcon from "../../assets/icons/steam.webp";
-import redditIcon from "../../assets/icons/reddit.webp";
-import discordIcon from "../../assets/icons/discord.webp";
-import epicgamesIcon from "../../assets/icons/epic-games.webp";
-import gogIcon from "../../assets/icons/gog.webp";
-import itchIcon from "../../assets/icons/itch.webp";
-import iphoneIcon from "../../assets/icons/iphone.webp";
-import androidIcon from "../../assets/icons/android.webp";
-import ipadIcon from "../../assets/icons/ipad.webp";
-import artworkIcon from "../../assets/icons/artworks.webp";
-import screenshotIcon from "../../assets/icons/screenshot.webp";
-import infoIcon from "../../assets/icons/info.webp";
-
 export const websiteIcons = [
   {
     category: 1,
-    icon: officialIcon,
+    icon: "icon-[tabler--world-www] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Website",
   },
   {
     category: 2,
-    icon: wikiaIcon,
+    icon: "icon-[mdi--love] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Wikia",
   },
   {
     category: 3,
-    icon: wikipediaIcon,
+    icon: "icon-[fa6-brands--wikipedia-w] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Wikipedia",
   },
   {
     category: 4,
-    icon: facebookIcon,
+    icon: "icon-[ri--facebook-fill] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Facebook",
   },
   {
     category: 5,
-    icon: twitterIcon,
+    icon: "icon-[fa6-brands--square-x-twitter] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Twitter",
   },
   {
     category: 6,
-    icon: twitchIcon,
+    icon: "icon-[mdi--twitch] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Twitch",
   },
   {
     category: 8,
-    icon: instagramIcon,
+    icon: "icon-[ri--instagram-fill] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Instagram",
   },
   {
     category: 9,
-    icon: youtubeIcon,
+    icon: "icon-[mdi--youtube] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Youtube",
   },
   {
     category: 10,
-    icon: iphoneIcon,
+    icon: "icon-[cbi--apple-iphone] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "iPhone",
   },
   {
     category: 11,
-    icon: ipadIcon,
+    icon: "icon-[icon-park-solid--ipad] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "iPad",
   },
   {
     category: 12,
-    icon: androidIcon,
+    icon: "icon-[uil--android] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Android",
   },
   {
     category: 13,
-    icon: steamIcon,
+    icon: "icon-[fa-brands--steam-square] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Steam",
   },
   {
     category: 14,
-    icon: redditIcon,
+    icon: "icon-[flat-color-icons--reddit] size-4 sm:size-5 md:size-6 hover:bg-gray-400",
     name: "Reddit",
   },
   {
     category: 15,
-    icon: itchIcon,
+    icon: "icon-[cib--itch-io] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Itch",
   },
   {
     category: 16,
-    icon: epicgamesIcon,
+    icon: "icon-[simple-icons--epicgames] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Epic Games",
   },
   {
     category: 17,
-    icon: gogIcon,
+    icon: "icon-[mdi--gog] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "GOG",
   },
   {
     category: 18,
-    icon: discordIcon,
+    icon: "icon-[ic--baseline-discord] size-4 sm:size-5 md:size-6 bg-white hover:bg-gray-400",
     name: "Discord",
   },
 ];
@@ -110,30 +89,26 @@ export const websiteIcons = [
 export const tabsGameDetailsMediaData = [
   {
     id: 1,
-    icon: screenshotIcon,
-    name: "Screenshots",
-    iconClassName: "size-3 sm:size-4 md:size-6 opacity-70",
+    icon: "icon-[zondicons--photo] size-4 sm:size-5 md:size-7 opacity-70",
+    name: "Fotos",
     textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
   },
   {
     id: 2,
-    icon: youtubeIcon,
+    icon: "icon-[mdi--youtube] size-4 sm:size-5 md:size-7 opacity-70",
     name: "Videos",
-    iconClassName: "size-3 sm:size-4 md:size-6 opacity-70",
     textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
   },
   {
     id: 3,
-    icon: artworkIcon,
+    icon: "icon-[mdi--art] size-4 sm:size-5 md:size-7 opacity-70",
     name: "Artworks",
-    iconClassName: "size-3 sm:size-4 md:size-6 opacity-70",
     textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
   },
   {
     id: 4,
-    icon: infoIcon,
-    name: "Información adicional",
-    iconClassName: "size-3 sm:size-4 md:size-6 opacity-70",
+    icon: "icon-[material-symbols--chat-info] size-4 sm:size-5 md:size-7 opacity-70",
+    name: "Más información",
     textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
   },
 ];
