@@ -5,5 +5,5 @@ export const getPlatformsIcons = (platformId) => {
     (platformIcon) => platformIcon.platform_id === platformId,
   );
 
-  return iconFound ? iconFound : "";
+  return iconFound ?? { icon: "icon-[ri--file-unknow-fill]" };
 };

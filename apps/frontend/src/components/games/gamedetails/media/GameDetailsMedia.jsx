@@ -7,14 +7,15 @@ import { useAuth } from "../../../../context/AuthContext.jsx";
 import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
 import { tabsGameDetailsMediaData } from "../../../../constants/gamedetails/websiteicons.js";
 import { CardImage } from "../../../ui/card/image/CardImage.tsx";
+import { MediaList } from "./list/MediaList.tsx";
+import { Tooltip } from "../../../ui/tooltip/Tooltip.tsx";
+import { getPlatformsIcons } from "../../../../utils/getPlatformsIcons.js";
+import { getGenreIcons } from "../../../../utils/getGenreIcons.js";
+import { getGameModesIcon } from "../../../../utils/getIcons.ts";
 import clsx from "clsx";
 import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
 import "./GameDetailsMedia.css";
-import { MediaList } from "./list/MediaList.tsx";
-import { Tooltip } from "../../../ui/tooltip/Tooltip.tsx";
-import { getWebSiteIcons } from "../../../../utils/getWebSiteIcons.js";
-import { getPlatformsIcons } from "../../../../utils/getPlatformsIcons.js";
 
 export const GameDetailsMedia = ({
   data,
@@ -22,8 +23,9 @@ export const GameDetailsMedia = ({
   activeTab,
   gameSlug,
 }) => {
-  const { gameInCollection, isLoading } = useCheckGameInCollection(gameSlug);
   const { isAuth } = useAuth();
+  const { gameInCollection, isLoading } = useCheckGameInCollection(gameSlug);
+
   const navigate = useNavigate();
 
   const steam_short_description = data?.steamData?.short_description;
@@ -44,14 +46,13 @@ export const GameDetailsMedia = ({
     type: "video",
     sources: [
       {
-        src:
-          `${data?.videos[0]?.video_id}` || "https://www.youtube.com/watch?v=0",
+        src: data?.videos?.length
+          ? data?.videos[0].video_id
+          : "https://www.youtube.com/watch?v=0",
         provider: "youtube",
       },
     ],
   };
-
-  console.log(data);
 
   return (
     <div className="mx-auto grid grid-cols-4 gap-4">
@@ -60,7 +61,7 @@ export const GameDetailsMedia = ({
           <CardImage
             src={largeCoverUrl}
             alt={`Cover de ${data?.name}`}
-            className="h-56 w-40 sm:h-64 sm:w-48 md:h-72 md:w-56"
+            className="h-56 w-40 sm:h-72 sm:w-60 lg:h-80 lg:w-64 2xl:h-96 2xl:w-72"
           />
           {isAuth && (
             <Button
@@ -71,7 +72,7 @@ export const GameDetailsMedia = ({
                   "bg-success text-white hover:bg-success hover:bg-opacity-70":
                     gameInCollection,
                 },
-                "w-40 text-xs font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50 sm:w-48 sm:text-sm md:w-56 md:text-base",
+                "w-40 text-xs font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50 sm:w-56 sm:text-base lg:w-64 2xl:w-72",
               )}
               disabled={isLoading}
               onClick={() => navigate(navigateTo)}
@@ -84,28 +85,29 @@ export const GameDetailsMedia = ({
         <div className="flex flex-grow flex-col rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black">
           <div className="flex-grow justify-center space-y-2 rounded-md">
             <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg">
-              Sitios web
+              Modos de juego
             </h3>
             <ul className="flex flex-wrap justify-center gap-4">
-              {data?.websites ? (
-                data.websites.map((website) => (
-                  <Link key={website.id} to={website?.url} target="_blank">
-                    <Tooltip text={getWebSiteIcons(website.category).name}>
+              {data?.game_modes ? (
+                data.game_modes.map((mode) => (
+                  <Link key={mode.id} to={mode?.url} target="_blank">
+                    <Tooltip text={getGameModesIcon(mode.id).name}>
                       <MediaList
-                        key={website.id}
-                        id={website.id}
-                        url={website.url}
-                        className={getWebSiteIcons(website.category).icon}
+                        key={mode.id}
+                        id={mode.id}
+                        icon={getGameModesIcon(mode.id).icon}
                       />
                     </Tooltip>
                   </Link>
                 ))
               ) : (
-                <p>No hay sitios web disponibles</p>
+                <p className="text-pretty text-xs text-gray-400 md:text-base">
+                  No hay modos de juego disponibles
+                </p>
               )}
             </ul>
           </div>
-          <div className="divider"></div>
+          <div className="divider my-1"></div>
           <div className="flex-grow justify-center space-y-2 rounded-md">
             <h3 className="text-center text-base tracking-wider text-blue-300 sm:text-sm md:text-lg">
               PLATAFORMAS
@@ -117,12 +119,37 @@ export const GameDetailsMedia = ({
                     <MediaList
                       id={platform.id}
                       name={platform.name}
-                      className={getPlatformsIcons(platform.id).icon}
+                      icon={getPlatformsIcons(platform.id).icon}
                     />
                   </Tooltip>
                 ))
               ) : (
-                <p>No hay plataformas disponibles</p>
+                <p className="text-pretty text-gray-400">
+                  No hay plataformas disponibles
+                </p>
+              )}
+            </ul>
+          </div>
+          <div className="divider my-1"></div>
+          <div className="flex-grow justify-center space-y-2 rounded-md">
+            <h3 className="text-center text-base tracking-wider text-blue-300 sm:text-sm md:text-lg">
+              GÉNEROS
+            </h3>
+            <ul className="flex flex-wrap justify-center gap-4">
+              {data?.genres ? (
+                data.genres.map((genre) => (
+                  <Tooltip key={genre.id} text={getGenreIcons(genre.id).name}>
+                    <MediaList
+                      id={genre.id}
+                      name={genre.name}
+                      icon={getGenreIcons(genre.id).icon}
+                    />
+                  </Tooltip>
+                ))
+              ) : (
+                <p className="text-pretty text-gray-400">
+                  No hay plataformas disponibles
+                </p>
               )}
             </ul>
           </div>

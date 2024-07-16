@@ -5,5 +5,5 @@ export const getWebSiteIcons = (webSiteId) => {
     (webSiteIcon) => webSiteIcon.category === webSiteId,
   );
 
-  return foundIcon ? foundIcon : "";
+  return foundIcon ? foundIcon : { icon: "icon-[ri--file-unknow-fill]" };
 };
