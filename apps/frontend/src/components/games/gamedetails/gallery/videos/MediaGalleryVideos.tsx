@@ -15,8 +15,8 @@ export const MediaGalleryVideos = ({ videoData }: MediaGalleryVideosProps) => {
 
   return (
     videoData && (
-      <div className="col-span-4 grid grid-cols-1 gap-2 rounded-md border-2 border-gray-700 bg-base-200 bg-opacity-70 p-4 sm:grid-cols-3 md:grid-cols-4">
-        <h2 className="col-span-full text-xl text-white">
+      <div className="col-span-4 grid grid-cols-2 gap-2  rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-lg shadow-black p-4 sm:grid-cols-3 md:grid-cols-4">
+        <h2 className="col-span-full text-xl text-white stroke-slate-100 uppercase tracking-wider">
           Videos ({videoData?.length})
         </h2>
         {videoData.map((video) => (
