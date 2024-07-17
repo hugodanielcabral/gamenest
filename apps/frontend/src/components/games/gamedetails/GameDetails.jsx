@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { GameDetailsHeader } from "./header/GameDetailsHeader";
 import { GameDetailsMedia } from "./media/GameDetailsMedia";
-import { useState } from "react";
 import { GameDetailsMediaGallery } from "./gallery/GameDetailsMediaGallery";
 import { Layout } from "../../layout/Layout";
 import getImageUrl from "../../../utils/getImageUrl.js";
@@ -14,10 +13,6 @@ export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { gameId: gameSlug } = useParams();
   const { data, isLoading } = useFetch(`${BASE_URL}/games/${gameSlug}`);
-  const [activeTab, setActiveTab] = useState(1);
-  const handleOnClick = (tab) => {
-    setActiveTab(tab);
-  };
 
   let gameScreenshot;
 
@@ -41,16 +36,11 @@ export const GameDetails = () => {
           </div>
           {/* Cover, Trailer, Add to Collection button, Brief description and Tabs */}
           <div className="mx-auto my-2">
-            <GameDetailsMedia
-              data={data}
-              handleOnClick={handleOnClick}
-              activeTab={activeTab}
-              gameSlug={gameSlug}
-            />
+            <GameDetailsMedia data={data} gameSlug={gameSlug} />
           </div>
           {/* Screenshots, Videos, Artworks and Additional info */}
           <div className="mx-auto my-2 grid grid-cols-4 gap-3">
-            <GameDetailsMediaGallery data={data} activeTab={activeTab} />
+            <GameDetailsMediaGallery data={data} />
           </div>
         </div>
       </BackgroundImage>

@@ -5,7 +5,6 @@ import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollec
 import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
 import { useAuth } from "../../../../context/AuthContext.jsx";
 import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
-import { tabsGameDetailsMediaData } from "../../../../constants/gamedetails/websiteicons.js";
 import { CardImage } from "../../../ui/card/image/CardImage.tsx";
 import { MediaList } from "./list/MediaList.tsx";
 import { Tooltip } from "../../../ui/tooltip/Tooltip.tsx";
@@ -17,12 +16,7 @@ import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
 import "./GameDetailsMedia.css";
 
-export const GameDetailsMedia = ({
-  data,
-  handleOnClick,
-  activeTab,
-  gameSlug,
-}) => {
+export const GameDetailsMedia = ({ data, gameSlug }) => {
   const { isAuth } = useAuth();
   const { gameInCollection, isLoading } = useCheckGameInCollection(gameSlug);
 
@@ -170,28 +164,6 @@ export const GameDetailsMedia = ({
             </p>
           ) ?? <p className="mt-2 text-center">No hay resumen disponible.</p>}
         </CardBackground>
-      </div>
-      <div className="col-span-4 my-2">
-        <div
-          role="tablist"
-          className="tabs tabs-bordered flex flex-wrap items-center justify-center gap-4 *:w-[150px] md:w-auto"
-        >
-          {tabsGameDetailsMediaData.map((tab) => (
-            <a
-              key={tab.id}
-              role="tab"
-              onClick={() => handleOnClick(tab.id)}
-              className={`tab flex-grow ${
-                tab.id === activeTab
-                  ? "tab-active font-bold text-white"
-                  : "text-gray-300"
-              } transition-all duration-200 ease-in-out hover:text-white hover:text-opacity-70`}
-            >
-              <span className={tab.icon} />
-              <span className={tab.textClassName}>{tab.name}</span>
-            </a>
-          ))}
-        </div>
       </div>
     </div>
   );

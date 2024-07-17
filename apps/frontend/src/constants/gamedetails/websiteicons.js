@@ -89,26 +89,14 @@ export const websiteIcons = [
 export const tabsGameDetailsMediaData = [
   {
     id: 1,
-    icon: "icon-[zondicons--photo] size-4 sm:size-5 md:size-7 opacity-70",
-    name: "Fotos",
+    icon: "icon-[material-symbols--chat-info] size-4 sm:size-5 md:size-7 opacity-70",
+    name: "Información",
     textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
   },
   {
     id: 2,
     icon: "icon-[mdi--youtube] size-4 sm:size-5 md:size-7 opacity-70",
-    name: "Videos",
-    textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
-  },
-  {
-    id: 3,
-    icon: "icon-[mdi--art] size-4 sm:size-5 md:size-7 opacity-70",
-    name: "Artworks",
-    textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
-  },
-  {
-    id: 4,
-    icon: "icon-[material-symbols--chat-info] size-4 sm:size-5 md:size-7 opacity-70",
-    name: "Más información",
+    name: "Media",
     textClassName: "ml-2 text-xs sm:text-sm md:text-base lg:text-lg",
   },
 ];
