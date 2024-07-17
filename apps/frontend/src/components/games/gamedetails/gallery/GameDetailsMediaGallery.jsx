@@ -26,7 +26,7 @@ export const GameDetailsMediaGallery = ({ data }) => {
                 tab.name === activeTab
                   ? "tab-active font-bold text-white"
                   : "text-gray-300"
-              } transition-all duration-200 ease-in-out hover:text-white hover:text-opacity-70`}
+              } uppercase tracking-wider transition-all duration-200 ease-in-out hover:text-white hover:text-opacity-70`}
             >
               <span className={tab.icon} />
               <span className={tab.textClassName}>{tab.name}</span>

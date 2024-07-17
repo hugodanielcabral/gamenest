@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import { Button } from "../../../ui/index.js";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
 import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
 import { useAuth } from "../../../../context/AuthContext.jsx";
@@ -8,7 +8,6 @@ import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
 import { CardImage } from "../../../ui/card/image/CardImage.tsx";
 import { MediaList } from "./list/MediaList.tsx";
 import { Tooltip } from "../../../ui/tooltip/Tooltip.tsx";
-import { getPlatformsIcons } from "../../../../utils/getPlatformsIcons.js";
 import { getGenreIcons } from "../../../../utils/getGenreIcons.js";
 import { getGameModesIcon } from "../../../../utils/getIcons.ts";
 import clsx from "clsx";
@@ -77,55 +76,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
         </div>
         <Plyr source={videoSrc} />
         <div className="flex flex-grow flex-col rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black">
-          <div className="flex-grow justify-center space-y-2 rounded-md">
-            <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg">
-              Modos de juego
-            </h3>
-            <ul className="flex flex-wrap justify-center gap-4">
-              {data?.game_modes ? (
-                data.game_modes.map((mode) => (
-                  <Link key={mode.id} to={mode?.url} target="_blank">
-                    <Tooltip text={getGameModesIcon(mode.id).name}>
-                      <MediaList
-                        key={mode.id}
-                        id={mode.id}
-                        icon={getGameModesIcon(mode.id).icon}
-                      />
-                    </Tooltip>
-                  </Link>
-                ))
-              ) : (
-                <p className="text-pretty text-xs text-gray-400 md:text-base">
-                  No hay modos de juego disponibles
-                </p>
-              )}
-            </ul>
-          </div>
-          <div className="divider my-1"></div>
-          <div className="flex-grow justify-center space-y-2 rounded-md">
-            <h3 className="text-center text-base tracking-wider text-blue-300 sm:text-sm md:text-lg">
-              PLATAFORMAS
-            </h3>
-            <ul className="flex flex-wrap justify-center gap-4">
-              {data?.platforms ? (
-                data.platforms.map((platform) => (
-                  <Tooltip key={platform.id} text={platform.name}>
-                    <MediaList
-                      id={platform.id}
-                      name={platform.name}
-                      icon={getPlatformsIcons(platform.id).icon}
-                    />
-                  </Tooltip>
-                ))
-              ) : (
-                <p className="text-pretty text-gray-400">
-                  No hay plataformas disponibles
-                </p>
-              )}
-            </ul>
-          </div>
-          <div className="divider my-1"></div>
-          <div className="flex-grow justify-center space-y-2 rounded-md">
+          <div className="flex-grow justify-center space-y-4 rounded-md">
             <h3 className="text-center text-base tracking-wider text-blue-300 sm:text-sm md:text-lg">
               GÉNEROS
             </h3>
@@ -143,6 +94,29 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
               ) : (
                 <p className="text-pretty text-gray-400">
                   No hay plataformas disponibles
+                </p>
+              )}
+            </ul>
+          </div>
+          <div className="divider my-1"></div>
+          <div className="flex-grow justify-center space-y-4 rounded-md">
+            <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg">
+              Modos de juego
+            </h3>
+            <ul className="flex flex-wrap justify-center gap-4">
+              {data?.game_modes ? (
+                data.game_modes.map((mode) => (
+                  <Tooltip key={mode.id} text={getGameModesIcon(mode.id).name}>
+                    <MediaList
+                      key={mode.id}
+                      id={mode.id}
+                      icon={getGameModesIcon(mode.id).icon}
+                    />
+                  </Tooltip>
+                ))
+              ) : (
+                <p className="text-pretty text-xs text-gray-400 md:text-base">
+                  No hay modos de juego disponibles
                 </p>
               )}
             </ul>

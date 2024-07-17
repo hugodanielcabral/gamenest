@@ -16,7 +16,7 @@ export const Tooltip = ({ text, children }: TooltipProps) => {
     >
       {children}
       {isVisible && (
-        <div className="absolute -right-8 top-9 z-10 min-w-24 text-pretty rounded-md bg-base-300 bg-opacity-70 p-2 text-center text-xs tracking-tight sm:top-10 sm:-left-7 text-white md:-left-7 md:top-12">
+        <div className="absolute -right-8 top-9 z-10 min-w-24 text-pretty rounded-md bg-base-300 bg-opacity-70 p-2 text-center text-xs tracking-tight sm:top-10 sm:-left-7 text-white md:-left-7 md:top-6">
           {text}
         </div>
       )}
