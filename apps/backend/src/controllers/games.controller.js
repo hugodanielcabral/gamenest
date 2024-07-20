@@ -71,7 +71,7 @@ export const getGame = async (req, res) => {
         "Client-ID": process.env.CLIENT_ID,
         Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
       },
-      body: `fields *, summary,storyline, cover.url, genres.name, platforms.abbreviation, platforms.name, screenshots.url, videos.video_id, artworks.url, websites.*, involved_companies.company.name, involved_companies.developer, game_modes.name, player_perspectives.name, franchises.name, release_dates.*, age_ratings.*, age_ratings.content_descriptions.*, external_games.uid, external_games.category; where slug = "${req.params.id}";`,
+      body: `fields *, bundles.name, bundles.slug, bundles.cover.url, dlcs.name, dlcs.slug,dlcs.cover.url, similar_games.name, similar_games.name,similar_games.cover.url,similar_games.slug, summary,storyline, cover.url, genres.name, platforms.abbreviation, platforms.name, screenshots.url, videos.video_id, artworks.url, websites.*, involved_companies.company.name, involved_companies.developer, game_modes.name, player_perspectives.name, franchises.name, release_dates.*, age_ratings.*, age_ratings.content_descriptions.*, external_games.uid, external_games.category; where slug = "${req.params.id}";`,
     });
 
     const data = await response.json();

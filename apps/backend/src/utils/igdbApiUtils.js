@@ -124,7 +124,7 @@ export const getSteamGame = async (gameData) => {
   const steamAchievements = await getSteamGameAchievements(steamUID);
 
   steamData[steamUID].data.achievements =
-    steamAchievements.game.availableGameStats.achievements;
+    steamAchievements.game.availableGameStats?.achievements;
 
   return steamData[steamUID].data;
 };
