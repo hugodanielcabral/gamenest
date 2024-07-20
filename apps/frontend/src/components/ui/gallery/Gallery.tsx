@@ -62,7 +62,7 @@ export const Gallery = ({
 
   return (
     <dialog
-      className="container mx-auto overflow-auto bg-base-100 p-2 backdrop:bg-base-300 backdrop:bg-opacity-50"
+      className="container mx-auto overflow-hidden bg-base-100 p-2 backdrop:bg-base-300 backdrop:bg-opacity-50"
       onKeyDown={handleOnKeyDown}
       ref={galleryRef}
     >
