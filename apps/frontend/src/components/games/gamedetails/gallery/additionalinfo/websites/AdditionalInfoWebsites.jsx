@@ -1,39 +1,30 @@
 import propTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { CardBackground } from "../../../../../ui/cardBackground/CardBackground.jsx";
-import { websiteIcons } from "../../../../../../constants/gamedetails/websiteicons.js";
+import { MediaList } from "../../../media/list/MediaList";
+import { getWebSiteIcons } from "../../../../../../utils/getWebSiteIcons.js";
+import { Link } from "react-router-dom";
 
-export const AdditionalInfoWebsites = ({ data }) => {
+export const AdditionalInfoWebsites = ({ websiteData }) => {
   return (
-    <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
-      <h2 className="text-center text-xl md:text-2xl mb-2 text-info">
-        Sitios web del juego
-      </h2>
-      <ul className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-        {data?.websites.map((website) => {
-          const websiteIcon = websiteIcons.find(
-            (icon) => icon.category === website.category
-          );
-          return (
-            <li key={website.id} className="flex">
-              {websiteIcon && (
-                <Link
-                  to={website.url}
-                  className="my-2 hover:text-error hover:scale-95 transition-transform duration-300 ease-in-out text-white space-x-2"
-                >
-                  <img
-                    src={websiteIcon.icon}
-                    alt={websiteIcon.name}
-                    className="size-6 inline opacity-80 hover:opacity-100"
-                  />
-                  <p className="inline text-sm">{websiteIcon.name}</p>
-                </Link>
-              )}
-            </li>
-          );
-        }) || (
-          <p className="text-center col-span-4 text-white">
-            No hay sitios web disponibles.
+    <CardBackground className="flex flex-col gap-y-2 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-lg shadow-black">
+      <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+        Sitios web
+      </h3>
+      <ul className="mx-auto flex max-w-[70%] flex-wrap gap-4 lg:max-w-[80%]">
+        {websiteData ? (
+          websiteData.map((website) => (
+            <Link key={website.id} to={website?.url} target="_blank">
+              <MediaList
+                id={website.category}
+                name={website.name}
+                icon={getWebSiteIcons(website.category).icon}
+                className="size-4 sm:size-5 md:size-6 lg:size-7 xl:size-10"
+              />
+            </Link>
+          ))
+        ) : (
+          <p className="text-pretty text-center text-xs text-gray-400 md:text-base">
+            No hay sitios web disponibles
           </p>
         )}
       </ul>
@@ -42,5 +33,5 @@ export const AdditionalInfoWebsites = ({ data }) => {
 };
 
 AdditionalInfoWebsites.propTypes = {
-  data: propTypes.object.isRequired,
+  websiteData: propTypes.object.isRequired,
 };

@@ -11,16 +11,16 @@ export const AdditionalInfoAgeRating = ({ data }) => {
     getFormattedRatings(ageRatings);
 
   return (
-    <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
-      <h2 className="text-center text-xl md:text-2xl mb-2 text-info">
+    <CardBackground className="flex flex-col gap-y-2 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-lg shadow-black">
+      <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-base lg:text-lg xl:text-xl">
         Clasificación por edades
-      </h2>
+      </h3>
       {!ageRatings ? (
-        <p className="text-center col-span-4 text-white">
-          No hay clasificación por edades disponible.
+        <p className="text-center text-xs uppercase tracking-wider text-gray-400 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+          No hay clasificación por edades disponible
         </p>
       ) : (
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-wrap justify-center gap-4">
           {formattedEsrbRating && (
             <AgeRatingImage src={formattedEsrbRating.image} alt="ESRB Rating" />
           )}

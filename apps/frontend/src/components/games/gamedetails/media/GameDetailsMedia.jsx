@@ -49,7 +49,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
 
   return (
     <div className="mx-auto grid grid-cols-4 gap-4">
-      <div className="col-span-4 flex flex-col gap-4 md:flex-row">
+      <div className="col-span-4 flex flex-col gap-4 lg:flex-row">
         <div className="flex flex-col items-center gap-y-1">
           <CardImage
             src={largeCoverUrl}
@@ -75,12 +75,12 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
           )}
         </div>
         <Plyr source={videoSrc} />
-        <div className="flex flex-grow flex-col rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black">
+        <div className="flex flex-shrink-0 flex-row gap-x-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black lg:max-w-[250px] lg:flex-col">
           <div className="flex-grow justify-center space-y-4 rounded-md">
-            <h3 className="text-center text-base tracking-wider text-blue-300 sm:text-sm md:text-lg">
+            <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-base lg:text-lg xl:text-xl">
               GÉNEROS
             </h3>
-            <ul className="flex flex-wrap justify-center gap-4">
+            <ul className="flex flex-grow flex-wrap justify-center gap-4">
               {data?.genres ? (
                 data.genres.map((genre) => (
                   <Tooltip key={genre.id} text={getGenreIcons(genre.id).name}>
@@ -88,6 +88,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
                       id={genre.id}
                       name={genre.name}
                       icon={getGenreIcons(genre.id).icon}
+                      className="size-4 sm:size-6 md:size-7 xl:size-9"
                     />
                   </Tooltip>
                 ))
@@ -100,7 +101,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
           </div>
           <div className="divider my-1"></div>
           <div className="flex-grow justify-center space-y-4 rounded-md">
-            <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg">
+            <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-base lg:text-lg xl:text-xl">
               Modos de juego
             </h3>
             <ul className="flex flex-wrap justify-center gap-4">
@@ -111,6 +112,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
                       key={mode.id}
                       id={mode.id}
                       icon={getGameModesIcon(mode.id).icon}
+                      className="size-4 sm:size-6 md:size-7 xl:size-9"
                     />
                   </Tooltip>
                 ))

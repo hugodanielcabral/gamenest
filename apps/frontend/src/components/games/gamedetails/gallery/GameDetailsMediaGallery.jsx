@@ -6,6 +6,7 @@ import { tabsGameDetailsMediaData } from "../../../../constants/gamedetails/webs
 import { MediaGalleryScreenshots } from "./screenshots/MediaGalleryScreenshots";
 import { MediaGalleryArtworks } from "./artworks/MediaGalleryArtworks";
 import { MediaGalleryVideos } from "./videos/MediaGalleryVideos.tsx";
+import { GameDetailsContent } from "./content/GameDetailsContent.tsx";
 
 export const GameDetailsMediaGallery = ({ data }) => {
   const [activeTab, setActiveTab] = useState("Información");
@@ -36,7 +37,12 @@ export const GameDetailsMediaGallery = ({ data }) => {
       </div>
 
       {activeTab === "Información" && (
-        <MediaGalleryAdditionalInfo data={data} />
+        <>
+          {data?.dlcs?.length > 0 || data?.bundles?.length > 0 ? (
+            <GameDetailsContent data={data} />
+          ) : null}
+          <MediaGalleryAdditionalInfo data={data} />
+        </>
       )}
       {activeTab === "Media" && (
         <>

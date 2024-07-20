@@ -1,34 +1,29 @@
 import propTypes from "prop-types";
 import { CardBackground } from "../../../../../ui/cardBackground/CardBackground";
 import { SpecificationsList } from "./list/SpecificationsList";
+import { Tooltip } from "../../../../../ui/tooltip/Tooltip";
+import { MediaList } from "../../../media/list/MediaList";
 
-export const AdditionalInfoSpecifications = ({ data }) => {
+export const AdditionalInfoSpecifications = ({ keywordsData }) => {
+  console.log(keywordsData);
   return (
-    <CardBackground className="col-span-3 md:col-span-1  flex flex-col">
-      <h2 className="text-center text-xl md:text-2xl mb-2 text-info">
-        Especificaciones
-      </h2>
-      <article className="flex justify-evenly flex-wrap">
-        {data?.franchises && (
-          <SpecificationsList
-            specificationTitle="Franquicias"
-            specification={data.franchises}
-          />
+    <CardBackground className="flex flex-col space-y-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-lg shadow-black md:col-span-1">
+      <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg">
+        Sitios web
+      </h3>
+      {/*  <ul className="flex flex-wrap justify-center gap-4">
+        {keywordsData ? (
+          keywordsData.map(({ language }) => (
+            <Tooltip key={language.id} text={language.name}>
+              <MediaList id={language.id} name={language.name} />
+            </Tooltip>
+          ))
+        ) : (
+          <p className="text-pretty text-xs text-gray-400 md:text-base">
+            No hay sitios web disponibles
+          </p>
         )}
-
-        {data?.game_modes && (
-          <SpecificationsList
-            specificationTitle="Modos de juego"
-            specification={data.game_modes}
-          />
-        )}
-        {data?.genres && (
-          <SpecificationsList
-            specificationTitle="Géneros"
-            specification={data.genres}
-          />
-        )}
-      </article>
+      </ul> */}
     </CardBackground>
   );
 };
