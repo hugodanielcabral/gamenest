@@ -20,8 +20,8 @@ export const AdditionalInfoSimilarGames = ({
   currentGameName
 }: AdditionalInfoSimilarGamesProps) => {
   return (
-    <div className="col-span-3 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black h-fit min-h-fit">
-      <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-pretty">
+    <div className="col-span-3 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-transparent h-fit min-h-fit">
+      <h3 className="text-center text-xs uppercase tracking-wider text-blue-400 sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-pretty">
         Juegos similares a <span className="text-white">{currentGameName}</span>
       </h3>
     <div className="flex justify-center">

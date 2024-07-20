@@ -23,7 +23,7 @@ export const ContentCard = ({ coverUrl, title }: ContentCardProps) => {
       <img
         src={getImageUrl(coverUrl, "cover_big")}
         alt={title}
-        className="h-32 w-20 cursor-pointer rounded-md border-2 border-gray-700 sm:h-36 sm:w-28 md:h-40"
+        className="h-32 w-20 cursor-pointer rounded-md border-2 border-gray-700 sm:h-36 sm:w-28 md:h-40 shadow-lg shadow-black"
         onMouseEnter={handleOnMouseEnter}
         onMouseLeave={handleOnMouseLeave}
       />

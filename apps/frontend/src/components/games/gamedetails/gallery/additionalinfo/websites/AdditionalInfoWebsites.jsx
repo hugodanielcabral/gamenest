@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 export const AdditionalInfoWebsites = ({ websiteData }) => {
   return (
-    <CardBackground className="flex flex-col gap-y-2 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-lg shadow-black">
-      <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+    <CardBackground className="flex flex-col gap-y-2 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-transparent">
+      <h3 className="text-center text-xs uppercase tracking-wider text-blue-400 sm:text-sm md:text-base lg:text-lg xl:text-xl">
         Sitios web
       </h3>
       <ul className="mx-auto flex max-w-[70%] flex-wrap gap-4 lg:max-w-[80%]">

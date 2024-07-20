@@ -54,7 +54,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
           <CardImage
             src={largeCoverUrl}
             alt={`Cover de ${data?.name}`}
-            className="h-56 w-40 sm:h-72 sm:w-60 lg:h-80 lg:w-64 2xl:h-96 2xl:w-72"
+            className="h-56 w-40 sm:h-64 sm:w-52 md:h-72 md:w-56 lg:h-80 lg:w-64 2xl:h-96 2xl:w-72"
           />
           {isAuth && (
             <Button
@@ -65,7 +65,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
                   "bg-success text-white hover:bg-success hover:bg-opacity-70":
                     gameInCollection,
                 },
-                "w-40 text-xs font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50 sm:w-56 sm:text-base lg:w-64 2xl:w-72",
+                "w-40 text-xs font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 disabled:opacity-50 sm:w-52 sm:text-base md:w-56 lg:w-64 2xl:w-72",
               )}
               disabled={isLoading}
               onClick={() => navigate(navigateTo)}
@@ -75,9 +75,9 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
           )}
         </div>
         <Plyr source={videoSrc} />
-        <div className="flex flex-shrink-0 flex-row gap-x-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black lg:max-w-[250px] lg:flex-col">
+        <div className="flex flex-shrink-0 flex-row gap-x-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 lg:max-w-[250px] lg:flex-col">
           <div className="flex-grow justify-center space-y-4 rounded-md">
-            <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+            <h3 className="text-center text-xs uppercase tracking-wider text-blue-400 sm:text-sm md:text-base lg:text-lg xl:text-xl">
               GÉNEROS
             </h3>
             <ul className="flex flex-grow flex-wrap justify-center gap-4">
@@ -93,7 +93,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
                   </Tooltip>
                 ))
               ) : (
-                <p className="text-pretty text-gray-400">
+                <p className="text-pretty text-center text-xs text-gray-400 md:text-base">
                   No hay plataformas disponibles
                 </p>
               )}
@@ -101,7 +101,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
           </div>
           <div className="divider my-1"></div>
           <div className="flex-grow justify-center space-y-4 rounded-md">
-            <h3 className="text-center text-xs uppercase tracking-wider text-blue-300 sm:text-sm md:text-base lg:text-lg xl:text-xl">
+            <h3 className="text-center text-xs uppercase tracking-wider text-blue-400 sm:text-sm md:text-base lg:text-lg xl:text-xl">
               Modos de juego
             </h3>
             <ul className="flex flex-wrap justify-center gap-4">
@@ -117,7 +117,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
                   </Tooltip>
                 ))
               ) : (
-                <p className="text-pretty text-xs text-gray-400 md:text-base">
+                <p className="text-pretty text-center text-xs text-gray-400 md:text-base">
                   No hay modos de juego disponibles
                 </p>
               )}
@@ -127,8 +127,8 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
       </div>
 
       <div className="col-span-4 my-2">
-        <CardBackground className="max-h-60 space-y-2 overflow-auto rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-lg shadow-black">
-          <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-lg md:text-xl">
+        <CardBackground className="max-h-60 space-y-2 overflow-auto rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-transparent">
+          <h3 className="text-center text-base uppercase tracking-wider text-blue-400 sm:text-lg md:text-xl">
             Resumen
           </h3>
 

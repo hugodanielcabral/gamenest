@@ -27,7 +27,7 @@ export const GameDetails = () => {
   }
 
   return !isLoading ? (
-    <Layout>
+    <Layout className="bg-base-300">
       <BackgroundImage backgroundImage={gameScreenshot}>
         <div className="container relative z-10 mx-auto p-4">
           {/* Header */}
