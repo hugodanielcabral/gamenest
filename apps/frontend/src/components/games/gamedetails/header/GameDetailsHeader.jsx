@@ -15,14 +15,14 @@ export const GameDetailsHeader = ({ data }) => {
 
   return (
     <div className="flex flex-col items-center gap-x-20 gap-y-2 md:flex-col">
-      <h1 className="text-pretty text-center text-base text-white sm:text-2xl md:text-left md:text-3xl lg:text-4xl">
+      <h1 className="text-pretty text-center text-xl text-blue-300 sm:text-2xl md:text-left md:text-3xl lg:text-4xl xl:text-5xl">
         {data?.name}
       </h1>
-      <h3 className="text-center text-sm text-info sm:text-lg md:text-left md:text-xl lg:text-xl">
+      <h3 className="text-pretty text-center text-lg text-gray-300 sm:text-xl md:text-left md:text-2xl lg:text-3xl">
         {involvedCompanies && involvedCompanies.company.name + " -"}{" "}
         {formattedDate}
       </h3>
-      <ul className="flex flex-wrap justify-center gap-4 *:text-sm *:text-white *:md:text-lg">
+      <ul className="flex flex-wrap justify-center gap-4 *:text-sm *:text-gray-300 *:sm:text-base *:md:text-lg *:lg:text-xl">
         {data?.platforms ? (
           data.platforms.map((platform) => (
             <Tooltip key={platform.id} text={platform.name}>
