@@ -1,6 +1,6 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface CarouselProps {
@@ -42,17 +42,22 @@ export const Carousel = ({
     setNextCard((prev) => prev - 1);
   };
 
+  useEffect(() => {
+    setPrevCard(start);
+    setNextCard(end);
+  }, [start, end]);
+
   return (
     <div
       className={twMerge(
         clsx(
-          "mx-auto flex min-w-fit items-center rounded-md bg-base-300 bg-opacity-70 p-4",
+          "flex justify-center items-center rounded-md bg-base-300 bg-opacity-70 p-4",
           className,
         ),
       )}
     >
       <button
-        className="icon-[ooui--previous-ltr] size-5 bg-white hover:bg-blue-400 sm:size-12"
+        className="icon-[ooui--previous-ltr] size-5 bg-white hover:bg-blue-400 sm:size-12 mt-20"
         onClick={handlePrevCard}
       ></button>
       <ul className="flex justify-center gap-2 rounded-md p-4" ref={parent}>
@@ -60,7 +65,7 @@ export const Carousel = ({
       </ul>
 
       <button
-        className="icon-[ooui--next-ltr] size-5 bg-white hover:bg-blue-400 sm:size-12"
+        className="icon-[ooui--next-ltr] size-5 bg-white hover:bg-blue-400 sm:size-12 mt-20"
         onClick={handleNextCard}
       ></button>
     </div>
