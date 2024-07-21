@@ -6,6 +6,8 @@ import {
   getPopularGames,
   getSteamGameAchievement,
   createSteamGameAchievement,
+  getUpcomingGames,
+  getMostAnticipatedGames,
 } from "../controllers/games.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
 
@@ -16,6 +18,10 @@ router.get("/games", getGames);
 router.get("/games/:id", getGame);
 
 router.get("/games/latest/released", getLatestGames);
+
+router.get("/games/latest/upcoming", getUpcomingGames);
+
+router.get("/games/latest/anticipated", getMostAnticipatedGames);
 
 router.get("/popular/games", getPopularGames);
 
