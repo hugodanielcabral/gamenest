@@ -75,7 +75,7 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
           )}
         </div>
         <Plyr source={videoSrc} />
-        <div className="flex flex-shrink-0 flex-row gap-x-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 lg:max-w-[250px] lg:flex-col">
+        <div className="flex flex-shrink-0 flex-row gap-x-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 lg:flex-1 lg:flex-col">
           <div className="flex-grow justify-center space-y-4 rounded-md">
             <h3 className="text-center text-xs uppercase tracking-wider text-blue-400 sm:text-sm md:text-base lg:text-lg xl:text-xl">
               GÉNEROS
