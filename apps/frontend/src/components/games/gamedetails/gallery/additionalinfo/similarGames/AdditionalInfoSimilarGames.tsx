@@ -17,34 +17,39 @@ interface AdditionalInfoSimilarGamesProps {
 
 export const AdditionalInfoSimilarGames = ({
   similarGamesData,
-  currentGameName
+  currentGameName,
 }: AdditionalInfoSimilarGamesProps) => {
   return (
-    <div className="col-span-3 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-transparent h-fit min-h-fit">
-      <h3 className="text-center text-xs uppercase tracking-wider text-blue-400 sm:text-sm md:text-lg lg:text-xl xl:text-2xl text-pretty">
+    <div className="col-span-3 h-fit min-h-fit rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 p-4 shadow-transparent">
+      <h3 className="text-pretty text-center text-xs uppercase tracking-wider text-blue-400 sm:text-sm md:text-lg lg:text-xl xl:text-2xl">
         Juegos similares a <span className="text-white">{currentGameName}</span>
       </h3>
-    <div className="flex justify-center">
-    {similarGamesData ? (
-        <Carousel length={similarGamesData.length} start={0} end={3} className="bg-transparent">
-          {similarGamesData.map((game) => (
-            <li key={game.id}>
-              <Link to={`/games/${game.slug}`}>
-                <CardImage
-                  src={getImageUrl(game.cover.url, "cover_big_2x")}
-                  alt={game.name}
-                  className="h-24 sm:h-44 md:h-56 lg:h-64 xl:h-80 border-2 border-gray-700"
-                />
-              </Link>
-            </li>
-          ))}
-        </Carousel>
-      ) : (
-        <p className="text-pretty text-xs text-gray-400 md:text-base text-center">
-          No se encontraron juegos similares
-        </p>
-      )}
-    </div>
+      <div className="flex justify-center">
+        {similarGamesData ? (
+          <Carousel
+            length={similarGamesData.length}
+            start={0}
+            end={3}
+            className="bg-transparent"
+          >
+            {similarGamesData.map((game) => (
+              <li key={game.id}>
+                <Link to={`/games/${game.slug}`}>
+                  <CardImage
+                    src={getImageUrl(game.cover.url, "cover_big_2x")}
+                    alt={game.name}
+                    className="h-24 border-2 border-gray-700 sm:h-44 md:h-56 lg:h-64 xl:h-80"
+                  />
+                </Link>
+              </li>
+            ))}
+          </Carousel>
+        ) : (
+          <p className="text-pretty text-center text-xs text-gray-400 md:text-base">
+            No se encontraron juegos similares
+          </p>
+        )}
+      </div>
     </div>
   );
 };

@@ -50,24 +50,23 @@ export const Carousel = ({
   return (
     <div
       className={twMerge(
-        clsx(
-          "flex justify-center items-center rounded-md bg-base-300 bg-opacity-70 p-4",
-          className,
-        ),
+        clsx("rounded-md bg-base-300 bg-opacity-70 p-4", className),
       )}
     >
-      <button
-        className="icon-[ooui--previous-ltr] size-5 bg-white hover:bg-blue-400 sm:size-12 mt-20"
-        onClick={handlePrevCard}
-      ></button>
-      <ul className="flex justify-center gap-2 rounded-md p-4" ref={parent}>
+      <ul
+        className="flex justify-center items-center gap-1 rounded-md md:gap-2 relative"
+        ref={parent}
+      >
+        <button
+          className="icon-[ooui--previous-ltr] size-6 md:size-10 text-white hover:text-gray-400"
+          onClick={handlePrevCard}
+        ></button>
         {Array.isArray(children) ? children.slice(prevCard, nextCard) : null}
+        <button
+          className="icon-[ooui--next-ltr] size-6 md:size-10 text-white hover:text-gray-400"
+          onClick={handleNextCard}
+        ></button>
       </ul>
-
-      <button
-        className="icon-[ooui--next-ltr] size-5 bg-white hover:bg-blue-400 sm:size-12 mt-20"
-        onClick={handleNextCard}
-      ></button>
     </div>
   );
 };
