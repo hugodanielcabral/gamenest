@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginForm } from "../components/auth/login/form/LoginForm.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useEffect, useState } from "react";
@@ -24,9 +24,8 @@ export const LoginPage = () => {
     repassword: false,
   });
 
-  const { signin, errors: signinErrors, setIsAuth} = useAuth();
-  
-
+  const { signin, errors: signinErrors, setIsAuth } = useAuth();
+  const navigate = useNavigate();
 
   const handleShowPassword = ({ currentTarget }) => {
     const { id } = currentTarget;
@@ -51,7 +50,7 @@ export const LoginPage = () => {
     setIsFormSubmitted(true);
     setButtonStatus("disabled");
     setIsAuth(true);
-    window.location.href = "/profile";
+    navigate("/");
   };
 
   useEffect(() => {

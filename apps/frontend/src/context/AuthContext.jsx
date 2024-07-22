@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 
 import propTypes from "prop-types";
 import Cookies from "js-cookie";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useStorage";
 
 export const AuthContext = createContext();
@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth, removeIsAuth] = useLocalStorage("isAuth", false);
   const [user, setUser, removeUser] = useLocalStorage("user", null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const navigate = useNavigate();
 
   const signup = async (formData) => {
     try {
@@ -100,14 +101,14 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        throw new Error("An error occurred");
+        throw new Error("An error occurred during signout.");
       }
 
+      setIsAuth(false);
+      removeUser();
       removeIsAuth();
-      setTimeout(() => {
-        removeUser();
-        window.location.href = "/";
-      }, 1000);
+      Cookies.remove("token");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

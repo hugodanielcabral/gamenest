@@ -11,6 +11,7 @@ import { CollectionManage } from "./components/collection/manage/CollectionManag
 import { ValidationPage } from "./pages/ValidationPage.tsx";
 import { UsersProvider } from "./context/UsersContext.tsx";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
+import { useAuth } from "./context/AuthContext.jsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -19,19 +20,21 @@ export const GameNestApp = () => {
   const GameDetails = lazy(() =>
     import("./components/games/gamedetails/GameDetails.jsx").then((module) => ({
       default: module.GameDetails,
-    }))
+    })),
   );
   const ProfilePage = lazy(() =>
     import("./pages/ProfilePage.tsx").then((module) => ({
       default: module.ProfilePage,
-    }))
+    })),
   );
-  const CollectionGamePage = lazy(() => import("./pages/CollectionGamePage.tsx").then((module) => ({
-    default: module.CollectionGamePage,
-  })));
+  const CollectionGamePage = lazy(() =>
+    import("./pages/CollectionGamePage.tsx").then((module) => ({
+      default: module.CollectionGamePage,
+    })),
+  );
 
+  const { isAuth } = useAuth();
 
-  const isAuth = localStorage.getItem("isAuth") === "true";
 
   const publicRoutes = [
     {
@@ -111,7 +114,7 @@ export const GameNestApp = () => {
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
           <Routes>
             <Route
-              element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/" />}
+              element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/error" />}
             >
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
@@ -133,7 +136,7 @@ export const GameNestApp = () => {
             </Route>
             <Route
               element={
-                <ProtectedRoute isAllowed={isAuth} redirectTo="/login" />
+                <ProtectedRoute isAllowed={isAuth} redirectTo="/error" />
               }
             >
               <Route
