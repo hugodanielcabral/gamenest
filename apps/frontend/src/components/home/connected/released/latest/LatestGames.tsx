@@ -7,16 +7,18 @@ export const LatestGames = () => {
   const { data, isLoading } = useFetch(`${BASE_URL}/games/latest/released`);
 
   return isLoading ? (
-    <Loading />
+    <div className="mt-10 self-center">
+      <Loading />
+    </div>
   ) : (
     <ul>
       {data.map((game) => (
         <ReleasedList
           key={game.id}
-          coverUrl={game.cover.url}
-          gameName={game.name}
-          releaseDate={game.first_release_date}
-          slug={game.slug}
+          coverUrl={game?.cover.url}
+          gameName={game?.name}
+          releaseDate={game?.first_release_date}
+          slug={game?.slug}
         />
       ))}
     </ul>

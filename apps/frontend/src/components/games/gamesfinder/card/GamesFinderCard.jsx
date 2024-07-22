@@ -17,15 +17,15 @@ export const GamesFinderCard = ({ game }) => {
 
   return (
     <Link to={`/games/${game.slug}`} className="flex">
-      <CardBackground className="group relative flex max-h-[200px] w-full gap-2 shadow-black transition-all duration-300 ease-in-out hover:border-l-blue-400">
+      <CardBackground className="group relative flex max-h-[200px] w-full gap-2 bg-opacity-50 shadow-none transition-all duration-300 ease-in-out hover:border-l-blue-400">
         <img
           src={getImageUrl(coverImage, "cover_big")}
           loading="lazy"
           alt={`${game?.name} cover`}
-          className="w-20 flex-grow-0 self-center border border-info transition-all duration-300 ease-in-out group-hover:border-error sm:w-24 md:h-36 md:w-28"
+          className="w-20 flex-grow-0 self-center border border-info shadow-md shadow-black transition-all duration-300 ease-in-out group-hover:border-error sm:w-24 md:h-36 md:w-28"
         />
         <div className="flex-grow basis-[600px] space-y-1">
-          <h2 className="text-sm font-bold text-white sm:text-lg md:text-xl lg:text-2xl">
+          <h2 className="text-sm font-bold text-white sm:text-base md:text-lg">
             {game?.name || <NoData message="Nombre no disponible" />}
           </h2>
           <ul className="line my-2 flex flex-wrap gap-x-2 *:bg-error *:p-1 *:text-xs *:font-semibold *:text-white *:md:text-sm *:lg:text-base">
@@ -37,7 +37,7 @@ export const GamesFinderCard = ({ game }) => {
               <NoData message="Plataformas no disponibles" />
             )}
           </ul>
-          <p className="line-clamp-2 hidden text-pretty text-white sm:line-clamp-3 sm:text-base md:text-lg">
+          <p className="line-clamp-2 hidden text-pretty text-white sm:line-clamp-3 sm:text-sm md:text-base">
             {game?.summary || <NoData message="Descripción no disponible" />}
           </p>
         </div>

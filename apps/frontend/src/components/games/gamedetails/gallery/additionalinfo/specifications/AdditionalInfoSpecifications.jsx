@@ -5,7 +5,6 @@ import { Tooltip } from "../../../../../ui/tooltip/Tooltip";
 import { MediaList } from "../../../media/list/MediaList";
 
 export const AdditionalInfoSpecifications = ({ keywordsData }) => {
-  console.log(keywordsData);
   return (
     <CardBackground className="flex flex-col space-y-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-lg shadow-black md:col-span-1">
       <h3 className="text-center text-base uppercase tracking-wider text-blue-300 sm:text-sm md:text-lg">

@@ -16,35 +16,36 @@ interface Game {
   rating: number;
 }
 
-const SMALL_SCREEN = window.innerWidth < 640;
-const MEDIUM_SCREEN = window.innerWidth < 768;
-const LARGE_SCREEN = window.innerWidth < 1024;
-const XL_SCREEN = window.innerWidth < 1280;
 
 export const HomePopularGames = () => {
   const { data, isLoading } = useFetch(`${BASE_URL}/popular/games`);
   const [end, setEnd] = useState(4);
 
   const handleOnWindowResize = () => {
-    if (SMALL_SCREEN) {
+
+    let innerWidth = window.innerWidth;
+
+    if (innerWidth < 640) {
       setEnd(2);
       return;
     }
 
-    if (MEDIUM_SCREEN) {
+    if (innerWidth < 768) {
       setEnd(3);
       return;
     }
 
-    if (LARGE_SCREEN) {
+    if (innerWidth < 1024) {
       setEnd(5);
       return;
     }
 
-    if (XL_SCREEN) {
+    if (innerWidth < 1280) {
       setEnd(5);
       return;
     }
+
+    setEnd(5);
   };
 
   const handleOnMouseEnter = (e: React.MouseEvent<HTMLImageElement>) => {
@@ -72,7 +73,7 @@ export const HomePopularGames = () => {
   }, []);
 
   return (
-    <div className="flex flex-col mt-5">
+    <div className="flex flex-col">
       <h2 className="text-center text-lg uppercase tracking-wider text-white underline decoration-blue-500 decoration-4 underline-offset-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
         Populares
       </h2>

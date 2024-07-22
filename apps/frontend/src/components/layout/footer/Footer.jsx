@@ -2,7 +2,7 @@ import gameNestLogo2 from "../../../assets/logos/gamenest-logo-2.webp";
 import { mySocialLinks } from "../../../constants/footer/footerConstants";
 export const Footer = () => {
   return (
-    <footer className="bg-base-300 border-t-2 border-black shadow-lg">
+    <footer className="border-t-2 border-blue-500 bg-base-300 bg-opacity-90">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div className="flex justify-center text-teal-600 sm:justify-start">
@@ -13,11 +13,11 @@ export const Footer = () => {
             />
           </div>
 
-          <ul className="flex gap-2 justify-center items-center">
+          <ul className="flex items-center justify-center gap-2">
             {mySocialLinks.map((socialLink) => (
               <li
                 key={socialLink.id}
-                className="hover:scale-110 transition-transform duration-300 ease-in-out"
+                className="transition-transform duration-300 ease-in-out hover:scale-110"
               >
                 <a href={socialLink.url} target="_blank" rel="noreferrer">
                   <img

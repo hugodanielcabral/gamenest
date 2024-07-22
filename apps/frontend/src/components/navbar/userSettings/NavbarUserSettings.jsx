@@ -5,12 +5,12 @@ export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
   return (
     <div>
       {!isAuth ? (
-        <div className="gap-3 flex md:flex-row flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center gap-3 md:flex-row">
           {authRoutes.map((route) => (
             <Link
               key={route.path}
               to={route.path}
-              className="uppercase font-bold md:text-base text-sm lg:text-lg text-error hover:text-error/80"
+              className="text-sm font-bold uppercase text-error hover:text-error/80 md:text-base lg:text-lg"
             >
               {route.name}
             </Link>
@@ -21,25 +21,25 @@ export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar size-12 md:size-20 hover:scale-95 transition-transform duration-300 ease-in-out"
+            className="avatar btn btn-circle btn-ghost size-12 transition-transform duration-300 ease-in-out hover:scale-95 md:size-20"
           >
-            <div className="rounded-full border-2 border-t-error border-x-info border-y-error size-12 md:size-20 hover:border-y-info hover:border-x-error transition-all duration-500 ease-in-out">
+            <div className="size-12 rounded-full border-2 border-x-info border-y-error border-t-error transition-all duration-500 ease-in-out hover:border-x-error hover:border-y-info md:size-20">
               <img alt="User Profile Picture" src={user?.avatar} />
             </div>
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow bg-base-100 rounded-box w-52 gap-2"
+            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 gap-2 rounded-box bg-base-100 p-3 shadow"
           >
             <Link
               to="/profile"
-              className="uppercase font-bold md:text-base text-base lg:text-lg text-white"
+              className="text-base font-bold uppercase text-white md:text-base lg:text-lg"
             >
               Perfil
             </Link>
             <button
               onClick={signout}
-              className="self-start uppercase font-bold md:text-base text-base lg:text-lg text-error"
+              className="self-start text-base font-bold uppercase text-error md:text-base lg:text-lg"
             >
               Cerrar sesión
             </button>
@@ -56,7 +56,7 @@ NavbarUserSettings.propTypes = {
     propTypes.shape({
       name: propTypes.string.isRequired,
       path: propTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   signout: propTypes.func.isRequired,
   user: propTypes.object.isRequired,

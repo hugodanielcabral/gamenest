@@ -9,7 +9,7 @@ export const NavbarLinkList = ({
   pathname,
 }) => {
   return (
-    <div className="gap-3 hidden md:flex">
+    <div className="hidden gap-3 md:flex">
       {isAuth
         ? privateRoutes.map((route) => (
             <Link
@@ -17,10 +17,10 @@ export const NavbarLinkList = ({
               to={route.path}
               className={clsx(
                 {
-                  "decoration-info underline decoration-solid decoration-4 underline-offset-8 text-white":
+                  "text-white underline decoration-info decoration-solid decoration-4 underline-offset-8":
                     pathname === route.path,
                 },
-                "uppercase font-bold md:text-base text-base lg:text-lg text-gray-400 hover:text-gray-500"
+                "text-base font-bold uppercase text-gray-400 hover:text-gray-500 md:text-base lg:text-lg",
               )}
             >
               {route.name}
@@ -32,10 +32,10 @@ export const NavbarLinkList = ({
               to={route.path}
               className={clsx(
                 {
-                  "decoration-info underline decoration-solid decoration-4 underline-offset-8 text-white":
+                  "text-white underline decoration-info decoration-solid decoration-4 underline-offset-8":
                     pathname === route.path,
                 },
-                "uppercase font-bold md:text-base text-base lg:text-lg text-gray-400 hover:text-gray-500"
+                "text-base font-bold uppercase text-gray-400 hover:text-gray-500 md:text-base lg:text-lg",
               )}
             >
               {route.name}
@@ -51,13 +51,13 @@ NavbarLinkList.propTypes = {
     propTypes.shape({
       name: propTypes.string.isRequired,
       path: propTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   publicRoutes: propTypes.arrayOf(
     propTypes.shape({
       name: propTypes.string.isRequired,
       path: propTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   pathname: propTypes.string.isRequired,
 };

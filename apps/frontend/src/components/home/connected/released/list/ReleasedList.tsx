@@ -24,7 +24,7 @@ export const ReleasedList = ({
         <a
           href={`/games/${slug}`}
           target="_blank"
-          className="line-clamp-1 text-ellipsis text-xs text-blue-400 sm:text-sm md:text-base lg:text-lg"
+          className="line-clamp-1 text-ellipsis text-xs text-purple-300 sm:text-sm md:text-base lg:text-lg"
         >
           {gameName}
         </a>

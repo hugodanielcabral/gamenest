@@ -58,7 +58,6 @@ export const RegisterForm = ({
   showPassword,
   signupErrors,
 }: RegisterFormProps) => {
-  console.log(signupErrors);
 
   return (
     <form className="w-96 space-y-2 rounded-md p-5" onSubmit={handleOnSubmit}>
