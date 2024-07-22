@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
     const token = await handleJwt({ email, verificationToken }, "1d");
 
     const { data, error } = await resend.emails.send(
-      emailTemplate(username, token)
+      emailTemplate(username, token, email)
     );
 
     if (error) {
