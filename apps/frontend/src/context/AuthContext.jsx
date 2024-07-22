@@ -21,7 +21,8 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState(null);
   const { pathname } = useLocation();
   const [isAuth, setIsAuth, removeIsAuth] = useLocalStorage("isAuth", false);
-  const [user, setUser, removeUser] = useLocalStorage("user", null);
+  /*   const [user, setUser, removeUser] = useLocalStorage("user", null);
+   */ const [user, setUser] = useState(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
 
@@ -105,8 +106,8 @@ export const AuthProvider = ({ children }) => {
       }
 
       setIsAuth(false);
-      removeUser();
-      removeIsAuth();
+      /*       removeUser();
+       */ removeIsAuth();
       Cookies.remove("token");
       navigate("/");
     } catch (error) {
@@ -166,8 +167,8 @@ export const AuthProvider = ({ children }) => {
         })
         .catch((error) => {
           console.log(error);
-          removeUser();
-          removeIsAuth();
+          /*           removeUser();
+           */ removeIsAuth();
         });
     }
   }, []);

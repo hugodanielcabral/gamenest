@@ -1,7 +1,7 @@
 import postgres from "postgres";
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env.development" });
+dotenv.config({ path: ".env" });
 
 const sql = postgres(process.env.DATABASE_URL, {
   host: process.env.DB_HOST,
@@ -9,9 +9,9 @@ const sql = postgres(process.env.DATABASE_URL, {
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  /* ssl: {
+  ssl: {
     rejectUnauthorized: false,
-  }, */
+  },
 });
 
 export default sql;

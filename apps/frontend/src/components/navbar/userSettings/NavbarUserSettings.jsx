@@ -31,12 +31,12 @@ export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
             tabIndex={0}
             className="menu dropdown-content menu-sm z-[1] mt-3 w-52 gap-2 rounded-box bg-base-100 p-3 shadow"
           >
-            <Link
+            {/*  <Link
               to="/profile"
               className="text-base font-bold uppercase text-white md:text-base lg:text-lg"
             >
               Perfil
-            </Link>
+            </Link> */}
             <button
               onClick={signout}
               className="self-start text-base font-bold uppercase text-error md:text-base lg:text-lg"

@@ -22,11 +22,11 @@ export const GameNestApp = () => {
       default: module.GameDetails,
     })),
   );
-  const ProfilePage = lazy(() =>
+ /*  const ProfilePage = lazy(() =>
     import("./pages/ProfilePage.tsx").then((module) => ({
       default: module.ProfilePage,
     })),
-  );
+  ); */
   const CollectionGamePage = lazy(() =>
     import("./pages/CollectionGamePage.tsx").then((module) => ({
       default: module.CollectionGamePage,
@@ -95,11 +95,11 @@ export const GameNestApp = () => {
       path: "/changelogs",
       element: <ChangelogsPage />,
     },
-    {
+    /* {
       id: 7,
       path: "/profile",
       element: <ProfilePage />,
-    },
+    }, */
     {
       id: 8,
       path: "/collection/:gameSlug",

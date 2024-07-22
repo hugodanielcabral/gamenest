@@ -69,10 +69,10 @@ export const signin = async (req, res) => {
       /*       httpOnly: true,
        */ sameSite: "none",
       secure: true,
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ username });
+    res.status(200).json({ username, avatar: checkUserExistence[0].avatar });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
