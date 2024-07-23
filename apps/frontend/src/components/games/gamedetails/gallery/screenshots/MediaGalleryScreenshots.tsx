@@ -14,6 +14,8 @@ export const MediaGalleryScreenshots = ({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedScreen, setSelectedScreen] = useState(0);
 
+  if (!screenshotData) return null;
+
   return (
     screenshotData && (
       <div className="col-span-4 grid grid-cols-2 gap-2 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-70 shadow-lg shadow-black p-4 sm:grid-cols-3 md:grid-cols-4">

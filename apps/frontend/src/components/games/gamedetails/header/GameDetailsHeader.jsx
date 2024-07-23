@@ -22,7 +22,7 @@ export const GameDetailsHeader = ({ data }) => {
         {involvedCompanies && involvedCompanies.company.name + " -"}{" "}
         {formattedDate}
       </h3>
-      <ul className="mx-auto flex min-w-96 flex-wrap justify-center gap-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-60 p-4 *:text-sm *:text-blue-400 *:sm:text-base *:md:text-lg *:lg:text-xl">
+      <ul className="mx-auto flex min-w-80 flex-wrap justify-center gap-4 rounded-md border-2 border-gray-700 bg-base-100 bg-opacity-60 p-4 *:text-sm *:text-blue-400 *:sm:text-base *:md:text-lg *:lg:text-xl">
         {data?.platforms ? (
           data.platforms.map((platform) => (
             <Tooltip key={platform.id} text={platform.name}>
