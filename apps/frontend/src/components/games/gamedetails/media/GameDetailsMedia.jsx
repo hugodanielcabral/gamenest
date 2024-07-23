@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
 import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";
 import { useAuth } from "../../../../context/AuthContext.jsx";
-import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
-import { CardImage } from "../../../ui/card/image/CardImage.tsx";
+/* import { retrieveGameSummary } from "../../../../utils/gameDetailsUtils.js";
+ */ import { CardImage } from "../../../ui/card/image/CardImage.tsx";
 import { MediaList } from "./list/MediaList.tsx";
 import { Tooltip } from "../../../ui/tooltip/Tooltip.tsx";
 import { getGenreIcons } from "../../../../utils/getGenreIcons.js";
@@ -21,8 +21,8 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
 
   const navigate = useNavigate();
 
-  const steam_short_description = data?.steamData?.short_description;
-  const igdb_summary = data?.summary;
+  /*   const steam_short_description = data?.steamData?.short_description;
+   */ const igdb_summary = data?.summary;
 
   const largeCoverUrl =
     data?.cover?.url.replace("t_thumb", "t_1080p") ||
@@ -134,9 +134,10 @@ export const GameDetailsMedia = ({ data, gameSlug }) => {
 
           {(
             <p className="text-sm text-white sm:text-lg md:text-xl">
-              {steam_short_description
+              {/* {steam_short_description
                 ? retrieveGameSummary(steam_short_description, igdb_summary)
-                : igdb_summary}
+                : igdb_summary} */}
+              {igdb_summary}
             </p>
           ) ?? <p className="mt-2 text-center">No hay resumen disponible.</p>}
         </CardBackground>
