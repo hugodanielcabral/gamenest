@@ -92,10 +92,10 @@ export const RegisterPage = () => {
             <h2 className="text-2xl font-bold text-success">
               ¡Registro exitoso!
             </h2>
-            <p className="text-sm text-white">
+           {/*  <p className="text-sm text-white">
               Por favor, revisa tu correo electrónico para confirmar tu cuenta.
-            </p>
-
+            </p> */}
+            
             <Button
               className="bg-info text-white"
               onClick={() => navigate("/login")}

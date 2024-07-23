@@ -19,24 +19,24 @@ export const signup = async (req, res) => {
 
     const encryptedPassword = await encryptPassword(password);
 
-    const verificationToken = uuidv4();
+    /* const verificationToken = uuidv4(); */
 
     const newUser =
       await sql`INSERT INTO users (username, email, password, country_id) VALUES (${username}, ${email}, ${encryptedPassword}, ${parseInt(
         country_id
       )}) RETURNING *`;
 
-    await sql`INSERT INTO verification_tokens (user_id, email, token, created_on, used) VALUES (${newUser[0].user_id}, ${email},${verificationToken}, current_timestamp, FALSE)`;
+    /* await sql`INSERT INTO verification_tokens (user_id, email, token, created_on, used) VALUES (${newUser[0].user_id}, ${email},${verificationToken}, current_timestamp, FALSE)`; */
 
-    const token = await handleJwt({ email, verificationToken }, "1d");
+    /* const token = await handleJwt({ email, verificationToken }, "1d"); */
 
-    const { data, error } = await resend.emails.send(
+    /*  const { data, error } = await resend.emails.send(
       emailTemplate(username, token, email)
-    );
+    ); */
 
-    if (error) {
+    /* if (error) {
       return console.error({ error });
-    }
+    } */
 
     res.status(201).json({ message: "User created" });
   } catch (error) {
