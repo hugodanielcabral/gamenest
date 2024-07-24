@@ -88,7 +88,6 @@ export const HomePopularGames = () => {
             <li key={game.id} className="w-32 sm:w-36 md:w-40 lg:w-48 xl:w-56">
               <Link
                 to={`/games/${game.slug}`}
-                target="_blank"
                 className="hover:bg-opacity-70"
               >
                 <img

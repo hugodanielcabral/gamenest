@@ -23,7 +23,6 @@ export const ReleasedList = ({
       <div className="flex flex-col">
         <a
           href={`/games/${slug}`}
-          target="_blank"
           className="line-clamp-1 text-ellipsis text-xs text-purple-300 sm:text-sm md:text-base lg:text-lg"
         >
           {gameName}

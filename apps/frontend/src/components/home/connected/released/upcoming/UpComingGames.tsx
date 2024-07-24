@@ -6,7 +6,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const UpComingGames = () => {
   const { data, isLoading } = useFetch(`${BASE_URL}/games/latest/upcoming`);
 
-
+  if (!data) {
+    return null;
+  }
 
   return isLoading ? (
     <div className="mt-10 self-center">
@@ -14,7 +16,7 @@ export const UpComingGames = () => {
     </div>
   ) : (
     <ul>
-      {data.map((game) => (
+      {data?.map((game) => (
         <ReleasedList
           key={game.id}
           coverUrl={game?.cover.url}
