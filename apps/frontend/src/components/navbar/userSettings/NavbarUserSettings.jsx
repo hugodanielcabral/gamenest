@@ -2,6 +2,9 @@ import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
+  const userAvatar =
+    user?.avatar || "https://placehold.co/50x50?text=Avatar&bg=1d1d1d&fc=fff";
+
   return (
     <div>
       {!isAuth ? (
@@ -24,7 +27,7 @@ export const NavbarUserSettings = ({ user, isAuth, authRoutes, signout }) => {
             className="avatar btn btn-circle btn-ghost size-12 transition-transform duration-300 ease-in-out hover:scale-95 md:size-20"
           >
             <div className="size-12 rounded-full border-2 border-x-info border-y-error border-t-error transition-all duration-500 ease-in-out hover:border-x-error hover:border-y-info md:size-20">
-              <img alt="User Profile Picture" src={user?.avatar} />
+              <img alt="User Profile Picture" src={userAvatar} />
             </div>
           </div>
           <ul

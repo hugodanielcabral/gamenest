@@ -12,6 +12,8 @@ export const Navbar = () => {
   const { isAuth, signout, user } = useAuth();
   const { pathname } = useLocation();
 
+  console.log(user);
+
   return (
     <>
       <div
