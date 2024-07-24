@@ -47,7 +47,7 @@ export const DisplayDetailsProgress = ({
           onChange={handleOnChange}
         />
       </article>
-      <article className="col-span-4 grid grid-cols-4 items-center justify-center gap-2 space-y-2 md:col-span-4">
+      <article className="col-span-4 grid grid-cols-2 items-center justify-center gap-2 space-y-2 md:col-span-4 lg:grid-cols-4">
         <Label className="flex-col text-center text-xs text-white sm:text-sm md:text-left md:text-base">
           Horas jugadas
           <Input
@@ -69,7 +69,7 @@ export const DisplayDetailsProgress = ({
           />
         </Label>
         <Label className="flex-col text-center text-xs text-white sm:text-sm md:text-left md:text-base">
-          Fecha de comienzo
+          Comienzo
           <Input
             type="date"
             name="start_date"
@@ -85,7 +85,7 @@ export const DisplayDetailsProgress = ({
           />
         </Label>
         <Label className="flex-col text-center text-xs text-white sm:text-sm md:text-left md:text-base">
-          Fecha de finalización
+          Finalización
           <Input
             type="date"
             name="finish_date"

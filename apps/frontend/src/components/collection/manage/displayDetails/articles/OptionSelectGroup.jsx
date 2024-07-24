@@ -10,10 +10,10 @@ export const OptionSelectGroup = ({
 }) => {
   return (
     <section>
-      <h3 className="text-base text-center md:text-left sm:text-lg md:text-xl text-white">
+      <h3 className="text-center text-base text-white sm:text-lg md:text-xl lg:text-left">
         {title}
       </h3>
-      <div className="mx-auto md:mx-0.5 self-center max-w-[300px] w-[220px]">
+      <div className="mx-auto w-[220px] max-w-[300px] self-center lg:mx-0.5">
         <Select name={name} onChange={handleOnChange} value={value} id={name}>
           {options.map((option) => (
             <option key={option.id} value={option.name}>

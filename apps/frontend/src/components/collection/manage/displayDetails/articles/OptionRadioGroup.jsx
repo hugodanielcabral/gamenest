@@ -9,11 +9,11 @@ export const OptionRadioGroup = ({
   name,
 }) => {
   return (
-    <article className="col-span-6 sm:col-span-3 md:col-span-2 space-y-2">
-      <h3 className="text-base text-center md:text-left sm:text-lg md:text-xl text-white">
+    <article className="col-span-6 space-y-2 md:col-span-3 lg:col-span-2">
+      <h3 className="text-center text-base text-white sm:text-lg md:text-xl lg:text-left">
         {title}
       </h3>
-      <div className={`flex flex-wrap gap-2 justify-center md:justify-start`}>
+      <div className={`flex flex-wrap justify-center gap-2 lg:justify-start`}>
         {options.map((option) => (
           <Radio
             key={option.id}
