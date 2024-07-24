@@ -128,7 +128,7 @@ export const GamePageAchievementManager = ({
       {!isLoading ? (
         <div className="flex flex-col gap-y-2 rounded-md bg-base-100 bg-opacity-50 p-6 md:flex-row md:gap-x-2">
           <div className="flex-1 space-y-2">
-            <h2 className="text-center text-base text-red-500 sm:text-lg md:text-xl">
+            <h2 className="text-center text-base text-gray-300 sm:text-lg md:text-xl">
               No obtenidos: {" "}
               <span className="">
                 {unachievedAchievements.length}

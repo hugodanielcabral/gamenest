@@ -28,8 +28,8 @@ export const GamePageSteamAchievement = ({
     <div className="max-h-screen gap-1 overflow-auto rounded-md bg-base-100 bg-opacity-50 p-6">
       <h2 className="col-span-2 text-center text-base text-white sm:text-lg md:text-xl">
         Logros obtenidos:{" "}
-        <span className="text-blue-400">{achievedAchievements?.length}</span> de{" "}
-        <span className="text-red-500">
+        <span className="text-yellow-500">{achievedAchievements?.length}</span> de{" "}
+        <span className="text-gray-300">
           {gameData?.steamData?.achievements.length}
         </span>
       </h2>

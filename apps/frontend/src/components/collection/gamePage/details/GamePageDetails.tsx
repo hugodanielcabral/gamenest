@@ -106,11 +106,11 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
         <h2 className="mb-5 text-center text-3xl text-white sm:text-4xl md:mb-10 md:text-5xl">
           {gameCollectionData?.game_name ?? "Sin nombre"}
         </h2>
-        <div className="grid grid-cols-2 gap-2 rounded-md bg-base-100 bg-opacity-50 p-4 *:col-span-2 *:md:col-span-1 border-2 border-gray-700">
+        <div className="grid grid-cols-2 gap-2 rounded-md bg-base-100 bg-opacity-50 p-4 *:col-span-2 *:xl:col-span-1 border-2 border-gray-700">
           {GAME_DETAILS.map((detail) => (
             <p
               key={detail.id}
-              className="text-sm text-gray-400 sm:text-base md:text-lg font-medium uppercase tracking-widest"
+              className="text-xs text-gray-400 sm:text-sm md:text-lg lg:text-xl font-medium uppercase tracking-wider"
             >
               {detail.name}:{" "}
               <span className="text-white">{detail.value ?? "Sin valor"}</span>
