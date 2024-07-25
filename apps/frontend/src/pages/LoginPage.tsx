@@ -49,7 +49,6 @@ export const LoginPage = () => {
 
     setIsFormSubmitted(true);
     setButtonStatus("disabled");
-    setIsAuth(true);
     navigate("/");
   };
 

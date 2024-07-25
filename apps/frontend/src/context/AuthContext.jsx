@@ -79,10 +79,6 @@ export const AuthProvider = ({ children }) => {
       }
 
       setUser(data);
-      //* Because setIsAuth is set to true, the page reloads automatically. This caused
-      //* the inability to execute any message with the "data" return variable. I resolved this by moving
-      //* setIsAuth to the handleSubmit function in the LoginPage component.
-      /*   setIsAuth(true); */
       setIsAuth(true);
       return data;
     } catch (error) {
@@ -168,7 +164,7 @@ export const AuthProvider = ({ children }) => {
         .catch((error) => {
           console.log(error);
           /*           removeUser();
-           */ removeIsAuth();
+           */ /* removeIsAuth(); */
         });
     }
   }, []);
