@@ -7,7 +7,7 @@ export const CollectionList = ({ collectionData }) => {
 
   return (
     <section
-      className="col-span-4 flex flex-wrap justify-center gap-x-1 gap-y-2 sm:justify-start md:col-span-4 md:gap-y-6"
+      className="col-span-4 flex flex-wrap justify-start gap-x-1 gap-y-2 *:mx-auto *:sm:mx-0 md:gap-y-6 lg:col-span-4"
       ref={parent}
     >
       {collectionData.map((game) => (
