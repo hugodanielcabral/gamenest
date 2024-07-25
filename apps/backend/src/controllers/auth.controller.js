@@ -70,7 +70,6 @@ export const signin = async (req, res) => {
       sameSite: "none",
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
-      domain: process.env.DOMAIN,
     });
 
     res.status(200).json({ username, avatar: checkUserExistence[0].avatar });
