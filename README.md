@@ -54,7 +54,7 @@ Todos los campos tienen sus validaciones correspondientes y una barra de progres
 <img src="https://github.com/user-attachments/assets/f1e5afd7-5f39-4970-903e-7a42b2a50bf2">
 
 **Login/Iniciar sesión**
-Esta sección también tiene sus validaciones.
+Esta sección también tiene sus validaciones, cuando inicia sesión el usuario, se crea el token utilizando JWT.
 <img src="https://github.com/user-attachments/assets/2378034c-3bc7-49de-8895-d936e281064c">
 
 **Games Finder / Buscador de juegos**
