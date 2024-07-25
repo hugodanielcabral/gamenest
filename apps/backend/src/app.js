@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 /* import "./cronJobs/deleteUnverifiedUsers.js";
 import "./cronJobs/restartUserEditCredits.js"; */
-dotenv.config({ path: ".env.development" });
+dotenv.config({ path: ".env" });
 
 const app = express();
 
