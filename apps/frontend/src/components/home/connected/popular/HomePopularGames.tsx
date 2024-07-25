@@ -74,7 +74,7 @@ export const HomePopularGames = () => {
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-center text-lg uppercase tracking-wider text-white underline decoration-blue-500 decoration-4 underline-offset-4 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+      <h2 className="text-center text-lg uppercase tracking-wider text-white underline decoration-blue-500 decoration-4 underline-offset-8 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
         Populares
       </h2>
       {!isLoading ? (
