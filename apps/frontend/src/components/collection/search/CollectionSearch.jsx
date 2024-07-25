@@ -27,6 +27,7 @@ export const CollectionSearch = () => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
+      e.stopPropagation();
       handleSearchSubmit(e);
     }
   };
