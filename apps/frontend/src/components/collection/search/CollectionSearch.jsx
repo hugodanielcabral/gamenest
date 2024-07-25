@@ -24,6 +24,13 @@ export const CollectionSearch = () => {
     clearQueryParamAndNavigate("page");
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSearchSubmit(e);
+    }
+  };
+
   useEffect(() => {
     updateUrlAndNavigate({
       orderBy: orderBy,
@@ -49,6 +56,7 @@ export const CollectionSearch = () => {
             className="mt-2 rounded-md bg-base-100 p-2 text-xs transition-colors duration-500 sm:text-base md:text-xl"
             onChange={handleOnChange}
             value={search}
+            handleKeyDown={handleKeyDown}
           ></InputSearch>
           {urlSearchParams.get("search") && (
             <Button
