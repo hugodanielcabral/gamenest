@@ -40,6 +40,7 @@ app.use(
     credentials: true,
   })
 );
+app.set("trust proxy", 1);
 
 // Routes
 
