@@ -23,22 +23,24 @@ interface PopularGame {
 }
 
 export const HomePopularGames = () => {
-  const { data: popularGamesData, isLoading } = useFetch(`${BASE_URL}/popular/games`);
+  const { data: popularGamesData, isLoading } = useFetch(
+    `${BASE_URL}/popular/games`,
+  );
 
   return (
-    <div className="flex justify-center">
+    <section className="flex flex-col justify-center items-center gap-6">
+      <h2 className="text-3xl text-gray-300">
+        Juegos populares <FaFire className="inline text-red-500" />{" "}
+      </h2>
       {!isLoading ? (
-        <div className="flex flex-col items-center gap-4">
-          <h2 className="text-3xl text-gray-300">
-            Juegos populares <FaFire className="inline text-red-500" />{" "}
-          </h2>
+        <>
           <Swiper
             modules={[Navigation, Pagination, A11y]}
             spaceBetween={0}
             slidesPerView={3}
             className="max-w-5xl"
             navigation
-            pagination={{ clickable: true, }}
+            pagination={{ clickable: true }}
           >
             {popularGamesData?.map((game: PopularGame) => (
               <SwiperSlide key={game.id} className="px-10">
@@ -60,12 +62,12 @@ export const HomePopularGames = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </>
       ) : (
         <div className="mt-10">
           <Loading />
         </div>
       )}
-    </div>
+    </section>
   );
 };
