@@ -4,11 +4,7 @@ import { Loading } from "../../../../ui/loading/Loading";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const AnticipatedGames = () => {
-  const { data, isLoading } = useFetch(`${BASE_URL}/games/latest/anticipated`);
-
-  if (!data) {
-    return null;
-  }
+  const { data = [], isLoading = true } = useFetch(`${BASE_URL}/games/latest/anticipated`);
 
   return isLoading ? (
     <div className="mt-10 self-center">

@@ -38,6 +38,7 @@
     "react-player": "^2.14.1",
     "react-router-dom": "^6.21.3",
     "sweetalert2": "^11.10.8",
+    "swiper": "^11.1.12",
     "tailwind-gradient-mask-image": "^1.2.0",
     "tailwind-merge": "^2.2.1",
     "zod": "^3.23.8",
