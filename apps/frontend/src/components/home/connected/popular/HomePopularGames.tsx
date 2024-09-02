@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
 import { useFetch } from "../../../../hooks/useFetch";
-import { Carousel } from "../../../ui/carousel/Carousel";
-import { Link } from "react-router-dom";
 import { Loading } from "../../../ui/loading/Loading";
+import { Link } from "react-router-dom";
+import { FaExternalLinkAlt, FaStar, FaFire } from "react-icons/fa";
+import { Card, CardContent, CardImage } from "../../../ui/card/Card";
 import getImageUrl from "../../../../utils/getImageUrl";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { A11y, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-interface Game {
+interface PopularGame {
   id: number;
   name: string;
   slug: string;
@@ -16,106 +22,47 @@ interface Game {
   rating: number;
 }
 
-
 export const HomePopularGames = () => {
-  const { data, isLoading } = useFetch(`${BASE_URL}/popular/games`);
-  const [end, setEnd] = useState(4);
-
-  const handleOnWindowResize = () => {
-
-    let innerWidth = window.innerWidth;
-
-    if (innerWidth < 640) {
-      setEnd(2);
-      return;
-    }
-
-    if (innerWidth < 768) {
-      setEnd(3);
-      return;
-    }
-
-    if (innerWidth < 1024) {
-      setEnd(5);
-      return;
-    }
-
-    if (innerWidth < 1280) {
-      setEnd(5);
-      return;
-    }
-
-    setEnd(5);
-  };
-
-  const handleOnMouseEnter = (e: React.MouseEvent<HTMLImageElement>) => {
-    e.currentTarget.nextElementSibling?.nextElementSibling.classList.remove(
-      "hidden",
-    );
-  };
-
-  const handleOnMouseLeave = (e: React.MouseEvent<HTMLImageElement>) => {
-    e.currentTarget.nextElementSibling?.nextElementSibling.classList.add(
-      "hidden",
-    );
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleOnWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleOnWindowResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    handleOnWindowResize();
-  }, []);
+  const { data: popularGamesData, isLoading } = useFetch(`${BASE_URL}/popular/games`);
 
   return (
-    <div className="flex flex-col">
-      <h2 className="text-center text-lg uppercase tracking-wider text-white underline decoration-blue-500 decoration-4 underline-offset-8 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
-        Populares
-      </h2>
+    <div className="flex justify-center">
       {!isLoading ? (
-        <Carousel
-          length={data?.length}
-          start={0}
-          end={end}
-          className="bg-transparent"
-        >
-          {data?.map((game: Game) => (
-            <li key={game.id} className="w-32 sm:w-36 md:w-40 lg:w-48 xl:w-56">
-              <Link
-                to={`/games/${game.slug}`}
-                className="hover:bg-opacity-70"
-              >
-                <img
-                  src={getImageUrl(game.cover.url, "cover_big_2x")}
-                  alt={game?.name}
-                  className="rounded-t-md"
-                />
-              </Link>
-              <div className="relative h-16 space-y-1 rounded-b-md bg-base-100 bg-opacity-90 p-4 sm:h-20 md:h-20 lg:h-24">
-                <h3
-                  className="line-clamp-1 text-xs text-white sm:text-sm md:text-sm lg:text-lg"
-                  onMouseEnter={handleOnMouseEnter}
-                  onMouseLeave={handleOnMouseLeave}
-                >
-                  {game?.name}
-                </h3>
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg">
-                  {game?.rating ? `⭐ ${Math.round(game.rating)}/100` : null}
-                </p>
-                <p className="absolute -top-14 left-0 z-10 hidden w-32 text-pretty border border-gray-700 bg-base-100 p-2 text-center text-xs text-white sm:w-36 lg:text-base md:w-40 lg:w-48 xl:w-56 lg:-top-12">
-                  {game?.name}
-                </p>
-              </div>
-            </li>
-          ))}
-        </Carousel>
+        <div className="flex flex-col items-center gap-4">
+          <h2 className="text-3xl text-gray-300">
+            Juegos populares <FaFire className="inline text-red-500" />{" "}
+          </h2>
+          <Swiper
+            modules={[Navigation, Pagination, A11y]}
+            spaceBetween={0}
+            slidesPerView={3}
+            className="max-w-5xl"
+            navigation
+            pagination={{ clickable: true, }}
+          >
+            {popularGamesData?.map((game: PopularGame) => (
+              <SwiperSlide key={game.id} className="px-10">
+                <Card>
+                  <CardImage
+                    imgSrc={() => getImageUrl(game.cover.url, "cover_big_2x")}
+                    title={game.name}
+                  />
+                  <CardContent title={game.name}>
+                    <p className="absolute left-2 right-2 top-28 z-10 flex flex-col items-center gap-1 text-lg text-gray-300">
+                      <FaStar className="text-yellow-400" />
+                      {Math.floor(game.rating)} / 100
+                    </p>
+                    <Link to={`/games/${game.slug}`}>
+                      <FaExternalLinkAlt className="absolute right-2 top-2 z-10 size-6 text-gray-300 opacity-0 transition-colors duration-300 ease-in-out hover:text-info group-hover:opacity-100" />
+                    </Link>
+                  </CardContent>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       ) : (
-        <div className="mx-auto mt-10">
+        <div className="mt-10">
           <Loading />
         </div>
       )}
