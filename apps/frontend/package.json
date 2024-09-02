@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.3.1",
+    "@fontsource/nunito": "^5.0.19",
     "@fontsource/roboto": "^5.0.12",
     "@formkit/auto-animate": "^0.8.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
