@@ -23,7 +23,7 @@ export const ReleasedList = ({
         title={gameName}
       />
       <CardContent className="space-y-4">
-        <h4 className="text-sm font-bold text-white md:text-lg lg:text-xl">{gameName}</h4>
+        <h4 className="text-sm font-bold text-white md:text-lg lg:text-xl text-pretty text-center">{gameName}</h4>
         <p className="text-xs text-white md:text-sm lg:text-lg">
           {DateTime.fromSeconds(releaseDate).toLocaleString()}
         </p>

@@ -2,10 +2,10 @@ import gameNestLogo2 from "../../../assets/logos/gamenest-logo-2.webp";
 import { mySocialLinks } from "../../../constants/footer/footerConstants";
 export const Footer = () => {
   return (
-    <footer className="border-t-2 border-blue-500 bg-base-300 bg-opacity-90">
+    <footer className="border-t-2 border-info bg-base-100">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center sm:justify-between">
-          <div className="flex justify-center text-teal-600 sm:justify-start">
+          <div className="flex justify-center sm:justify-start">
             <img
               src={gameNestLogo2}
               alt="GameNest Logo"
