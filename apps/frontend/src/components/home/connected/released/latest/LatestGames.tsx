@@ -6,8 +6,8 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const LatestGames = () => {
   const { data = [], isLoading = true } = useFetch(`${BASE_URL}/games/latest/released`);
 
-  return isLoading ? (
-    <div className="mt-10 flex justify-center">
+  return !isLoading ? (
+    <div className="mt-10 mx-auto col-span-full">
       <Loading />
     </div>
   ) : (

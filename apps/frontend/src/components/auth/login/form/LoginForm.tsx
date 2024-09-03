@@ -42,7 +42,7 @@ export const LoginForm = ({
 }: LoginFormProps) => {
   return (
     <form className="w-96 space-y-2 rounded-md p-5" onSubmit={handleOnSubmit}>
-      <div className="divider mb-6"></div>
+      <div className="divider mb-6 divider-info opacity-75"></div>
       {signinErrors?.length && (
         <p className="text-center text-xs text-red-500 md:text-sm">
           Nombre de usuario o contraseña inválidos.

@@ -61,7 +61,7 @@ export const RegisterForm = ({
 
   return (
     <form className="w-96 space-y-2 rounded-md p-5" onSubmit={handleOnSubmit}>
-      <div className="divider mb-6"></div>
+      <div className="divider mb-6 divider-info opacity-75"></div>
       <Progress formValues={formValues} clientErrors={clientErrors} />
       {signupErrors?.map((err) => (
         <p
