@@ -42,7 +42,7 @@ export const HomeReleasedGames = () => {
   };
 
   return (
-    <article>
+    <article className="p-8">
       <div className="mb-4 flex justify-center space-x-12">
         {sections.map((section) => (
           <button
@@ -63,6 +63,7 @@ export const HomeReleasedGames = () => {
       </div>
       {sections.map((section) => (
         <div
+          key={section.name}
           className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 ${currentContent === section.name ? "block" : "hidden"}`}
         >
           {section.component}

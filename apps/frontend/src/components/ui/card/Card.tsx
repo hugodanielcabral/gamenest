@@ -35,9 +35,9 @@ const CardContent = ({ className, children }: CardProps) => {
   );
 };
 
-const Card = ({ className, children }: CardProps) => {
+const Card = ({ className, children, ...props }: CardProps) => {
   return (
-    <div className={twMerge(clsx("group relative", className))}>{children}</div>
+    <div className={twMerge(clsx("group relative", className))} {...props}>{children}</div>
   );
 };
 

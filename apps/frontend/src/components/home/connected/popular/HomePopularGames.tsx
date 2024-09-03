@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaExternalLinkAlt, FaStar, FaFire } from "react-icons/fa";
 import { Card, CardContent, CardImage } from "../../../ui/card/Card";
 import getImageUrl from "../../../../utils/getImageUrl";
+import "./HomePopularGames.css";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -34,22 +35,24 @@ export const HomePopularGames = () => {
       return 0;
     });
   };
-
+  
   return (
-    <section className="flex flex-col items-center justify-center gap-8">
-      <h2 className="text-3xl text-gray-300">
+    <section className="flex flex-col items-center justify-center gap-4">
+      <h2 className="text-2xl mt-10 md:text-3xl lg:text-4xl text-gray-300">
         Juegos populares <FaFire className="inline text-red-500" />{" "}
       </h2>
+
       {!isLoading ? (
-        <div className="grid max-w-4xl grid-cols-4 gap-2 self-center">
-          {getTopGamesByRating(popularGamesData).map((game: PopularGame) => (
+        <div className="grid grid-cols-4 md:grid-rows-2 gap-2 self-center p-4">
+          {getTopGamesByRating(popularGamesData).map((game: PopularGame, index) => (
             <Card
               key={game.id}
-              className="col-span-4 row-span-1 h-80 sm:col-span-2 sm:h-full md:col-span-1 first:md:col-span-2 first:md:row-span-2"
+              className="h-80 sm:h-96 focus:outline-none group"
+              data-popular-game-id={index}
             >
               <CardImage
                 imgSrc={() => getImageUrl(game.cover.url, "cover_big_2x")}
-                title={game.name}
+                title={game?.name}
               />
               <CardContent>
                 <h2 className="card-title text-pretty text-lg text-info md:text-sm group-first:md:text-xl">
