@@ -1,5 +1,8 @@
 import getImageUrl from "../../../../../utils/getImageUrl";
 import { DateTime } from "luxon";
+import { Card, CardContent, CardImage } from "../../../../ui/card/Card";
+import { Link } from "react-router-dom";
+import { FaExternalLinkAlt } from "react-icons/fa";
 interface ReleasedListProps {
   coverUrl: string;
   gameName: string;
@@ -14,23 +17,20 @@ export const ReleasedList = ({
   slug,
 }: ReleasedListProps) => {
   return (
-    <li className="flex gap-2 p-4 group">
-      <img
-        src={getImageUrl(coverUrl, "cover_small")}
-        alt={gameName}
-        className="h-20 border-2 border-gray-500 rounded-md group-hover:border-purple-500 group-hover:border-2 transition-all duration-300 ease-in-out"
+    <Card className="h-72 md:h-80 lg:h-96">
+      <CardImage
+        imgSrc={() => getImageUrl(coverUrl, "cover_big_2x")}
+        title={gameName}
       />
-      <div className="flex flex-col">
-        <a
-          href={`/games/${slug}`}
-          className="line-clamp-1 text-ellipsis text-xs text-purple-200 sm:text-sm md:text-base lg:text-lg"
-        >
-          {gameName}
-        </a>
-        <span className="block text-sm text-gray-400 sm:text-base">
+      <CardContent className="space-y-4">
+        <h4 className="text-sm font-bold text-white md:text-lg lg:text-xl">{gameName}</h4>
+        <p className="text-xs text-white md:text-sm lg:text-lg">
           {DateTime.fromSeconds(releaseDate).toLocaleString()}
-        </span>
-      </div>
-    </li>
+        </p>
+        <Link to={`/games/${slug}`}>
+          <FaExternalLinkAlt className="absolute right-2 top-2 z-10 size-6 text-gray-300 opacity-0 transition-colors duration-300 ease-in-out hover:text-info group-hover:opacity-100" />
+        </Link>
+      </CardContent>
+    </Card>
   );
 };

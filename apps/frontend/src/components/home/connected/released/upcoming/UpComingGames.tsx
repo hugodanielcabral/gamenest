@@ -11,8 +11,8 @@ export const UpComingGames = () => {
       <Loading />
     </div>
   ) : (
-    <ul>
-      {data?.map((game) => (
+    <>
+      {data?.slice(0,6).map((game) => (
         <ReleasedList
           key={game.id}
           coverUrl={game?.cover.url}
@@ -21,6 +21,6 @@ export const UpComingGames = () => {
           slug={game?.slug}
         />
       ))}
-    </ul>
+    </>
   );
 };

@@ -14,7 +14,7 @@ const CardImage = ({ imgSrc, className, title }: CardProps) => {
       src={typeof imgSrc === "function" ? imgSrc() : imgSrc}
       alt={title}
       className={twMerge(
-        clsx("h-full rounded-md border-2 border-gray-700", className),
+        clsx("h-full w-full rounded-md border-2 border-gray-700", className),
       )}
     />
   );

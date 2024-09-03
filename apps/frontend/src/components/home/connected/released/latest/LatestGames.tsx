@@ -7,12 +7,12 @@ export const LatestGames = () => {
   const { data = [], isLoading = true } = useFetch(`${BASE_URL}/games/latest/released`);
 
   return isLoading ? (
-    <div className="mt-10 self-center">
+    <div className="mt-10 flex justify-center">
       <Loading />
     </div>
   ) : (
-    <ul>
-      {data?.map((game) => (
+    <>
+      {data?.slice(0,6).map((game) => (
         <ReleasedList
           key={game.id}
           coverUrl={game?.cover.url}
@@ -21,6 +21,6 @@ export const LatestGames = () => {
           slug={game?.slug}
         />
       ))}
-    </ul>
+    </>
   );
 };
