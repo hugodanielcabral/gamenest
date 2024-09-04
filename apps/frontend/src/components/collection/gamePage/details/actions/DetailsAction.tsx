@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../../../ui/button/Button.jsx";
+import { Button } from "../../../../ui/button/Button.tsx";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useCollection } from "../../../../../context/CollectionContext.jsx";

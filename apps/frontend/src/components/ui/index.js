@@ -1,4 +1,4 @@
-import { Button } from "./button/Button";
+import { Button } from "./button/Button.tsx";
 import { Input } from "./input/Input";
 import { Label } from "./label/Label";
 import { Toast } from "./toast/Toast";

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { FaUser } from "react-icons/fa";
 import { MdPassword, MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { Button } from "../../../ui/button/Button";
+import { Button } from "../../../ui/button/Button.tsx";
 import { Link } from "react-router-dom";
 
 type SigninError = {

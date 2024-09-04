@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal } from "../../ui/modal/Modal";
 import { avatarsImages } from "../../../constants/profile/profileConstants";
-import { Button } from "../../ui/button/Button";
+import { Button } from "../../ui/button/Button.tsx";
 import "./ProfileAvatar.css";
 import clsx from "clsx";
 import { FaPencilAlt } from "react-icons/fa";

@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { Button } from "../../../ui";
+import { Button } from "../../../ui/button/Button.tsx";
 import { CardImage } from "../../../ui/card/image/CardImage";
 import { useLocation, useNavigate } from "react-router-dom";
 import getImageUrl from "../../../../utils/getImageUrl";

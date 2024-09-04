@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../ui/index.js";
+import { Button } from "../../ui/button/Button.tsx";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 

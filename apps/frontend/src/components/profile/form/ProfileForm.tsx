@@ -1,6 +1,6 @@
 import { Label } from "../../ui/label/Label";
 import { Input } from "../../ui/input/Input";
-import { Button } from "../../ui/button/Button";
+import { Button } from "../../ui/button/Button.tsx";
 import clsx from "clsx";
 import { Option } from "../../ui/option/Option";
 import {

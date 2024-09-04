@@ -1,7 +1,7 @@
 import { useForm } from "../../../../hooks/useForm.js";
 import { DisplayDetailsGameInformation } from "./gameInformation/DisplayDetailsGameInformation";
 import { DisplayDetailsProgress } from "./progress/DisplayDetailsProgress";
-import { Button } from "../../../ui";
+import { Button } from "../../../ui/button/Button.tsx";
 import propTypes from "prop-types";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

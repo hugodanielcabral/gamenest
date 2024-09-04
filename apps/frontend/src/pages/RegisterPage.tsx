@@ -3,7 +3,7 @@ import { RegisterForm } from "../components/auth/register/form/RegisterForm";
 import { useAuthForm } from "../hooks/useAuthForm";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
-import { Button } from "../components/ui/button/Button";
+import { Button } from "../components/ui/button/Button.tsx";
 import gamenestLogo from "../assets/logos/gamenest-logo-1.webp";
 
 export const RegisterPage = () => {

@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { Button } from "../button/Button";
+import { Button } from "../button/Button.tsx";
 
 export const ConfirmationMessage = ({
   title,

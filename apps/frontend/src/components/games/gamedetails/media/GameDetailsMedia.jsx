@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-import { Button } from "../../../ui/index.js";
+import { Button } from "../../../ui/button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { useCheckGameInCollection } from "../../../../hooks/useCheckGameInCollection.js";
 import { CardBackground } from "../../../ui/cardBackground/CardBackground.jsx";

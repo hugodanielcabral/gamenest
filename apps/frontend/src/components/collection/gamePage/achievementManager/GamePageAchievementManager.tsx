@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AchievementManagerList } from "./list/AchievementManagerList.js";
-import { Button } from "../../../ui/button/Button";
+import { Button } from "../../../ui/button/Button.tsx";
 import toast from "../../../../utils/toast.js";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 import { useSteamAchievement } from "../../../../hooks/useSteamAchievement.js";
