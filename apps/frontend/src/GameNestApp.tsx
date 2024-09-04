@@ -18,7 +18,7 @@ export const GameNestApp = () => {
   const HomePage = lazy(() => import("./pages/HomePage.tsx"));
   const GamesPage = lazy(() => import("./pages/GamesPage.jsx"));
   const GameDetails = lazy(() =>
-    import("./components/games/gamedetails/GameDetails.jsx").then((module) => ({
+    import("./components/games/details/GameDetails.tsx").then((module) => ({
       default: module.GameDetails,
     })),
   );
@@ -105,6 +105,7 @@ export const GameNestApp = () => {
       path: "/collection/:gameSlug",
       element: <CollectionGamePage />,
     },
+   
   ];
 
   return (

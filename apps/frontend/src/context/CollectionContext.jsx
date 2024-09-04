@@ -18,6 +18,7 @@ export const CollectionProvider = ({ children }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { search } = useLocation();
   const [collectionData, setCollectionData] = useState([]);
+  const [currentGameData, setCurrentGameData] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [filtersData, setFiltersData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,6 +66,7 @@ export const CollectionProvider = ({ children }) => {
       }
 
       const data = await response.json();
+      setCurrentGameData(data);
       setIsLoading(false);
       return data;
     } catch (error) {
@@ -200,6 +202,7 @@ export const CollectionProvider = ({ children }) => {
         errors,
         search,
         filtersData,
+        currentGameData,
       }}
     >
       {children}

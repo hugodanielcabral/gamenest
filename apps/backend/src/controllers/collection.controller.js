@@ -24,12 +24,10 @@ export const getCollection = async (req, res) => {
       );
 
       if (!collection[0])
-        return res
-          .status(404)
-          .json({
-            message:
-              "Ningún juego coincide con los parámetros de búsqueda actuales.",
-          });
+        return res.status(404).json({
+          message:
+            "Ningún juego coincide con los parámetros de búsqueda actuales.",
+        });
 
       const collectionWithGameInfo = await getGameInfoFromCollection(
         collection
@@ -91,7 +89,7 @@ export const getGameFromCollection = async (req, res) => {
 
     const collectionWithGameInfo = await getGameInfoFromCollection(collection);
 
-    res.status(200).json(collectionWithGameInfo[0]);
+    res.status(200).json(collectionWithGameInfo);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
