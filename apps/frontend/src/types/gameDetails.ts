@@ -19,8 +19,19 @@ interface GameDetailsProps {
       game: { id: number; name: string };
       platform: { id: number; name: string };
     }[];
+    bundles: {
+      id: number;
+      cover: { id: number; url: string };
+      name: string;
+      slug: string;
+    }[];
+    dlcs: {
+      id: number;
+      cover: { id: number; url: string };
+      name: string;
+      slug: string;
+    }[];
   } | null;
-
   isLoading: boolean;
 }
 
@@ -44,6 +55,18 @@ interface GameDetailsContentProps {
       date: number;
       game: { id: number; name: string };
       platform: { id: number; name: string };
+    }[];
+    bundles: {
+      id: number;
+      cover: { id: number; url: string };
+      name: string;
+      slug: string;
+    }[];
+    dlcs: {
+      id: number;
+      cover: { id: number; url: string };
+      name: string;
+      slug: string;
     }[];
   };
   gameSlug?: string;

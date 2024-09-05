@@ -5,7 +5,7 @@ export const genresIcons = {
     "Role-playing (RPG)": "icon-[mdi--sword]",
     Indie: "icon-[mdi--gamepad-variant]",
     Simulator: "icon-[mdi--airplane]",
-    Strategy: "icon-[mdi--chess]",
+    Strategy: "icon-[mingcute--chess-fill]",
     Puzzle: "icon-[mdi--puzzle]",
     Arcade: "icon-[mdi--arcade]",
     Platform: "icon-[mdi--platform]",
