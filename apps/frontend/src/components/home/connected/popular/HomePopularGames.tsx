@@ -55,7 +55,7 @@ export const HomePopularGames = () => {
                 title={game?.name}
               />
               <CardContent>
-                <h2 className="card-title text-pretty text-lg text-info md:text-sm group-first:md:text-xl">
+                <h2 className="card-title text-pretty text-lg text-info md:text-lg group-first:md:text-xl">
                   {game.name}
                 </h2>
                 <p className="absolute left-2 top-2 z-10 flex flex-col items-center gap-1 text-sm text-gray-300 md:text-lg">

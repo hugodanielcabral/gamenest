@@ -25,7 +25,7 @@ export const GameDetailsHeader = ({
         alt={`Cover del juego "${gameDetail.name}"`}
         className="z-10 h-full w-64 self-center rounded-md shadow-md shadow-black"
       />
-      <div className="z-10 mb-10 space-y-4 self-center md:self-end">
+      <div className="z-10 space-y-4 self-center md:self-end">
         <div className="flex gap-2">
           {gameDetail?.platforms.map((platform) => (
             <span
