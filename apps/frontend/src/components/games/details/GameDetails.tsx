@@ -2,18 +2,9 @@ import { useParams } from "react-router-dom";
 import { Layout } from "../../layout/Layout";
 import { useFetch } from "../../../hooks/useFetch";
 import { GameDetailsHeader } from "./header/GameDetailsHeader";
+import { GameDetailsContent } from "./content/GameDetailsContent";
+import type { GameDetailsProps } from "../../../types/gameDetails";
 
-
-interface GameDetailsProps {
-  data: {
-    id: number;
-    name: string;
-    cover: { id: number; url: string };
-    platforms: { id: number; abbreviation: string; name: string }[];
-    screenshots: { id: number; url: string }[];
-  } | null;
-  isLoading: boolean;
-}
 
 
 export const GameDetails = () => {
@@ -31,13 +22,11 @@ export const GameDetails = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-gray-800 from-50% to-base-100 space-y-8">
+      <div className="min-h-screen bg-gradient-to-b from-gray-800 from-50% to-base-100">
         {/* Header */}
-       <GameDetailsHeader gameDetail={gameDetail} gameSlug={gameSlug}/>
+        <GameDetailsHeader gameDetail={gameDetail} gameSlug={gameSlug} />
         {/* Contenido: Video, Bundles, sitio web, clasificación de edades, fotos, artworks y videos */}
-        <section>
-            <h2 className="text-3xl text-center">Sobre {gameDetail.name}</h2>
-        </section>
+        <GameDetailsContent gameDetail={gameDetail} />
         {/* Juegos relacionados y otras cosas que no sean principalmente del juego */}
         <section></section>
       </div>

@@ -1,0 +1,38 @@
+export const genresIcons = {
+    Shooter: "icon-[mdi--pistol]",
+    Action: "icon-[mdi--sword]",
+    Adventure: "icon-[mdi--treasure-chest]",
+    "Role-playing (RPG)": "icon-[mdi--sword]",
+    Indie: "icon-[mdi--gamepad-variant]",
+    Simulator: "icon-[mdi--airplane]",
+    Strategy: "icon-[mdi--chess]",
+    Puzzle: "icon-[mdi--puzzle]",
+    Arcade: "icon-[mdi--arcade]",
+    Platform: "icon-[mdi--platform]",
+    Racing: "icon-[mdi--car-sports]",
+  };
+  
+  
+  export const genresTranslate = {
+    Shooter: "Disparos",
+    Action: "Acción",
+    Adventure: "Aventura",
+    "Role-playing (RPG)": "Rol",
+    Indie: "Indie",
+    Simulator: "Simulación",
+    Strategy: "Estrategia",
+    Puzzle: "Puzzle",
+    Arcade: "Arcade",
+    Platform: "Plataformas",
+    Racing: "Carreras",
+    Sport: "Deportes",
+    Fighting: "Lucha",
+    "Hack and slash/Beat 'em up": "Hack and slash",
+    Music: "Música",
+    Pinball: "Pinball",
+    "Quiz/Trivia": "Quiz",
+    "Visual Novel": "Novela visual",
+    Tactical: "Táctico",
+    "Turn-based strategy (TBS)": "Estrategia por turnos",
+    "Real Time Strategy (RTS)": "Estrategia en tiempo real",
+  };
