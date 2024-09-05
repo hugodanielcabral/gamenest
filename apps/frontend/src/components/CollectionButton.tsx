@@ -22,7 +22,7 @@ export const CollectionButton = ({ gameSlug }: CollectionButtonProps) => {
           variant={`${!collectionData.length ? "info" : "error"}`}
           disabled={isLoading}
           onClick={() => {
-            collectionData
+            collectionData.length
               ? navigate("/collection")
               : navigate(`/collection/add/${gameSlug}`);
           }}
