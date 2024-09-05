@@ -1,19 +1,22 @@
-import { platformsIcons } from "../../../../data/platformsIcons";
 import type { GameDetailsContentProps } from "../../../../types/gameDetails";
-import getImageUrl from "../../../../utils/getImageUrl";
+import { platformsIcons } from "../../../../data/platformsIcons";
 import { CollectionButton } from "../../../CollectionButton";
 import { Icon } from "../../../ui/icon/Icon";
+import gameDetailsBackground from "../../../../assets/backgrounds/gamesdetails-background.webp"
+import getImageUrl from "../../../../utils/getImageUrl";
 
 export const GameDetailsHeader = ({
   gameDetail,
   gameSlug,
 }: GameDetailsContentProps) => {
+
+
+  const headerBackground = gameDetail?.screenshots && gameDetail.screenshots.length > 0 ? getImageUrl(gameDetail.screenshots[0].url) : gameDetailsBackground;
+
   return (
     <section className="relative flex flex-col gap-4 p-4 md:flex-row">
       <img
-        src={getImageUrl(
-          getImageUrl(gameDetail.screenshots[0].url, "cover_big_2x"),
-        )}
+        src={headerBackground}
         alt={`Cover del juego "${gameDetail.name}"`}
         className="absolute left-0 top-0 z-0 h-full w-full object-cover opacity-45 blur-sm"
       />
