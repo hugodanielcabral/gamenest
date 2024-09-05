@@ -1,65 +1,25 @@
 import type { GameDetailsContentProps } from "../../../../types/gameDetails";
-import { useEffect, useState } from "react";
-import { VideoCard } from "./videoCard/VideoCard";
 import { ContentDescription } from "./description/ContentDescription";
 import { Collapse } from "../../../ui/collapse/Collapse";
 import { DateTime } from "luxon";
 import { genresIcons, genresTranslate } from "../../../../data/genresData";
 import { Icon } from "../../../ui/icon/Icon";
 import { DLCs } from "./dlcs/DLCs";
-import Plyr from "plyr-react";
-import "plyr-react/plyr.css";
+import { VideoContent } from "./videoContent/VideoContent";
 
 export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
-  const [currentVideo, setCurrentVideo] = useState("");
-
-  useEffect(() => {
-    if (!gameDetail.videos || gameDetail?.videos.length === 0) {
-      return;
-    }
-    setCurrentVideo(gameDetail?.videos[0].video_id);
-  }, []);
-
-  const handleOnCurrentVideo = (videoId: string) => {
-    setCurrentVideo(videoId);
-  };
-
   return (
     <section className="grid grid-cols-1 gap-8 p-4 md:grid-cols-3">
       <div className="col-span-2 space-y-4">
-        {gameDetail.videos && gameDetail.videos.length ? (
-          <div className="aspect-auto">
-            <Plyr
-              source={{
-                type: "video",
-                sources: [
-                  {
-                    src:
-                      `https://www.youtube.com/watch?v=${currentVideo}` ||
-                      "https://www.youtube.com/watch?v=0",
-                    provider: "youtube",
-                  },
-                ],
-              }}
-            />
-          </div>
-        ) : null}
-        <div className="mt-4 flex space-x-2 overflow-auto">
-          {gameDetail.videos &&
-            gameDetail.videos.map((video) => (
-              <VideoCard
-                key={video.id}
-                video={video}
-                handleOnCurrentVideo={handleOnCurrentVideo}
-                currentVideo={currentVideo}
-              />
-            ))}
-        </div>
+        {gameDetail.videos && gameDetail.videos.length && (
+          <VideoContent videos={gameDetail.videos} />
+        )}
         <ContentDescription
           summary={gameDetail.summary}
           storyline={gameDetail.storyline}
         />
       </div>
+
       <div className="space-y-4">
         {gameDetail?.genres && gameDetail?.genres.length > 0 && (
           <Collapse

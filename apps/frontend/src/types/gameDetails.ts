@@ -31,6 +31,12 @@ interface GameDetailsProps {
       name: string;
       slug: string;
     }[];
+    similar_games: {
+      id: number;
+      cover: { id: number; url: string };
+      name: string;
+      slug: string;
+    }[];
   } | null;
   isLoading: boolean;
 }
@@ -63,6 +69,12 @@ interface GameDetailsContentProps {
       slug: string;
     }[];
     dlcs: {
+      id: number;
+      cover: { id: number; url: string };
+      name: string;
+      slug: string;
+    }[];
+    similar_games: {
       id: number;
       cover: { id: number; url: string };
       name: string;
