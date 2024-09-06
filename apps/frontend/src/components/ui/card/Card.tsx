@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 interface CardProps {
@@ -6,38 +7,40 @@ interface CardProps {
   title?: string;
   children?: React.ReactNode;
   className?: string;
+  linkTo?: string;
 }
 
 const CardImage = ({ imgSrc, className, title }: CardProps) => {
   return (
-    <img
-      src={typeof imgSrc === "function" ? imgSrc() : imgSrc}
-      alt={title}
-      className={twMerge(
-        clsx("h-full w-full rounded-md border-2 border-gray-700", className),
-      )}
-    />
+    <figure>
+      <img
+        src={typeof imgSrc === "function" ? imgSrc() : imgSrc}
+        alt={title}
+        className={twMerge(clsx("", className))}
+      />
+    </figure>
   );
 };
 
 const CardContent = ({ className, children }: CardProps) => {
   return (
-    <div
-      className={twMerge(
-        clsx(
-          "card-content absolute bottom-0 z-10 flex h-full w-full flex-col items-center justify-center rounded-md border-2 bg-base-100 bg-opacity-0 opacity-0 transition-all duration-300 ease-in-out group-hover:border-gray-500 group-hover:bg-opacity-90 group-hover:opacity-100",
-          className,
-        ),
-      )}
-    >
-      {children}
-    </div>
+    <div className={twMerge(clsx("card-body", className))}>{children}</div>
   );
 };
 
-const Card = ({ className, children, ...props }: CardProps) => {
+const Card = ({ className,linkTo = "#", children, ...props }: CardProps) => {
   return (
-    <div className={twMerge(clsx("group relative", className))} {...props}>{children}</div>
+    <Link to={linkTo}
+      className={twMerge(
+        clsx(
+          "card card-compact w-96 bg-base-100 shadow-xl",
+          className,
+        ),
+      )}
+      {...props}
+    >
+      {children}
+    </Link>
   );
 };
 
