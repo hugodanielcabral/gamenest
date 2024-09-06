@@ -16,7 +16,7 @@ const CardImage = ({ imgSrc, className, title }: CardProps) => {
       <img
         src={typeof imgSrc === "function" ? imgSrc() : imgSrc}
         alt={title}
-        className={twMerge(clsx("", className))}
+        className={twMerge(clsx("w-full h-full", className))}
       />
     </figure>
   );
