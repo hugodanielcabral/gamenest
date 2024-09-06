@@ -75,7 +75,7 @@ export const HomeReleasedGames = () => {
         {sections.map((section) => (
           <div
             key={section.name}
-            className={`w-max gap-2 ${currentContent === section.name ? "flex" : "hidden"}`}
+            className={`w-max mx-auto gap-2 ${currentContent === section.name ? "flex" : "hidden"}`}
           >
             {section.component}
           </div>

@@ -14,13 +14,22 @@ export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
         {gameDetail.videos && gameDetail.videos.length && (
           <VideoContent videos={gameDetail.videos} />
         )}
+        <div className="divider"></div>
         <ContentDescription
           summary={gameDetail.summary}
           storyline={gameDetail.storyline}
         />
+
+        <div className="divider"></div>
+
+        {gameDetail.bundles || gameDetail.dlcs ? (
+          <DLCs gameDetail={gameDetail} />
+        ) : null}
       </div>
 
       <div className="space-y-4">
+        <div className="divider flex md:hidden"></div>
+
         {gameDetail?.genres && gameDetail?.genres.length > 0 && (
           <Collapse
             title="Géneros"
@@ -116,10 +125,6 @@ export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
           </Collapse>
         )}
       </div>
-
-      {gameDetail.bundles || gameDetail.dlcs ? (
-        <DLCs gameDetail={gameDetail} />
-      ) : null}
     </section>
   );
 };

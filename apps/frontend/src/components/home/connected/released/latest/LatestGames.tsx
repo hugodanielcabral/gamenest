@@ -7,7 +7,7 @@ export const LatestGames = () => {
   const { data = [], isLoading = true } = useFetch(`${BASE_URL}/games/latest/released`);
 
   return isLoading ? (
-    <div className="mt-10 mx-auto col-span-full">
+    <div className="mt-10">
       <Loading />
     </div>
   ) : (
