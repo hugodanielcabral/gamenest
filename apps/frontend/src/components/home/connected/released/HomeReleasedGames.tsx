@@ -18,19 +18,25 @@ const sections: SectionProps[] = [
     name: "latest",
     title: "Últimos lanzamientos",
     component: <LatestGames />,
-    icon: <MdCelebration className="size-4 text-info text-opacity-75 md:size-6" />,
+    icon: (
+      <MdCelebration className="size-4 text-info text-opacity-75 md:size-6" />
+    ),
   },
   {
     name: "soon",
     title: "Próximamente",
     component: <UpComingGames />,
-    icon: <FaHourglass className="size-4 text-info text-opacity-75 md:size-6" />,
+    icon: (
+      <FaHourglass className="size-4 text-info text-opacity-75 md:size-6" />
+    ),
   },
   {
-    name: "sect3",
+    name: "anticipated",
     title: "Más anticipados",
     component: <AnticipatedGames />,
-    icon: <FaGrinHearts className="size-4 text-info text-opacity-75 md:size-6" />,
+    icon: (
+      <FaGrinHearts className="size-4 text-info text-opacity-75 md:size-6" />
+    ),
   },
 ];
 
@@ -47,28 +53,34 @@ export const HomeReleasedGames = () => {
         {sections.map((section) => (
           <button
             key={section.name}
-            className={`flex flex-col justify-center items-center group`}
+            className={`group flex flex-col items-center justify-center`}
             onClick={() => handleOnChangeContent(section.name)}
             aria-selected={currentContent === section.name}
             aria-controls={`section-${section.name}`}
           >
-            <span className={`transition-opacity duration-500 ease-in-out ${currentContent === section.name ? "opacity-100" : "opacity-0"}`}>{section.icon}</span>
             <span
-              className={`text-xs md:text-lg lg:text-xl group-hover:text-opacity-90 ${currentContent === section.name ? "text-info" : "text-gray-300"} `}
+              className={`transition-opacity duration-500 ease-in-out ${currentContent === section.name ? "opacity-100" : "opacity-0"}`}
+            >
+              {section.icon}
+            </span>
+            <span
+              className={`text-xs group-hover:text-opacity-90 md:text-lg lg:text-xl ${currentContent === section.name ? "text-info" : "text-gray-300"} `}
             >
               {section.title}
             </span>
           </button>
         ))}
       </div>
-      {sections.map((section) => (
-        <div
-          key={section.name}
-          className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 ${currentContent === section.name ? "block" : "hidden"}`}
-        >
-          {section.component}
-        </div>
-      ))}
+      <div className="overflow-x-auto">
+        {sections.map((section) => (
+          <div
+            key={section.name}
+            className={`w-max gap-2 ${currentContent === section.name ? "flex" : "hidden"}`}
+          >
+            {section.component}
+          </div>
+        ))}
+      </div>
     </article>
   );
 };

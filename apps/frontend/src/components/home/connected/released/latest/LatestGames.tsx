@@ -12,7 +12,7 @@ export const LatestGames = () => {
     </div>
   ) : (
     <>
-      {data?.slice(0,6).map((game) => (
+      {data?.map((game) => (
         <ReleasedList
           key={game.id}
           coverUrl={game?.cover.url}

@@ -17,19 +17,17 @@ export const ReleasedList = ({
   slug,
 }: ReleasedListProps) => {
   return (
-    <Card className="h-72 md:h-80 lg:h-96">
+    <Card className="w-40 sm:w-44 md:w-52 lg:w-64" linkTo={`/games/${slug}`}>
       <CardImage
         imgSrc={() => getImageUrl(coverUrl, "cover_big_2x")}
         title={gameName}
+        className="h-48 sm:h-60 md:h-72 lg:h-80 xl:h-96"
       />
-      <CardContent className="space-y-4">
-        <h4 className="text-sm font-bold text-white md:text-lg lg:text-xl text-pretty text-center">{gameName}</h4>
-        <p className="text-xs text-white md:text-sm lg:text-lg">
-          {DateTime.fromSeconds(releaseDate).toLocaleString()}
+      <CardContent>
+        <h3 className="text-xs sm:text-sm md:text-base font-semibold line-clamp-1 text-pretty">{gameName}</h3>
+        <p className="text-xs md:text-sm text-base-content-secondary">
+          {DateTime.fromSeconds(releaseDate).toFormat("DD")}
         </p>
-        <Link to={`/games/${slug}`}>
-          <FaExternalLinkAlt className="absolute right-2 top-2 z-10 size-6 text-gray-300 opacity-0 transition-colors duration-300 ease-in-out hover:text-info group-hover:opacity-100" />
-        </Link>
       </CardContent>
     </Card>
   );
