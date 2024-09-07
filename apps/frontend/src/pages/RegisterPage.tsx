@@ -78,8 +78,9 @@ export const RegisterPage = () => {
             </p> */}
 
             <Button
-              className="bg-info text-white"
+              className="text-white"
               onClick={() => navigate("/login")}
+              variant="info"
             >
               Iniciar sesión
             </Button>

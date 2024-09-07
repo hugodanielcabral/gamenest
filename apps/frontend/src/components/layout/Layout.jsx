@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import { Header } from "./header/Header.tsx";
-import { Footer } from "./footer/Footer.jsx";
+import { Footer } from "./footer/Footer.tsx";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 

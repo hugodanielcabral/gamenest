@@ -22,11 +22,6 @@ export const GameNestApp = () => {
       default: module.GameDetails,
     })),
   );
- /*  const ProfilePage = lazy(() =>
-    import("./pages/ProfilePage.tsx").then((module) => ({
-      default: module.ProfilePage,
-    })),
-  ); */
   const CollectionGamePage = lazy(() =>
     import("./pages/CollectionGamePage.tsx").then((module) => ({
       default: module.CollectionGamePage,

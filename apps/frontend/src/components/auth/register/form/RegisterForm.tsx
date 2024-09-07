@@ -233,10 +233,11 @@ export const RegisterForm = ({
       <Button
         disabled={buttonStatus === "submitting" || buttonStatus === "disabled"}
         className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25"
+        variant="info"
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Registrarse"}
       </Button>
-      <p className="text-center text-sm text-gray-300 md:text-base">
+      <p className="text-center text-base text-gray-300 md:text-lg">
         ¿Ya tienes una cuenta?{" "}
         <Link to="/login" className="text-info">
           Inicia sesión

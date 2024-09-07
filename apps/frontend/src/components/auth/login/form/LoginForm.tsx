@@ -103,12 +103,13 @@ export const LoginForm = ({
       <Button
         disabled={buttonStatus === "submitting" || buttonStatus === "disabled"}
         className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25"
+        variant="info"
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Iniciar sesión"}
       </Button>
-      <p className="text-center text-sm text-gray-300 md:text-base">
+      <p className="text-center text-base text-gray-300 md:text-lg">
         ¿No tienes una cuenta?{" "}
-        <Link to="/register" className="text-info">
+        <Link to="/register" className="text-error">
           Registrate
         </Link>
       </p>
