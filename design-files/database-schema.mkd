@@ -1,5 +1,6 @@
-<sub>Ultima actualización: 3/6/2024</sub>
-# <span style="color:yellow"> Glosario </span>
+# Glosario
+
+Ultima actualización: 7/9/2024
 
 - **PK** - _LLAVE PRIMARIA_.
 - **FK** - _LLAVE FORÁNEA._
@@ -8,85 +9,67 @@
 - **EP** - _ENTIDAD PIVOTE_.
 - **EC** - _ENTIDAD CATALOGO._
 
-## <span style="color:orange"> Entidades </span>
+## Entidades
 
-### 👤 <span style="color:white"> users </span>**(ED)**
+### 👤 users **(ED)**
 
-- <u>user_id</u> *INT IDENTITY-ALWAYS* **(PK)**
-- username *VARCHAR(50) UNIQUE NOT NULL* **(UQ)**
-- email *VARCHAR(150) UNIQUE NOT NULL* **(UQ)**
-- password *VARCHAR(150) NOT NULL*
-- birthday *DATE*
-- gender *ENUM*
-- avatar *VARCHAR(255)*
-- title *VARCHAR(50)*
-- active *BOOL DEFAULT TRUE NOT NULL*
-- role_id *INT DEFAULT 3 NOT NULL* **(FK)** *
-- country_id *INT* **(FK)**
-- created_on *TIMESTAMP*  **
-- updated_on *TIMESTAMP*  **
-- verified *BOOL DEFAULT FALSE NOT NULL*
+- user_id INT IDENTITY-ALWAYS **(PK)**
+- username VARCHAR(50) UNIQUE NOT NULL **(UQ)**
+- email VARCHAR(150) UNIQUE NOT NULL **(UQ)**
+- password VARCHAR(150) NOT NULL
+- active BOOL DEFAULT TRUE NOT NULL
+- role_id INT DEFAULT 3 NOT NULL **(FK)**
+- country_id INT **(FK)**
+- created_on TIMESTAMP
+- updated_on TIMESTAMP
 
+> *Por defecto el rol será con el id 3, que es usuario.
+> **Deberá tener la hora del momento de la creación ( NOW() ).
 
-> * Por defecto el rol será con el id 3, que es usuario.
-> **  Deberá tener la hora del momento de la creación ( NOW() ).
+### 👨‍🏭 roles **(EC)**
 
-### 👨‍🏭<span style="color:white"> roles </span>**(EC)**
+- role_id INT IDENTITY-ALWAYS **(PK)**
+- name VARCHAR(150) NOT NULL
 
-- <u>role_id</u> *INT IDENTITY-ALWAYS* **(PK)**
-- name *VARCHAR(150) NOT NULL*
-### 📚 <span style="color:white"> collection </span>**(ED)**
+### 📚 collection **(ED)**
 
-- <u>collection_id</u> *INT IDENTITY-ALWAYS* **(PK)**
-- game_id *VARCHAR(100) NOT NULL*
-- game_slug *VARCHAR(255) NOT NULL*
-- game_name *VARCHAR(255) NOT NULL*
-- game_cover *VARCHAR(255) NOT NULL*
-- platform_name *VARCHAR(255) NOT NULL*
-- format_name *VARCHAR(255) NOT NULL*
-- ownership_name *VARCHAR(255)  NOT NULL*
-- store_name *VARCHAR(255) NOT NULL*
-- status_name *VARCHAR(255) NOT NULL*
-- start_date *DATE* *
-- finish_date DATE *
-- progress_note *VARCHAR(255)*
-- rating *INT DEFAULT 0*
-- amount_paid *DECIMAL(5, 2)*
-- is_favorite *BOLEAN DEFAULT FALSE*
-- user_id *INT* **(FK)**
+- collection_id INT IDENTITY-ALWAYS **(PK)**
+- game_id VARCHAR(100) NOT NULL
+- game_slug VARCHAR(255) NOT NULL
+- game_name VARCHAR(255) NOT NULL
+- game_cover VARCHAR(255) NOT NULL
+- platform_name VARCHAR(255) NOT NULL
+- format_name VARCHAR(255) NOT NULL
+- ownership_name VARCHAR(255)  NOT NULL
+- store_name VARCHAR(255) NOT NULL
+- status_name VARCHAR(255) NOT NULL
+- start_date DATE
+- finish_date DATE
+- rating INT DEFAULT 0
+- amount_paid DECIMAL(5, 2) DEFAULT 0
+- hours_played INT DEFAULT 0
+- minutes_played INT DEFAULT 0
+- difficulty VARCHAR(100)
+- is_favorite BOLEAN DEFAULT FALSE
+- user_id INT **(FK)**
 
-> * Agregar un constraint/check que no permita que el start_date sea mayor que el finish_date.
+> *Agregar un constraint/check que no permita que el start_date sea mayor que el finish_date.
 
-### ❤️<span style="color:white"> hearts </span>**(EC)**
+### 🇦🇷 country **(EC)**
 
-- <u>heart_id</u> *INT IDENTITY-ALWAYS* **(PK)**
-- game_slug *VARCHAR(255) NOT NULL*
-- user_id *INT* **(FK)**
-
-### 🇦🇷<span style="color:white"> country </span>**(EC)**
-
-- <u>country_id</u> *INT IDENTITY-ALWAYS* **(PK)**
-- name *VARCHAR(150) NOT NULL*
-- domain *VARCHAR(2) UNIQUE NOT NULL*  **(UQ)**
-
-### 🔑<span style="color:white"> verification_tokens </span>**(ED)**
-
-- token_id *INT IDENTITY-ALWAYS* **(PK)**
-- user_id *INT* **(FK)**
-- token *VARCHAR(255) NOT NULL*
-- created_on *TIME_STAMP DEFAULT NOW*
-- used *BOOL DEFAULT FALSE NOT NULL*
+- country_id INT IDENTITY-ALWAYS **(PK)**
+- name VARCHAR(150) NOT NULL
+- domain VARCHAR(2) UNIQUE NOT NULL **(UQ)**
 
 > En el momento de la creación será usado para la validación del email, pero luego solamente será usado para verificar el cambio de contraseña.
 
-## <span style="color:orange"> Relaciones </span>
+## Relaciones
 
 1. Un **user** tiene una **collection** _(1 a 1)_.
 2. Un **user** pertenece a un **country** _(1 a 1)_.
 3. Un **user** tiene un **role** _(1 a 1)_.
 4. Una **collection** pertenece a un **user** _(1 a 1)._
-5. Un **user** puede dar **heart** a varios juegos. _(1 a M)._
 
-## <span style="color:orange"> Modelo relacional de la base de datos </span>
+## Modelo relacional de la base de datos
 
 ![Modelo relacional de la base de datos GameNest](/modelo-relacional-db-gamenest.png)

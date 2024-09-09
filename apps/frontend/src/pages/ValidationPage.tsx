@@ -1,7 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useFetch } from "../hooks/useFetch.ts";
 import { BackgroundImage, CardBackground } from "../components/ui/index.js";
-import validationPageBG from "../assets/backgrounds/validation-page-background.webp";
 import gamenestLogo2 from "../assets/logos/gamenest-logo-2.webp";
 import { Message } from "../components/auth/validation/Message.tsx";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -17,7 +16,7 @@ export const ValidationPage = () => {
 
 
   return (
-    <BackgroundImage backgroundImage={validationPageBG}>
+    <BackgroundImage>
       <div className="flex justify-center flex-col items-center">
         <Link to="/">
           <img

@@ -50,7 +50,7 @@ export const HomePopularGames = () => {
                 key={game.id}
                 className="h-full w-40 sm:w-44 relative"
                 data-popular-game-id={index}
-                linkTo={`/game/${game.slug}`}
+                linkTo={`/games/${game.slug}`}
               >
                 <CardImage
                   imgSrc={() => getImageUrl(game.cover.url, "cover_big_2x")}

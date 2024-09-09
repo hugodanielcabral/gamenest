@@ -6,7 +6,6 @@ import { GamesFinderFilters } from "./filters/GamesFinderFilters.jsx";
 import { useState } from "react";
 import { GamesFinderSkeleton } from "./skeleton/GamesFinderSkeleton.jsx";
 import { useFetch } from "../../../hooks/useFetch.ts";
-import notFoundImg from "../../../assets/images/fortnite-confused.webp";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const GamesFinder = () => {
@@ -53,11 +52,7 @@ export const GamesFinder = () => {
               games.map((game) => <GamesFinderCard game={game} key={game.id} />)
             ) : (
               <div className="col-span-4 mx-auto flex flex-col items-center sm:flex-row">
-                <img
-                  src={notFoundImg}
-                  alt="No se encontraron juegos"
-                  className="h-48"
-                />
+               
                 <NoData
                   className="text-2xl text-red-500"
                   message={error?.statusText || "No se encontraron juegos"}
