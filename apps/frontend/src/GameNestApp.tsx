@@ -15,7 +15,7 @@ import { useAuth } from "./context/AuthContext.jsx";
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
   const HomePage = lazy(() => import("./pages/HomePage.tsx"));
-  const GamesPage = lazy(() => import("./pages/GamesPage.jsx"));
+  const GamesFinderPage = lazy(() => import("./pages/GamesFinderPage.tsx"));
   const GameDetails = lazy(() =>
     import("./components/games/details/GameDetails.tsx").then((module) => ({
       default: module.GameDetails,
@@ -39,7 +39,7 @@ export const GameNestApp = () => {
     {
       id: 2,
       path: "/games",
-      element: <GamesPage />,
+      element: <GamesFinderPage/>,
     },
     {
       id: 3,

@@ -10,57 +10,22 @@ import sql from "../db.js";
 env.config();
 
 export const getGames = async (req, res) => {
-  const { search, page, genres, platforms } = req.query;
-  if (page && isNaN(page)) {
-    return res.status(400).json({ error: "Invalid page number" });
-  }
-
-  if (search) {
-    const { gamesData, countData } = await getGamesBySearch(
-      search,
-      platforms,
-      genres,
-      page
-    );
-
-    const data = {
-      games: gamesData,
-      count: countData,
-      currentPage: parseInt(page, 20) || 1,
-      totalPages: Math.ceil(countData.count / 20),
-    };
-
-    return res.json(data);
-  }
-
   const response = await fetch("https://api.igdb.com/v4/games", {
     method: "POST",
     headers: {
       "Client-ID": process.env.CLIENT_ID,
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     },
-    body: `fields *, cover.url, genres.name, platforms.abbreviation, screenshots.url; where rating > 1 & themes != (42) ${
-      platforms ? `& platforms=(${platforms})` : ""
-    } ${
-      genres ? `& genres=(${genres})` : ""
-    }; sort aggregated_rating desc;limit 20; offset ${
-      page ? (page - 1) * 20 : 0
-    };`,
+    body: `fields *, cover.url, genres.name, platforms.abbreviation, platforms.name, screenshots.url; where rating > 1 & themes != (42) & cover.url != null; sort hypes desc; limit 18;`,
   });
 
   if (!response.ok) {
-    throw new Error("Oops");
+    throw new Error("Failed to fetch games");
   }
 
   const gamesData = await response.json();
-  const countData = await getCount();
 
-  res.json({
-    games: gamesData,
-    count: countData,
-    currentPage: parseInt(page, 20) || 1,
-    totalPages: Math.ceil(countData.count / 20),
-  });
+  res.json(gamesData);
 };
 
 export const getGame = async (req, res) => {
