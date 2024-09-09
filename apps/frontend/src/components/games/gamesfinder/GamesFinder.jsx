@@ -52,7 +52,6 @@ export const GamesFinder = () => {
               games.map((game) => <GamesFinderCard game={game} key={game.id} />)
             ) : (
               <div className="col-span-4 mx-auto flex flex-col items-center sm:flex-row">
-               
                 <NoData
                   className="text-2xl text-red-500"
                   message={error?.statusText || "No se encontraron juegos"}

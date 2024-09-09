@@ -4,7 +4,6 @@ import { CollectionList } from "../components/collection/list/CollectionList.jsx
 import { Layout } from "../components/layout/Layout.jsx";
 import { CollectionPagination } from "../components/collection/pagination/CollectionPagination.jsx";
 import { useEffect } from "react";
-import { CollectionPageSkeleton } from "../components/collection/skeleton/CollectionPageSkeleton.jsx";
 import { CollectionFilters } from "../components/collection/filters/CollectionFilters.jsx";
 import { useNavigate } from "react-router-dom";
 
@@ -33,9 +32,11 @@ export const CollectionPage = () => {
   }, []);
 
   return isLoading ? (
-    <CollectionPageSkeleton />
+    <div className="flex min-h-screen items-center justify-center">
+      <span className="loading loading-spinner loading-lg mx-auto size-32 sm:size-36 md:size-40 lg:size-44"></span>
+    </div>
   ) : (
-    <Layout className="bg-gradient-to-r from-blue-900 from-25% via-black via-60% to-blue-900">
+    <Layout className="bg-gradient-to-b from-gray-800 from-50% to-base-100">
       <article className="container relative z-10 mx-auto grid grid-cols-4 gap-x-10 gap-y-5 p-4">
         <CollectionSearch collectionData={collectionData} />
         <section className="col-span-4 mx-auto">

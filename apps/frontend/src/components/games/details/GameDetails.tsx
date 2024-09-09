@@ -13,8 +13,6 @@ export const GameDetails = () => {
     `${BASE_URL}/games/${gameSlug}`,
   ) as GameDetailsProps;
 
-  console.log(isLoading);
-
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
