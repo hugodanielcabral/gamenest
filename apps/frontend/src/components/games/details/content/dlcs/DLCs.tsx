@@ -18,7 +18,8 @@ export const DLCs = ({ gameDetail }: GameDetailsContentProps) => {
               {gameDetail.dlcs.map((dlc) => (
                 <Card
                   key={dlc.id}
-                  className="w-40 sm:w-44 md:w-52 lg:w-60 xl:w-64 bg-base-300 border border-gray-600"
+                  className="w-40 border border-gray-600 bg-base-300 sm:w-44 md:w-52 lg:w-60 xl:w-64"
+                  linkTo={`/games/${dlc.slug}`}
                 >
                   <CardImage
                     imgSrc={() => getImageUrl(dlc.cover.url, "cover_big_2x")}
@@ -26,7 +27,7 @@ export const DLCs = ({ gameDetail }: GameDetailsContentProps) => {
                     className="h-48 sm:h-60 md:h-72 lg:h-80"
                   />
                   <CardContent>
-                    <h2 className="text-xs sm:text-sm md:text-base font-semibold line-clamp-2 text-pretty">
+                    <h2 className="line-clamp-2 text-pretty text-xs font-semibold sm:text-sm md:text-base">
                       {dlc.name}
                     </h2>
                   </CardContent>
@@ -45,14 +46,18 @@ export const DLCs = ({ gameDetail }: GameDetailsContentProps) => {
           <div className="overflow-x-auto">
             <div className="flex w-max space-x-2">
               {gameDetail.bundles.map((bundle) => (
-                <Card key={bundle.id} className="w-40 sm:w-44 md:w-52 lg:w-60 xl:w-64 bg-base-300 border border-gray-600">
+                <Card
+                  key={bundle.id}
+                  className="w-40 border border-gray-600 bg-base-300 sm:w-44 md:w-52 lg:w-60 xl:w-64"
+                  linkTo={`/games/${bundle.slug}`}
+                >
                   <CardImage
                     imgSrc={() => getImageUrl(bundle.cover.url, "cover_big_2x")}
                     title={bundle?.name}
                     className="h-48 sm:h-60 md:h-72 lg:h-80"
                   />
                   <CardContent>
-                    <h2 className="text-xs sm:text-sm md:text-base font-semibold line-clamp-2 text-pretty">
+                    <h2 className="line-clamp-2 text-pretty text-xs font-semibold sm:text-sm md:text-base">
                       {bundle.name}
                     </h2>
                   </CardContent>
