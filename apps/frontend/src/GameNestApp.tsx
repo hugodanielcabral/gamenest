@@ -7,9 +7,8 @@ import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { ChangelogsPage } from "./pages/ChangelogsPage.jsx";
-import { CollectionManage } from "./components/collection/manage/CollectionManage.jsx";
+import { CollectionManager } from "./components/collection/manager/CollectionManager.tsx";
 import { ValidationPage } from "./pages/ValidationPage.tsx";
-import { UsersProvider } from "./context/UsersContext.tsx";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
 import { useAuth } from "./context/AuthContext.jsx";
 
@@ -52,11 +51,6 @@ export const GameNestApp = () => {
       path: "*",
       element: <ErrorPage />,
     },
-    {
-      id: 7,
-      path: "/changelogs",
-      element: <ChangelogsPage />,
-    },
   ];
 
   const privateRoutes = [
@@ -73,28 +67,23 @@ export const GameNestApp = () => {
     {
       id: 3,
       path: "/collection/add/:gameSlug",
-      element: <CollectionManage />,
+      element: <CollectionManager />,
     },
     {
       id: 5,
-      path: "collection/update/:gameSlug",
-      element: <CollectionManage />,
+      path: "/collection/update/:gameSlug",
+      element: <CollectionManager />,
     },
     {
-      id: 5,
+      id: 6,
       path: "*",
       element: <ErrorPage />,
     },
     {
-      id: 6,
+      id: 7,
       path: "/changelogs",
       element: <ChangelogsPage />,
     },
-    /* {
-      id: 7,
-      path: "/profile",
-      element: <ProfilePage />,
-    }, */
     {
       id: 8,
       path: "/collection/:gameSlug",
@@ -137,11 +126,9 @@ export const GameNestApp = () => {
             >
               <Route
                 element={
-                  <UsersProvider>
                     <CollectionProvider>
                       <Outlet />
                     </CollectionProvider>
-                  </UsersProvider>
                 }
               >
                 {privateRoutes.map((route) => {
