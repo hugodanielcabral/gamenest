@@ -1,8 +1,6 @@
 import sql from "../db.js";
 import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js";
 
-//TODO 1: Además de refactorizar getCollection, tendria que en lugar de enviar solamente la data de la collection, tambien deberia enviar un totalPages, la funcion getTotalCollectionPages deberia recibir un parametro para buscar acorde a la query que se le pase, y deberia devolver el total de paginas que se necesitan para mostrar la data de la query que se le pase. De esta forma no tendria que estar creando ifs para saber si estoy buscando por nombre de juego o por status, sino que simplemente le paso la query y me devuelve el total de paginas que necesito para mostrar la data de esa query.
-
 export const getCollection = async (req, res) => {
   try {
     const { search, orderBy, sort, page, status, ownership } = req.query;
@@ -96,7 +94,7 @@ export const getGameFromCollection = async (req, res) => {
   }
 };
 
-export const addGameToCollection = async (req, res) => {
+export const addCollection = async (req, res) => {
   let {
     game_id,
     game_slug,
@@ -107,33 +105,29 @@ export const addGameToCollection = async (req, res) => {
     ownership_name,
     store_name,
     status_name,
-    progress_note,
-    total_played,
     start_date,
     finish_date,
+    rating,
     amount_paid,
+    hours_played,
+    minutes_played,
+    difficulty,
+    is_favorite,
   } = req.body;
 
-  total_played = total_played === "" ? null : total_played;
-  amount_paid = amount_paid === "" ? null : amount_paid;
-  start_date = start_date === "" ? null : start_date;
-  finish_date = finish_date === "" ? null : finish_date;
-
   try {
-    const collection =
-      await sql`INSERT INTO collection (game_id, game_slug, game_name, game_cover, platform_name, format_name, ownership_name, store_name, status_name, progress_note, total_played, start_date, finish_date, amount_paid, user_id) VALUES (${game_id}, ${game_slug}, ${game_name}, ${game_cover}, ${platform_name}, ${format_name}, ${ownership_name}, ${store_name}, ${status_name}, ${progress_note}, ${total_played}, ${start_date}, ${finish_date}, ${amount_paid}, ${req.user_id}) RETURNING *`;
+    const newCollection =
+      await sql`INSERT INTO collection (user_id, game_id, game_slug, game_name, game_cover, platform_name, format_name, ownership_name, store_name, status_name, start_date, finish_date, rating, amount_paid, hours_played, minutes_played, difficulty, is_favorite) VALUES (${req.user_id}, ${game_id}, ${game_slug}, ${game_name}, ${game_cover}, ${platform_name}, ${format_name}, ${ownership_name}, ${store_name}, ${status_name}, ${start_date}, ${finish_date}, ${rating}, ${amount_paid}, ${hours_played}, ${minutes_played}, ${difficulty}, ${is_favorite}) RETURNING *`;
 
-    res.status(201).json(collection);
+    res.status(201).json(newCollection);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
   }
 };
 
-export const updateGameFromCollection = async (req, res) => {
+export const updateCollection = async (req, res) => {
   const { gameSlug } = req.params;
-
-  //* I don't need to pass the body parts like "game_id, game_slug, game_name, etc. Because postgres will only update the fields that are passed in the body using the ${sql(req.body)} syntax."
 
   try {
     const gameExists =

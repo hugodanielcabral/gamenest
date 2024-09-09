@@ -3,13 +3,14 @@ import Router from "express";
 import {
   getCollection,
   getGameFromCollection,
-  addGameToCollection,
-  updateGameFromCollection,
+  addCollection,
+  updateCollection,
   deleteGameFromCollection,
   getTotalCollectionPages,
   getCollectionFilters,
 } from "../controllers/collection.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
+import { addCollectionValidator } from "../validators/collection.validation.js";
 
 const router = Router();
 
@@ -23,10 +24,17 @@ router.get("/collection/totalPages", isAuth, getTotalCollectionPages);
 
 router.get("/collection/filters", isAuth, getCollectionFilters);
 
-router.post("/collection/add/game", isAuth, addGameToCollection);
+/* CollectionManage  */
 
-router.patch("/collection/update/:gameSlug", isAuth, updateGameFromCollection);
+router.post(
+  "/collection/add/game",
+  isAuth,
+  addCollectionValidator,
+  addCollection
+);
 
-router.delete("/collection/:id", isAuth, deleteGameFromCollection);
+router.patch("/collection/update/game/:gameSlug", isAuth, updateCollection);
+
+router.delete("/collection/delete/game/:id", isAuth, deleteGameFromCollection);
 
 export default router;
