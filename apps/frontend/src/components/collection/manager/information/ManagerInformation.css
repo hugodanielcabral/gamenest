@@ -1,0 +1,40 @@
+.manager-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+
+  .primary-info {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+  }
+
+  .secondary-info {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+  }
+
+  .optional-info {
+    grid-column: 3 / 4;
+    grid-row: 1 / 3;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+
+    .primary-info {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    .secondary-info {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+    }
+
+    .optional-info {
+      grid-column: 1 / 2;
+      grid-row: 3 / 4;
+    }
+  }
+}
