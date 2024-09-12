@@ -34,7 +34,7 @@ export const Card = ({ game }: GameProps) => {
         <h2 className="line-clamp-2 text-pretty text-base text-white sm:text-lg md:text-xl">
           {game.name}
         </h2>
-        <ul className="flex flex-wrap gap-2">
+        <ul className="flex flex-wrap gap-1 md:gap-2">
           {game.platforms
             .filter((platform, index) => {
               if (index < 4) return platform;
