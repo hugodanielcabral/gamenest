@@ -10,10 +10,11 @@ import {
   getMostAnticipatedGames,
 } from "../controllers/games.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
+import { gamesValidation } from "../validators/games.validation.js";
 
 const router = Router();
 
-router.get("/games", getGames);
+router.get("/games", gamesValidation, getGames);
 
 router.get("/games/:id", getGame);
 

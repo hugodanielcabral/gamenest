@@ -10,13 +10,17 @@ import sql from "../db.js";
 env.config();
 
 export const getGames = async (req, res) => {
+  let { page = 1 } = req.query;
+
   const response = await fetch("https://api.igdb.com/v4/games", {
     method: "POST",
     headers: {
       "Client-ID": process.env.CLIENT_ID,
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     },
-    body: `fields *, cover.url, genres.name, platforms.abbreviation, platforms.name, screenshots.url; where rating > 1 & themes != (42) & cover.url != null; sort hypes desc; limit 18;`,
+    body: `fields *, cover.url, genres.name, platforms.abbreviation, platforms.name, screenshots.url; where rating > 1 & themes != (42) & cover.url != null; sort hypes desc; limit 18;offset ${
+      (page - 1) * 18
+    };`,
   });
 
   if (!response.ok) {
