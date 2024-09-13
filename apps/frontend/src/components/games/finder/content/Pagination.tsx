@@ -1,44 +1,68 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useDataFetch } from "../../../../hooks/useDataFetch";
 import queryString from "query-string";
+
+interface PaginationProps {
+  fetchData: {
+    count: number;
+  };
+  isLoading?: boolean;
+}
 
 export const Pagination = () => {
   const { search } = useLocation();
-  const { page } = queryString.parse(search);
+  const query = queryString.parse(search);
+  const parsedQuery = new URLSearchParams(
+    query as Record<string, string>,
+  ).toString();
 
-  const parsedPage = Number(page) || 1;
-
+  let page = query.page ? query.page : "1";
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const handleNextPage = () => {
-    if (page === undefined) {
-      navigate(`?page=2`);
-      return;
-    }
+  const { fetchData: totalPages } = useDataFetch(
+    "count/games",
+    `${parsedQuery}`,
+  ) as unknown as PaginationProps;
 
-    navigate(`?page=${parsedPage + 1}`);
+  const totalPagesCount = Math.ceil(totalPages.count / 21);
+
+  const handleNextPage = () => {
+    if (Number(page) < totalPagesCount && typeof page === "string") {
+      let parsedPage = parseInt(page);
+      const search = new URLSearchParams(searchParams);
+      search.set("page", String(parsedPage + 1));
+      navigate(`?${search}`);
+    }
   };
 
   const handlePrevPage = () => {
-    if (page === "1") return;
-
-    navigate(`?page=${parsedPage - 1}`);
+    if (Number(page) > 1 && typeof page === "string") {
+      let parsedPage = parseInt(page);
+      const search = new URLSearchParams(searchParams);
+      search.set("page", String(parsedPage - 1));
+      navigate(`?${search}`);
+    }
   };
+  
 
   return (
-    <>
-      <div className="join m-6">
-        <button
-          className="btn join-item disabled:opacity-50"
-          onClick={handlePrevPage}
-          disabled={parsedPage === 1 || parsedPage === undefined ? true : false}
-        >
-          «
-        </button>
-        <button className="btn join-item">Página {parsedPage ?? 1}</button>
-        <button className="btn join-item" onClick={handleNextPage}>
-          »
-        </button>
-      </div>
-    </>
+    <div className="join m-6">
+      <button
+        className="btn join-item disabled:opacity-50"
+        onClick={handlePrevPage}
+        disabled={Number(page) === 1}
+      >
+        «
+      </button>
+      <button className="btn join-item">Página {page}</button>
+      <button
+        className="btn join-item"
+        onClick={handleNextPage}
+        disabled={Number(page) >= totalPagesCount}
+      >
+        »
+      </button>
+    </div>
   );
 };

@@ -42,7 +42,7 @@ export const getGamesBySearch = async (search, platforms, genres, page) => {
     });
 
     const gamesData = await response.json();
-    const countData = await getCount(search);
+    const countData = await getGameCount(search);
 
     return {
       gamesData,
@@ -53,7 +53,7 @@ export const getGamesBySearch = async (search, platforms, genres, page) => {
   }
 };
 
-export const getCount = async (search) => {
+export const getGameCount = async (search) => {
   try {
     const response = await fetch("https://api.igdb.com/v4/games/count", {
       method: "POST",
@@ -61,7 +61,9 @@ export const getCount = async (search) => {
         "Client-ID": process.env.CLIENT_ID,
         Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
       },
-      body: `${search ? `search "${search}";` : ""}where rating > 1;`,
+      body: `${
+        search ? `search "${search}";` : ""
+      }where rating > 1 & themes != (42) & cover.url != null;`,
     });
 
     const countData = await response.json();

@@ -19,16 +19,20 @@ interface GamesProps {
 
 export const GamesFinderContent = () => {
   const { search } = useLocation();
-  const { page } = queryString.parse(search);
+  const query = queryString.parse(search);
+  const parsedQuery = new URLSearchParams(
+    query as Record<string, string>,
+  ).toString();
+
   const { fetchData: gamesData, isLoading } = useDataFetch(
     "games",
-    page ? `page=${page}` : "",
+    `${parsedQuery}`,
   ) as GamesProps;
 
   if (isLoading) {
     return (
       <Loading
-        className="col-span-full flex justify-center"
+        className="col-span-full flex justify-center min-h-screen items-center"
         color="primary"
         type="ring"
       />
@@ -39,9 +43,9 @@ export const GamesFinderContent = () => {
     <>
       <Toaster richColors position="top-center" />
       {gamesData.length > 0 ? (
-        gamesData.map((game) => <Card key={game.id} game={game} />)
+        gamesData?.map((game) => <Card key={game.id} game={game} />)
       ) : (
-        <div className="col-span-full flex justify-center">
+        <div className="col-span-full flex justify-center min-h-screen">
           <p className="text-white lg:text-4xl">
             No se encontraron juegos para mostrar 😢.
           </p>

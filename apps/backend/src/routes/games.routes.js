@@ -8,6 +8,7 @@ import {
   createSteamGameAchievement,
   getUpcomingGames,
   getMostAnticipatedGames,
+  getCountGames,
 } from "../controllers/games.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
 import { gamesValidation } from "../validators/games.validation.js";
@@ -17,6 +18,8 @@ const router = Router();
 router.get("/games", gamesValidation, getGames);
 
 router.get("/games/:id", getGame);
+
+router.get("/count/games", getCountGames);
 
 router.get("/games/latest/released", getLatestGames);
 
