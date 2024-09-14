@@ -18,7 +18,7 @@ export const Pagination = () => {
     `${getQueryString()}`,
   ) as unknown as PaginationProps;
 
-  const totalPagesCount = Math.ceil(totalPages.count / 21);
+  const totalPagesCount = Math.ceil(totalPages.count / 12);
 
   const handleNextPage = () => {
     if (Number(page) < totalPagesCount && typeof page === "string") {

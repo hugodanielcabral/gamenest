@@ -22,7 +22,7 @@ export const getGames = async (req, res) => {
       q ? `search "${q}";` : ""
     } where rating > 1 & themes != (42) & cover.url != null; ${
       sort && !q ? `sort ${sort} ${order};` : ""
-    } limit 21; offset ${(page - 1) * 21};`,
+    } limit 12; offset ${(page - 1) * 12};`,
   });
 
   if (!response.ok) {
