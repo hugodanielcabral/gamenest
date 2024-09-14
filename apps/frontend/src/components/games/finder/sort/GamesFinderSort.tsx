@@ -1,7 +1,6 @@
-import queryString from "query-string";
 import { useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Option, Select } from "../../../ui/select/Select.tsx";
+import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
 
 const sortOptions = [
   { value: "name", text: "Nombre" },
@@ -9,29 +8,25 @@ const sortOptions = [
 ];
 
 export const GamesFinderSort = () => {
-  const { search } = useLocation();
-  const { sort = "", q = "" } = queryString.parse(search);
-  const [inputSort, setInputSort] = useState(sort as string);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const { query, clearParams, setParams } = useQueryParams();
+  const [inputSort, setInputSort] = useState(query.sort as string);
+  
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInputSort(e.target.value);
 
-    const searchQuery = new URLSearchParams(searchParams);
-    searchQuery.delete("page");
-    searchQuery.set("sort", e.target.value);
-    navigate(`?${searchQuery.toString()}`);
+    clearParams("page");
+    setParams("sort", e.target.value);
   };
   return (
     <>
-      {q ? (
+      {query?.q ? (
         <Select className="max-w-lg bg-base-300 lg:select-lg" disabled={true}>
           <Option value="relevance" text="Relevancia" />
         </Select>
       ) : (
         <Select
-          className="max-w-lg bg-base-300 lg:select-lg focus:border-info focus:border-2"
+          className="max-w-lg bg-base-300 lg:select-lg focus:border-2 focus:border-info"
           value={inputSort}
           onChange={handleOnChange}
         >
