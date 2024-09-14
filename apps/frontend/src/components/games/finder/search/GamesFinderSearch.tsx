@@ -37,7 +37,7 @@ export const GamesFinderSearch = () => {
   }, [q]);
 
   return (
-    <form onSubmit={handleOnSubmit} className="w-full flex justify-center">
+    <form onSubmit={handleOnSubmit} className="flex-grow">
       <input
         type="search"
         placeholder="Buscar juego..."
@@ -47,7 +47,7 @@ export const GamesFinderSearch = () => {
         name="q"
         minLength={2}
         maxLength={50}
-        className="input input-bordered input-xs w-full max-w-lg sm:input-sm md:input-md focus:border-info focus:border-2 lg:input-lg"
+        className="input input-bordered input-xs w-full sm:input-sm md:input-md focus:border-info focus:border-2 lg:input-lg bg-base-300"
       />
     </form>
   );
