@@ -1,24 +1,19 @@
-import queryString from "query-string";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useQueryParams } from "../../../../hooks/useQueryParams";
 
 export const GamesFinderSearch = () => {
-  const { search } = useLocation();
-  const { q = "" } = queryString.parse(search);
-  const [inputSearch, setInputSearch] = useState(q as string);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const { query, navigate, searchParams, clearParams, setParams } =
+    useQueryParams();
+  const [inputSearch, setInputSearch] = useState(query.q as string);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputSearch(e.target.value);
   };
 
   const handleOnInput = (e: React.FormEvent<HTMLInputElement>) => {
-    if (e.currentTarget.value === "" && q) {
-      const searchQuery = new URLSearchParams(searchParams);
-      searchQuery.delete("q");
-      searchQuery.delete("page");
-      navigate(`?${searchQuery.toString()}`);
+    if (e.currentTarget.value === "" && query.q) {
+      clearParams(["page", "q"]);
+      navigate(`?${searchParams.toString()}`);
     }
   };
 
@@ -26,15 +21,13 @@ export const GamesFinderSearch = () => {
     e.preventDefault();
 
     if (inputSearch.trim().length <= 1) return;
-    const searchQuery = new URLSearchParams(searchParams);
-    searchQuery.delete("page");
-    searchQuery.set("q", inputSearch);
-    navigate(`?${searchQuery.toString()}`);
+    clearParams("page");
+    setParams("q", inputSearch);
   };
 
   useEffect(() => {
-    setInputSearch(q as string);
-  }, [q]);
+    setInputSearch(query.q as string);
+  }, [query.q]);
 
   return (
     <form onSubmit={handleOnSubmit} className="flex-grow">
@@ -47,7 +40,7 @@ export const GamesFinderSearch = () => {
         name="q"
         minLength={2}
         maxLength={50}
-        className="input input-bordered input-xs w-full sm:input-sm md:input-md focus:border-info focus:border-2 lg:input-lg bg-base-300"
+        className="input input-bordered input-xs w-full bg-base-300 sm:input-sm md:input-md lg:input-lg focus:border-2 focus:border-info"
       />
     </form>
   );

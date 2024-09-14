@@ -1,7 +1,6 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Option, Select } from "../../../ui/select/Select.tsx";
-import queryString from "query-string";
 import { useState } from "react";
+import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
 
 const orderOptions = [
   { value: "asc", text: "Ascendente" },
@@ -9,24 +8,19 @@ const orderOptions = [
 ];
 
 export const GamesFinderOrder = () => {
-  const { search } = useLocation();
-  const { order = "", q = "" } = queryString.parse(search);
-  const [inputOrder, setInputOrder] = useState(order as string);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const { query, clearParams, setParams } = useQueryParams();
+  const [inputOrder, setInputOrder] = useState(query.order as string);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInputOrder(e.target.value);
 
-    const searchQuery = new URLSearchParams(searchParams);
-    searchQuery.delete("page");
-    searchQuery.set("order", e.target.value);
-    navigate(`?${searchQuery.toString()}`);
+    clearParams("page");
+    setParams("order", e.target.value);
   };
 
   return (
     <>
-      {q ? (
+      {query?.q ? (
         <Select className="max-w-44 bg-base-300 lg:select-lg" disabled={true}>
           <Option value="asc" text="Ascendente" />
         </Select>
