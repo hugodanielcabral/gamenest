@@ -32,7 +32,7 @@ export const GamesFinderContent = () => {
   if (isLoading) {
     return (
       <Loading
-        className="col-span-full flex justify-center min-h-screen items-center"
+        className="col-span-full flex min-h-screen items-center justify-center"
         color="primary"
         type="ring"
       />
@@ -45,9 +45,10 @@ export const GamesFinderContent = () => {
       {gamesData.length > 0 ? (
         gamesData?.map((game) => <Card key={game.id} game={game} />)
       ) : (
-        <div className="col-span-full flex justify-center min-h-screen">
-          <p className="text-white lg:text-4xl">
-            No se encontraron juegos para mostrar 😢.
+        <div className="col-span-full flex min-h-screen justify-center">
+          <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+            No se encontraron resultados para tu búsqueda. Verifica los filtros
+            aplicados.
           </p>
         </div>
       )}

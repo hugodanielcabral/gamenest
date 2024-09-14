@@ -16,16 +16,19 @@ export const Pagination = () => {
     query as Record<string, string>,
   ).toString();
 
+  
+  
   let page = query.page ? query.page : "1";
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-
+  
   const { fetchData: totalPages } = useDataFetch(
     "count/games",
     `${parsedQuery}`,
   ) as unknown as PaginationProps;
-
+  
   const totalPagesCount = Math.ceil(totalPages.count / 21);
+  console.log(totalPagesCount);
 
   const handleNextPage = () => {
     if (Number(page) < totalPagesCount && typeof page === "string") {
