@@ -10,9 +10,11 @@ export const useQueryParams = () => {
   const clearParams = (param: string | string[]) => {
     if (typeof param === "string") {
       searchParams.delete(param);
+      navigate(`?${searchParams.toString()}`);
     } else {
       param.forEach((el) => {
         searchParams.delete(el);
+        navigate(`?${searchParams.toString()}`);
       });
     }
   };
@@ -22,17 +24,23 @@ export const useQueryParams = () => {
     navigate(`?${searchParams.toString()}`);
   };
 
-
   const getQueryString = () => {
     let parsedQuery = searchParams.toString();
 
     return parsedQuery;
   };
 
+  const getParams = () => {
+    return Object.entries(query).map(([key, value]) => {
+      return { key, value };
+    });
+  };
+
   return {
     query,
     searchParams,
     navigate,
+    getParams,
     setParams,
     clearParams,
     getQueryString,

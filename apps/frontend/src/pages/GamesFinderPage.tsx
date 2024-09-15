@@ -5,17 +5,19 @@ import { Pagination } from "../components/games/finder/content/Pagination";
 import { GamesFinderSearch } from "../components/games/finder/search/GamesFinderSearch";
 import { GamesFinderOrder } from "../components/games/finder/order/GamesFinderOrder";
 import { GamesFinderSort } from "../components/games/finder/sort/GamesFinderSort";
+import { GamesFinderActiveFilters } from "../components/games/finder/activeFilters/GamesFinderActiveFilters";
 
 const GamesFinderPage = () => {
   return (
     <Layout>
-      <Container className="space-y-4 p-4">
-        <section className="flex flex-col justify-start gap-2 md:flex-row">
+      <Container className="space-y-12 p-4">
+        <section className="flex flex-col justify-start gap-2 md:flex-row flex-wrap">
           <GamesFinderSearch />
-          <div className="flex">
+          <div className="flex gap-1">
             <GamesFinderSort />
             <GamesFinderOrder />
           </div>
+          <GamesFinderActiveFilters />
         </section>
         <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <GamesFinderContent />
