@@ -1,23 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Option, Select } from "../../../ui/select/Select.tsx";
-import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
+import { useQueryParams } from "../../../../hooks/useQueryParams";
 
-const sortOptions = [
+interface SortOptions {
+  value: "rating" | "name";
+  text: "Rating" | "Nombre";
+}
+
+const sortOptions: SortOptions[] = [
   { value: "rating", text: "Rating" },
   { value: "name", text: "Nombre" },
 ];
 
 export const GamesFinderSort = () => {
   const { query, clearParams, setParams } = useQueryParams();
-  const [inputSort, setInputSort] = useState(query.sort as string);
-  
+  const [inputSort, setInputSort] = useState((query.sort as string) || "");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInputSort(e.target.value);
-
     clearParams("page");
     setParams("sort", e.target.value);
   };
+
+  useEffect(() => {
+    setInputSort((query.sort as string) || "");
+  }, [query.sort]);
+
   return (
     <>
       {query?.q ? (

@@ -2,7 +2,7 @@ import { useDataFetch } from "../../../../hooks/useDataFetch";
 import { Card } from "./card/Card";
 import { Toaster } from "sonner";
 import { Loading } from "../../../ui/loading/Loading.tsx";
-import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
+import { useQueryParams } from "../../../../hooks/useQueryParams";
 
 interface GamesProps {
   fetchData: {
@@ -35,8 +35,6 @@ export const GamesFinderContent = () => {
       />
     );
   }
-
-  console.log(gamesData);
 
   return (
     <>

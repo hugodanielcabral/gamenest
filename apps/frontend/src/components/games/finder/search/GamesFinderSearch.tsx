@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useQueryParams } from "../../../../hooks/useQueryParams";
 
 export const GamesFinderSearch = () => {
-  const { query, navigate, searchParams, clearParams, setParams } =
-    useQueryParams();
+  const { query, clearParams, setParams } = useQueryParams();
   const [inputSearch, setInputSearch] = useState(query.q as string);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,7 +12,6 @@ export const GamesFinderSearch = () => {
   const handleOnInput = (e: React.FormEvent<HTMLInputElement>) => {
     if (e.currentTarget.value === "" && query.q) {
       clearParams(["page", "q"]);
-      navigate(`?${searchParams.toString()}`);
     }
   };
 

@@ -1,15 +1,20 @@
 import { Option, Select } from "../../../ui/select/Select.tsx";
-import { useState } from "react";
-import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
+import { useEffect, useState } from "react";
+import { useQueryParams } from "../../../../hooks/useQueryParams";
 
-const orderOptions = [
+interface OrderOptions {
+  value: "desc" | "asc";
+  text: "Descendente" | "Ascendente";
+}
+
+const orderOptions: OrderOptions[] = [
   { value: "desc", text: "Descendente" },
   { value: "asc", text: "Ascendente" },
 ];
 
 export const GamesFinderOrder = () => {
   const { query, clearParams, setParams } = useQueryParams();
-  const [inputOrder, setInputOrder] = useState(query.order as string);
+  const [inputOrder, setInputOrder] = useState((query.order as string) || "");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInputOrder(e.target.value);
@@ -17,6 +22,10 @@ export const GamesFinderOrder = () => {
     clearParams("page");
     setParams("order", e.target.value);
   };
+
+  useEffect(() => {
+    setInputOrder((query.order as string) || "");
+  }, [query.order]);
 
   return (
     <>
