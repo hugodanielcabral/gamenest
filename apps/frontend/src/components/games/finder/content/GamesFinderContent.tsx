@@ -1,9 +1,8 @@
-import { useLocation } from "react-router-dom";
 import { useDataFetch } from "../../../../hooks/useDataFetch";
 import { Card } from "./card/Card";
 import { Toaster } from "sonner";
 import { Loading } from "../../../ui/loading/Loading.tsx";
-import queryString from "query-string";
+import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
 
 interface GamesProps {
   fetchData: {
@@ -13,20 +12,18 @@ interface GamesProps {
     platforms: { id: string; abbreviation: string; name: string }[];
     slug: string;
     rating: number;
+    parent_game?: { id: string; name: string; slug: string };
+    first_release_date: number;
+    version_parent?: { id: string; name: string; slug: string };
   }[];
   isLoading: boolean;
 }
 
 export const GamesFinderContent = () => {
-  const { search } = useLocation();
-  const query = queryString.parse(search);
-  const parsedQuery = new URLSearchParams(
-    query as Record<string, string>,
-  ).toString();
-
+  const { getQueryString } = useQueryParams();
   const { fetchData: gamesData, isLoading } = useDataFetch(
     "games",
-    `${parsedQuery}`,
+    `${getQueryString()}`,
   ) as GamesProps;
 
   if (isLoading) {
@@ -38,6 +35,8 @@ export const GamesFinderContent = () => {
       />
     );
   }
+
+  console.log(gamesData);
 
   return (
     <>

@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
 
 const orderOptions = [
-  { value: "asc", text: "Ascendente" },
   { value: "desc", text: "Descendente" },
+  { value: "asc", text: "Ascendente" },
 ];
 
 export const GamesFinderOrder = () => {

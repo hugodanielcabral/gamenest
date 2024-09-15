@@ -3,8 +3,8 @@ import { Option, Select } from "../../../ui/select/Select.tsx";
 import { useQueryParams } from "../../../../hooks/useQueryParams.tsx";
 
 const sortOptions = [
-  { value: "name", text: "Nombre" },
   { value: "rating", text: "Rating" },
+  { value: "name", text: "Nombre" },
 ];
 
 export const GamesFinderSort = () => {

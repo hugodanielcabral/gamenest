@@ -7,11 +7,6 @@ export const useQueryParams = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  //TODO1: crear metodos.
-  //TODO 2: Bajar la cantidad de elementos traídos a 12.
-
-  //* Metodo para eliminar un parametro de la URL. Puede recibir un string o un array de strings.
-
   const clearParams = (param: string | string[]) => {
     if (typeof param === "string") {
       searchParams.delete(param);
@@ -27,11 +22,19 @@ export const useQueryParams = () => {
     navigate(`?${searchParams.toString()}`);
   };
 
+
   const getQueryString = () => {
     let parsedQuery = searchParams.toString();
 
     return parsedQuery;
   };
 
-  return { query, searchParams, navigate, setParams, clearParams, getQueryString };
+  return {
+    query,
+    searchParams,
+    navigate,
+    setParams,
+    clearParams,
+    getQueryString,
+  };
 };
