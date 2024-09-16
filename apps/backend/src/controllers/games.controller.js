@@ -10,7 +10,15 @@ import sql from "../db.js";
 env.config();
 
 export const getGames = async (req, res) => {
-  let { q = "", page = 1, sort = "name", order = "desc" } = req.query;
+  let {
+    q = "",
+    page = 1,
+    sort = "name",
+    order = "desc",
+    platforms = "",
+  } = req.query;
+
+  console.log(platforms);
 
   const response = await fetch("https://api.igdb.com/v4/games", {
     method: "POST",
@@ -20,7 +28,9 @@ export const getGames = async (req, res) => {
     },
     body: `fields name, first_release_date, rating, slug, cover.url, genres.name, platforms.abbreviation, platforms.name,release_dates.platform.name, release_dates.game.name, release_dates.date,parent_game.name, parent_game.slug, version_parent.name, version_parent.slug; screenshots.url; ${
       q ? `search "${q}";` : ""
-    } where rating > 1 & themes != (42) & cover.url != null; ${
+    } where ${
+      platforms ? `platforms = (${platforms}) &` : ""
+    } rating > 1 & themes != (42) & cover.url != null; ${
       sort && !q ? `sort ${sort} ${order};` : ""
     } limit 12; offset ${(page - 1) * 12};`,
   });

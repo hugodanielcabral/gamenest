@@ -1,5 +1,6 @@
 import { validateResult } from "../helpers/handleValidateResult.js";
 import { query } from "express-validator";
+import { availablePlatforms } from "../data/availablePlatforms.js";
 
 export const gamesValidation = [
   query("page")
@@ -30,6 +31,23 @@ export const gamesValidation = [
       }
 
       return value;
+    }),
+  query("platforms")
+    .optional()
+    .customSanitizer((value) => {
+      const splitArray = value.split(",");
+
+      const filteredPlatforms = splitArray.filter((item) => {
+        const matchingPlatform = availablePlatforms.find(
+          (platform) => platform.value === item
+        );
+
+        return matchingPlatform.value;
+      });
+
+      if (filteredPlatforms.length === 0) return "";
+
+      return filteredPlatforms.join(",");
     }),
   (req, res, next) => {
     validateResult(req, res, next);
