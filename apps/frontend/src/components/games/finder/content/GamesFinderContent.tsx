@@ -29,7 +29,7 @@ export const GamesFinderContent = () => {
   if (isLoading) {
     return (
       <Loading
-        className="col-span-full flex min-h-screen items-center justify-center"
+        className="lg:col-span-3 flex min-h-screen items-center justify-center"
         color="primary"
         type="ring"
       />
@@ -37,7 +37,7 @@ export const GamesFinderContent = () => {
   }
 
   return (
-    <>
+    <div className="col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-4 h-fit">
       <Toaster richColors position="top-center" />
       {gamesData.length > 0 ? (
         gamesData?.map((game) => <Card key={game.id} game={game} />)
@@ -49,6 +49,6 @@ export const GamesFinderContent = () => {
           </p>
         </div>
       )}
-    </>
+    </div>
   );
 };

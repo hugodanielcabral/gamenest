@@ -19,9 +19,24 @@ export const useQueryParams = () => {
     }
   };
 
-  const setParams = (param: string, value: string) => {
-    searchParams.set(param, value);
-    navigate(`?${searchParams.toString()}`);
+  const filterParams = (key: string, value: string) => {
+    const values = searchParams.get(key)?.split(",") || [];
+    const newValues = values.filter((val) => val !== value);
+
+    if (newValues.length === 0) {
+      clearParams(key);
+      return;
+    }
+    setParams(key, newValues);
+  };
+
+  const setParams = (param: string, value: string | string[]) => {
+    if (typeof value === "string") {
+      searchParams.set(param, value);
+      navigate(`?${searchParams.toString()}`);
+    } else {
+      setParams(param, value.join(","));
+    }
   };
 
   const getQueryString = () => {
@@ -44,5 +59,6 @@ export const useQueryParams = () => {
     setParams,
     clearParams,
     getQueryString,
+     filterParams,
   };
 };

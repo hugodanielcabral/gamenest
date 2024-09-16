@@ -1,26 +1,72 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Collapse } from "../../../ui/collapse/Collapse";
+import { Label } from "../../../ui/label/Label.tsx";
+import { Checkbox } from "../../../ui/checkbox/Checkbox.tsx";
+import { useQueryParams } from "../../../../hooks/useQueryParams.ts";
+import { platformsFilterOptions } from "../../../../data/gamesFinder.ts";
+import { Button } from "../../../ui/button/Button.tsx";
 
 export const GamesFinderFilters = () => {
-  /* const searchParams = new URLSearchParams(window.location.search);
+  const { setParams, searchParams, clearParams } = useQueryParams();
+  const [showAllPlatforms, setShowAllPlatforms] = useState(false);
+  const initialPlatformsToShow = 4;
 
-  searchParams.set("filter", "1");
+  const platforms = searchParams.get("platforms")?.split(",") || [];
 
-  console.log(searchParams.get("filter"));
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
 
-  const handleSearch = () => {
-    searchParams.set("filter", "2");
-  } */
+    if (checked) {
+      setParams("platforms", [...platforms, value].join(","));
+    } else {
+      const filteredPlatforms = platforms.filter(
+        (platform) => platform !== value,
+      );
 
-  const navigate = useNavigate();
+      if (filteredPlatforms.length === 0) {
+        clearParams("platforms");
+        return;
+      }
+
+      setParams("platforms", filteredPlatforms.join(","));
+    }
+  };
+
+  const handleToggleShowPlatforms = () => {
+    setShowAllPlatforms((prev) => !prev);
+  };
+
+  const platformsToShow = showAllPlatforms
+    ? platformsFilterOptions
+    : platformsFilterOptions.slice(0, initialPlatformsToShow);
 
   return (
-    <>
-      <h1>Filters</h1>
-      <input type="text" />
-      <input type="checkbox" name="" id="" />
-      <button className="btn btn-primary" onClick={() => navigate("?page=2")}>
-        Filter BTN
-      </button>
-    </>
+    <div /* className="fixed inset-0 z-50 flex flex-col overflow-auto bg-base-200" */
+    >
+      <div className="flex-grow p-4">
+        <Collapse title="Platforms" detailsClassName="bg-base-200">
+          {platformsToShow.map((platform) => (
+            <Label title={platform.title} key={platform.id}>
+              <Checkbox
+                name={platform.title}
+                value={platform.value}
+                onChange={handleOnChange}
+                checked={platforms.includes(platform.value)}
+              />
+            </Label>
+          ))}
+          {platformsFilterOptions.length > initialPlatformsToShow && (
+            <Button
+              className="mt-2 text-xs"
+              variant="error"
+              size="sm"
+              onClick={handleToggleShowPlatforms}
+            >
+              {showAllPlatforms ? "Mostrar menos" : "Mostrar más"}
+            </Button>
+          )}
+        </Collapse>
+      </div>
+    </div>
   );
 };

@@ -6,12 +6,13 @@ import { GamesFinderSearch } from "../components/games/finder/search/GamesFinder
 import { GamesFinderOrder } from "../components/games/finder/order/GamesFinderOrder";
 import { GamesFinderSort } from "../components/games/finder/sort/GamesFinderSort";
 import { GamesFinderActiveFilters } from "../components/games/finder/activeFilters/GamesFinderActiveFilters";
+import { GamesFinderFilters } from "../components/games/finder/filters/GamesFinderFilters";
 
 const GamesFinderPage = () => {
   return (
     <Layout>
       <Container className="space-y-12 p-4">
-        <section className="flex flex-col justify-start gap-2 md:flex-row flex-wrap">
+        <section className="flex flex-col flex-wrap justify-start gap-2 md:flex-row">
           <GamesFinderSearch />
           <div className="flex gap-1">
             <GamesFinderSort />
@@ -19,7 +20,8 @@ const GamesFinderPage = () => {
           </div>
           <GamesFinderActiveFilters />
         </section>
-        <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <section className="relative grid grid-cols-1 gap-4 lg:grid-cols-4">
+          <GamesFinderFilters />
           <GamesFinderContent />
         </section>
         <section className="flex justify-center">
