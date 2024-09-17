@@ -11,7 +11,7 @@ import { GamesFinderFilters } from "../components/games/finder/filters/GamesFind
 const GamesFinderPage = () => {
   return (
     <Layout>
-      <Container className="space-y-12 p-4">
+      <Container className="space-y-4 p-4">
         <section className="flex flex-col flex-wrap justify-start gap-2 md:flex-row">
           <GamesFinderSearch />
           <div className="flex gap-1">
@@ -20,7 +20,7 @@ const GamesFinderPage = () => {
           </div>
           <GamesFinderActiveFilters />
         </section>
-        <section className="relative grid grid-cols-1 gap-4 lg:grid-cols-4">
+        <section className="relative grid grid-cols-1 gap-y-4 lg:gap-x-2 lg:grid-cols-4">
           <GamesFinderFilters />
           <GamesFinderContent />
         </section>

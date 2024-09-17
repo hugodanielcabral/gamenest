@@ -29,7 +29,7 @@ export const GamesFinderContent = () => {
   if (isLoading) {
     return (
       <Loading
-        className="lg:col-span-3 flex min-h-screen items-center justify-center"
+        className="lg:col-span-3 flex min-h-screen items-start justify-center"
         color="primary"
         type="ring"
       />

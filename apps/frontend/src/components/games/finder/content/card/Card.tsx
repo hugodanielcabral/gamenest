@@ -44,7 +44,7 @@ export const Card = ({ game }: GameProps) => {
           className="w-16 rounded-lg object-cover sm:w-20 md:w-24 lg:w-28"
         />
         <div className="flex-grow">
-          <h2 className="line-clamp-2 text-pretty text-xs text-white sm:text-lg md:text-xl">
+          <h2 className="line-clamp-2 text-pretty text-xs text-white sm:text-sm md:text-base">
             {game.name}{" "}
             <span className="text-gray-300">
               (
@@ -56,7 +56,7 @@ export const Card = ({ game }: GameProps) => {
           <ul className="mb-1 line-clamp-1  md:mb-4 flex flex-wrap gap-1 md:gap-2">
             {game.platforms.slice(0, 4).map((platform) => (
               <CardList key={platform.id}>
-                <Badge>{platform.abbreviation}</Badge>
+                <Badge className="text-xs sm:text-sm">{platform.abbreviation}</Badge>
               </CardList>
             ))}
             {game.platforms.length > 4 && (
@@ -69,7 +69,7 @@ export const Card = ({ game }: GameProps) => {
               href={`/games/${game.parent_game.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-gray-300 hover:underline sm:text-sm md:text-base text-pretty line-clamp-2"
+              className="text-xs text-gray-300 hover:underline sm:text-sm text-pretty line-clamp-2"
             >
               DLC de{" "}
               <span className="font-nunito font-semibold text-white">
@@ -83,7 +83,7 @@ export const Card = ({ game }: GameProps) => {
               href={`/games/${game.version_parent.slug}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-gray-300 hover:underline sm:text-sm md:text-base text-pretty text-ellipsis line-clamp-2"
+              className="text-xs text-gray-300 hover:underline sm:text-sm text-pretty text-ellipsis line-clamp-2"
             >
               Actualización de{" "}
               <span className="font-semibold text-white">
@@ -95,7 +95,7 @@ export const Card = ({ game }: GameProps) => {
         <div className="flex flex-col items-end">
           <Icon
             name="icon-[material-symbols--star]"
-            className={clsx("size-3 sm:size-6 md:size-8", {
+            className={clsx("size-4 sm:size-5 md:size-6", {
               "text-red-500": game.rating < 40,
               "text-orange-800": game.rating >= 40 && game.rating < 60,
               "text-green-500": game.rating >= 60 && game.rating < 80,
@@ -103,7 +103,7 @@ export const Card = ({ game }: GameProps) => {
               "text-teal-400": game.rating >= 90,
             })}
           />
-          <span className="mr-0 text-xs text-white sm:text-lg md:mr-1 md:text-xl">
+          <span className="mr-0 text-xs text-white sm:text-sm md:mr-1 md:text-base">
             {Math.floor(game.rating)}
           </span>
         </div>
