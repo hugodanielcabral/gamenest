@@ -44,18 +44,30 @@ export const GamesFinderFilters = () => {
     : platformsFilterOptions.slice(0, initialPlatformsToShow);
 
   return (
-    <div className="col-span-full md:col-span-1 mx-auto md:mx-0">
+    <div className="col-span-1 mx-auto md:mx-0">
       <Button
-        className="md:hidden text-white ml-10 text-xs sm:text-sm"
+        className="text-xs text-white sm:text-sm md:hidden"
         variant="info"
         size="sm"
         onClick={() => setIsDrawlerOpen(!isDrawlerOpen)}
       >
-        <Icon name="icon-[mdi--filter]" className="text-gray-200 size-3 sm:size-4" />
+        <Icon
+          name="icon-[mdi--filter]"
+          className="size-3 text-gray-200 sm:size-4"
+        />
         Filtros
       </Button>
-      <Drawer isOpen={isDrawlerOpen} setIsOpen={setIsDrawlerOpen}>
-        <Collapse title="Plataformas" detailsClassName="bg-base-200">
+      <Drawer
+        title="Filtrar por"
+        isOpen={isDrawlerOpen}
+        setIsOpen={setIsDrawlerOpen}
+      >
+        <Collapse
+          title="Plataformas"
+          detailsClassName="bg-base-300 border rounded-sm border-gray-700"
+          summaryClassName="bg-base-100 p-4"
+          isOpen={true}
+        >
           {platformsToShow.map((platform) => (
             <Label title={platform.title} key={platform.id}>
               <Checkbox
@@ -78,9 +90,13 @@ export const GamesFinderFilters = () => {
           )}
         </Collapse>
       </Drawer>
-      <div className="sticky top-20 hidden h-fit md:block border border-gray-700 rounded-lg">
-         <Collapse title="Plataformas" detailsClassName="bg-base-200 overflow-auto">
-         {platformsToShow.map((platform) => (
+      <div className="sticky top-20 hidden h-fit rounded-lg border border-gray-700 md:block">
+        <Collapse
+          title="Plataformas"
+          detailsClassName="overflow-auto bg-base-200 rounded-lg"
+          summaryClassName="bg-base-100 p-2"
+        >
+          {platformsToShow.map((platform) => (
             <Label title={platform.title} key={platform.id}>
               <Checkbox
                 name={platform.title}
@@ -97,10 +113,16 @@ export const GamesFinderFilters = () => {
               size="sm"
               onClick={handleToggleShowPlatforms}
             >
-              {showAllPlatforms ? "Mostrar menos" : "Mostrar más"}
+              {showAllPlatforms ? <>
+                Mostrar menos
+                <Icon name="icon-[mdi--chevron-up]" className="size-4" />
+              </> : <>
+                Mostrar más
+                <Icon name="icon-[mdi--chevron-down]" className="size-4" />
+              </>}
             </Button>
           )}
-          </Collapse>
+        </Collapse>
       </div>
     </div>
   );
