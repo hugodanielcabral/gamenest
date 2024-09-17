@@ -18,7 +18,7 @@ export const GameDetailsHeader = ({
       <img
         src={headerBackground}
         alt={`Cover del juego "${gameDetail.name}"`}
-        className="absolute left-0 top-0 z-0 h-full w-full object-cover opacity-45 blur-sm"
+        className="absolute left-0 top-0 z-0 h-full w-full object-cover bg-center opacity-20 blur-md"
       />
       <img
         src={getImageUrl(getImageUrl(gameDetail.cover.url, "cover_big_2x"))}

@@ -7,7 +7,7 @@ export const genresIcons = {
     Simulator: "icon-[mdi--airplane]",
     Strategy: "icon-[mingcute--chess-fill]",
     Puzzle: "icon-[mdi--puzzle]",
-    Arcade: "icon-[mdi--arcade]",
+    Arcade: "icon-[tabler--brand-apple-arcade]",
     Platform: "icon-[mdi--platform]",
     Racing: "icon-[mdi--car-sports]",
   };
