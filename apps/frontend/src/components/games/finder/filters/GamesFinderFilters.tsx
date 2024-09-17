@@ -5,11 +5,14 @@ import { Checkbox } from "../../../ui/checkbox/Checkbox.tsx";
 import { useQueryParams } from "../../../../hooks/useQueryParams.ts";
 import { platformsFilterOptions } from "../../../../data/gamesFinder.ts";
 import { Button } from "../../../ui/button/Button.tsx";
+import { Drawer } from "../../../ui/drawer/Drawer.tsx";
+import { Icon } from "../../../ui/icon/Icon.tsx";
 
 export const GamesFinderFilters = () => {
   const { setParams, searchParams, clearParams } = useQueryParams();
   const [showAllPlatforms, setShowAllPlatforms] = useState(false);
-  const initialPlatformsToShow = 4;
+  const [isDrawlerOpen, setIsDrawlerOpen] = useState(false);
+  const initialPlatformsToShow = 10;
 
   const platforms = searchParams.get("platforms")?.split(",") || [];
 
@@ -41,10 +44,18 @@ export const GamesFinderFilters = () => {
     : platformsFilterOptions.slice(0, initialPlatformsToShow);
 
   return (
-    <div /* className="fixed inset-0 z-50 flex flex-col overflow-auto bg-base-200" */
-    >
-      <div className="flex-grow p-4">
-        <Collapse title="Platforms" detailsClassName="bg-base-200">
+    <div className="col-span-full md:col-span-1 mx-auto md:mx-0">
+      <Button
+        className="md:hidden text-white ml-10 text-xs sm:text-sm"
+        variant="info"
+        size="sm"
+        onClick={() => setIsDrawlerOpen(!isDrawlerOpen)}
+      >
+        <Icon name="icon-[mdi--filter]" className="text-gray-200 size-3 sm:size-4" />
+        Filtros
+      </Button>
+      <Drawer isOpen={isDrawlerOpen} setIsOpen={setIsDrawlerOpen}>
+        <Collapse title="Plataformas" detailsClassName="bg-base-200">
           {platformsToShow.map((platform) => (
             <Label title={platform.title} key={platform.id}>
               <Checkbox
@@ -66,6 +77,30 @@ export const GamesFinderFilters = () => {
             </Button>
           )}
         </Collapse>
+      </Drawer>
+      <div className="sticky top-20 hidden h-fit md:block border border-gray-700 rounded-lg">
+         <Collapse title="Plataformas" detailsClassName="bg-base-200 overflow-auto">
+         {platformsToShow.map((platform) => (
+            <Label title={platform.title} key={platform.id}>
+              <Checkbox
+                name={platform.title}
+                value={platform.value}
+                onChange={handleOnChange}
+                checked={platforms.includes(platform.value)}
+              />
+            </Label>
+          ))}
+          {platformsFilterOptions.length > initialPlatformsToShow && (
+            <Button
+              className="mt-2 text-xs"
+              variant="error"
+              size="sm"
+              onClick={handleToggleShowPlatforms}
+            >
+              {showAllPlatforms ? "Mostrar menos" : "Mostrar más"}
+            </Button>
+          )}
+          </Collapse>
       </div>
     </div>
   );

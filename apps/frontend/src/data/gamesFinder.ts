@@ -96,4 +96,112 @@ const platformsFilterOptions = [
   },
 ];
 
-export { platformsFilterOptions };
+const genresFilterOptions = [
+  {
+    id: 1,
+    title: "Apuntar y clic",
+    value: "2",
+  },
+  {
+    id: 2,
+    title: "Peleas",
+    value: "4",
+  },
+  {
+    id: 3,
+    title: "Disparos",
+    value: "5",
+  },
+  {
+    id: 4,
+    title: "Música",
+    value: "7",
+  },
+  {
+    id: 5,
+    title: "Plataformas",
+    value: "8",
+  },
+  {
+    id: 6,
+    title: "Puzles",
+    value: "9",
+  },
+  {
+    id: 7,
+    title: "Carreras",
+    value: "10",
+  },
+  {
+    id: 8,
+    title: "Rol",
+    value: "12",
+  },
+  {
+    id: 9,
+    title: "Estrategia en tiempo real",
+    value: "11",
+  },
+  {
+    id: 10,
+    title: "Simulación",
+    value: "14",
+  },
+  {
+    id: 11,
+    title: "Deportes",
+    value: "15",
+  },
+  {
+    id: 12,
+    title: "Estrategia por turnos",
+    value: "16",
+  },
+  {
+    id: 13,
+    title: "Arcade",
+    value: "33",
+  },
+  {
+    id: 14,
+    title: "Cartas y tablero",
+    value: "35",
+  },
+  {
+    id: 15,
+    title: "Estrategia",
+    value: "15",
+  },
+  {
+    id: 16,
+    title: "Aventura",
+    value: "31",
+  },
+  {
+    id: 17,
+    title: "Indie",
+    value: "32",
+  },
+  {
+    id: 18,
+    title: "MOBA",
+    value: "36",
+  },
+  {
+    id: 19,
+    title: "Novela visual",
+    value: "34",
+  },
+  {
+    id: 20,
+    title: "Brawler",
+    value: "25",
+  },
+  {
+    id: 21,
+    title: "Táctico",
+    value: "24",
+  },
+];
+
+export { platformsFilterOptions, genresFilterOptions };

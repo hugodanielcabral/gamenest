@@ -27,6 +27,7 @@ export const GamesFinderActiveFilters = () => {
                 key={platform}
                 variant={platformTitle ? "info" : "error"}
                 size="sm"
+                className="text-gray-200 text-xs sm:text-sm md:text-base lg:text-lg"
                 onClick={() => filterParams("platforms", platform)}
               >
                 {platformTitle ?? "NULL"}
