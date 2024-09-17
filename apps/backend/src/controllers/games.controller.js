@@ -13,7 +13,7 @@ export const getGames = async (req, res) => {
   let {
     q = "",
     page = 1,
-    sort = "name",
+    sort = "hypes",
     order = "desc",
     platforms = "",
   } = req.query;
