@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
-import "./Collapse.css"
+import "./Collapse.css";
 
 interface CollapseProps {
   title: string;
@@ -18,11 +18,16 @@ export const Collapse = ({
   summaryClassName,
 }: CollapseProps) => {
   return (
-    <details className="bg-base-200 details collapse" open={isOpen}>
+    <details
+      className={twMerge(
+        clsx("details collapse bg-base-200", detailsClassName),
+      )}
+      open={isOpen}
+    >
       <summary
         className={twMerge(
           clsx(
-            "collapse-title collapse-open summary text-white",
+            "summary collapse-title collapse-open text-white",
             detailsClassName,
           ),
         )}

@@ -1,37 +1,49 @@
 import clsx from "clsx";
-import { Button } from "../button/Button";
 import { Icon } from "../icon/Icon";
+import { useEffect } from "react";
 
-export const Drawer = ({ children, isOpen, setIsOpen }) => {
-  /* useEffect(() => {
-    if (isOpen) {
+interface DrawerProps {
+  title: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+export const Drawer = ({ title, children, isOpen, setIsOpen }: DrawerProps) => {
+  const handleBodyOverflow = () => {
+    if (window.innerWidth >= 768 || !isOpen) {
       document.body.style.overflow = "auto";
     } else {
       document.body.style.overflow = "hidden";
     }
-  }, [isOpen]); */
+  };
+
+  useEffect(() => {
+    handleBodyOverflow();
+    window.addEventListener("resize", handleBodyOverflow);
+    return () => {
+      window.removeEventListener("resize", handleBodyOverflow);
+    };
+  }, [isOpen]);
 
   return (
     <div
       className={clsx(
-        "fixed inset-0 z-50 flex flex-col overflow-auto bg-gray-800",
+        "fixed inset-0 z-50 flex flex-col space-y-4 overflow-auto bg-gray-800",
         {
           hidden: !isOpen,
           "md:hidden": isOpen,
         },
       )}
     >
-      <div className="flex justify-between items-center p-4">
-        <h2 className="text-3xl text-gray-300">Filtros</h2>
-        <Button
-          className="btn-ghost text-4xl"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <Icon name="icon-[material-symbols--close]" />
-        </Button>
+      <div className="flex flex-col gap-y-4 p-4">
+        <span onClick={() => setIsOpen(!isOpen)} className="flex items-center">
+          <Icon name="icon-[mdi--arrow-left] text-info mr-auto size-12 hover:bg-opacity-75" />
+        </span>
+        <h2 className="text-3xl text-gray-300">{title}</h2>
       </div>
 
-      <div className="flex-grow p-4">{children}</div>
+      <div className="flex-grow">{children}</div>
     </div>
   );
 };
