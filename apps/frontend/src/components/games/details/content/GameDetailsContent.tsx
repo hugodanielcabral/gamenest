@@ -9,13 +9,13 @@ import { VideoContent } from "./videoContent/VideoContent";
 
 export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
 
-  const publishers = gameDetail?.involved_companies.filter(
+  const publishers = gameDetail?.involved_companies?.filter(
     (company) => !company.developer,
-  );
+  ) || [];
 
-  const developers = gameDetail?.involved_companies.filter(
+  const developers = gameDetail?.involved_companies?.filter(
     (company) => company.developer,
-  );
+  ) || [];
 
   return (
     <section className="grid grid-cols-1 gap-8 p-4 md:grid-cols-3">

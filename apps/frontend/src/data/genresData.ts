@@ -8,8 +8,9 @@ export const genresIcons = {
     Strategy: "icon-[mingcute--chess-fill]",
     Puzzle: "icon-[mdi--puzzle]",
     Arcade: "icon-[tabler--brand-apple-arcade]",
-    Platform: "icon-[mdi--platform]",
+    Platform: "icon-[carbon--platforms]",
     Racing: "icon-[mdi--car-sports]",
+    "Card & Board Game": "icon-[mdi--cards]",
   };
   
   
@@ -35,4 +36,5 @@ export const genresIcons = {
     Tactical: "Táctico",
     "Turn-based strategy (TBS)": "Estrategia por turnos",
     "Real Time Strategy (RTS)": "Estrategia en tiempo real",
+    "Card & Board Game": "Cartas y tablero",
   };

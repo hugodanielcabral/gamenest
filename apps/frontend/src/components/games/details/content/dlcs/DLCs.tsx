@@ -22,7 +22,7 @@ export const DLCs = ({ gameDetail }: GameDetailsContentProps) => {
                   linkTo={`/games/${dlc.slug}`}
                 >
                   <CardImage
-                    imgSrc={() => getImageUrl(dlc.cover.url, "cover_big_2x")}
+                    imgSrc={() => getImageUrl(dlc?.cover?.url, "cover_big_2x")}
                     title={dlc?.name}
                     className="h-48 sm:h-60 md:h-72 lg:h-80"
                   />
@@ -52,7 +52,7 @@ export const DLCs = ({ gameDetail }: GameDetailsContentProps) => {
                   linkTo={`/games/${bundle.slug}`}
                 >
                   <CardImage
-                    imgSrc={() => getImageUrl(bundle.cover.url, "cover_big_2x")}
+                    imgSrc={() => getImageUrl(bundle?.cover?.url, "cover_big_2x")}
                     title={bundle?.name}
                     className="h-48 sm:h-60 md:h-72 lg:h-80"
                   />
