@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { useFetch } from "../../../hooks/useFetch";
 import { Layout } from "../../layout/Layout";
 import { ManagerHeader } from "./header/ManagerHeader";
-import { ManagerInformation } from "./information/ManagerInformation";
 import { Container } from "../../ui/container/Container";
+import { CollectionManagerContent } from "./content/CollectionManagerContent";
 
 interface GameProps {
   data: {
@@ -46,7 +46,7 @@ export const CollectionManager = () => {
     <Layout>
       <Container>
         <ManagerHeader game={game} />
-        <ManagerInformation game={game} />
+        <CollectionManagerContent game={game} />
       </Container>
     </Layout>
   );

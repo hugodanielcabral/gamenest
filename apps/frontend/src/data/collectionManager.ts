@@ -4,6 +4,7 @@ const collectionOwnershipOptions = [
     title: "Comprado",
     name: "comprado",
     value: "comprado",
+    icon: "icon-[material-symbols--new-releases]"
   },
   {
     id: 2,
@@ -37,7 +38,7 @@ const collectionOwnershipOptions = [
   },
 ];
 
-const collectionStoreOptions = [
+const storeOptions = [
   {
     id: 1,
     title: "Steam",
@@ -88,7 +89,7 @@ const collectionStoreOptions = [
   },
 ];
 
-const collectionFormatOptions = [
+const formatOptions = [
   {
     id: 1,
     title: "Digital",
@@ -103,7 +104,7 @@ const collectionFormatOptions = [
   },
 ];
 
-const collectionStatusOptions = [
+const statusOptions = [
   {
     id: 1,
     title: "Sin estado",
@@ -136,7 +137,7 @@ const collectionStatusOptions = [
   },
 ];
 
-const collectionDifficultyOptions = [
+const difficultyOptions = [
   {
     id: 1,
     title: "Fácil",
@@ -166,8 +167,8 @@ const collectionDifficultyOptions = [
 
 export {
   collectionOwnershipOptions,
-  collectionStoreOptions,
-  collectionFormatOptions,
-  collectionStatusOptions,
-  collectionDifficultyOptions,
+  storeOptions as collectionStoreOptions,
+  formatOptions as collectionFormatOptions,
+  statusOptions as collectionStatusOptions,
+  difficultyOptions as collectionDifficultyOptions,
 };

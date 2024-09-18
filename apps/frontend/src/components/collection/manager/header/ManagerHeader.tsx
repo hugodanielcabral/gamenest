@@ -8,7 +8,7 @@ export const ManagerHeader = ({ game }: GameProps) => {
 
   const headerBackground =
     game?.screenshots && game.screenshots.length > 0
-      ? getImageUrl(game.screenshots[1].url)
+      ? getImageUrl(game?.screenshots[0].url)
       : gameDetailsBackground;
 
     const {pathname} = useLocation();
@@ -18,7 +18,7 @@ export const ManagerHeader = ({ game }: GameProps) => {
       <img
         src={headerBackground}
         alt={`Cover del juego "${game?.name}"`}
-        className="absolute left-0 top-0 z-0 h-full w-full object-cover opacity-45 blur-sm"
+        className="absolute left-0 top-0 z-0 h-full w-full object-cover bg-center opacity-20 blur-md"
       />
       <img
         src={getImageUrl(getImageUrl(game?.cover?.url, "cover_big_2x"))}
