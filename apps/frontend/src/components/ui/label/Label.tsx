@@ -17,7 +17,7 @@ export const Label = ({ title, className, children }: LabelProps) => {
         ),
       )}
     >
-      <span className="label-text text-xs sm:text-sm md:text-lg text-white">{title}</span>
+      <span className="label-text text-xs sm:text-sm md:text-base text-white">{title}</span>
       {children}
     </label>
   );
