@@ -10,7 +10,6 @@ export const GameDetailsHeader = ({
   gameDetail,
   gameSlug,
 }: GameDetailsContentProps) => {
-
   const headerBackground =
     gameDetail?.screenshots && gameDetail.screenshots.length > 0
       ? getImageUrl(gameDetail.screenshots[0].url)
@@ -18,8 +17,6 @@ export const GameDetailsHeader = ({
 
   return (
     <section className="relative flex flex-col gap-4 p-4 md:flex-row">
-      <Toaster richColors position="top-center" />
-
       <img
         src={headerBackground}
         alt={`Cover del juego "${gameDetail.name}"`}
@@ -52,6 +49,8 @@ export const GameDetailsHeader = ({
         </h1>
         <CollectionButton gameSlug={gameSlug} />
       </div>
+
+      <Toaster richColors position="top-center" />
     </section>
   );
 };

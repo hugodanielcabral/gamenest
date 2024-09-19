@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { Button } from "./ui/button/Button";
 import { useCollectionChecker } from "../hooks/useCollectionChecker";
 import { Icon } from "./ui/icon/Icon";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 
 interface CollectionButtonProps {
   gameSlug: string;
@@ -34,11 +34,25 @@ export const CollectionButton = ({ gameSlug }: CollectionButtonProps) => {
   };
 
   return (
-    <>
-      {isAuth && (
+    <div className="flex gap-2">
+      {isAuth && !collectionData.length && (
         <Button
-          variant={`${!collectionData.length ? "info" : "error"}`}
           disabled={isLoading}
+          variant="info"
+          className="tooltip tooltip-top"
+          data-tip="Añadir a tu colección"
+          onClick={() => navigate(`/collection/add/${gameSlug}`)}
+        >
+          <Icon name="icon-[material-symbols--add]" className="size-6" />
+        </Button>
+      )}
+
+      {isAuth && collectionData.length > 0 && (
+        <Button
+          disabled={isLoading}
+          variant="error"
+          className="tooltip tooltip-top"
+          data-tip={`Eliminar ${collectionData[0]?.game_name}`}
           onClick={() => {
             collectionData.length
               ? toast.warning(
@@ -53,19 +67,22 @@ export const CollectionButton = ({ gameSlug }: CollectionButtonProps) => {
               : navigate(`/collection/add/${gameSlug}`);
           }}
         >
-          {collectionData.length ? (
-            <>
-              <Icon name="icon-[material-symbols--close]" className="size-6" />
-              Quitar de mi colección
-            </>
-          ) : (
-            <>
-              <Icon name="icon-[material-symbols--add]" className="size-6" />
-              Agregar a mi colección
-            </>
-          )}
+          <Icon name="icon-[material-symbols--delete]" className="size-6" />
         </Button>
       )}
-    </>
+
+      {isAuth && collectionData.length > 0 && (
+        <Button
+          disabled={isLoading}
+          variant="success"
+          size="md"
+          className="tooltip tooltip-top w-fit"
+          data-tip={`Editar ${collectionData[0]?.game_name}`}
+          onClick={() => navigate(`/collection/update/${gameSlug}`)}
+        >
+          <Icon name="icon-[mage--edit-fill]" className="size-6" />
+        </Button>
+      )}
+    </div>
   );
 };
