@@ -4,12 +4,12 @@ import { CollectionButton } from "../../../CollectionButton";
 import { Icon } from "../../../ui/icon/Icon";
 import gameDetailsBackground from "../../../../assets/backgrounds/gamesdetails-background.webp";
 import getImageUrl from "../../../../utils/getImageUrl";
+import { Toaster } from "sonner";
 
 export const GameDetailsHeader = ({
   gameDetail,
   gameSlug,
 }: GameDetailsContentProps) => {
-  console.log(gameDetail);
 
   const headerBackground =
     gameDetail?.screenshots && gameDetail.screenshots.length > 0
@@ -18,6 +18,8 @@ export const GameDetailsHeader = ({
 
   return (
     <section className="relative flex flex-col gap-4 p-4 md:flex-row">
+      <Toaster richColors position="top-center" />
+
       <img
         src={headerBackground}
         alt={`Cover del juego "${gameDetail.name}"`}
