@@ -47,7 +47,7 @@ export const ContentPrimary = ({
       <h2 className="text-center text-xl text-gray-300 sm:text-2xl md:text-3xl lg:text-4xl">
         Datos principales
       </h2>
-      <section className="flex *:flex-grow">
+      <section className="flex flex-col md:flex-row  *:flex-grow">
         <Label
           title=""
           className="flex flex-grow flex-col border-0 bg-transparent"
@@ -80,7 +80,7 @@ export const ContentPrimary = ({
           </Select>
         </Label>
       </section>
-      <section className="flex *:flex-grow">
+      <section className="flex flex-col md:flex-row *:flex-grow">
         <Label title="" className="flex flex-col border-0 bg-transparent">
           <Select
             className="valid:border-2 valid:border-success focus:border-2 focus:border-info"

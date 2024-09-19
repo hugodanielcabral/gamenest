@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   collectionDifficultyOptions,
   collectionStoreOptions,
@@ -6,7 +5,6 @@ import {
 import { Input } from "../../../../ui/input/Input.tsx";
 import { Label } from "../../../../ui/label/Label.tsx";
 import { Option, Select } from "../../../../ui/select/Select.tsx";
-import { Button } from "../../../../ui/button/Button.tsx";
 import clsx from "clsx";
 import { Icon } from "../../../../ui/icon/Icon.tsx";
 
@@ -38,34 +36,17 @@ export const ContentOptional = ({
   handleOnChange,
   serverErrors,
 }: ContentOptionalProps) => {
-  const [showOptionalContent, setShowOptionalContent] = useState(false);
 
   return (
-    <div className="p-4 space-y-8">
+    <div className="p-4 space-y-6">
       <div className="divider divider-neutral"></div>
       <div className="flex items-center justify-center gap-4">
         <h2 className="text-center text-xl text-gray-300 sm:text-2xl md:text-3xl lg:text-4xl">
-          Datos opcionales -
+          Datos opcionales
         </h2>
-        <Button
-          type="button"
-          variant="info"
-          size="sm"
-          className="tooltip tooltip-right"
-          data-tip="Mostrar u ocultar datos opcionales"
-          onClick={() => setShowOptionalContent(!showOptionalContent)}
-        >
-          {showOptionalContent ? (
-            <Icon name="icon-[mdi--show]" />
-          ) : (
-            <Icon name="icon-[mdi--hide]" />
-          )}
-        </Button>
       </div>
       <section
-        className={clsx("flex flex-col gap-4", {
-          hidden: !showOptionalContent,
-        })}
+        className="flex flex-col gap-4"
       >
         {serverErrors?.length > 0 && (
           <div className="mx-auto mt-4 max-w-6xl rounded-lg border border-gray-600 bg-error p-2 md:p-4">
