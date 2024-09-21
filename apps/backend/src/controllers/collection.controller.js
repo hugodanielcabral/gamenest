@@ -3,63 +3,22 @@ import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js
 
 export const getCollection = async (req, res) => {
   try {
-    const { search, orderBy, sort, page, status, ownership } = req.query;
+    const { platforms, status, ownership } = req.query;
 
     //* Because of Postgre.js works, I can't pass the sort value directly to the query, so I need to store it in a variable first.
-    const orderByValue = orderBy || "status_name";
-    const pageValue = page || 0;
-    const statusValue = status?.split(",") || [];
-    const ownershipValue = ownership?.split(",") || [];
 
-    if (search) {
-      const collection = await findCollectionByGameName(
-        search,
-        req.user_id,
-        orderByValue,
-        sort,
-        statusValue,
-        ownershipValue
-      );
-
-      if (!collection[0])
-        return res.status(404).json({
-          message:
-            "Ningún juego coincide con los parámetros de búsqueda actuales.",
-        });
-
-      const collectionWithGameInfo = await getGameInfoFromCollection(
-        collection
-      );
-
-      return res.status(200).json(collectionWithGameInfo);
+    const collection = await sql`SELECT * FROM collection WHERE user_id = ${
+      req.user_id
+    } ${
+      platforms ? sql`AND platform_name IN ${sql(platforms.split(","))}` : sql``
+    } ${status ? sql`AND status_name IN ${sql(status.split(","))}` : sql``}
+    ${
+      ownership
+        ? sql`AND ownership_name IN ${sql(ownership.split(","))}`
+        : sql``
     }
-
-    let collection;
-
-    if (sort === "desc") {
-      collection = await sql`SELECT * FROM collection ${
-        req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
-      } 
-
-      ${ownership ? sql`AND ownership_name IN ${sql(ownershipValue)}` : sql``}
-
-      ${status ? sql`AND status_name IN ${sql(statusValue)}` : sql``}
-      ORDER BY ${sql(orderByValue)} DESC LIMIT 20 OFFSET ${
-        pageValue >= 1 ? (pageValue - 1) * 20 : 0
-      } `;
-    } else {
-      collection = await sql`SELECT * FROM collection ${
-        req.user_id ? sql`WHERE user_id = ${req.user_id}` : sql``
-      } 
-
-      ${ownership ? sql`AND ownership_name IN ${sql(ownershipValue)}` : sql``}
-      
-      ${
-        status ? sql`AND status_name IN ${sql(statusValue)}` : sql``
-      } ORDER BY ${sql(orderByValue)} LIMIT 20 OFFSET ${
-        pageValue >= 1 ? (pageValue - 1) * 20 : 0
-      } `;
-    }
+    LIMIT 12
+    `;
 
     if (!collection[0])
       return res.status(404).json({ message: "No se encontraron juegos." });

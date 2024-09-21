@@ -1,5 +1,7 @@
+import { query } from "express-validator";
 import { validateResult } from "../helpers/handleValidateResult.js";
 import { body } from "express-validator";
+import { availablePlatforms } from "../data/availablePlatforms.js";
 
 export const addCollectionValidator = [
   body("hours_played")
@@ -38,6 +40,83 @@ export const addCollectionValidator = [
         );
       }
       return true;
+    }),
+
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+export const getCollectionValidator = [
+  query("status")
+    .optional()
+    .customSanitizer((value) => {
+      const validStatus = [
+        "Sin estado",
+        "Jugando",
+        "Completado",
+        "Pendiente",
+        "Abandonado",
+      ];
+
+      const splitArray = value.split(",");
+
+      const filteredStatus = splitArray.filter((item) => {
+        const matchingStatus = validStatus.find((status) => status === item);
+
+        return matchingStatus;
+      });
+
+      if (filteredStatus.length === 0) return "";
+
+      return filteredStatus.join(",");
+    }),
+  query("ownership")
+    .optional()
+    .customSanitizer((value) => {
+      const validOwnership = [
+        "Comprado",
+        "Compartido",
+        "Suscripción",
+        "Alquilado",
+        "Sin licencia",
+        "Otro",
+      ];
+
+      const splitArray = value.split(",");
+
+      const filteredOwnership = splitArray.filter((item) => {
+        const matchingOwnership = validOwnership.find(
+          (ownership) => ownership === item
+        );
+
+        return matchingOwnership;
+      });
+
+      if (filteredOwnership.length === 0) return "";
+
+      return filteredOwnership.join(",");
+    }),
+  query("platforms")
+    .optional()
+    .customSanitizer((value) => {
+      const splitArray = value.split(",");
+
+      const filteredPlatforms = splitArray.filter((item) => {
+        const matchingPlatform = availablePlatforms.find((platform) => {
+          if (item === "PC (Microsoft Windows)") {
+            return platform.title === "Windows PC";
+          }
+
+          return platform.title === item;
+        });
+
+        return matchingPlatform.value;
+      });
+
+      if (filteredPlatforms.length === 0) return "";
+
+      return filteredPlatforms.join(",");
     }),
 
   (req, res, next) => {

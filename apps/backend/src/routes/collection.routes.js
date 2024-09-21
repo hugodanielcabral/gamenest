@@ -10,11 +10,14 @@ import {
   getCollectionFilters,
 } from "../controllers/collection.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
-import { addCollectionValidator } from "../validators/collection.validation.js";
+import {
+  addCollectionValidator,
+  getCollectionValidator,
+} from "../validators/collection.validation.js";
 
 const router = Router();
 
-router.get("/collection", isAuth, getCollection);
+router.get("/collection", isAuth, getCollectionValidator, getCollection);
 
 router.get("/collection/:id", isAuth /* getCollectionFromUser */);
 
