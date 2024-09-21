@@ -76,7 +76,6 @@ const Item = ({
       console.log(error);
     }
   };
-  
 
   return (
     <Link
@@ -175,10 +174,19 @@ const Item = ({
 
 export const CollectionList = ({ collections }: CollectionListProps) => {
   return (
-    <div className="col-span-3 grid-cols-1 lg:grid-cols-2 grid gap-4">
-      {collections.map((collection) => (
-        <Item key={collection.id} {...collection} />
-      ))}
+    <div className="col-span-3 grid h-fit grid-cols-1 gap-4 lg:grid-cols-2">
+      {collections.length > 0 ? (
+        collections.map((collection) => (
+          <Item key={collection.id} {...collection} />
+        ))
+      ) : (
+        <div className="col-span-full flex min-h-screen justify-center">
+          <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+            No se encontraron resultados para tu búsqueda. Verifica los filtros
+            aplicados.
+          </p>
+        </div>
+      )}
       <Toaster richColors position="top-center" />
     </div>
   );
