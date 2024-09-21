@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
-import { CollectionPage } from "./pages/CollectionPage.jsx";
 import { RegisterPage } from "./pages/RegisterPage.tsx";
 import { LoginPage } from "./pages/LoginPage.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
@@ -27,8 +26,13 @@ export const GameNestApp = () => {
     })),
   );
 
-  const { isAuth } = useAuth();
+  const CollectionPage = lazy(() =>
+    import("./pages/CollectionPage.tsx").then((module) => ({
+      default: module.CollectionPage,
+    })),
+  );
 
+  const { isAuth } = useAuth();
 
   const publicRoutes = [
     {
@@ -39,7 +43,7 @@ export const GameNestApp = () => {
     {
       id: 2,
       path: "/games",
-      element: <GamesFinderPage/>,
+      element: <GamesFinderPage />,
     },
     {
       id: 3,
@@ -89,7 +93,6 @@ export const GameNestApp = () => {
       path: "/collection/:gameSlug",
       element: <CollectionGamePage />,
     },
-   
   ];
 
   return (
@@ -99,7 +102,9 @@ export const GameNestApp = () => {
         <SkeletonTheme baseColor="#313131" highlightColor="#525252">
           <Routes>
             <Route
-              element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/error" />}
+              element={
+                <ProtectedRoute isAllowed={!isAuth} redirectTo="/error" />
+              }
             >
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
@@ -126,9 +131,9 @@ export const GameNestApp = () => {
             >
               <Route
                 element={
-                    <CollectionProvider>
-                      <Outlet />
-                    </CollectionProvider>
+                  <CollectionProvider>
+                    <Outlet />
+                  </CollectionProvider>
                 }
               >
                 {privateRoutes.map((route) => {
