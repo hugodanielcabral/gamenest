@@ -249,6 +249,7 @@ export const CollectionFilters = () => {
       >
         <StatusFilters />
         <OwnershipFilters />
+        <FavoritesFilters />
         <PlatformFilters uniquePlatforms={uniquePlatforms} />
       </Drawer>
       <div className="sticky top-20 hidden h-fit rounded-lg border border-gray-700 md:block">
