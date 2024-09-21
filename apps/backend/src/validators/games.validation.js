@@ -49,6 +49,7 @@ export const gamesValidation = [
 
       return filteredPlatforms.join(",");
     }),
+  query("favorites").optional().isBoolean(),
   (req, res, next) => {
     validateResult(req, res, next);
   },

@@ -3,7 +3,7 @@ import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js
 
 export const getCollection = async (req, res) => {
   try {
-    const { platforms, status, ownership } = req.query;
+    const { platforms, status, ownership, favorites } = req.query;
 
     //* Because of Postgre.js works, I can't pass the sort value directly to the query, so I need to store it in a variable first.
 
@@ -17,6 +17,8 @@ export const getCollection = async (req, res) => {
         ? sql`AND ownership_name IN ${sql(ownership.split(","))}`
         : sql``
     }
+    ${favorites ? sql`AND is_favorite = ${favorites === "true"}` : sql``}
+
     LIMIT 12
     `;
 
