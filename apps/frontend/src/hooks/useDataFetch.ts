@@ -10,7 +10,16 @@ export const useDataFetch = (url: string, query?: string) => {
 
   const getData = async (url: string, query?: string): Promise<void> => {
     try {
-      const data = await fetch(`${BASE_URL}/${url}${query ? `?${query}` : ""}`);
+      const data = await fetch(
+        `${BASE_URL}/${url}${query ? `?${query}` : ""}`,
+        {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": "true",
+          },
+        },
+      );
 
       if (!data.ok) {
         setIsLoading(false);

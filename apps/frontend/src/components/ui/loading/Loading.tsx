@@ -3,9 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 interface LoadingProps {
   className?: string;
-  color:
-    | "primary"
-    | "secondary | accent | neutral | success | warning | error | info";
+  color: "primary" | "secondary" | "accent" | "neutral" | "success" | "warning" | "error" | "info";
   type?: "spinner" | "dots" | "ring" | "ball" | "bars" | "infinity";
 }
 
