@@ -229,9 +229,9 @@ export const CollectionFilters = () => {
   const uniquePlatforms = [...new Set(platformsApi)];
 
   return (
-    <div className="col-span-1 mx-auto md:mx-0">
+    <div className="col-span-1 mx-auto lg:mx-0">
       <Button
-        className="text-xs text-white sm:text-sm md:hidden"
+        className="text-xs text-white sm:text-sm lg:hidden"
         variant="info"
         size="sm"
         onClick={() => setIsDrawlerOpen(!isDrawlerOpen)}
@@ -252,7 +252,7 @@ export const CollectionFilters = () => {
         <FavoritesFilters />
         <PlatformFilters uniquePlatforms={uniquePlatforms} />
       </Drawer>
-      <div className="sticky top-20 hidden h-fit rounded-lg border border-gray-700 md:block">
+      <div className="sticky top-20 hidden h-fit rounded-lg border border-gray-700 lg:block">
         <StatusFilters />
         <OwnershipFilters />
         <FavoritesFilters />

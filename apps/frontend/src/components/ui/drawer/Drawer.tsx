@@ -32,7 +32,7 @@ export const Drawer = ({ title, children, isOpen, setIsOpen }: DrawerProps) => {
         "fixed inset-0 z-50 flex flex-col space-y-4 overflow-auto bg-gray-800",
         {
           hidden: !isOpen,
-          "md:hidden": isOpen,
+          "lg:hidden": isOpen,
         },
       )}
     >

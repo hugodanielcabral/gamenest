@@ -44,9 +44,9 @@ export const GamesFinderFilters = () => {
     : platformsFilterOptions.slice(0, initialPlatformsToShow);
 
   return (
-    <div className="col-span-1 mx-auto md:mx-0">
+    <div className="col-span-1 mx-auto lg:mx-0">
       <Button
-        className="text-xs text-white sm:text-sm md:hidden"
+        className="text-xs text-white sm:text-sm lg:hidden"
         variant="info"
         size="sm"
         onClick={() => setIsDrawlerOpen(!isDrawlerOpen)}
@@ -90,7 +90,7 @@ export const GamesFinderFilters = () => {
           )}
         </Collapse>
       </Drawer>
-      <div className="sticky top-20 hidden h-fit rounded-lg border border-gray-700 md:block">
+      <div className="sticky top-20 hidden h-fit rounded-lg border border-gray-700 lg:block">
         <Collapse
           title="Plataformas"
           detailsClassName="overflow-auto bg-base-200 rounded-lg"
