@@ -97,29 +97,16 @@ export const getCollectionValidator = [
 
       return filteredOwnership.join(",");
     }),
-  query("platforms")
-    .optional()
-    .customSanitizer((value) => {
-      const splitArray = value.split(",");
-
-      const filteredPlatforms = splitArray.filter((item) => {
-        const matchingPlatform = availablePlatforms.find((platform) => {
-          if (item === "PC (Microsoft Windows)") {
-            return platform.title === "Windows PC";
-          }
-
-          return platform.title === item;
-        });
-
-        return matchingPlatform.value;
-      });
-
-      if (filteredPlatforms.length === 0) return "";
-
-      return filteredPlatforms.join(",");
-    }),
+  query("platforms").optional(),
   query("favorites").optional().isBoolean(),
   query("q").optional().isString(),
+  query("page")
+    .optional()
+    .customSanitizer((value) => {
+      if (isNaN(value)) return 1;
+
+      return value;
+    }),
   (req, res, next) => {
     validateResult(req, res, next);
   },

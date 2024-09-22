@@ -3,7 +3,7 @@ import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js
 
 export const getCollection = async (req, res) => {
   try {
-    const { platforms, status, ownership, favorites, q } = req.query;
+    const { platforms, status, ownership, favorites, q, page = 1 } = req.query;
 
     //* Because of Postgre.js works, I can't pass the sort value directly to the query, so I need to store it in a variable first.
 
@@ -19,6 +19,7 @@ export const getCollection = async (req, res) => {
     }
     ${favorites ? sql`AND is_favorite = ${favorites === "true"}` : sql``}
     ${q ? sql`AND game_name ILIKE ${q + "%"}` : sql``}
+    OFFSET ${(page - 1) * 12}
     LIMIT 12
     `;
 
@@ -185,43 +186,28 @@ const findCollectionByGameName = async (
 
 export const getTotalCollectionPages = async (req, res) => {
   try {
-    const { search, status, ownership } = req.query;
+    const { platforms, status, ownership, favorites, q } = req.query;
 
-    if (search) {
-      const cleanGameName = search?.replace(/[^a-zA-Z ]/g, "").toLowerCase();
-
-      const totalGames =
-        await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${
-          req.user_id
-        } AND ${sql`regexp_replace(lower(game_name),'[^a-zA-Z ]', '', 'g')`} LIKE ${
-          cleanGameName + "%"
-        }`;
-
-      const totalPages = Math.ceil(totalGames[0].count / 20);
-      console.log(totalPages, "totalPages");
-      res.status(200).json(totalPages);
+    const collection = await sql`SELECT * FROM collection WHERE user_id = ${
+      req.user_id
+    } ${
+      platforms ? sql`AND platform_name IN ${sql(platforms.split(","))}` : sql``
+    } ${status ? sql`AND status_name IN ${sql(status.split(","))}` : sql``}
+    ${
+      ownership
+        ? sql`AND ownership_name IN ${sql(ownership.split(","))}`
+        : sql``
     }
+    ${favorites ? sql`AND is_favorite = ${favorites === "true"}` : sql``}
+    ${q ? sql`AND game_name ILIKE ${q + "%"}` : sql``}
+    `;
 
-    if (status || ownership) {
-      const statusValue = status?.split(",") || [];
-      const ownershipValue = ownership?.split(",") || [];
+    if (!collection[0])
+      return res.status(404).json({ message: "No se encontraron juegos." });
 
-      const totalGames =
-        await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${
-          req.user_id
-        } AND ownership_name IN ${sql(ownershipValue)} AND status_name IN ${sql(
-          statusValue
-        )}`;
-
-      const totalPages = Math.ceil(totalGames[0].count / 20);
-      res.status(200).json(totalPages);
-    }
-
-    const totalGames =
-      await sql`SELECT COUNT(*) FROM collection WHERE user_id = ${req.user_id}`;
-
-    const totalPages = Math.ceil(totalGames[0].count / 20);
-    res.status(200).json(totalPages);
+    res.status(200).json({
+      count: collection.length,
+    });
   } catch (error) {
     console.error(error);
   }

@@ -18,8 +18,6 @@ export const getGames = async (req, res) => {
     platforms = "",
   } = req.query;
 
-  console.log(platforms);
-
   const response = await fetch("https://api.igdb.com/v4/games", {
     method: "POST",
     headers: {
