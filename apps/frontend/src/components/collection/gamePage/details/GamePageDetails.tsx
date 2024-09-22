@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCollection } from "../../../../context/CollectionContext.jsx";
 import { CardImage } from "../../../ui/card/image/CardImage.js";
-import { CardRating } from "../../list/card/rating/CardRating.jsx";
 import { DateTime } from "luxon";
 import { DetailsAction } from "./actions/DetailsAction.js";
 import getImageUrl from "../../../../utils/getImageUrl.js";
@@ -89,7 +88,6 @@ export const GamePageDetails = ({ gameSlug }: GamePageDetailsProps) => {
   return (
     <div className="flex flex-col items-center justify-around gap-x-4 md:flex-row">
       <div className="flex flex-col gap-y-2">
-        <CardRating gameSlug={gameSlug} />
         <CardImage
           src={GAME_IMAGE_URL}
           alt={`Cover de ${gameCollectionData?.game_name}`}
