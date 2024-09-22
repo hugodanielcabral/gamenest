@@ -118,7 +118,8 @@ export const getCollectionValidator = [
 
       return filteredPlatforms.join(",");
     }),
-
+  query("favorites").optional().isBoolean(),
+  query("q").optional().isString(),
   (req, res, next) => {
     validateResult(req, res, next);
   },
