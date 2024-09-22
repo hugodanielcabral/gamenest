@@ -107,6 +107,28 @@ export const getCollectionValidator = [
 
       return value;
     }),
+  query("sort")
+    .optional()
+    .customSanitizer((value) => {
+      const validSort = [
+        "platform_name",
+        "game_name",
+        "status_name",
+        "ownership_name",
+        "hours_played",
+        "minutes_played",
+        "amount_paid",
+        "start_date",
+        "finish_date",
+        "is_favorite",
+      ];
+
+      const matchingSort = validSort.find((sort) => sort === value);
+
+      if (!matchingSort) return "platform_name";
+
+      return value;
+    }),
   (req, res, next) => {
     validateResult(req, res, next);
   },

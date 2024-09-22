@@ -3,7 +3,16 @@ import { getGameInfoFromCollection } from "../utils/getGameInfoFromCollection.js
 
 export const getCollection = async (req, res) => {
   try {
-    const { platforms, status, ownership, favorites, q, page = 1 } = req.query;
+    const {
+      platforms,
+      status,
+      ownership,
+      favorites,
+      q,
+      page = 1,
+      sort = "platform_name",
+      order = "DESC",
+    } = req.query;
 
     //* Because of Postgre.js works, I can't pass the sort value directly to the query, so I need to store it in a variable first.
 
@@ -19,6 +28,7 @@ export const getCollection = async (req, res) => {
     }
     ${favorites ? sql`AND is_favorite = ${favorites === "true"}` : sql``}
     ${q ? sql`AND game_name ILIKE ${q + "%"}` : sql``}
+    ORDER BY ${sql(sort)} ${order === "asc" ? sql`ASC` : sql`DESC`}
     OFFSET ${(page - 1) * 12}
     LIMIT 12
     `;
