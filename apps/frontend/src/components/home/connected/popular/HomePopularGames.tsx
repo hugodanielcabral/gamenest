@@ -1,10 +1,9 @@
 import { useFetch } from "../../../../hooks/useFetch";
-import { Loading } from "../../../ui/loading/Loading";
-import { Link } from "react-router-dom";
+import { Loading } from "../../../ui/loading/Loading.tsx";
 import { Card, CardImage } from "../../../ui/card/Card";
+import { FaFire, FaStar } from "react-icons/fa";
 import getImageUrl from "../../../../utils/getImageUrl";
 import "./HomePopularGames.css";
-import { FaFire, FaStar } from "react-icons/fa";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -66,7 +65,7 @@ export const HomePopularGames = () => {
         </div>
       ) : (
         <div className="mt-10">
-          <Loading />
+          <Loading color="neutral" type="ring" />
         </div>
       )}
     </section>

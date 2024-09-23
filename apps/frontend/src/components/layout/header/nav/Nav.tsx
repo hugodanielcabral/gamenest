@@ -11,7 +11,7 @@ export const Nav = () => {
   const { isAuth, signout } = useAuth();
 
   return (
-    <div className="navbar flex justify-between bg-base-100 bg-opacity-75 px-4 backdrop-blur-md">
+    <nav className="navbar flex justify-between bg-base-100 bg-opacity-75 px-4 backdrop-blur-md">
       <NavLogo imgSrc={gameNestLogo1} />
 
       {/* Links */}
@@ -70,6 +70,6 @@ export const Nav = () => {
           ))
         )}
       </div>
-    </div>
+    </nav>
   );
 };

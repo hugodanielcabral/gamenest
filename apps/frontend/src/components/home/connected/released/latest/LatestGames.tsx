@@ -1,6 +1,6 @@
 import { useFetch } from "../../../../../hooks/useFetch";
 import { ReleasedList } from "../list/ReleasedList";
-import { Loading } from "../../../../ui/loading/Loading";
+import { Loading } from "../../../../ui/loading/Loading.tsx";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const LatestGames = () => {
@@ -8,7 +8,7 @@ export const LatestGames = () => {
 
   return isLoading ? (
     <div className="mt-10">
-      <Loading />
+      <Loading type="ring" color="neutral"/>
     </div>
   ) : (
     <>
