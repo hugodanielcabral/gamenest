@@ -58,10 +58,9 @@ export const RegisterForm = ({
   showPassword,
   signupErrors,
 }: RegisterFormProps) => {
-
   return (
     <form className="w-96 space-y-2 rounded-md p-5" onSubmit={handleOnSubmit}>
-      <div className="divider mb-6 divider-info opacity-75"></div>
+      <div className="divider divider-info mb-6 opacity-75"></div>
       <Progress formValues={formValues} clientErrors={clientErrors} />
       {signupErrors?.map((err) => (
         <p
@@ -232,14 +231,19 @@ export const RegisterForm = ({
 
       <Button
         disabled={buttonStatus === "submitting" || buttonStatus === "disabled"}
-        className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25"
+        className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25 btn-outline disabled:opacity-50"
         variant="info"
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Registrarse"}
       </Button>
-      <p className="text-center text-base text-gray-300 md:text-lg">
+      <p
+        className={clsx("text-center text-base text-gray-300 md:text-lg", {
+          hidden: buttonStatus === "submitting",
+          block: buttonStatus === "disabled",
+        })}
+      >
         ¿Ya tienes una cuenta?{" "}
-        <Link to="/login" className="text-info">
+        <Link to="/login" className="text-info underline">
           Inicia sesión
         </Link>
       </p>

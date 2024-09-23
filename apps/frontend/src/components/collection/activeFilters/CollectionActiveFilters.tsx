@@ -23,7 +23,7 @@ export const CollectionActiveFilters = () => {
                 key={platform}
                 size="sm"
                 variant={platform ? "success" : "error"}
-                className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg"
+                className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg btn-outline"
                 onClick={() => filterParams("platforms", platform)}
               >
                 <Icon name="icon-[material-symbols--close] size-4" />
@@ -39,7 +39,7 @@ export const CollectionActiveFilters = () => {
                 key={status}
                 size="sm"
                 variant={status ? "success" : "error"}
-                className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg"
+                className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg btn-outline"
                 onClick={() => filterParams("status", status)}
               >
                 <Icon name="icon-[material-symbols--close] size-4" />
@@ -55,7 +55,7 @@ export const CollectionActiveFilters = () => {
                 key={ownership}
                 size="sm"
                 variant={ownership ? "success" : "error"}
-                className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg"
+                className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg btn-outline"
                 onClick={() => filterParams("ownership", ownership)}
               >
                 <Icon name="icon-[material-symbols--close] size-4" />
@@ -68,7 +68,7 @@ export const CollectionActiveFilters = () => {
           <Button
             size="sm"
             variant="success"
-            className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg"
+            className="text-xs text-gray-200 sm:text-sm md:text-base lg:text-lg btn-outline"
             onClick={() => filterParams("favorites", "true")}
           >
             <Icon name="icon-[material-symbols--close] size-4" />

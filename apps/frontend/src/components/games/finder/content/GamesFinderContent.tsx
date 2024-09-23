@@ -37,8 +37,8 @@ export const GamesFinderContent = () => {
   }
 
   return (
-    <div className="col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-4 h-fit">
-      <Toaster richColors position="top-center" />
+    <div className="col-span-3 grid grid-cols-1 xl:grid-cols-2 gap-4 h-fit">
+      <Toaster position="top-center" />
       {gamesData.length > 0 ? (
         gamesData?.map((game) => <Card key={game.id} game={game} />)
       ) : (

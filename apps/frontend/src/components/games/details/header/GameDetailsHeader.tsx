@@ -4,7 +4,7 @@ import { CollectionButton } from "../../../CollectionButton";
 import { Icon } from "../../../ui/icon/Icon";
 import gameDetailsBackground from "../../../../assets/backgrounds/gamesdetails-background.webp";
 import getImageUrl from "../../../../utils/getImageUrl";
-import { Toaster } from "sonner";
+import {  Toaster } from "sonner";
 
 export const GameDetailsHeader = ({
   gameDetail,
@@ -29,7 +29,7 @@ export const GameDetailsHeader = ({
       />
       <div className="z-10 space-y-4 self-center md:self-end">
         {gameDetail?.platforms && gameDetail?.platforms.length > 0 && (
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {gameDetail.platforms.map((platform) => (
               <span
                 key={platform.id}
@@ -37,20 +37,22 @@ export const GameDetailsHeader = ({
                 data-tip={platform.name}
               >
                 <Icon
-                  name={platformsIcons[platform.name]}
+                  name={platformsIcons[platform.name] || "icon-[mdi--gamepad]"}
                   className="size-6 text-gray-300 hover:text-gray-400 md:size-8"
                 />
               </span>
             ))}
           </div>
         )}
-        <h1 className="text-pretty text-xl text-white md:text-2xl lg:text-3xl xl:text-4xl">
+        <h1 className="text-pretty text-center text-base text-white sm:text-lg md:text-left md:text-2xl lg:text-3xl xl:text-4xl">
           {gameDetail?.name}
         </h1>
-        <CollectionButton gameSlug={gameSlug} />
+        <div className="flex justify-center gap-2 md:justify-start">
+          <CollectionButton gameSlug={gameSlug} />
+        </div>
       </div>
 
-      <Toaster richColors position="top-center" />
+      <Toaster position="top-center" visibleToasts={1}/>
     </section>
   );
 };

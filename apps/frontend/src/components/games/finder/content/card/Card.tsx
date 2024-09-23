@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "../../../../ui/badge/Badge.tsx";
 import { Icon } from "../../../../ui/icon/Icon.tsx";
 import getImageUrl from "../../../../../utils/getImageUrl";
 import clsx from "clsx";
 import { DateTime } from "luxon";
+import { Button } from "../../../../ui/button/Button.tsx";
 
 interface GameProps {
   game: {
@@ -26,6 +27,7 @@ const CardList = ({ children }: { children: React.ReactNode }) => {
 
 export const Card = ({ game }: GameProps) => {
   const coverImageUrl = getImageUrl(game?.cover?.url, "cover_big_2x");
+  const navigate = useNavigate();
 
   return (
     <Link
@@ -44,19 +46,26 @@ export const Card = ({ game }: GameProps) => {
           className="w-16 rounded-lg object-cover sm:w-20 md:w-24 lg:w-28"
         />
         <div className="flex-grow">
-          <h2 className="line-clamp-2 text-pretty text-xs text-white sm:text-sm md:text-base">
-            {game.name}{" "}
+          <h2 className="line-clamp-1 text-pretty text-xs text-white sm:text-sm md:text-base">
+            {game?.name}{" "}
             <span className="text-gray-300">
-              (
-              {DateTime.fromMillis(game?.first_release_date * 1000).year ??
-                "Sin fecha"}
-              )
+              {game?.first_release_date && (
+                <span>
+                  (
+                  {DateTime.fromMillis(
+                    game?.first_release_date * 1000,
+                  ).toFormat("yyyy")}
+                  )
+                </span>
+              )}
             </span>
           </h2>
-          <ul className="mb-1 line-clamp-1  md:mb-4 flex flex-wrap gap-1 md:gap-2">
+          <ul className="mb-1 line-clamp-1 flex flex-wrap gap-1 md:mb-4 md:gap-2">
             {game.platforms.slice(0, 4).map((platform) => (
               <CardList key={platform.id}>
-                <Badge className="text-xs sm:text-sm">{platform.abbreviation}</Badge>
+                <Badge className="text-xs sm:text-sm">
+                  {platform.abbreviation}
+                </Badge>
               </CardList>
             ))}
             {game.platforms.length > 4 && (
@@ -65,31 +74,27 @@ export const Card = ({ game }: GameProps) => {
           </ul>
 
           {game.parent_game && !game.version_parent && (
-            <a
-              href={`/games/${game.parent_game.slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-gray-300 hover:underline sm:text-sm text-pretty line-clamp-2"
+            <Button
+              onClick={() => navigate(`/games/${game.parent_game.slug}`)}
+              className="btn-link line-clamp-2 text-pretty p-0 text-xs text-gray-300 hover:text-white hover:underline sm:text-sm"
             >
               DLC de{" "}
               <span className="font-nunito font-semibold text-white">
                 {game.parent_game.name}
               </span>
-            </a>
+            </Button>
           )}
 
           {game.version_parent && (
-            <a
-              href={`/games/${game.version_parent.slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-gray-300 hover:underline sm:text-sm text-pretty text-ellipsis line-clamp-2"
+            <Button
+              onClick={() => navigate(`/games/${game.version_parent.slug}`)}
+              className="btn-link line-clamp-2 text-pretty p-0 text-xs text-gray-300 hover:text-white hover:underline sm:text-sm"
             >
               Actualización de{" "}
               <span className="font-semibold text-white">
                 {game.version_parent.name}
               </span>
-            </a>
+            </Button>
           )}
         </div>
         <div className="flex flex-col items-end">

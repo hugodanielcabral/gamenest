@@ -23,7 +23,7 @@ export const LoginPage = () => {
     repassword: false,
   });
 
-  const { signin, errors: signinErrors, setIsAuth } = useAuth();
+  const { signin, errors: signinErrors } = useAuth();
   const navigate = useNavigate();
 
   const handleShowPassword = ({ currentTarget }) => {

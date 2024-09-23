@@ -102,14 +102,17 @@ export const LoginForm = ({
 
       <Button
         disabled={buttonStatus === "submitting" || buttonStatus === "disabled"}
-        className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25"
+        className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25 btn-outline disabled:opacity-50"
         variant="info"
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Iniciar sesión"}
       </Button>
-      <p className="text-center text-base text-gray-300 md:text-lg">
+      <p className={clsx("text-center text-base text-gray-300 md:text-lg", {
+        hidden: buttonStatus === "submitting",
+        block: buttonStatus === "disabled",
+      })}>
         ¿No tienes una cuenta?{" "}
-        <Link to="/register" className="text-error">
+        <Link to="/register" className="text-error underline">
           Registrate
         </Link>
       </p>

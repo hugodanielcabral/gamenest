@@ -5,6 +5,7 @@ import { PATCH } from "../../../services/apiServices";
 import { useState } from "react";
 import { toast, Toaster } from "sonner";
 import getImageUrl from "../../../utils/getImageUrl";
+import clsx from "clsx";
 
 interface CollectionListProps {
   collections: {
@@ -54,9 +55,12 @@ const Item = ({
   is_favorite: boolean;
 }) => {
   const [isFavorite, setIsFavorite] = useState(is_favorite);
+  const [sending, setSending] = useState(false);
 
   const handleFavorite = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    setSending(true);
 
     try {
       const response = await PATCH(`/collection/update/game/${game_slug}`, {
@@ -64,13 +68,23 @@ const Item = ({
       });
 
       if (!response) {
-        toast.error("Ocurrió un error al actualizar la información del juego");
+        toast.error("Ocurrió un error al actualizar la información del juego", {
+          duration: 3000,
+          className:
+          "bg-error text-white text-xs md:text-sm text-white font-nunito",
+        });
+        setSending(false);
         return console.error("Error");
       }
 
       setIsFavorite(!isFavorite);
+      setSending(false);
       toast.success(
-        `${game_name} fue ${isFavorite ? "quitado de" : "agregado a"} favoritos`,
+        `${game_name} fue ${isFavorite ? "quitado de" : "agregado a"} favoritos`, {
+          duration: 3000,
+          className:
+          `bg-${isFavorite ? "error" : "success"} text-white text-xs md:text-sm text-white font-nunito`,
+        }
       );
     } catch (error) {
       console.log(error);
@@ -96,7 +110,7 @@ const Item = ({
 
         <div className="flex-grow">
           <h2
-            className="line-clamp-2 text-pretty text-center text-xs font-bold text-white sm:text-sm md:text-base lg:text-lg"
+            className="line-clamp-1 text-pretty text-center text-xs font-bold text-white sm:text-sm md:text-base lg:text-lg"
             data-tip={game_name}
           >
             {game_name}
@@ -148,8 +162,12 @@ const Item = ({
 
           <Button
             onClick={handleFavorite}
-            className="btn-ghost tooltip tooltip-left absolute right-0 top-0"
+            className={clsx("btn-ghost tooltip tooltip-left absolute right-0 bottom-0 disabled:cursor-not-allowed disabled:opacity-50", {
+              "tooltip-error": isFavorite,
+              "tooltip-warning": !isFavorite,
+            })}
             size="sm"
+            disabled={sending}
             data-tip={
               isFavorite ? "Quitar de favoritos" : "Agregar a favoritos"
             }
@@ -174,7 +192,7 @@ const Item = ({
 
 export const CollectionList = ({ collections }: CollectionListProps) => {
   return (
-    <div className="col-span-3 grid h-fit grid-cols-1 gap-4 lg:grid-cols-2">
+    <div className="col-span-3 grid h-fit grid-cols-1 gap-4 xl:grid-cols-2">
       {collections.length > 0 ? (
         collections.map((collection) => (
           <Item key={collection.id} {...collection} />
@@ -187,7 +205,7 @@ export const CollectionList = ({ collections }: CollectionListProps) => {
           </p>
         </div>
       )}
-      <Toaster richColors position="top-center" />
+      <Toaster position="top-center" visibleToasts={1}/>
     </div>
   );
 };

@@ -46,14 +46,14 @@ export const GamesFinderFilters = () => {
   return (
     <div className="col-span-1 mx-auto lg:mx-0">
       <Button
-        className="text-xs text-white sm:text-sm lg:hidden"
+        className="text-xs text-white sm:text-sm lg:hidden btn-outline"
         variant="info"
         size="sm"
         onClick={() => setIsDrawlerOpen(!isDrawlerOpen)}
       >
         <Icon
           name="icon-[mdi--filter]"
-          className="size-3 text-gray-200 sm:size-4"
+          className="size-3 sm:size-4"
         />
         Filtros
       </Button>
@@ -80,7 +80,7 @@ export const GamesFinderFilters = () => {
           ))}
           {platformsFilterOptions.length > initialPlatformsToShow && (
             <Button
-              className="mt-2 text-xs"
+              className="mt-2 text-xs btn-outline"
               variant="error"
               size="sm"
               onClick={handleToggleShowPlatforms}
@@ -108,7 +108,7 @@ export const GamesFinderFilters = () => {
           ))}
           {platformsFilterOptions.length > initialPlatformsToShow && (
             <Button
-              className="mt-2 text-xs"
+              className="mt-2 text-xs btn-outline"
               variant="error"
               size="sm"
               onClick={handleToggleShowPlatforms}
