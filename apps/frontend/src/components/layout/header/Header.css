@@ -1,0 +1,19 @@
+@keyframes scaleProgress {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.progressContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.progressBar {
+  transform-origin: left;
+  animation: scaleProgress auto linear;
+  animation-timeline: scroll(root);
+}

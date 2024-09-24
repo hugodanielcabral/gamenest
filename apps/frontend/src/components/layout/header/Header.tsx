@@ -1,9 +1,13 @@
 import { Nav } from "./nav/Nav";
+import "./Header.css";
 
 export const Header = () => {
   return (
-    <div className="border-b-4 border-opacity-90 border-info sticky top-0 z-50">
+    <div className="sticky top-0 z-50">
       <Nav />
+      <div className="progressContainer h-1 bg-gray-500">
+        <span className="progressBar block h-full bg-info"></span>
+      </div>
     </div>
   );
 };

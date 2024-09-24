@@ -24,7 +24,7 @@ export const mySocialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="border-t-2 border-info bg-base-100">
+    <footer className="border-t border-gray-700 bg-base-100">
       <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="space-y-2 sm:flex sm:items-center sm:justify-between sm:space-y-0">
           <div className="flex justify-center sm:justify-start">
