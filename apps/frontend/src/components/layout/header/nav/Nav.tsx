@@ -26,7 +26,7 @@ export const Nav = () => {
                 ))}
           </ul>
           {/* Mobile */}
-          <div className="dropdown dropdown-bottom block md:hidden">
+          <div className="dropdown dropdown-bottom block md:hidden z-50">
             <div tabIndex={0} role="button" className="m-1">
               <IoMdMenu className="size text-2xl" />
             </div>
