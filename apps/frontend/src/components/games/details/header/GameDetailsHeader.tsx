@@ -23,7 +23,7 @@ export const GameDetailsHeader = ({
         className="absolute left-0 top-0 z-0 h-full w-full bg-center object-cover opacity-20 blur-md"
       />
       <img
-        src={getImageUrl(getImageUrl(gameDetail?.cover?.url, "cover_big_2x"))}
+        src={getImageUrl(gameDetail?.cover?.url, "cover_big_2x")}
         alt={`Cover del juego "${gameDetail.name}"`}
         className="z-10 h-full w-64 self-center rounded-md shadow-md shadow-black"
       />

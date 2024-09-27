@@ -1,77 +1,57 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
+import { useParams } from "react-router-dom";
 import { Layout } from "../components/layout/Layout";
-import { GamePageAchievementManager } from "../components/collection/gamePage/achievementManager/GamePageAchievementManager.js";
-import { GamePageSteamAchievement } from "../components/collection/gamePage/steamAchievement/GamePageSteamAchievement.js";
-import { GiAchievement } from "react-icons/gi";
-import { FaListCheck } from "react-icons/fa6";
-import { GamePageDetails } from "../components/collection/gamePage/details/GamePageDetails.js";
-import { CollectionGamePageSkeleton } from "../components/collection/gamePage/skeleton/CollectionGamePageSkeleton.js";
+import { Container } from "../components/ui/container/Container.js";
+import { useDataFetch } from "../hooks/useDataFetch.js";
+import { Loading } from "../components/ui/loading/Loading.js";
+import { CollectionGamePageHeader } from "../components/collection/gamePage/header/CollectionGamePageHeader.js";
+import { Toaster } from "sonner";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+interface DataFetch {
+  fetchData: {
+    id: number;
+    collection_id: number;
+    game_id: string;
+    game_name: string;
+    game_slug: string;
+    game_cover: string;
+    hours_played: number;
+    minutes_played: number;
+    rating: number;
+    ownership_name: string;
+    status_name: string;
+    platform_name: string;
+    store_name: string;
+    is_favorite: boolean;
+    difficulty: string;
+    cover: {
+      id: number;
+      url: string;
+    };
+    start_date: string;
+    finish_date: string;
+    amount_paid: string;
+    format_name: string;
+    user_id: string;
+  }[];
+  isLoading: boolean;
+}
 
 export const CollectionGamePage = () => {
   const { gameSlug } = useParams<{ gameSlug: string }>();
-  const { data: gameData, isLoading: isLoadingGameData } = useFetch(
-    `${BASE_URL}/games/${gameSlug}`,
-  );
-  const [tabAchievement, setTabAchievement] = useState("achievement");
-  const navigate = useNavigate();
+  const { fetchData: collection, isLoading } = useDataFetch(
+    `collection/game/${gameSlug}`,
+  ) as DataFetch;
 
-  if (isLoadingGameData) {
-    return <CollectionGamePageSkeleton />;
-  }
-
-  if (!gameData) {
-    navigate("/404");
-    return null;
-  }
-
-  return (
-    <Layout className="bg-gradient-to-r from-blue-900 from-25% via-black via-60% to-blue-900 p-8">
-      <div className="container relative z-10 mx-auto space-y-10">
-        <GamePageDetails gameSlug={gameSlug} />
-        {gameData?.steamData?.achievements && (
-          <div>
-            <div
-              role="tablist"
-              className="tabs tabs-bordered mb-1 *:text-base *:sm:text-lg *:md:text-xl"
-            >
-              <a
-                role="tab"
-                className={`tab ${tabAchievement === "achievement" ? "tab-active font-bold text-white" : ""}`}
-                onClick={() => setTabAchievement("achievement")}
-              >
-                <GiAchievement className="mr-2 inline-block opacity-70" />{" "}
-                Logros
-              </a>
-              <a
-                role="tab"
-                className={`tab ${tabAchievement === "achievementManager" ? "tab-active font-bold text-white" : ""}`}
-                onClick={() => setTabAchievement("achievementManager")}
-              >
-                <FaListCheck className="mr-2 inline-block opacity-70" /> Gestor
-                de logros
-              </a>
-            </div>
-            {tabAchievement === "achievement" && (
-              <GamePageSteamAchievement
-                gameData={gameData}
-                gameSlug={gameSlug}
-              />
-            )}
-
-            {tabAchievement === "achievementManager" &&
-              gameData?.steamData?.achievements && (
-                <GamePageAchievementManager
-                  gameData={gameData}
-                  gameSlug={gameSlug}
-                />
-              )}
-          </div>
-        )}
-      </div>
+  return isLoading ? (
+    <div className="flex min-h-screen items-center justify-center">
+      <Loading color="neutral" />
+    </div>
+  ) : (
+    <Layout>
+      <Container className="space-y-4">
+        <CollectionGamePageHeader collection={collection} />
+        <Toaster position="top-center" visibleToasts={1} />
+      </Container>
     </Layout>
   );
 };
