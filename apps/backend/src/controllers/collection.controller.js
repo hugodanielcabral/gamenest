@@ -57,9 +57,7 @@ export const getGameFromCollection = async (req, res) => {
         .status(404)
         .json({ message: "Game not found in your collection" });
 
-    const collectionWithGameInfo = await getGameInfoFromCollection(collection);
-
-    res.status(200).json(collectionWithGameInfo);
+    res.status(200).json(collection);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });

@@ -5,6 +5,7 @@ import { Button } from "../../../ui/button/Button";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "./rating/Rating.tsx";
 import { formatPrice } from "../../../../utils/formatPrice.ts";
+import { DateTime } from "luxon";
 
 interface CollectionGamePageHeaderProps {
   collection: {
@@ -39,7 +40,7 @@ const List = ({ title, content }) => {
   return (
     <li className="text-pretty rounded-md border border-gray-700 bg-base-100 p-2 font-nunito text-xs text-gray-400 sm:text-sm md:text-base lg:text-lg">
       <strong>{title}</strong>{" "}
-      <span className="text-white">{content ?? "No disponible"}</span>
+      <span className="text-white">{content ?? "S/D"}</span>
     </li>
   );
 };
@@ -55,16 +56,20 @@ export const CollectionGamePageHeader = ({
 
   const gameDetails = {
     "Plataforma:": collection[0]?.platform_name,
-    "Tienda:": collection[0]?.store_name || "No especificada",
+    "Tienda:": collection[0]?.store_name || "S/D",
     "Precio:": formatPrice(collection[0]?.amount_paid),
     "Estado:": collection[0]?.status_name,
     "Horas jugadas:": collection[0]?.hours_played,
     "Minutos jugados:": collection[0]?.minutes_played,
-    "Dificultad:": collection[0]?.difficulty || "No especificada",
+    "Dificultad:": collection[0]?.difficulty || "S/D",
     "Favorito:": collection[0]?.is_favorite ? "Sí" : "No",
     "Propiedad:": collection[0]?.ownership_name,
-    "Fecha de inicio:": collection[0]?.start_date,
-    "Fecha de finalización:": collection[0]?.finish_date,
+    "Inicio:": DateTime.fromISO(collection[0]?.start_date, {
+      zone: "utc",
+    }).toLocaleString(DateTime.DATE_SHORT),
+    "Finalización:": DateTime.fromISO(collection[0]?.finish_date, {
+      zone: "utc",
+    }).toLocaleString(DateTime.DATE_SHORT),
   };
 
   return (
@@ -89,11 +94,11 @@ export const CollectionGamePageHeader = ({
       </div>
 
       <div className="z-10 flex flex-grow flex-col items-center justify-between space-y-4 self-center lg:flex-row lg:self-end">
-        <div className="flex flex-col gap-4 basis-2/5">
+        <div className="flex basis-2/5 flex-col gap-4">
           <h1 className="text-pretty text-center text-lg text-white md:text-left md:text-2xl lg:text-2xl">
             {collection[0]?.game_name}
           </h1>
-          <div className="flex justify-center lg:justify-start gap-4">
+          <div className="flex justify-center gap-4 lg:justify-start">
             <Button
               disabled={!collection.length}
               variant="primary"
