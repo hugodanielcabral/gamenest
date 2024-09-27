@@ -38,7 +38,7 @@ interface CollectionGamePageHeaderProps {
 
 const List = ({ title, content }) => {
   return (
-    <li className="text-pretty rounded-md border border-gray-700 bg-base-100 p-2 font-nunito text-xs text-gray-400 sm:text-sm md:text-base lg:text-lg">
+    <li className="text-pretty rounded-md border border-gray-700 bg-base-100 p-2 font-nunito text-sm text-gray-400 md:text-base lg:text-lg">
       <strong>{title}</strong>{" "}
       <span className="text-white">{content ?? "S/D"}</span>
     </li>
@@ -93,12 +93,12 @@ export const CollectionGamePageHeader = ({
         </div>
       </div>
 
-      <div className="z-10 flex flex-grow flex-col items-center justify-between space-y-4 self-center lg:flex-row lg:self-end">
+      <div className="z-10 flex flex-grow flex-col items-center justify-between space-y-4 lg:flex-col lg:self-end">
         <div className="flex basis-2/5 flex-col gap-4">
           <h1 className="text-pretty text-center text-lg text-white md:text-left md:text-2xl lg:text-2xl">
             {collection[0]?.game_name}
           </h1>
-          <div className="flex justify-center gap-4 lg:justify-start">
+          <div className="flex justify-center gap-4">
             <Button
               disabled={!collection.length}
               variant="primary"
@@ -128,7 +128,7 @@ export const CollectionGamePageHeader = ({
           </div>
         </div>
 
-        <ul className="grid max-w-4xl grid-cols-1 gap-2 rounded-lg bg-base-300 bg-opacity-75 p-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid w-full grid-cols-1 gap-2 rounded-lg bg-base-300 bg-opacity-75 p-4 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(gameDetails).map(([title, content]) => (
             <List key={title} title={title} content={content} />
           ))}

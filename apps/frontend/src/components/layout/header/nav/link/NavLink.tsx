@@ -12,7 +12,7 @@ export const NavLink = ({ route }: NavLinkProps) => {
     <li>
       <Link
         to={route.path}
-        className={clsx("text-lg text-gray-300 hover:text-opacity-65", {
+        className={clsx("text-sm sm:text-base text-gray-300 hover:text-opacity-65", {
           "font-bold text-info": pathname === route.path,
         })}
       >
