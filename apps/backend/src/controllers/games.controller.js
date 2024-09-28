@@ -219,7 +219,7 @@ export const createSteamGameAchievement = async (req, res) => {
     const newAchievement =
       await sql`INSERT INTO user_game_achievement (game_slug, achievement_name, user_id) VALUES (${gameSlug}, ${achievements}, ${req.user_id}) RETURNING *`;
 
-    res.status(201).json(newAchievement);
+    res.status(200).json(newAchievement);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

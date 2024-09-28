@@ -61,8 +61,8 @@ export const AchievementManager = ({
   const [achievementList, setAchievementList] = useState(
     achievements.filter(
       (achievement) =>
-        !userAchievements[0].achievement_name.includes(achievement.name),
-    ),
+        !userAchievements[0]?.achievement_name?.includes(achievement.name),
+    ) || [],
   );
   const [selectedAchievement, setSelectedAchievement] = useState<
     SteamAchievement["achievements"][0] | null
@@ -71,8 +71,8 @@ export const AchievementManager = ({
     SteamAchievement["achievements"]
   >(
     achievements.filter((achievement) =>
-      userAchievements[0].achievement_name.includes(achievement.name),
-    ),
+      userAchievements[0]?.achievement_name?.includes(achievement.name),
+    ) || [],
   );
 
   const [isSending, setIsSending] = useState(false);
