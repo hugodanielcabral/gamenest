@@ -194,8 +194,8 @@ export const CollectionList = ({ collections }: CollectionListProps) => {
   return (
     <div className="col-span-3 grid h-fit grid-cols-1 gap-4 xl:grid-cols-2">
       {collections.length > 0 ? (
-        collections.map((collection) => (
-          <Item key={collection.id} {...collection} />
+        collections.map((collection, index) => (
+          <Item key={collection.id + index} {...collection} />
         ))
       ) : (
         <div className="col-span-full flex min-h-screen justify-center">

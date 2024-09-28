@@ -5,6 +5,7 @@ import { useDataFetch } from "../hooks/useDataFetch.js";
 import { Loading } from "../components/ui/loading/Loading.js";
 import { CollectionGamePageHeader } from "../components/collection/gamePage/header/CollectionGamePageHeader.js";
 import { Toaster } from "sonner";
+import { CollectionGamePageContent } from "../components/collection/gamePage/content/CollectionGamePageContent.js";
 
 interface DataFetch {
   fetchData: {
@@ -50,6 +51,7 @@ export const CollectionGamePage = () => {
     <Layout>
       <Container className="space-y-4">
         <CollectionGamePageHeader collection={collection} />
+        <CollectionGamePageContent collection={collection} />
         <Toaster position="top-center" visibleToasts={1} />
       </Container>
     </Layout>

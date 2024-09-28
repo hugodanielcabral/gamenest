@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -23,11 +22,6 @@ export const useDataFetch = (url: string, query?: string) => {
 
       if (!data.ok) {
         setIsLoading(false);
-        toast.error("Ocurrió un error al intentar obtener los datos", {
-          duration: 3000,
-          className:
-            "bg-error text-white text-xs md:text-sm text-white font-nunito",
-        });
         return setError("Ocurrió un error al intentar obtener los datos");
       }
 
