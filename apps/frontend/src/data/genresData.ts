@@ -11,6 +11,12 @@ export const genresIcons = {
     Platform: "icon-[carbon--platforms]",
     Racing: "icon-[mdi--car-sports]",
     "Card & Board Game": "icon-[mdi--cards]",
+    Tactical: "icon-[mdi--shield]",
+    "Hack and slash/Beat 'em up": "icon-[game-icons--bouncing-sword]",
+    Sport: "icon-[game-icons--soccer-ball]",
+    Fighting: "icon-[game-icons--mailed-fist]",
+    Music: "icon-[mdi--music]",
+    Pinball: "icon-[game-icons--pinball-flipper]",
   };
   
   

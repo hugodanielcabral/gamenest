@@ -18,7 +18,7 @@ export const DLCs = ({ gameDetail }: GameDetailsContentProps) => {
               {gameDetail.dlcs.map((dlc) => (
                 <Card
                   key={dlc.id}
-                  className="w-40 border border-gray-600 bg-base-300 sm:w-44 md:w-52 lg:w-60 xl:w-64"
+                  className="w-36 border border-gray-600 bg-base-300 sm:w-44 md:w-52 lg:w-60 xl:w-64"
                   linkTo={`/games/${dlc.slug}`}
                 >
                   <CardImage
@@ -48,7 +48,7 @@ export const DLCs = ({ gameDetail }: GameDetailsContentProps) => {
               {gameDetail.bundles.map((bundle) => (
                 <Card
                   key={bundle.id}
-                  className="w-40 border border-gray-600 bg-base-300 sm:w-44 md:w-52 lg:w-60 xl:w-64"
+                  className="w-36 border border-gray-600 bg-base-300 sm:w-44 md:w-52 lg:w-60 xl:w-64"
                   linkTo={`/games/${bundle.slug}`}
                 >
                   <CardImage

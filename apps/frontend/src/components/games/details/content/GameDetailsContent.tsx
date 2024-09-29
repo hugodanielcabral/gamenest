@@ -8,17 +8,16 @@ import { DLCs } from "./dlcs/DLCs";
 import { VideoContent } from "./videoContent/VideoContent";
 
 export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
+  const publishers =
+    gameDetail?.involved_companies?.filter((company) => !company.developer) ||
+    [];
 
-  const publishers = gameDetail?.involved_companies?.filter(
-    (company) => !company.developer,
-  ) || [];
-
-  const developers = gameDetail?.involved_companies?.filter(
-    (company) => company.developer,
-  ) || [];
+  const developers =
+    gameDetail?.involved_companies?.filter((company) => company.developer) ||
+    [];
 
   return (
-    <section className="grid grid-cols-1 gap-8 p-4 md:grid-cols-3">
+    <section className="grid grid-cols-1 gap-8 p-4 lg:grid-cols-3">
       <div className="col-span-2 space-y-4">
         {gameDetail.videos && gameDetail.videos.length && (
           <VideoContent videos={gameDetail.videos} />
@@ -49,7 +48,7 @@ export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
               {gameDetail.genres.map((genre) => (
                 <span
                   key={genre.id}
-                  className="item-center flex justify-between text-pretty rounded-md border border-gray-700 bg-base-100 p-4 text-sm text-white"
+                  className="item-center flex justify-between text-pretty rounded-md border border-gray-700 bg-base-100 p-4 text-xs text-white sm:text-sm md:text-base"
                 >
                   {genresTranslate[genre.name] || genre.name}
                   <Icon
@@ -74,7 +73,7 @@ export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
                   company.developer && (
                     <span
                       key={company.company.id}
-                      className="text-pretty rounded-md border border-gray-700 bg-base-100 p-4 text-sm text-white"
+                      className="text-pretty rounded-md border border-gray-700 bg-base-100 p-4 text-xs text-white sm:text-sm md:text-base"
                     >
                       {company.company.name}
                     </span>
@@ -96,7 +95,7 @@ export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
                   !company.developer && (
                     <span
                       key={company.company.id}
-                      className="text-pretty rounded-md border border-gray-700 bg-base-100 p-4 text-sm text-white"
+                      className="text-pretty rounded-md border border-gray-700 bg-base-100 p-4 text-xs text-white sm:text-sm md:text-base"
                     >
                       {company.company.name}
                     </span>
@@ -118,7 +117,7 @@ export const GameDetailsContent = ({ gameDetail }: GameDetailsContentProps) => {
                   key={date.id}
                   className="flex h-28 w-full flex-col justify-between self-center rounded-md border border-gray-700 bg-base-100 p-4"
                 >
-                  <span className="text-pretty text-sm text-white">
+                  <span className="text-pretty text-xs text-white sm:text-sm md:text-base">
                     {date.date
                       ? DateTime.fromMillis(date.date * 1000).toLocaleString(
                           DateTime.DATE_FULL,

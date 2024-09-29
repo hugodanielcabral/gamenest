@@ -32,7 +32,7 @@ export const Collapse = ({
           ),
         )}
       >
-        {title}
+        <span className="text-base md:text-lg lg:text-xl">{title}</span>
       </summary>
       <div className={twMerge(clsx("collapse-content", summaryClassName))}>
         {children}
