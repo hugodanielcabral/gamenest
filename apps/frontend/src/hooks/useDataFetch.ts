@@ -44,5 +44,5 @@ export const useDataFetch = (url: string, query?: string) => {
     };
   }, [query]);
 
-  return { fetchData, isLoading, error };
+  return { fetchData, isLoading, error, setFetchData };
 };
