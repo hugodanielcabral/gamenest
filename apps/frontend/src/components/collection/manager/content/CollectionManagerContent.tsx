@@ -145,7 +145,6 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
 
         setButtonState("success");
         toast.success("La información del juego fue actualizada", {
-          description: "Serás redirigido a tu colección en unos segundos",
           className:
             "bg-success text-white text-xs md:text-sm text-white font-nunito",
         });
@@ -194,7 +193,6 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
       setButtonState("success");
       setServerErrors(null);
       toast.success(`${game?.name} fue agregado a tu colección`, {
-        description: "Serás redirigido a tu colección en unos segundos",
         className:
           "bg-success text-white text-xs md:text-sm text-white font-nunito",
       });
@@ -214,10 +212,8 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
   return (
     <form onSubmit={handleOnSubmit}>
       <Toaster
-        position="top-right"
-        closeButton={true}
+        position="top-center"
         duration={2000}
-        expand={true}
         visibleToasts={1}
       />
       <Progress

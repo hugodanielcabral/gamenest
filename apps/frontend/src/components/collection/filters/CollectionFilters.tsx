@@ -2,14 +2,13 @@ import { useQueryParams } from "../../../hooks/useQueryParams";
 import { Collapse } from "../../ui/collapse/Collapse";
 import { Label } from "../../ui/label/Label.tsx";
 import { Checkbox } from "../../ui/checkbox/Checkbox.tsx";
-import { useDataFetch } from "../../../hooks/useDataFetch";
 import { Button } from "../../ui/button/Button.tsx";
 import { Drawer } from "../../ui/drawer/Drawer.tsx";
 import { Icon } from "../../ui/icon/Icon.tsx";
 import { useState } from "react";
 
-interface DataFetch {
-  fetchData: {
+interface CollectionFiltersProps {
+  collections: {
     id: number;
     collection_id: number;
     game_id: string;
@@ -34,7 +33,6 @@ interface DataFetch {
     amount_paid: string;
     user_id: string;
   }[];
-  isLoading: boolean;
 }
 
 const status = [
@@ -219,8 +217,7 @@ const FavoritesFilters = () => {
   );
 };
 
-export const CollectionFilters = () => {
-  const { fetchData: collections } = useDataFetch("collection") as DataFetch;
+export const CollectionFilters = ({ collections }: CollectionFiltersProps) => {
   const [isDrawlerOpen, setIsDrawlerOpen] = useState(false);
 
   const platformsApi = collections?.map(
@@ -231,15 +228,12 @@ export const CollectionFilters = () => {
   return (
     <div className="col-span-1 mx-auto lg:mx-0">
       <Button
-        className="text-xs text-white sm:text-sm lg:hidden btn-outline"
+        className="btn-outline text-xs text-white sm:text-sm lg:hidden"
         variant="info"
         size="sm"
         onClick={() => setIsDrawlerOpen(!isDrawlerOpen)}
       >
-        <Icon
-          name="icon-[mdi--filter]"
-          className="size-3 sm:size-4"
-        />
+        <Icon name="icon-[mdi--filter]" className="size-3 sm:size-4" />
         Filtros
       </Button>
       <Drawer

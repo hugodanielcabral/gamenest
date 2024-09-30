@@ -1,10 +1,9 @@
-import { useDataFetch } from "../../../hooks/useDataFetch";
-import { useQueryParams } from "../../../hooks/useQueryParams";
 import { Loading } from "../../ui/loading/Loading.tsx";
 import { CollectionList } from "../list/CollectionList";
 
-interface DataFetch {
-  fetchData: {
+interface CollectionContentProps {
+  deleteGameCollection: (collection_id: number) => void;
+  collections: {
     id: number;
     collection_id: number;
     game_id: string;
@@ -32,14 +31,11 @@ interface DataFetch {
   isLoading: boolean;
 }
 
-export const CollectionContent = () => {
-  const { getQueryString } = useQueryParams();
-
-  const { fetchData: collections, isLoading } = useDataFetch(
-    "collection",
-    `${getQueryString()}`,
-  ) as DataFetch;
-
+export const CollectionContent = ({
+  deleteGameCollection,
+  collections,
+  isLoading,
+}: CollectionContentProps) => {
   return (
     <>
       {isLoading ? (
@@ -47,11 +43,14 @@ export const CollectionContent = () => {
           <Loading
             color="primary"
             type="ring"
-            className="flex min-h-screen  justify-center"
+            className="flex min-h-screen justify-center"
           />
         </div>
       ) : (
-        <CollectionList collections={collections} />
+        <CollectionList
+          collections={collections}
+          deleteGameCollection={deleteGameCollection}
+        />
       )}
     </>
   );
