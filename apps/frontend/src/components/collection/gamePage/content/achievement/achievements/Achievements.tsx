@@ -1,9 +1,10 @@
 import type { SteamAchievement } from "../../../../../../types/steamAchievement";
 
 export const Achievements = ({ achievements }: SteamAchievement) => {
+  
   return (
     <div className="mt-2 space-y-4">
-      {achievements.map((achievement) => (
+      {achievements?.map((achievement) => (
         <div
           key={achievement.name}
           className="flex gap-2 rounded-lg border border-gray-700 bg-base-100 p-2"

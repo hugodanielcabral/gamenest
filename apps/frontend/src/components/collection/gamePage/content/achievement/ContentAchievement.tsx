@@ -43,8 +43,8 @@ export const ContentAchievement = () => {
       </div>
     );
   }
-
-  return achievementData?.steamData ? (
+  
+  return achievementData?.steamData?.achievements ? (
     <div className="rounded-lg bg-base-300 p-4">
       <div role="tablist" className="tabs tabs-bordered">
         <a
