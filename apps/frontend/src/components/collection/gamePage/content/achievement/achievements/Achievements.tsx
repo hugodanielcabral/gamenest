@@ -8,7 +8,7 @@ export const Achievements = ({ achievements }: SteamAchievement) => {
           key={achievement.name}
           className="flex gap-2 rounded-lg border border-gray-700 bg-base-100 p-2"
         >
-          <img src={achievement.icon} alt={achievement.displayName} />
+          <img src={achievement.icon} alt={achievement.displayName} className="h-12 sm:h-14 md:h-16 lg:h-20"/>
           <div className="space-y-1">
             <h3 className="font-nunito text-sm text-white md:text-base lg:text-lg">
               {achievement.displayName}

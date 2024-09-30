@@ -5,7 +5,8 @@ import { Button } from "../../../ui/button/Button";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "./rating/Rating.tsx";
 import { formatPrice } from "../../../../utils/formatPrice.ts";
-import { DateTime } from "luxon";
+import { formatDate } from "../../../../utils/formatDate.ts";
+import { capitalizeWord } from "../../../../utils/capitalizeWord.ts";
 
 interface CollectionGamePageHeaderProps {
   collection: {
@@ -56,20 +57,16 @@ export const CollectionGamePageHeader = ({
 
   const gameDetails = {
     "Plataforma:": collection[0]?.platform_name,
-    "Tienda:": collection[0]?.store_name || "S/D",
+    "Tienda:": capitalizeWord(collection[0]?.store_name) || "S/D",
     "Precio:": formatPrice(collection[0]?.amount_paid),
     "Estado:": collection[0]?.status_name,
     "Horas jugadas:": collection[0]?.hours_played,
     "Minutos jugados:": collection[0]?.minutes_played,
-    "Dificultad:": collection[0]?.difficulty || "S/D",
+    "Dificultad:": capitalizeWord(collection[0]?.difficulty) || "S/D",
     "Favorito:": collection[0]?.is_favorite ? "Sí" : "No",
     "Propiedad:": collection[0]?.ownership_name,
-    "Inicio:": DateTime.fromISO(collection[0]?.start_date, {
-      zone: "utc",
-    }).toLocaleString(DateTime.DATE_SHORT),
-    "Finalización:": DateTime.fromISO(collection[0]?.finish_date, {
-      zone: "utc",
-    }).toLocaleString(DateTime.DATE_SHORT),
+    "Inicio:": formatDate(collection[0]?.start_date, "short"),
+    "Finalización:": formatDate(collection[0]?.finish_date, "short"),
   };
 
   return (
@@ -77,7 +74,7 @@ export const CollectionGamePageHeader = ({
       <img
         src={headerBackground}
         alt={`Cover del juego "${collection[0].game_name}"`}
-        className="absolute left-0 top-0 z-0 h-full w-full bg-center object-cover opacity-20 blur-md"
+        className="absolute left-0 top-0 z-0 h-full w-full bg-center object-cover opacity-20 blur-md line-clamp-1"
       />
       <div className="z-10 flex h-full flex-col gap-y-4">
         <img
@@ -95,7 +92,7 @@ export const CollectionGamePageHeader = ({
 
       <div className="z-10 flex flex-grow flex-col items-center justify-between space-y-4 lg:flex-col lg:self-end">
         <div className="flex basis-2/5 flex-col gap-4">
-          <h1 className="text-pretty text-center text-lg text-white md:text-left md:text-2xl lg:text-2xl">
+          <h1 className="text-pretty text-center text-lg text-white md:text-2xl lg:text-3xl">
             {collection[0]?.game_name}
           </h1>
           <div className="flex justify-center gap-4">

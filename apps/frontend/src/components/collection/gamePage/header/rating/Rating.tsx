@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../../../../ui/button/Button";
 import { PATCH } from "../../../../../services/apiServices";
+import clsx from "clsx";
 
 interface RatingProps {
   rating: number;
@@ -9,7 +10,7 @@ interface RatingProps {
 }
 
 export const Rating = ({ rating, gameSlug }: RatingProps) => {
-  const [currentRating, setCurrentRating] = useState<number>(rating || 1);
+  const [currentRating, setCurrentRating] = useState<number>(rating || 0);
   const [isSending, setIsSending] = useState(false);
 
   const updateRating = async (newRating: number) => {
@@ -48,7 +49,7 @@ export const Rating = ({ rating, gameSlug }: RatingProps) => {
       return;
     }
 
-    toast.warning("¿Estás seguro de que deseas cambiar la calificación?", {
+    toast.warning(`¿Calificar juego con ${newRating} estrellas?`, {
       duration: 4000,
       className: `bg-neutral text-xs md:text-sm text-white font-nunito`,
       action: (
@@ -78,18 +79,28 @@ export const Rating = ({ rating, gameSlug }: RatingProps) => {
   };
 
   return (
-    <div className="rating">
-      {[1, 2, 3, 4, 5].map((value) => (
-        <input
-          key={value}
-          type="radio"
-          name="rating-2"
-          className="mask mask-star-2 bg-orange-400 disabled:cursor-not-allowed disabled:bg-opacity-50"
-          checked={currentRating === value}
-          onChange={() => handleOnRating(value)}
-          disabled={isSending}
-        />
-      ))}
+    <div className="rating md:rating-md rating-sm">
+      {[0, 1, 2, 3, 4, 5].map((value) => {
+        if (value === 0) return null;
+
+        return (
+          <input
+            key={value}
+            type="radio"
+            name="rating-2"
+            className={clsx(
+              "mask mask-star-2 disabled:cursor-not-allowed disabled:bg-opacity-50",
+              {
+                "bg-gray-300 bg-opacity-50": currentRating === 0,
+                "bg-yellow-400 bg-opacity-100": currentRating > 0,
+              },
+            )}
+            checked={currentRating === value}
+            onChange={() => handleOnRating(value)}
+            disabled={isSending}
+          />
+        );
+      })}
     </div>
   );
 };

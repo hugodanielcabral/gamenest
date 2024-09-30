@@ -41,6 +41,7 @@ const AchievementCard = ({
     <img
       src={`${iconType === "icon" ? achievement.icon : achievement.icongray}`}
       alt={achievement.displayName}
+      className="h-full sm:h-14 md:h-16 lg:h-20"
     />
     <div className="space-y-1">
       <h3 className="font-nunito text-sm text-white md:text-base lg:text-lg">
@@ -164,39 +165,48 @@ export const AchievementManager = ({
       onSubmit={handleOnSubmit}
       className="mt-2 grid grid-cols-2 gap-x-4 space-y-4"
     >
-      <div className="col-span-full flex flex-col gap-2 sticky top-20 bg-base-100">
+      <div className="sticky top-20 col-span-full grid grid-cols-2 gap-2 bg-base-100 bg-opacity-90 p-2">
         <Button
-          className="btn-outline col-span-full"
+          className="btn-outline md:col-span-full"
           onClick={handleMoveToCompleted}
           type="button"
+          size="sm"
         >
-          <Icon name="icon-[entypo--arrow-right]" className="size-10" />
+          <Icon
+            name="icon-[entypo--arrow-right]"
+            className="size-6 md:size-8"
+          />
         </Button>
         <Button
-          className="btn-outline col-span-full"
+          className="btn-outline md:col-span-full"
           variant="warning"
           onClick={handleMoveToPending}
           type="button"
+          size="sm"
         >
-          <Icon name="icon-[entypo--arrow-left]" className="size-10" />
+          <Icon name="icon-[entypo--arrow-left]" className="size-6 md:size-8" />
+        </Button>
+        <Button
+          className={clsx(
+            "btn-outline col-span-full mx-auto w-fit opacity-100 transition-all duration-200 ease-in-out",
+            {
+              "opacity-0": buttonHidden,
+            },
+          )}
+          variant="success"
+          size="sm"
+          type="submit"
+          disabled={isSending}
+        >
+          <span className="hidden md:block">
+            {isSending ? "Guardando..." : "Guardar cambios"}{" "}
+          </span>
+          <Icon name="icon-[material-symbols--save]" className="block md:hidden size-5" />
         </Button>
       </div>
-      <Button
-        className={clsx(
-          "btn-outline col-span-full mx-auto w-fit opacity-100 transition-all duration-200 ease-in-out",
-          {
-            "opacity-0": buttonHidden,
-          },
-        )}
-        variant="success"
-        type="submit"
-        disabled={isSending}
-      >
-        {isSending ? "Guardando..." : "Guardar cambios"}
-      </Button>
 
       <div className="space-y-2">
-        <h2 className="text-center font-nunito text-sm sm:text-base md:text-lg lg:text-xl text-warning">
+        <h2 className="text-center font-nunito text-xs text-warning sm:text-sm  md:text-lg lg:text-xl">
           No obtenidos ({achievementList.length})
         </h2>
         {achievementList.map((achievement) => (
@@ -210,7 +220,7 @@ export const AchievementManager = ({
         ))}
       </div>
       <div className="space-y-2">
-        <h2 className="text-center font-nunito text-sm sm:text-base md:text-lg lg:text-xl text-info">
+        <h2 className="text-center font-nunito text-xs text-info sm:text-sm md:text-lg lg:text-xl">
           Obtenidos ({completedAchievements.length})
         </h2>
         {completedAchievements.map((achievement) => (
