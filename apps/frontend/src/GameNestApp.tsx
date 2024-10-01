@@ -4,7 +4,6 @@ import { RegisterPage } from "./pages/RegisterPage.tsx";
 import { LoginPage } from "./pages/LoginPage.tsx";
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
-import { SkeletonTheme } from "react-loading-skeleton";
 import { CollectionManager } from "./components/collection/manager/CollectionManager.tsx";
 import { ValidationPage } from "./pages/ValidationPage.tsx";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
@@ -93,7 +92,6 @@ export const GameNestApp = () => {
     <>
       {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
       <Suspense fallback={""}>
-        <SkeletonTheme baseColor="#313131" highlightColor="#525252">
           <Routes>
             <Route
               element={
@@ -142,7 +140,6 @@ export const GameNestApp = () => {
               </Route>
             </Route>
           </Routes>
-        </SkeletonTheme>
       </Suspense>
     </>
   );

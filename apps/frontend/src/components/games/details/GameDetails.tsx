@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import { Layout } from "../../layout/Layout";
 import { GameDetailsHeader } from "./header/GameDetailsHeader";
 import { GameDetailsContent } from "./content/GameDetailsContent";
-/* import { GameDetailsSkeleton } from "./skeleton/GameDetailsSkeleton";
- */
+
 export const GameDetails = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { gameId: gameSlug } = useParams();
