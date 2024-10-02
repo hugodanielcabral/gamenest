@@ -98,7 +98,7 @@ export const CollectionGamePageHeader = ({
           <div className="flex justify-center gap-4">
             <Button
               disabled={!collection.length}
-              variant="primary"
+              variant="info"
               className="btn-outline tooltip tooltip-top"
               data-tip={`Página de ${collection[0]?.game_name}`}
               onClick={() => navigate(`/games/${collection[0]?.game_slug}`)}

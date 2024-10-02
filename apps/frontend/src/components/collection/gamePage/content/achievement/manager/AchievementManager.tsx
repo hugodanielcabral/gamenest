@@ -170,6 +170,7 @@ export const AchievementManager = ({
           className="btn-outline md:col-span-full"
           onClick={handleMoveToCompleted}
           type="button"
+          variant="info"
           size="sm"
         >
           <Icon
@@ -179,7 +180,7 @@ export const AchievementManager = ({
         </Button>
         <Button
           className="btn-outline md:col-span-full"
-          variant="warning"
+          variant="error"
           onClick={handleMoveToPending}
           type="button"
           size="sm"
