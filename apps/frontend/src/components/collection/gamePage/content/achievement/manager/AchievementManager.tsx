@@ -207,7 +207,7 @@ export const AchievementManager = ({
       </div>
 
       <div className="space-y-2">
-        <h2 className="text-center font-nunito text-xs text-warning sm:text-sm  md:text-lg lg:text-xl">
+        <h2 className="text-center font-nunito text-xs text-error sm:text-sm  md:text-lg lg:text-xl">
           No obtenidos ({achievementList.length})
         </h2>
         {achievementList.map((achievement) => (
