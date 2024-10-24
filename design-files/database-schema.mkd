@@ -1,6 +1,6 @@
 # Glosario
 
-Ultima actualización: 7/9/2024
+Ultima actualización: 24/10/2024
 
 - **PK** - _LLAVE PRIMARIA_.
 - **FK** - _LLAVE FORÁNEA._
@@ -10,6 +10,37 @@ Ultima actualización: 7/9/2024
 - **EC** - _ENTIDAD CATALOGO._
 
 ## Entidades
+
+### 📋 lists **(ED)**
+
+- list_id INT GENERATED ALWAYS AS IDENTITY **(PK)**
+- title VARCHAR(100) NOT NULL
+- description VARCHAR(255)
+- user_id INT **(FK)**
+- visibility BOOLEAN
+- created_on TIMESTAMP
+- updated_on TIMESTAMP
+
+> *Indexes: visibility (solo cargar listas visibles), user_id (cargar las listas del usuario)
+
+### 📋 list_games **(EP)**
+
+- list_games_id INT GENERATED ALWAYS AS IDENTITY **(PK)**
+- list_id INT **(FK)**
+- game_id VARCHAR(100) NOT NULL
+- game_slug VARCHAR(255) NOT NULL
+- game_name VARCHAR(255) NOT NULL
+- game_cover VARCHAR(255) NOT NULL
+
+### 📈 likes **(EP)**
+
+- like_id INT GENERATED ALWAYS AS IDENTITY **(PK)**
+- user_id INT **(FK)**
+- likeable_id INT NOT NULL **(UQ)**
+- likeable_type VARCHAR(50) NOT NULL **(UQ)**
+- created_on TIMESTAMP DEFAULT NOW()
+
+> *Indexes: likeable_type + likeable_id --> mejora la busqueda de likes por entidad, user_id + likeable_type + likeable_id --> ayuda a validar si el usuario ya ha dado like a na entidad.
 
 ### 👤 users **(ED)**
 
@@ -53,15 +84,11 @@ Ultima actualización: 7/9/2024
 - is_favorite BOLEAN DEFAULT FALSE
 - user_id INT **(FK)**
 
-> *Agregar un constraint/check que no permita que el start_date sea mayor que el finish_date.
-
 ### 🇦🇷 country **(EC)**
 
 - country_id INT IDENTITY-ALWAYS **(PK)**
 - name VARCHAR(150) NOT NULL
 - domain VARCHAR(2) UNIQUE NOT NULL **(UQ)**
-
-> En el momento de la creación será usado para la validación del email, pero luego solamente será usado para verificar el cambio de contraseña.
 
 ## Relaciones
 
@@ -69,6 +96,8 @@ Ultima actualización: 7/9/2024
 2. Un **user** pertenece a un **country** _(1 a 1)_.
 3. Un **user** tiene un **role** _(1 a 1)_.
 4. Una **collection** pertenece a un **user** _(1 a 1)._
+5. Un **user** puede tener muchas **lists** _(1 a N)_.
+6. Un **user** puede dar **likes** _(1 a N)_.
 
 ## Modelo relacional de la base de datos
 
