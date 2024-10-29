@@ -44,3 +44,27 @@ export const getPublicListsValidator = [
     validateResult(req, res, next);
   },
 ];
+
+export const getPublicListsByIdValidator = [
+  query("order")
+    .optional()
+    .customSanitizer((value) => {
+      const lowerCaseValue = value?.toLowerCase();
+
+      if (lowerCaseValue === "asc" || lowerCaseValue === "desc") {
+        return lowerCaseValue;
+      }
+
+      return "asc";
+    }),
+  query("page")
+    .optional()
+    .customSanitizer((value) => {
+      if (isNaN(value)) return 1;
+
+      return value;
+    }),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
