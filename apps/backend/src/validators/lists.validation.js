@@ -1,4 +1,4 @@
-import { body, query } from "express-validator";
+import { body, param, query } from "express-validator";
 import { validateResult } from "../helpers/handleValidateResult.js";
 import sql from "../db.js";
 
@@ -82,6 +82,38 @@ export const addListValidator = [
     .isBoolean()
     .withMessage("Ocurrió un error al intentar guardar la lista"),
   body("games").optional().isArray(),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+export const updateListValidator = [
+  body("title")
+    .trim()
+    .isString()
+    .isLength({ min: 6, max: 100 })
+    .withMessage("El título debe tener entre 6 y 100 caracteres"),
+  body("description").optional().trim().isString().isLength({ max: 255 }),
+  body("visibility")
+    .optional()
+    .isBoolean()
+    .withMessage("Ocurrió un error al intentar guardar la lista"),
+  body("games").optional().isArray(),
+  body("deletedGameIds").optional().isArray(),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+export const deleteListValidator = [
+  param("list_id").isInt(),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+export const listLikeValidator = [
+  param("list_id").isInt(),
   (req, res, next) => {
     validateResult(req, res, next);
   },

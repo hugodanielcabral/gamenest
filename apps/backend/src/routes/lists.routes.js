@@ -1,15 +1,22 @@
 import Router from "express";
 import {
   addList,
+  addListLike,
+  deleteList,
+  deleteListLike,
   getPrivateLists,
   getPrivateListsById,
   getPublicLists,
   getPublicListsById,
+  updateList,
 } from "../controllers/lists.controller.js";
 import {
+  listLikeValidator,
   addListValidator,
+  deleteListValidator,
   getListsByIdValidator,
   getListsValidator,
+  updateListValidator,
 } from "../validators/lists.validation.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
 
@@ -29,5 +36,18 @@ router.get(
 );
 
 router.post("/lists", isAuth, addListValidator, addList);
+
+router.put("/lists/:list_id", isAuth, updateListValidator, updateList);
+
+router.delete("/lists/:list_id", isAuth, deleteListValidator, deleteList);
+
+router.post("/lists/like/:list_id", isAuth, listLikeValidator, addListLike);
+
+router.delete(
+  "/lists/like/:list_id",
+  isAuth,
+  listLikeValidator,
+  deleteListLike
+);
 
 export default router;

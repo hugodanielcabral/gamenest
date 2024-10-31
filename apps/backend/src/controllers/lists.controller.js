@@ -276,3 +276,133 @@ export const addList = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const updateList = async (req, res) => {
+  try {
+    const { title, description, visibility, games, deletedGameIds } = req.body;
+    const { list_id } = req.params;
+
+    console.log(list_id);
+
+    await sql.begin(async (sql) => {
+      // Actualizar los datos de la lista
+      await sql`
+        UPDATE lists 
+        SET title = ${title}, description = ${description}, visibility = ${visibility} 
+        WHERE list_id = ${list_id}
+      `;
+
+      // Eliminar los juegos que el usuario ha marcado para borrar
+      if (deletedGameIds.length > 0) {
+        await sql`
+          DELETE FROM list_games 
+          WHERE list_id = ${list_id} 
+          AND list_games_id = ANY(${deletedGameIds});
+        `;
+      }
+
+      // Insertar los juegos nuevos o no existentes
+      const existingGames = await sql`
+        SELECT game_id FROM list_games WHERE list_id = ${list_id}
+      `;
+
+      const existingGameIds = existingGames.map((game) => game.game_id);
+      const newGames = games.filter(
+        (game) => !existingGameIds.includes(game.game_id)
+      );
+
+      if (newGames.length > 0) {
+        const newGamesData = newGames.map((game) => ({
+          ...game,
+          list_id,
+        }));
+        await sql`INSERT INTO list_games ${sql(newGamesData)}`;
+      }
+
+      res.status(200).json({ message: "Lista actualizada correctamente." });
+    });
+  } catch (error) {
+    console.error("Error al actualizar la lista:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteList = async (req, res) => {
+  const { list_id } = req.params;
+
+  try {
+    const deletedResult = await sql`
+      DELETE FROM lists
+      WHERE list_id = ${list_id}
+      RETURNING *;
+    `;
+
+    if (!deletedResult.length) {
+      return res.status(404).json({ message: "La lista no existe." });
+    }
+
+    res.status(200).json({ message: "Lista eliminada correctamente." });
+  } catch (error) {
+    console.error("Error al eliminar la lista:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const addListLike = async (req, res) => {
+  const { list_id } = req.params;
+
+  try {
+    const listExists =
+      await sql`SELECT 1 FROM lists WHERE list_id = ${list_id}`;
+    if (!listExists.length) {
+      return res.status(404).json({ message: "La lista no existe." });
+    }
+
+    const existingLike = await sql`
+      SELECT 1 FROM likes
+      WHERE user_id = ${req.user_id} AND likeable_id = ${list_id} AND likeable_type = 'list'
+    `;
+
+    if (existingLike.length) {
+      return res
+        .status(400)
+        .json({ message: "Ya has dado me gusta a esta lista." });
+    }
+
+    const insertedLike = await sql`
+      INSERT INTO likes (user_id, likeable_id, likeable_type)
+      VALUES (${req.user_id}, ${list_id}, 'list')
+      RETURNING *;
+    `;
+
+    res.status(201).json({ message: "Me gusta agregado correctamente." });
+  } catch (error) {
+    console.error("Error al agregar me gusta:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteListLike = async (req, res) => {
+  const { list_id } = req.params;
+
+  try {
+    const deletedLike = await sql`
+      DELETE FROM likes
+      WHERE likeable_id = ${list_id}
+      AND user_id = ${req.user_id}
+      RETURNING *;
+    `;
+
+    if (!deletedLike.length) {
+      return res.status(404).json({
+        message:
+          "No existe un me gusta de este usuario en la lista especificada.",
+      });
+    }
+
+    res.status(200).json({ message: "Me gusta eliminado correctamente." });
+  } catch (error) {
+    console.error("Error al eliminar me gusta:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
