@@ -1,4 +1,6 @@
 import sql from "../db.js";
+import { ListGamesRepository } from "../repositories/ListGamesRepository.js";
+import { ListRepository } from "../repositories/ListsRepository.js";
 
 export const getPublicLists = async (req, res) => {
   const { order = "asc", sort = "l.created_on", q = "", page = 1 } = req.query;
@@ -240,30 +242,29 @@ export const getPrivateListsById = async (req, res) => {
 
 export const addList = async (req, res) => {
   try {
-    const { title, description, visibility, games } = req.body;
+    const data = req.body;
+    data["user_id"] = req.user_id;
 
     await sql.begin(async (sql) => {
-      const insertedList = await sql`
-        INSERT INTO lists (title, description, user_id, visibility) 
-        VALUES (${title}, ${description}, ${req.user_id}, ${visibility})
-        RETURNING list_id;
-      `;
+      const insertedList = await ListRepository.create(data);
 
       if (!insertedList.length) {
-        throw new Error("Error al crear la lista.");
+        console.error("Error al crear la lista.");
+        return res.status(500).json({ message: "Error al crear la lista." });
       }
 
-      const gamesData = games.map((game) => ({
+      const gamesData = data.games.map((game) => ({
         ...game,
         list_id: insertedList[0].list_id,
       }));
 
-      const insertedGames = await sql`
-        INSERT INTO list_games ${sql(gamesData)};
-      `;
+      const insertedGames = await ListGamesRepository.createMany(gamesData);
 
       if (!insertedGames) {
-        throw new Error("Error al agregar juegos a la lista.");
+        console.error("Error al agregar juegos a la lista.");
+        return res
+          .status(500)
+          .json({ message: "Error al agregar juegos a la lista." });
       }
 
       res.status(201).json({
@@ -279,35 +280,23 @@ export const addList = async (req, res) => {
 
 export const updateList = async (req, res) => {
   try {
-    const { title, description, visibility, games, deletedGameIds } = req.body;
+    const data = req.body;
     const { list_id } = req.params;
-
-    console.log(list_id);
 
     await sql.begin(async (sql) => {
       // Actualizar los datos de la lista
-      await sql`
-        UPDATE lists 
-        SET title = ${title}, description = ${description}, visibility = ${visibility} 
-        WHERE list_id = ${list_id}
-      `;
+      await ListRepository.update(data, list_id);
 
       // Eliminar los juegos que el usuario ha marcado para borrar
-      if (deletedGameIds.length > 0) {
-        await sql`
-          DELETE FROM list_games 
-          WHERE list_id = ${list_id} 
-          AND list_games_id = ANY(${deletedGameIds});
-        `;
+      if (data.deletedGameIds.length > 0) {
+        await ListGamesRepository.deleteMany(data.deletedGameIds, list_id);
       }
 
       // Insertar los juegos nuevos o no existentes
-      const existingGames = await sql`
-        SELECT game_id FROM list_games WHERE list_id = ${list_id}
-      `;
+      const existingGames = await ListGamesRepository.findById(list_id);
 
       const existingGameIds = existingGames.map((game) => game.game_id);
-      const newGames = games.filter(
+      const newGames = data.games.filter(
         (game) => !existingGameIds.includes(game.game_id)
       );
 
@@ -316,7 +305,7 @@ export const updateList = async (req, res) => {
           ...game,
           list_id,
         }));
-        await sql`INSERT INTO list_games ${sql(newGamesData)}`;
+        await ListGamesRepository.createMany(newGamesData);
       }
 
       res.status(200).json({ message: "Lista actualizada correctamente." });
@@ -331,11 +320,7 @@ export const deleteList = async (req, res) => {
   const { list_id } = req.params;
 
   try {
-    const deletedResult = await sql`
-      DELETE FROM lists
-      WHERE list_id = ${list_id}
-      RETURNING *;
-    `;
+    const deletedResult = await ListRepository.delete(list_id);
 
     if (!deletedResult.length) {
       return res.status(404).json({ message: "La lista no existe." });
