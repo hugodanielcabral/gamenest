@@ -21,10 +21,11 @@ interface GamesProps {
 
 export const GamesFinderContent = () => {
   const { getQueryString } = useQueryParams();
-  const { fetchData: gamesData, isLoading } = useDataFetch(
+
+  const { fetchData: gamesData, isLoading } = useDataFetch<GamesProps['fetchData']>(
     "games",
-    `${getQueryString()}`,
-  ) as GamesProps;
+    `${getQueryString()}`
+  );
 
   if (isLoading) {
     return (
@@ -39,8 +40,8 @@ export const GamesFinderContent = () => {
   return (
     <div className="col-span-3 grid grid-cols-1 xl:grid-cols-2 gap-4 h-fit">
       <Toaster position="top-center" />
-      {gamesData.length > 0 ? (
-        gamesData?.map((game) => <Card key={game.id} game={game} />)
+      {gamesData && gamesData.length > 0 ? (
+        gamesData.map((game) => <Card key={game.id} game={game} />)
       ) : (
         <div className="col-span-full flex min-h-screen justify-center">
           <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">

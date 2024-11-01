@@ -1,35 +1,56 @@
 import { useDataFetch } from "../../../../hooks/useDataFetch";
 import { useQueryParams } from "../../../../hooks/useQueryParams";
+import { Loading } from "../../../ui/loading/Loading.tsx";
 
-interface PaginationProps {
-  fetchData: {
-    count: number;
-  };
-  isLoading?: boolean;
+interface CountGames {
+  count: number;
 }
 
 export const Pagination = () => {
   const { getQueryString, query, setParams } = useQueryParams();
 
-  let page = query.page ? query.page : "1";
+  const page = query.page ? query.page : "1";
 
-  const { fetchData: totalPages } = useDataFetch(
-    "count/games",
-    `${getQueryString()}`,
-  ) as unknown as PaginationProps;
+  const {
+    fetchData: totalPages,
+    isLoading,
+    error,
+  } = useDataFetch<CountGames>("count/games", `${getQueryString()}`);
+
+  if (isLoading) {
+    return (
+      <Loading
+        className="m-6 flex items-center justify-center"
+        color="primary"
+        type="ring"
+      />
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="m-6 text-center text-red-500">
+        Ocurrió un error al cargar los datos: {error}
+      </div>
+    );
+  }
+
+  if (!totalPages) {
+    return null;
+  }
 
   const totalPagesCount = Math.ceil(totalPages.count / 12);
 
   const handleNextPage = () => {
     if (Number(page) < totalPagesCount && typeof page === "string") {
-      let parsedPage = parseInt(page);
+      const parsedPage = parseInt(page, 10);
       setParams("page", String(parsedPage + 1));
     }
   };
 
   const handlePrevPage = () => {
     if (Number(page) > 1 && typeof page === "string") {
-      let parsedPage = parseInt(page);
+      const parsedPage = parseInt(page, 10);
       setParams("page", String(parsedPage - 1));
     }
   };

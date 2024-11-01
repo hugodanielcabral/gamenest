@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const useDataFetch = (url: string, query?: string) => {
-  const [fetchData, setFetchData] = useState([]);
+export const useDataFetch = <T>(url: string, query?: string) => {
+  const [fetchData, setFetchData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const getData = async (url: string, query?: string): Promise<void> => {
     try {
-      const data = await fetch(
+      const response = await fetch(
         `${BASE_URL}/${url}${query ? `?${query}` : ""}`,
         {
           credentials: "include",
@@ -20,18 +20,20 @@ export const useDataFetch = (url: string, query?: string) => {
         },
       );
 
-      if (!data.ok) {
+      if (!response.ok) {
         setIsLoading(false);
-        return setError("Ocurrió un error al intentar obtener los datos");
+        setError("Ocurrió un error al intentar obtener los datos");
+        return;
       }
 
-      const response = await data.json();
+      const data: T = await response.json();
+      setFetchData(data);
       setIsLoading(false);
       setError(null);
-
-      setFetchData(response);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      setError("Error de conexión o de servidor");
     }
   };
 
@@ -39,7 +41,7 @@ export const useDataFetch = (url: string, query?: string) => {
     getData(url, query);
 
     return () => {
-      setFetchData([]);
+      setFetchData(null);
       setIsLoading(true);
     };
   }, [query]);
