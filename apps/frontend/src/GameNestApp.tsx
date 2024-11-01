@@ -30,6 +30,12 @@ export const GameNestApp = () => {
     })),
   );
 
+  const ListsPage = lazy(() =>
+    import("./pages/ListsPage.tsx").then((module) => ({
+      default: module.ListsPage,
+    })),
+  );
+
   const { isAuth } = useAuth();
 
   const publicRoutes = [
@@ -53,6 +59,11 @@ export const GameNestApp = () => {
       path: "*",
       element: <ErrorPage />,
     },
+    {
+      id: 7,
+      path: "/lists",
+      element: <ListsPage />,
+    }
   ];
 
   const privateRoutes = [

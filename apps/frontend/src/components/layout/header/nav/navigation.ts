@@ -8,6 +8,10 @@ export const privateRoutes = [
     path: "/games",
   },
   {
+    name: "Listas",
+    path: "/lists"
+  },
+  {
     name: "Colección",
     path: "/collection",
   },
@@ -22,6 +26,10 @@ export const publicRoutes = [
     name: "Juegos",
     path: "/games",
   },
+  {
+    name: "Listas",
+    path: "/lists"
+  }
 ];
 
 export const authRoutes = [
