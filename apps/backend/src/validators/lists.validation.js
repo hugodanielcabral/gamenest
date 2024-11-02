@@ -74,8 +74,8 @@ export const addListValidator = [
   body("title")
     .trim()
     .isString()
-    .isLength({ min: 6, max: 100 })
-    .withMessage("El título debe tener entre 6 y 100 caracteres"),
+    .isLength({ min: 6, max: 40 })
+    .withMessage("El título debe tener entre 6 y 40 caracteres"),
   body("description").optional().trim().isString().isLength({ max: 255 }),
   body("visibility")
     .optional()
@@ -91,8 +91,8 @@ export const updateListValidator = [
   body("title")
     .trim()
     .isString()
-    .isLength({ min: 6, max: 100 })
-    .withMessage("El título debe tener entre 6 y 100 caracteres"),
+    .isLength({ min: 6, max: 40 })
+    .withMessage("El título debe tener entre 6 y 40 caracteres"),
   body("description").optional().trim().isString().isLength({ max: 255 }),
   body("visibility")
     .optional()
