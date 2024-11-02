@@ -38,8 +38,8 @@ export const getPublicLists = async (req, res) => {
         WHERE
             l.visibility = TRUE AND LOWER(l.title) LIKE ${`%${q}%`}
         ORDER BY ${sql(sort)} ${order === "asc" ? sql`ASC` : sql`DESC`}
-        OFFSET ${(page - 1) * 12}
-        LIMIT 12;
+        OFFSET ${(page - 1) * 18}
+        LIMIT 18;
       `;
 
     if (!lists.length) {
@@ -57,7 +57,12 @@ export const getPublicLists = async (req, res) => {
         LIMIT 3;
       `;
 
-    res.status(200).json({ lists, games });
+    const totalPages =
+      await sql`SELECT COUNT(*) FROM lists WHERE visibility = TRUE AND LOWER(title) LIKE ${`%${q}%`};`;
+
+    res
+      .status(200)
+      .json({ lists, games, totalPages: parseInt(totalPages[0].count) });
   } catch (error) {
     console.error("Error al obtener listas públicas:", error);
     res.status(500).json({ message: error.message });
