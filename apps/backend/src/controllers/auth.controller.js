@@ -66,14 +66,15 @@ export const signin = async (req, res) => {
     const token = await handleJwt({ id: checkUserExistence[0].user_id });
 
     res.cookie("token", token, {
-      httpOnly: true,
       sameSite: "none",
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
-    res.status(200).json({ username, avatar: checkUserExistence[0].avatar });
+    res.status(200).json({
+      username,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });
@@ -88,7 +89,7 @@ export const signout = (req, res) => {
 export const profile = async (req, res) => {
   try {
     const checkUserExists =
-      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.title, a.active, b."name" AS country, a.user_edit_credits FROM users a 
+      await sql`SELECT a.username, a.email, a.active, b."name" AS country FROM users a 
       INNER JOIN country b
       ON a.country_id = b.country_id
       WHERE user_id = ${req.user_id};`;
@@ -96,7 +97,7 @@ export const profile = async (req, res) => {
     if (!checkUserExists[0])
       return res.status(404).json({ message: "User not found" });
 
-    res.status(200).json(checkUserExists[0]);
+    res.status(200).json({ user_id: req.user_id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });

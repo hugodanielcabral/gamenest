@@ -76,10 +76,12 @@ export const getPublicListsById = async (req, res) => {
     const list = await sql`
             SELECT 
           l.*,
+         u.username,
           COALESCE(lg.total_games, 0) AS total_games,
           COALESCE(lk.total_likes, 0) AS total_likes
       FROM 
           lists l
+      LEFT JOIN users u ON l.user_id = u.user_id
       LEFT JOIN (
           SELECT list_id, COUNT(*) AS total_games
           FROM list_games
@@ -401,6 +403,25 @@ export const deleteList = async (req, res) => {
   }
 };
 
+export const getListLikes = async (req, res) => {
+  const { list_id } = req.params;
+
+  try {
+    const likes = await sql`
+      SELECT * FROM likes WHERE user_id = ${req.user_id} AND likeable_id = ${list_id} AND likeable_type = 'list'
+    `;
+
+    if (!likes.length) {
+      return res.status(404).json({ message: "No se encontraron me gusta." });
+    }
+
+    res.status(200).json(true);
+  } catch (error) {
+    console.error("Error al obtener me gusta de la lista:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const addListLike = async (req, res) => {
   const { list_id } = req.params;
 
@@ -417,9 +438,11 @@ export const addListLike = async (req, res) => {
     `;
 
     if (existingLike.length) {
+      await sql` DELETE FROM likes WHERE user_id = ${req.user_id} AND likeable_id = ${list_id} AND likeable_type = 'list'`;
+
       return res
-        .status(400)
-        .json({ message: "Ya has dado me gusta a esta lista." });
+        .status(204)
+        .json({ message: "Me gusta eliminado correctamente." });
     }
 
     const insertedLike = await sql`
@@ -435,7 +458,7 @@ export const addListLike = async (req, res) => {
   }
 };
 
-export const deleteListLike = async (req, res) => {
+/* export const deleteListLike = async (req, res) => {
   const { list_id } = req.params;
 
   try {
@@ -459,3 +482,4 @@ export const deleteListLike = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+ */

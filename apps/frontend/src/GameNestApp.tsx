@@ -36,6 +36,12 @@ export const GameNestApp = () => {
     })),
   );
 
+  const ListDetailsPage = lazy(() =>
+    import("./components/lists/details/ListDetailsPage.tsx").then((module) => ({
+      default: module.ListDetailsPage,
+    })),
+  );
+
   const { isAuth } = useAuth();
 
   const publicRoutes = [
@@ -63,6 +69,11 @@ export const GameNestApp = () => {
       id: 7,
       path: "/lists",
       element: <ListsPage />,
+    },
+    {
+      id:8,
+      path: "/lists/:listId",
+      element: <ListDetailsPage />,
     }
   ];
 

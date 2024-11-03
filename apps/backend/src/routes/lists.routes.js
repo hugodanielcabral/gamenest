@@ -3,7 +3,8 @@ import {
   addList,
   addListLike,
   deleteList,
-  deleteListLike,
+  /* deleteListLike */
+  getListLikes,
   getPopularLists,
   getPrivateLists,
   getPrivateListsById,
@@ -44,13 +45,15 @@ router.put("/lists/:list_id", isAuth, updateListValidator, updateList);
 
 router.delete("/lists/:list_id", isAuth, deleteListValidator, deleteList);
 
+router.get("/lists/like/:list_id", isAuth, getListLikes);
+
 router.post("/lists/like/:list_id", isAuth, listLikeValidator, addListLike);
 
-router.delete(
+/* router.delete(
   "/lists/like/:list_id",
   isAuth,
   listLikeValidator,
   deleteListLike
-);
+); */
 
 export default router;
