@@ -4,6 +4,7 @@ import {
   addListLike,
   deleteList,
   deleteListLike,
+  getPopularLists,
   getPrivateLists,
   getPrivateListsById,
   getPublicLists,
@@ -25,6 +26,8 @@ const router = Router();
 router.get("/lists", getListsValidator, getPublicLists);
 
 router.get("/lists/:id", getListsByIdValidator, getPublicListsById);
+
+router.get("/popular/lists", getPopularLists);
 
 router.get("/user/lists", isAuth, getListsValidator, getPrivateLists);
 

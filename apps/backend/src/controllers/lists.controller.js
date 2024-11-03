@@ -245,6 +245,69 @@ export const getPrivateListsById = async (req, res) => {
   }
 };
 
+export const getPopularLists = async (req, res) => {
+  try {
+    const popularLists = await sql`
+      
+SELECT
+    l.*,
+    u.username,
+    COALESCE(lg.total_games, 0) AS total_games,
+    COALESCE(lk.total_likes, 0) AS total_likes
+FROM
+    lists l
+    LEFT JOIN users u ON l.user_id = u.user_id
+    LEFT JOIN (
+        SELECT
+            list_id,
+            COUNT(*) AS total_games
+        FROM
+            list_games
+        GROUP BY
+            list_id
+    ) lg ON l.list_id = lg.list_id
+    LEFT JOIN (
+        SELECT
+            likeable_id,
+            COUNT(*) AS total_likes
+        FROM
+            likes
+        WHERE
+            likeable_type = 'list'
+        GROUP BY
+            likeable_id
+    ) lk ON l.list_id = lk.likeable_id
+WHERE
+    l.visibility = TRUE
+ORDER BY
+    lk.total_likes ASC
+    LIMIT 3;
+    `;
+
+    if (!popularLists.length) {
+      return res
+        .status(404)
+        .json({ message: "No se encontraron listas populares." });
+    }
+
+    // Obtengo los IDs de las listas para buscar los juegos
+    const listIds = popularLists.map((list) => list.list_id);
+
+    const games = await sql`
+        SELECT *
+        FROM list_games
+        WHERE list_id = ANY(${listIds})
+        ORDER BY game_name ASC
+        LIMIT 3;
+      `;
+
+    res.status(200).json({ lists: popularLists, games });
+  } catch (error) {
+    console.error("Error al obtener listas populares:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const addList = async (req, res) => {
   try {
     const data = req.body;

@@ -1,12 +1,11 @@
 import { body, param, query } from "express-validator";
 import { validateResult } from "../helpers/handleValidateResult.js";
-import sql from "../db.js";
 
 const validSortOptions = {
   created_on: "l.created_on",
   updated_on: "l.updated_on",
   total_games: "lg.total_games",
-  total_likes: "lk.total_likes",
+  likes: "lk.total_likes",
 };
 
 export const getListsValidator = [
