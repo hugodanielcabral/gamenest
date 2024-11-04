@@ -2,7 +2,7 @@ import getImageUrl from "../../../../utils/getImageUrl.js";
 import cover from "../../../../assets/logos/no-cover.webp";
 import { Link } from "react-router-dom";
 import { Icon } from "../../../ui/icon/Icon.js";
-import { LikeButton } from "../../../LikeButton.js";
+import { TotalLikes } from "../../../LikeButton.js";
 import "./ContentCard.css";
 
 interface ContentCardProps {
@@ -77,7 +77,7 @@ export const ContentCard = ({ list, games }: ContentCardProps) => {
         </p>
       </div>
       <div className="-order-1 place-self-end sm:order-3 sm:place-self-start">
-        <LikeButton likes={list.total_likes} />
+        <TotalLikes likes={list.total_likes} />
       </div>
     </Link>
   );

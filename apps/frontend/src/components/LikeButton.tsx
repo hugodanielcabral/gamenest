@@ -14,10 +14,18 @@ interface LikeButtonProps {
   likes: string;
   id?: number;
   url?: string;
-  outline?: boolean;
 }
 
-export const LikeButton = ({ likes, id, url, outline = false }: LikeButtonProps) => {
+export const TotalLikes = ({ likes }) => {
+  return (
+    <div className="flex items-center gap-1">
+      <Icon name={"icon-[material-symbols--favorite]"} className="size-6" />
+      <span>{likes}</span>
+    </div>
+  );
+};
+
+export const LikeButton = ({ likes, id, url }: LikeButtonProps) => {
   const [totalLikes, setTotalLikes] = useState(parseInt(likes));
   const [isSending, setIsSending] = useState(false);
 
@@ -56,7 +64,7 @@ export const LikeButton = ({ likes, id, url, outline = false }: LikeButtonProps)
         setIsSending(false);
         return;
       }
-
+      
       setIsSending(false);
     } catch (error) {
       console.error(error);
@@ -68,10 +76,9 @@ export const LikeButton = ({ likes, id, url, outline = false }: LikeButtonProps)
       <button
         onClick={handleLike}
         className={clsx(
-          "flex items-center gap-1",
+          "btn btn-outline flex items-center gap-1",
           hasLiked ? "text-red-500" : "text-gray-500",
           isSending && "cursor-not-allowed",
-          outline && "btn-outline btn",
         )}
       >
         <Icon name={"icon-[material-symbols--favorite]"} className="size-6" />

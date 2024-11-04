@@ -15,7 +15,7 @@ interface ListsProps {
       updated_at: string;
       username: string;
       total_games: number;
-      total_likes: number;
+      total_likes: string;
     }[];
     games: {
       list_games_id: number;
