@@ -71,7 +71,7 @@ export const getPublicLists = async (req, res) => {
 
 export const getPublicListsById = async (req, res) => {
   const { id } = req.params;
-  const { order = "asc", page = 1 } = req.query;
+  const { order = "asc" } = req.query;
   try {
     const list = await sql`
             SELECT 
@@ -107,8 +107,6 @@ export const getPublicListsById = async (req, res) => {
       FROM list_games
       WHERE list_id = ${id}
       ORDER BY game_name ${order === "asc" ? sql`ASC` : sql`DESC`}
-        OFFSET ${(page - 1) * 12}
-        LIMIT 12
       ;
     `;
 
