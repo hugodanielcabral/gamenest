@@ -11,19 +11,22 @@ interface ListsProps {
       description: string;
       user_id: number;
       visibility: boolean;
-      created_at: string;
-      updated_at: string;
+      created_on: string;
+      updated_on: string;
       username: string;
       total_games: number;
       total_likes: string;
     }[];
     games: {
-      list_games_id: number;
       list_id: number;
-      game_id: number;
-      game_slug: string;
-      game_name: string;
-      game_cover: string;
+      games: {
+        list_games_id: number;
+        list_id: number;
+        game_id: number;
+        game_slug: string;
+        game_name: string;
+        game_cover: string;
+      }[];
     }[];
   };
   isLoading: boolean;
@@ -49,14 +52,15 @@ export const ListsContent = () => {
 
   return (
     <div className="grid h-fit grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
-      {fetchData.lists.length > 0 ? (
+      {fetchData?.lists?.length > 0 ? (
         fetchData.lists.map((list) => (
           <ContentCard
             key={list.list_id}
             list={list}
-            games={fetchData.games.filter(
-              (game) => game.list_id === list.list_id,
-            )}
+            games={
+              fetchData.games.find((game) => game.list_id === list.list_id)
+                ?.games || []
+            }
           />
         ))
       ) : (

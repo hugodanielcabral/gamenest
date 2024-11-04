@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import { useAuth } from "../../../../context/AuthContext";
 import { Button } from "../../../ui/button/Button";
 import { Icon } from "../../../ui/icon/Icon";
-import { LikeButton } from "../../../LikeButton";
+import { LikeButton, TotalLikes } from "../../../LikeButton";
 import type { List } from "../../../../types/lists";
 
 interface ListDetailsUserPanelProps {
@@ -13,30 +13,37 @@ export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
   const { isAuth, user } = useAuth();
   return (
     <div className="-order-1 col-span-full flex h-fit flex-col gap-2 rounded-md p-4 lg:order-2 lg:col-span-1">
-      {isAuth && user?.user_id === list?.user_id && (
-        <div className="flex justify-center gap-2">
+      <div className="flex justify-center gap-2">
+        {isAuth ? (
           <LikeButton
             likes={list.total_likes}
             id={list.list_id}
             url="lists/like"
           />
-          <Button
-            variant="success"
-            size="md"
-            className="btn-outline tooltip tooltip-top w-fit"
-            data-tip="Editar lista"
-          >
-            <Icon name="icon-[mage--edit-fill]" className="size-6" />
-          </Button>
-          <Button
-            variant="error"
-            className="btn-outline tooltip tooltip-top"
-            data-tip="Eliminar lista"
-          >
-            <Icon name="icon-[material-symbols--delete]" className="size-6" />
-          </Button>
-        </div>
-      )}
+        ) : (
+          <TotalLikes likes={list.total_likes} />
+        )}
+        {isAuth && user?.user_id === list?.user_id && (
+          <>
+            <Button
+              variant="success"
+              size="md"
+              className="btn-outline tooltip tooltip-top w-fit"
+              data-tip="Editar lista"
+            >
+              <Icon name="icon-[mage--edit-fill]" className="size-6" />
+            </Button>
+            <Button
+              variant="error"
+              className="btn-outline tooltip tooltip-top"
+              data-tip="Eliminar lista"
+            >
+              <Icon name="icon-[material-symbols--delete]" className="size-6" />
+            </Button>
+          </>
+        )}
+      </div>
+
       <div className="divider divider-info" />
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-center gap-2">

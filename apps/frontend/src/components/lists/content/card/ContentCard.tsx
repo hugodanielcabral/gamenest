@@ -4,29 +4,12 @@ import { Link } from "react-router-dom";
 import { Icon } from "../../../ui/icon/Icon.js";
 import { TotalLikes } from "../../../LikeButton.js";
 import "./ContentCard.css";
+import type { List, Game } from "../../../../types/lists.js";
 
 interface ContentCardProps {
-  list: {
-    list_id: number;
-    title: string;
-    description: string;
-    user_id: number;
-    visibility: boolean;
-    created_at: string;
-    updated_at: string;
-    username: string;
-    total_games: number;
-    total_likes: string;
-  };
+  list: List;
 
-  games: {
-    list_games_id: number;
-    list_id: number;
-    game_id: number;
-    game_slug: string;
-    game_name: string;
-    game_cover: string;
-  }[];
+  games: Game[];
 }
 
 const fillMissingGames = (games: ContentCardProps["games"]) => {
@@ -44,7 +27,6 @@ const fillMissingGames = (games: ContentCardProps["games"]) => {
 
 export const ContentCard = ({ list, games }: ContentCardProps) => {
   const gamesWithPlaceholders = fillMissingGames(games);
-
   return (
     <Link
       to={`/lists/${list.list_id}`}

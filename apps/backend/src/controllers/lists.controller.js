@@ -46,16 +46,22 @@ export const getPublicLists = async (req, res) => {
       return res.status(404).json({ message: "No se encontraron listas." });
     }
 
-    // Obtengo los IDs de las listas para buscar los juegos
-    const listIds = lists.map((list) => list.list_id);
+    const listGames = await sql`SELECT * FROM list_games;`;
 
-    const games = await sql`
-        SELECT *
-        FROM list_games
-        WHERE list_id = ANY(${listIds})
-        ORDER BY game_name ASC
-        LIMIT 3;
-      `;
+    const games = listGames.reduce((acc, { list_id, ...game }) => {
+      let list = acc.find((item) => item.list_id === list_id);
+
+      if (!list) {
+        list = { list_id, games: [game] };
+        acc.push(list);
+      } else {
+        if (!list.games.some((g) => g.game_id === game.game_id)) {
+          list.games.push(game);
+        }
+      }
+
+      return acc;
+    }, []);
 
     const totalPages =
       await sql`SELECT COUNT(*) FROM lists WHERE visibility = TRUE AND LOWER(title) LIKE ${`%${q}%`};`;

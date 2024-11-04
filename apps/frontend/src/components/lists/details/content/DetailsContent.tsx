@@ -43,7 +43,7 @@ export const DetailsContent = ({ list }: DetailsContentProps) => {
   });
 
   return (
-    <div className="col-span-full lg:col-span-3 flex flex-col gap-4 md:gap-8">
+    <div className="col-span-full flex flex-col gap-4 md:gap-8 lg:col-span-3">
       <div className="ml-auto flex">
         <Select
           className="max-w-lg bg-base-300 lg:select-lg focus:border-2 focus:border-info"
@@ -53,7 +53,11 @@ export const DetailsContent = ({ list }: DetailsContentProps) => {
         >
           <Option value="" text="Criterio" disabled />
           {sortOptions.map((option) => (
-            <Option key={option.value} value={option.value} text={option.text} />
+            <Option
+              key={option.value}
+              value={option.value}
+              text={option.text}
+            />
           ))}
         </Select>
 
@@ -65,14 +69,26 @@ export const DetailsContent = ({ list }: DetailsContentProps) => {
         >
           <Option value="" text="Orden" disabled />
           {orderOptions.map((option) => (
-            <Option key={option.value} value={option.value} text={option.text} />
+            <Option
+              key={option.value}
+              value={option.value}
+              text={option.text}
+            />
           ))}
         </Select>
       </div>
       <div className="grid grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-4 lg:grid-cols-6">
-        {sortedList.map((game) => (
-          <DetailsCard key={game.list_games_id} game={game} />
-        ))}
+        {sortedList.length > 0 ? (
+          sortedList.map((game) => (
+            <DetailsCard key={game.list_games_id} game={game} />
+          ))
+        ) : (
+          <div className="col-span-full flex justify-center">
+            <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+              No se encontró ningún juego.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
