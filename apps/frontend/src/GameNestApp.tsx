@@ -8,6 +8,7 @@ import { CollectionManager } from "./components/collection/manager/CollectionMan
 import { ValidationPage } from "./pages/ValidationPage.tsx";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
 import { useAuth } from "./context/AuthContext.jsx";
+import { MyListsPage } from "./pages/MyListsPage.tsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -74,6 +75,11 @@ export const GameNestApp = () => {
       id:8,
       path: "/lists/:listId",
       element: <ListDetailsPage />,
+    },
+    {
+      id: 9,
+      path: "/user/lists",
+      element: <MyListsPage/>,
     }
   ];
 

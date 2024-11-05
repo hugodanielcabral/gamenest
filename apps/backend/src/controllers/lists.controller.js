@@ -131,59 +131,68 @@ export const getPrivateLists = async (req, res) => {
 
   try {
     const lists = await sql`
-              SELECT
-          l.*,
-          u.username,
-          COALESCE(lg.total_games, 0) AS total_games,
-          COALESCE(lk.total_likes, 0) AS total_likes
-      FROM
-          lists l
-          LEFT JOIN users u ON l.user_id = u.user_id
-          LEFT JOIN (
-              SELECT
-                  list_id,
-                  COUNT(*) AS total_games
-              FROM
-                  list_games
-              GROUP BY
-                  list_id
-          ) lg ON l.list_id = lg.list_id
-          LEFT JOIN (
-              SELECT
-                  likeable_id,
-                  COUNT(*) AS total_likes
-              FROM
-                  likes
-              WHERE
-                  likeable_type = 'list'
-              GROUP BY
-                  likeable_id
-          ) lk ON l.list_id = lk.likeable_id
-      WHERE
-          l.visibility = FALSE
-          AND l.user_id = ${req.user_id}
-          AND LOWER(l.title) LIKE ${`%${q}%`}
+        SELECT
+            l.*,
+            u.username,
+            COALESCE(lg.total_games, 0) AS total_games,
+            COALESCE(lk.total_likes, 0) AS total_likes
+        FROM
+            lists l
+            LEFT JOIN users u ON l.user_id = u.user_id
+            LEFT JOIN (
+                SELECT
+                    list_id,
+                    COUNT(*) AS total_games
+                FROM
+                    list_games
+                GROUP BY
+                    list_id
+            ) lg ON l.list_id = lg.list_id
+            LEFT JOIN (
+                SELECT
+                    likeable_id,
+                    COUNT(*) AS total_likes
+                FROM
+                    likes
+                WHERE
+                    likeable_type = 'list'
+                GROUP BY
+                    likeable_id
+            ) lk ON l.list_id = lk.likeable_id
+        WHERE
+            l.visibility = FALSE AND LOWER(l.title) LIKE ${`%${q}%`}
         ORDER BY ${sql(sort)} ${order === "asc" ? sql`ASC` : sql`DESC`}
-        OFFSET ${(page - 1) * 12}
-        LIMIT 12;
-    `;
+        OFFSET ${(page - 1) * 18}
+        LIMIT 18;
+      `;
 
     if (!lists.length) {
       return res.status(404).json({ message: "No se encontraron listas." });
     }
 
-    // Obtengo los IDs de las listas para buscar los juegos
-    const listIds = lists.map((list) => list.list_id);
+    const listGames = await sql`SELECT * FROM list_games;`;
 
-    const games = await sql`
-        SELECT *
-        FROM list_games
-        WHERE list_id = ANY(${listIds})
-        ORDER BY game_name ASC
-        LIMIT 3;
-      `;
+    const games = listGames.reduce((acc, { list_id, ...game }) => {
+      let list = acc.find((item) => item.list_id === list_id);
 
-    res.status(200).json({ lists, games });
+      if (!list) {
+        list = { list_id, games: [game] };
+        acc.push(list);
+      } else {
+        if (!list.games.some((g) => g.game_id === game.game_id)) {
+          list.games.push(game);
+        }
+      }
+
+      return acc;
+    }, []);
+
+    const totalPages =
+      await sql`SELECT COUNT(*) FROM lists WHERE visibility = FALSE AND LOWER(title) LIKE ${`%${q}%`};`;
+
+    res
+      .status(200)
+      .json({ lists, games, totalPages: parseInt(totalPages[0].count) });
   } catch (error) {
     console.error("Error al obtener listas privadas:", error);
     res.status(500).json({ message: error.message });

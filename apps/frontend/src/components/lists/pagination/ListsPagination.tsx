@@ -1,16 +1,20 @@
 import { useDataFetch } from "../../../hooks/useDataFetch.ts";
 import { useQueryParams } from "../../../hooks/useQueryParams.ts";
 
+interface ListsPaginationProps {
+  pathUrl: string;
+}
+
 interface TotalPagesLists {
   totalPages: number;
 }
-export const ListsPagination = () => {
+export const ListsPagination = ({ pathUrl }: ListsPaginationProps) => {
   const { getQueryString, query, setParams } = useQueryParams();
 
   const page = query.page ? query.page : "1";
 
   const { fetchData: totalPages, isLoading } = useDataFetch<TotalPagesLists>(
-    "lists",
+    `${pathUrl}`,
     `${getQueryString()}`,
   );
 

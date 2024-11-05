@@ -9,7 +9,11 @@ export const privateRoutes = [
   },
   {
     name: "Listas",
-    path: "/lists"
+    path: "/lists",
+  },
+  {
+    name: "Mis Listas",
+    path: "/user/lists",
   },
   {
     name: "Colección",
@@ -28,8 +32,8 @@ export const publicRoutes = [
   },
   {
     name: "Listas",
-    path: "/lists"
-  }
+    path: "/lists",
+  },
 ];
 
 export const authRoutes = [

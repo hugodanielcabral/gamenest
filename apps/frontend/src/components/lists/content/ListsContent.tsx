@@ -2,21 +2,15 @@ import { useDataFetch } from "../../../hooks/useDataFetch";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import { Loading } from "../../ui/loading/Loading.tsx";
 import { ContentCard } from "./card/ContentCard.tsx";
+import type { List } from "../../../types/lists.ts";
+
+interface ListsContentProps {
+  pathUrl: string;
+}
 
 interface ListsProps {
   fetchData: {
-    lists: {
-      list_id: number;
-      title: string;
-      description: string;
-      user_id: number;
-      visibility: boolean;
-      created_on: string;
-      updated_on: string;
-      username: string;
-      total_games: number;
-      total_likes: string;
-    }[];
+    lists: List[];
     games: {
       list_id: number;
       games: {
@@ -32,11 +26,11 @@ interface ListsProps {
   isLoading: boolean;
 }
 
-export const ListsContent = () => {
+export const ListsContent = ({ pathUrl }: ListsContentProps) => {
   const { getQueryString } = useQueryParams();
 
   const { fetchData, isLoading } = useDataFetch<ListsProps["fetchData"]>(
-    "lists",
+    `${pathUrl}`,
     `${getQueryString()}`,
   );
 
