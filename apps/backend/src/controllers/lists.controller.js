@@ -75,7 +75,7 @@ export const getPublicLists = async (req, res) => {
   }
 };
 
-export const getPublicListsById = async (req, res) => {
+export const getListsById = async (req, res) => {
   const { id } = req.params;
   const { order = "asc" } = req.query;
   try {
@@ -100,12 +100,15 @@ export const getPublicListsById = async (req, res) => {
           GROUP BY likeable_id
       ) lk ON l.list_id = lk.likeable_id
       WHERE 
-          l.list_id = ${id}
-          AND l.visibility = TRUE;
+          l.list_id = ${id};
     `;
 
     if (!list.length) {
       return res.status(404).json({ message: "No se encontró la lista." });
+    }
+
+    if (!list[0].visibility && list[0].user_id !== req.user_id) {
+      return res.status(404).json({ message: "La lista no es pública." });
     }
 
     const games = await sql`
@@ -160,7 +163,9 @@ export const getPrivateLists = async (req, res) => {
                     likeable_id
             ) lk ON l.list_id = lk.likeable_id
         WHERE
-            l.visibility = FALSE AND LOWER(l.title) LIKE ${`%${q}%`}
+            l.visibility = FALSE AND u.user_id = ${
+              req.user_id
+            } AND LOWER(l.title) LIKE ${`%${q}%`}
         ORDER BY ${sql(sort)} ${order === "asc" ? sql`ASC` : sql`DESC`}
         OFFSET ${(page - 1) * 18}
         LIMIT 18;
@@ -195,67 +200,6 @@ export const getPrivateLists = async (req, res) => {
       .json({ lists, games, totalPages: parseInt(totalPages[0].count) });
   } catch (error) {
     console.error("Error al obtener listas privadas:", error);
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const getPrivateListsById = async (req, res) => {
-  const { id } = req.params;
-  const { order = "asc", page = 1 } = req.query;
-  try {
-    const list = await sql`
-        SELECT
-        l.*,
-        COALESCE(lg.total_games, 0) AS total_games,
-        COALESCE(lk.total_likes, 0) AS total_likes
-    FROM
-        lists l
-        LEFT JOIN (
-            SELECT
-                list_id,
-                COUNT(*) AS total_games
-            FROM
-                list_games
-            GROUP BY
-                list_id
-        ) lg ON l.list_id = lg.list_id
-        LEFT JOIN (
-            SELECT
-                likeable_id,
-                COUNT(*) AS total_likes
-            FROM
-                likes
-            WHERE
-                likeable_type = 'list'
-            GROUP BY
-                likeable_id
-        ) lk ON l.list_id = lk.likeable_id
-    WHERE
-        l.list_id = ${id}
-        AND l.visibility = FALSE
-        AND user_id = ${req.user_id};
-    `;
-
-    if (!list.length) {
-      return res.status(404).json({ message: "No se encontró la lista." });
-    }
-
-    const games = await sql`
-            SELECT *
-      FROM list_games
-      WHERE list_id = ${id}
-      ORDER BY game_name ${order === "asc" ? sql`ASC` : sql`DESC`}
-        OFFSET ${(page - 1) * 12}
-        LIMIT 12
-      ;
-    `;
-
-    return res.status(200).json({
-      list: list[0],
-      games,
-    });
-  } catch (error) {
-    console.error("Error al obtener lista privada por ID:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -470,29 +414,3 @@ export const addListLike = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-/* export const deleteListLike = async (req, res) => {
-  const { list_id } = req.params;
-
-  try {
-    const deletedLike = await sql`
-      DELETE FROM likes
-      WHERE likeable_id = ${list_id}
-      AND user_id = ${req.user_id}
-      RETURNING *;
-    `;
-
-    if (!deletedLike.length) {
-      return res.status(404).json({
-        message:
-          "No existe un me gusta de este usuario en la lista especificada.",
-      });
-    }
-
-    res.status(200).json({ message: "Me gusta eliminado correctamente." });
-  } catch (error) {
-    console.error("Error al eliminar me gusta:", error);
-    res.status(500).json({ message: error.message });
-  }
-};
- */

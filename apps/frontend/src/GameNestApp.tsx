@@ -76,11 +76,7 @@ export const GameNestApp = () => {
       path: "/lists/:listId",
       element: <ListDetailsPage />,
     },
-    {
-      id: 9,
-      path: "/user/lists",
-      element: <MyListsPage/>,
-    }
+    
   ];
 
   const privateRoutes = [
@@ -114,6 +110,11 @@ export const GameNestApp = () => {
       path: "/collection/:gameSlug",
       element: <CollectionGamePage />,
     },
+    {
+      id: 8,
+      path: "/user/lists",
+      element: <MyListsPage/>,
+    }
   ];
 
   return (

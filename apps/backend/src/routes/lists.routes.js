@@ -3,13 +3,11 @@ import {
   addList,
   addListLike,
   deleteList,
-  /* deleteListLike */
   getListLikes,
   getPopularLists,
   getPrivateLists,
-  getPrivateListsById,
   getPublicLists,
-  getPublicListsById,
+  getListsById,
   updateList,
 } from "../controllers/lists.controller.js";
 import {
@@ -21,23 +19,17 @@ import {
   updateListValidator,
 } from "../validators/lists.validation.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
+import { optionalAuth } from "../middlewares/optionalAuth.middleware.js";
 
 const router = Router();
 
 router.get("/lists", getListsValidator, getPublicLists);
 
-router.get("/lists/:id", getListsByIdValidator, getPublicListsById);
+router.get("/lists/:id", getListsByIdValidator, optionalAuth, getListsById);
 
 router.get("/popular/lists", getPopularLists);
 
 router.get("/user/lists", isAuth, getListsValidator, getPrivateLists);
-
-router.get(
-  "/user/lists/:id",
-  isAuth,
-  getListsByIdValidator,
-  getPrivateListsById
-);
 
 router.post("/lists", isAuth, addListValidator, addList);
 
@@ -48,12 +40,5 @@ router.delete("/lists/:list_id", isAuth, deleteListValidator, deleteList);
 router.get("/lists/like/:list_id", isAuth, getListLikes);
 
 router.post("/lists/like/:list_id", isAuth, listLikeValidator, addListLike);
-
-/* router.delete(
-  "/lists/like/:list_id",
-  isAuth,
-  listLikeValidator,
-  deleteListLike
-); */
 
 export default router;
