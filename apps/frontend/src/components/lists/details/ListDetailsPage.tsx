@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Layout } from "../../layout/Layout";
 import { Container } from "../../ui/container/Container";
 import { useDataFetch } from "../../../hooks/useDataFetch";
@@ -10,6 +10,7 @@ import type { ListsProps } from "../../../types/lists.ts";
 
 export const ListDetailsPage = () => {
   const { listId } = useParams();
+  const navigate = useNavigate();
 
   const { fetchData, isLoading } = useDataFetch<ListsProps["fetchData"]>(
     `lists/${listId}`,
@@ -22,6 +23,11 @@ export const ListDetailsPage = () => {
       </div>
     );
   }
+
+  if (fetchData === null) {
+    navigate("/404");
+  }
+
   return (
     <Layout>
       <Container className="flex flex-col space-y-4 p-4">
