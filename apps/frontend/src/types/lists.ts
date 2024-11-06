@@ -20,10 +20,13 @@ export interface List {
   total_likes: string;
 }
 
+export type OwnedGames = number[];
+
 export interface ListsProps {
   fetchData: {
     list: List;
     games: Game[];
+    ownedGames: OwnedGames;
   };
   isLoading: boolean;
 }

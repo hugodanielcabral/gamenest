@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Option, Select } from "../../../ui/select/Select.tsx";
 import { DetailsCard } from "../card/DetailsCard";
-import type { Game } from "../../../../types/lists.ts";
+import type { Game, OwnedGames } from "../../../../types/lists.ts";
 
 interface DetailsContentProps {
   list: Game[];
+  ownedGames: OwnedGames;
 }
 
 const sortOptions = [
@@ -17,7 +18,7 @@ const orderOptions = [
   { value: "desc", text: "Descendente" },
 ];
 
-export const DetailsContent = ({ list }: DetailsContentProps) => {
+export const DetailsContent = ({ list, ownedGames }: DetailsContentProps) => {
   const [inputSort, setInputSort] = useState({
     sort: "",
     order: "",
@@ -80,7 +81,11 @@ export const DetailsContent = ({ list }: DetailsContentProps) => {
       <div className="grid grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-4 lg:grid-cols-6">
         {sortedList.length > 0 ? (
           sortedList.map((game) => (
-            <DetailsCard key={game.list_games_id} game={game} />
+            <DetailsCard
+              key={game.list_games_id}
+              game={game}
+              ownedGame={ownedGames.includes(game.game_id)}
+            />
           ))
         ) : (
           <div className="col-span-full flex justify-center">

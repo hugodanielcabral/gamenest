@@ -79,49 +79,61 @@ export const getListsById = async (req, res) => {
   const { id } = req.params;
   const { order = "asc" } = req.query;
   try {
-    const list = await sql`
-            SELECT 
-          l.*,
-         u.username,
-          COALESCE(lg.total_games, 0) AS total_games,
-          COALESCE(lk.total_likes, 0) AS total_likes
+    const listDetails = await sql`
+      SELECT 
+        l.*,
+        u.username,
+        COALESCE(lg.total_games, 0) AS total_games,
+        COALESCE(lk.total_likes, 0) AS total_likes
       FROM 
-          lists l
+        lists l
       LEFT JOIN users u ON l.user_id = u.user_id
       LEFT JOIN (
-          SELECT list_id, COUNT(*) AS total_games
-          FROM list_games
-          GROUP BY list_id
+        SELECT list_id, COUNT(*) AS total_games
+        FROM list_games
+        GROUP BY list_id
       ) lg ON l.list_id = lg.list_id
       LEFT JOIN (
-          SELECT likeable_id, COUNT(*) AS total_likes
-          FROM likes
-          WHERE likeable_type = 'list'
-          GROUP BY likeable_id
+        SELECT likeable_id, COUNT(*) AS total_likes
+        FROM likes
+        WHERE likeable_type = 'list'
+        GROUP BY likeable_id
       ) lk ON l.list_id = lk.likeable_id
       WHERE 
-          l.list_id = ${id};
+        l.list_id = ${id};
     `;
 
-    if (!list.length) {
+    if (!listDetails.length) {
       return res.status(404).json({ message: "No se encontró la lista." });
     }
 
-    if (!list[0].visibility && list[0].user_id !== req.user_id) {
+    if (!listDetails[0].visibility && listDetails[0].user_id !== req.user_id) {
       return res.status(404).json({ message: "La lista no es pública." });
     }
 
-    const games = await sql`
-            SELECT *
+    const listGames = await sql`
+      SELECT *
       FROM list_games
       WHERE list_id = ${id}
       ORDER BY game_name ${order === "asc" ? sql`ASC` : sql`DESC`}
-      ;
+    `;
+
+    const ownedGames = await sql`
+      SELECT 
+        b.game_id
+      FROM 
+        list_games lg
+      INNER JOIN 
+        collection b ON lg.game_slug = b.game_slug
+      WHERE 
+        lg.list_id = ${id}
+        AND b.user_id = ${req.user_id || 0};
     `;
 
     return res.status(200).json({
-      list: list[0],
-      games,
+      list: listDetails[0],
+      games: listGames,
+      ownedGames: ownedGames.map((game) => parseInt(game.game_id)) || [],
     });
   } catch (error) {
     console.error("Error al obtener lista pública por ID:", error);

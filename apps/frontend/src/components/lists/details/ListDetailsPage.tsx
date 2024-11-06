@@ -37,7 +37,7 @@ export const ListDetailsPage = () => {
           </h2>
         </section>
         <section className="grid grid-cols-4">
-          <DetailsContent list={fetchData.games} />
+          <DetailsContent list={fetchData.games} ownedGames={fetchData.ownedGames}/>
           <ListDetailsUserPanel list={fetchData.list} />
         </section>
       </Container>
