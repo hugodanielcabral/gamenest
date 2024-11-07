@@ -11,7 +11,7 @@ export const DetailsCard = ({ game, ownedGame }: DetailsCardProps) => {
   return (
     <Link
       to={`/games/${game.game_slug}`}
-      className={`relative overflow-hidden md:tooltip md:tooltip-bottom md:tooltip-info`}
+      className={`relative md:tooltip md:tooltip-bottom md:tooltip-info`}
       data-tip={game.game_name}
     >
       {ownedGame && (

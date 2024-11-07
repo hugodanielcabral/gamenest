@@ -13,6 +13,10 @@ interface ContentCardProps {
 }
 
 const fillMissingGames = (games: ContentCardProps["games"]) => {
+  if (games.length >= 3) {
+    return games;
+  }
+
   const placeholders = Array(3 - games.length).fill({
     game_cover: cover,
     game_id: 0,

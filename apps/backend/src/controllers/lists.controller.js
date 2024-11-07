@@ -46,29 +46,22 @@ export const getPublicLists = async (req, res) => {
       return res.status(404).json({ message: "No se encontraron listas." });
     }
 
-    const listGames = await sql`SELECT * FROM list_games;`;
+    const listGames = [];
 
-    const games = listGames.reduce((acc, { list_id, ...game }) => {
-      let list = acc.find((item) => item.list_id === list_id);
-
-      if (!list) {
-        list = { list_id, games: [game] };
-        acc.push(list);
-      } else {
-        if (!list.games.some((g) => g.game_id === game.game_id)) {
-          list.games.push(game);
-        }
-      }
-
-      return acc;
-    }, []);
+    for (const list of lists) {
+      const games =
+        await sql` SELECT * FROM list_games WHERE list_id = ${list.list_id} LIMIT 3;`;
+      listGames.push({ list_id: list.list_id, games });
+    }
 
     const totalPages =
       await sql`SELECT COUNT(*) FROM lists WHERE visibility = TRUE AND LOWER(title) LIKE ${`%${q}%`};`;
 
-    res
-      .status(200)
-      .json({ lists, games, totalPages: parseInt(totalPages[0].count) });
+    res.status(200).json({
+      lists,
+      games: listGames,
+      totalPages: parseInt(totalPages[0].count),
+    });
   } catch (error) {
     console.error("Error al obtener listas públicas:", error);
     res.status(500).json({ message: error.message });
@@ -174,10 +167,7 @@ export const getPrivateLists = async (req, res) => {
                 GROUP BY
                     likeable_id
             ) lk ON l.list_id = lk.likeable_id
-        WHERE
-            l.visibility = FALSE AND u.user_id = ${
-              req.user_id
-            } AND LOWER(l.title) LIKE ${`%${q}%`}
+        WHERE u.user_id = ${req.user_id} AND LOWER(l.title) LIKE ${`%${q}%`}
         ORDER BY ${sql(sort)} ${order === "asc" ? sql`ASC` : sql`DESC`}
         OFFSET ${(page - 1) * 18}
         LIMIT 18;
@@ -187,29 +177,22 @@ export const getPrivateLists = async (req, res) => {
       return res.status(404).json({ message: "No se encontraron listas." });
     }
 
-    const listGames = await sql`SELECT * FROM list_games;`;
+    const listGames = [];
 
-    const games = listGames.reduce((acc, { list_id, ...game }) => {
-      let list = acc.find((item) => item.list_id === list_id);
-
-      if (!list) {
-        list = { list_id, games: [game] };
-        acc.push(list);
-      } else {
-        if (!list.games.some((g) => g.game_id === game.game_id)) {
-          list.games.push(game);
-        }
-      }
-
-      return acc;
-    }, []);
+    for (const list of lists) {
+      const games =
+        await sql` SELECT * FROM list_games WHERE list_id = ${list.list_id} LIMIT 3;`;
+      listGames.push({ list_id: list.list_id, games });
+    }
 
     const totalPages =
       await sql`SELECT COUNT(*) FROM lists WHERE visibility = FALSE AND LOWER(title) LIKE ${`%${q}%`};`;
 
-    res
-      .status(200)
-      .json({ lists, games, totalPages: parseInt(totalPages[0].count) });
+    res.status(200).json({
+      lists,
+      games: listGames,
+      totalPages: parseInt(totalPages[0].count),
+    });
   } catch (error) {
     console.error("Error al obtener listas privadas:", error);
     res.status(500).json({ message: error.message });
@@ -219,40 +202,39 @@ export const getPrivateLists = async (req, res) => {
 export const getPopularLists = async (req, res) => {
   try {
     const popularLists = await sql`
-      
-SELECT
-    l.*,
-    u.username,
-    COALESCE(lg.total_games, 0) AS total_games,
-    COALESCE(lk.total_likes, 0) AS total_likes
-FROM
-    lists l
-    LEFT JOIN users u ON l.user_id = u.user_id
-    LEFT JOIN (
+      SELECT
+        l.*,
+        u.username,
+        COALESCE(lg.total_games, 0) AS total_games,
+        COALESCE(lk.total_likes, 0) AS total_likes
+      FROM
+        lists l
+      LEFT JOIN users u ON l.user_id = u.user_id
+      LEFT JOIN (
         SELECT
-            list_id,
-            COUNT(*) AS total_games
+          list_id,
+          COUNT(*) AS total_games
         FROM
-            list_games
+          list_games
         GROUP BY
-            list_id
-    ) lg ON l.list_id = lg.list_id
-    LEFT JOIN (
+          list_id
+      ) lg ON l.list_id = lg.list_id
+      LEFT JOIN (
         SELECT
-            likeable_id,
-            COUNT(*) AS total_likes
+          likeable_id,
+          COUNT(*) AS total_likes
         FROM
-            likes
+          likes
         WHERE
-            likeable_type = 'list'
+          likeable_type = 'list'
         GROUP BY
-            likeable_id
-    ) lk ON l.list_id = lk.likeable_id
-WHERE
-    l.visibility = TRUE
-ORDER BY
-    lk.total_likes ASC
-    LIMIT 3;
+          likeable_id
+      ) lk ON l.list_id = lk.likeable_id
+      WHERE
+        l.visibility = TRUE
+      ORDER BY
+        lk.total_likes DESC
+      LIMIT 3;
     `;
 
     if (!popularLists.length) {
@@ -264,15 +246,19 @@ ORDER BY
     // Obtengo los IDs de las listas para buscar los juegos
     const listIds = popularLists.map((list) => list.list_id);
 
-    const games = await sql`
+    const listGames = [];
+
+    for (const listId of listIds) {
+      const games = await sql`
         SELECT *
         FROM list_games
-        WHERE list_id = ANY(${listIds})
-        ORDER BY game_name ASC
+        WHERE list_id = ${listId}
         LIMIT 3;
       `;
+      listGames.push({ list_id: listId, games });
+    }
 
-    res.status(200).json({ lists: popularLists, games });
+    res.status(200).json({ lists: popularLists, games: listGames });
   } catch (error) {
     console.error("Error al obtener listas populares:", error);
     res.status(500).json({ message: error.message });
@@ -292,7 +278,7 @@ export const addList = async (req, res) => {
         return res.status(500).json({ message: "Error al crear la lista." });
       }
 
-      const gamesData = data.games.map((game) => ({
+      /* const gamesData = data.games.map((game) => ({
         ...game,
         list_id: insertedList[0].list_id,
       }));
@@ -304,7 +290,7 @@ export const addList = async (req, res) => {
         return res
           .status(500)
           .json({ message: "Error al agregar juegos a la lista." });
-      }
+      } */
 
       res.status(201).json({
         message: "Lista y juegos agregados correctamente.",

@@ -2,28 +2,21 @@ import { useDataFetch } from "../../../hooks/useDataFetch";
 import { useQueryParams } from "../../../hooks/useQueryParams";
 import { Loading } from "../../ui/loading/Loading.tsx";
 import { ContentCard } from "../content/card/ContentCard";
+import type { List } from "../../../types/lists";
 
 interface ListsProps {
   fetchData: {
-    lists: {
-      list_id: number;
-      title: string;
-      description: string;
-      user_id: number;
-      visibility: boolean;
-      created_on: string;
-      updated_on: string;
-      username: string;
-      total_games: number;
-      total_likes: string;
-    }[];
+    lists: List[];
     games: {
-      list_games_id: number;
       list_id: number;
-      game_id: number;
-      game_slug: string;
-      game_name: string;
-      game_cover: string;
+      games: {
+        list_games_id: number;
+        list_id: number;
+        game_id: number;
+        game_slug: string;
+        game_name: string;
+        game_cover: string;
+      }[];
     }[];
   };
   isLoading: boolean;
@@ -54,9 +47,10 @@ export const ListsPopular = () => {
           <ContentCard
             key={list.list_id}
             list={list}
-            games={fetchData.games.filter(
-              (game) => game.list_id === list.list_id,
-            )}
+            games={
+              fetchData.games.find((game) => game.list_id === list.list_id)
+                ?.games || []
+            }
           />
         ))
       ) : (
