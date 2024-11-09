@@ -185,8 +185,9 @@ export const getPrivateLists = async (req, res) => {
       listGames.push({ list_id: list.list_id, games });
     }
 
-    const totalPages =
-      await sql`SELECT COUNT(*) FROM lists WHERE visibility = FALSE AND LOWER(title) LIKE ${`%${q}%`};`;
+    const totalPages = await sql`SELECT COUNT(*) FROM lists WHERE user_id = ${
+      req.user_id
+    } AND LOWER(title) LIKE ${`%${q}%`};`;
 
     res.status(200).json({
       lists,
@@ -270,32 +271,26 @@ export const addList = async (req, res) => {
     const data = req.body;
     data["user_id"] = req.user_id;
 
-    await sql.begin(async (sql) => {
-      const insertedList = await ListRepository.create(data);
+    const insertedList = await ListRepository.create(data);
 
-      if (!insertedList.length) {
-        console.error("Error al crear la lista.");
-        return res.status(500).json({ message: "Error al crear la lista." });
-      }
+    if (!insertedList.length) {
+      console.error("Error al crear la lista.");
+      return res.status(500).json({ message: "Error al crear la lista." });
+    }
 
-      /* const gamesData = data.games.map((game) => ({
-        ...game,
+    for (const game of data.games) {
+      await ListGamesRepository.createMany({
         list_id: insertedList[0].list_id,
-      }));
-
-      const insertedGames = await ListGamesRepository.createMany(gamesData);
-
-      if (!insertedGames) {
-        console.error("Error al agregar juegos a la lista.");
-        return res
-          .status(500)
-          .json({ message: "Error al agregar juegos a la lista." });
-      } */
-
-      res.status(201).json({
-        message: "Lista y juegos agregados correctamente.",
-        list_id: insertedList[0].list_id,
+        game_id: game.id,
+        game_slug: game.slug,
+        game_name: game.name,
+        game_cover: game.cover.url,
       });
+    }
+
+    res.status(201).json({
+      message: "Lista y juegos agregados correctamente.",
+      list_id: insertedList[0].list_id,
     });
   } catch (error) {
     console.error("Error al agregar lista:", error);

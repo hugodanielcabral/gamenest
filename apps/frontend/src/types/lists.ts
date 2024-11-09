@@ -1,7 +1,7 @@
 export interface Game {
-  list_games_id: number;
-  list_id: number;
-  game_id: number;
+  list_games_id?: number;
+  list_id?: number;
+  game_id?: number | string;
   game_slug: string;
   game_name: string;
   game_cover: string;

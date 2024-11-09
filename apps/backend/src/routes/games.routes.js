@@ -9,6 +9,7 @@ import {
   getUpcomingGames,
   getMostAnticipatedGames,
   getCountGames,
+  getGamesBySearch,
 } from "../controllers/games.controller.js";
 import { isAuth } from "../middlewares/auth.middleware.js";
 import { gamesValidation } from "../validators/games.validation.js";
@@ -30,6 +31,8 @@ router.get("/games/latest/anticipated", getMostAnticipatedGames);
 router.get("/popular/games", getPopularGames);
 
 router.get("/achievement/:id", isAuth, getSteamGameAchievement);
+
+router.post("/search/games", getGamesBySearch);
 
 router.post("/achievement", isAuth, createSteamGameAchievement);
 

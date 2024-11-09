@@ -11,8 +11,15 @@ export const ListGamesRepository = {
 
   async createMany(gamesData) {
     const result = await sql`
-            INSERT INTO list_games ${sql(gamesData)};
-        `;
+            INSERT INTO list_games ${sql(
+              gamesData,
+              "list_id",
+              "game_id",
+              "game_slug",
+              "game_name",
+              "game_cover"
+            )};`;
+
     return result;
   },
 

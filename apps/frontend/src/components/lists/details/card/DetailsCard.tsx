@@ -4,7 +4,7 @@ import getImageUrl from "../../../../utils/getImageUrl";
 
 interface DetailsCardProps {
   game: Game;
-  ownedGame: boolean;
+  ownedGame?: boolean;
 }
 
 export const DetailsCard = ({ game, ownedGame }: DetailsCardProps) => {
@@ -22,7 +22,7 @@ export const DetailsCard = ({ game, ownedGame }: DetailsCardProps) => {
       <img
         src={getImageUrl(game.game_cover, "cover_big_2x")}
         alt={game.game_name}
-        className="rounded-lg"
+        className="rounded-lg h-full object-cover"
       />
     </Link>
   );

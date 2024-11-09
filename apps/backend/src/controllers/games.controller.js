@@ -1,6 +1,5 @@
 import env from "dotenv";
 import {
-  getGamesBySearch,
   getGameCount,
   getSteamGame,
   getGamesFromUser,
@@ -220,6 +219,29 @@ export const createSteamGameAchievement = async (req, res) => {
       await sql`INSERT INTO user_game_achievement (game_slug, achievement_name, user_id) VALUES (${gameSlug}, ${achievements}, ${req.user_id}) RETURNING *`;
 
     res.status(200).json(newAchievement);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getGamesBySearch = async (req, res) => {
+  try {
+    const response = await fetch("https://api.igdb.com/v4/games", {
+      method: "POST",
+      headers: {
+        "Client-ID": process.env.CLIENT_ID,
+        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+      },
+      body: `fields name, cover.url, slug; search "${req.body.search}"; limit 50;`,
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch games", response.statusText);
+    }
+
+    const gamesData = await response.json();
+    res.json(gamesData);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
