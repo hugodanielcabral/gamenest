@@ -7,6 +7,7 @@ import { Input } from "../../../ui/input/Input.tsx";
 import { Select } from "../../../ui/select/Select.tsx";
 import clsx from "clsx";
 import { Icon } from "../../../ui/icon/Icon.tsx";
+import { SendingState } from "../ListsManager.tsx";
 
 const INITIAL_SEARCH_STATE = {
   search: "",
@@ -22,11 +23,13 @@ enum FetchState {
 interface ManagerGamesSearchProps {
   formState: FormState;
   setFormState: React.Dispatch<React.SetStateAction<FormState>>;
+  sendingState: SendingState;
 }
 
 export const ManagerGamesSearch = ({
   formState,
   setFormState,
+  sendingState,
 }: ManagerGamesSearchProps) => {
   const { formState: searchState, handleOnChange } =
     useForm(INITIAL_SEARCH_STATE);
@@ -124,8 +127,9 @@ export const ManagerGamesSearch = ({
             "border-red-500": errors,
             "border-gray-700": gamesData.length === 0 && !errors,
           })}
+          defaultValue=""
         >
-          <option value="">{getFetchStateMessage()}</option>
+          <option value="" disabled>{getFetchStateMessage()}</option>
           {gamesData.map((game) => (
             <option key={game.id} value={game.name}>
               {game?.name}
@@ -161,7 +165,9 @@ export const ManagerGamesSearch = ({
               />
               <button
                 type="button"
-                className="group absolute right-1 top-1 rounded-lg bg-gray-700/70 p-2 hover:bg-gray-700/90"
+                className={clsx("group absolute right-1 top-1 rounded-lg bg-gray-700/70 p-2 hover:bg-gray-700/90", {
+                  "hidden": sendingState === SendingState.Loading || sendingState === SendingState.Success,
+                })}
                 onClick={() => handleGameRemove(game.id)}
               >
                 <Icon
@@ -174,7 +180,7 @@ export const ManagerGamesSearch = ({
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          <h3 className="font-nunito text-xl font-bold text-white md:text-2xl lg:text-3xl">
+          <h3 className="font-nunito text-xl font-bold text-blue-400 md:text-2xl lg:text-3xl">
             Tu lista está vacía
           </h3>
           <p className="font-nunito text-xs text-gray-400 sm:text-sm md:text-lg">

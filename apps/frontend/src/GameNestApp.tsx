@@ -9,6 +9,7 @@ import { ValidationPage } from "./pages/ValidationPage.tsx";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
 import { useAuth } from "./context/AuthContext.jsx";
 import { MyListsPage } from "./pages/MyListsPage.tsx";
+import { ListsManager } from "./components/lists/manager/ListsManager.tsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -114,6 +115,11 @@ export const GameNestApp = () => {
       id: 8,
       path: "/user/lists",
       element: <MyListsPage/>,
+    },
+    {
+      id: 9,
+      path: "/lists/add",
+      element: <ListsManager />,
     }
   ];
 

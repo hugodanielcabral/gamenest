@@ -11,19 +11,19 @@ export const useForm = <T extends FormState>(
   const [formState, setFormState] = useState<T>(initialFormState);
 
   const handleOnChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> | React.FormEvent<HTMLSelectElement>,
   ) => {
+    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
     setFormState({
       ...formState,
-      [e.target.name]: e.target.value,
+      [target.name]: target.value,
     });
-
+  
     if (callback) {
       callback();
     }
   };
+  
 
   return {
     formState,
