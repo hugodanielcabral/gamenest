@@ -343,6 +343,15 @@ export const deleteList = async (req, res) => {
   const { list_id } = req.params;
 
   try {
+    const isOwner =
+      await sql`SELECT 1 FROM lists WHERE list_id = ${list_id} AND user_id = ${req.user_id}`;
+
+    if (!isOwner.length) {
+      return res
+        .status(403)
+        .json({ message: "No tienes permiso para eliminar esta lista." });
+    }
+
     const deletedResult = await ListRepository.delete(list_id);
 
     if (!deletedResult.length) {
