@@ -66,4 +66,21 @@ export const ListRepository = {
       console.error(error);
     }
   },
+
+  async delete(id: number) {
+    try {
+      const response = await fetch(`${BASE_URL}/lists/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      });
+
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };

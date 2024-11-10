@@ -6,6 +6,7 @@ import { Loading } from "../../ui/loading/Loading.tsx";
 import { ListDetailsUserPanel } from "./panel/ListDetailsUserPanel.tsx";
 import { DetailsContent } from "./content/DetailsContent.tsx";
 import type { ListsProps } from "../../../types/lists.ts";
+import { Toaster } from "sonner";
 
 
 export const ListDetailsPage = () => {
@@ -30,6 +31,7 @@ export const ListDetailsPage = () => {
 
   return (
     <Layout>
+      <Toaster position="top-center" visibleToasts={1} />
       <Container className="flex flex-col space-y-4 p-4">
         <section className="">
           <h2 className="text-pretty font-nunito text-xl text-white md:text-2xl lg:text-3xl">

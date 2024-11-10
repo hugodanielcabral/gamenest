@@ -4,6 +4,9 @@ import { Button } from "../../../ui/button/Button";
 import { Icon } from "../../../ui/icon/Icon";
 import { LikeButton, TotalLikes } from "../../../LikeButton";
 import type { List } from "../../../../types/lists";
+import { useNavigate } from "react-router-dom";
+import { ListRepository } from "../../../repositories/ListRepository";
+import { toast } from "sonner";
 
 interface ListDetailsUserPanelProps {
   list: List;
@@ -11,6 +14,54 @@ interface ListDetailsUserPanelProps {
 
 export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
   const { isAuth, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleConfirm = () => {
+    toast.warning(
+      `¿Estás seguro de que deseas eliminar la lista?`,
+      {
+        duration: 3000,
+        className: "bg-neutral text-xs md:text-sm text-white font-nunito",
+        action: (
+          <>
+            <Button
+              className="btn-info text-white"
+              size="sm"
+              onClick={handleDelete}
+            >
+              Sí
+            </Button>
+            <Button
+              className="btn-error text-white"
+              size="sm"
+              onClick={() => {
+                toast.dismiss();
+              }}
+            >
+              No
+            </Button>
+          </>
+        ),
+      },
+    );
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await ListRepository.delete(list.list_id);
+
+      if (!response.ok) {
+        return toast.error("No se pudo eliminar la lista", {
+          duration: 3000,
+          className: "bg-neutral text-xs md:text-sm text-white font-nunito",
+        });
+      }
+      navigate("/user/lists");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="-order-1 col-span-full flex h-fit flex-col gap-2 rounded-md p-4 lg:order-2 lg:col-span-1">
       <div className="flex justify-center gap-2">
@@ -30,6 +81,7 @@ export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
               size="md"
               className="btn-outline tooltip tooltip-top w-fit"
               data-tip="Editar lista"
+              onClick={() => navigate(`/lists/update/${list.list_id}`)}
             >
               <Icon name="icon-[mage--edit-fill]" className="size-6" />
             </Button>
@@ -37,6 +89,7 @@ export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
               variant="error"
               className="btn-outline tooltip tooltip-top"
               data-tip="Eliminar lista"
+              onClick={handleConfirm}
             >
               <Icon name="icon-[material-symbols--delete]" className="size-6" />
             </Button>

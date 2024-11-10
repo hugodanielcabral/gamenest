@@ -84,7 +84,7 @@ export const DetailsContent = ({ list, ownedGames }: DetailsContentProps) => {
             <DetailsCard
               key={game.list_games_id}
               game={game}
-              ownedGame={ownedGames.includes(game.game_id)}
+              ownedGame={ownedGames.includes(game.game_id as number)}
             />
           ))
         ) : (
