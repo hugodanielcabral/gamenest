@@ -2,12 +2,11 @@ import { useState } from "react";
 import { useForm } from "../../../../hooks/useForm.ts";
 import { POST } from "../../../../services/apiServices.ts";
 import { DetailsCard } from "../../details/card/DetailsCard.tsx";
-import { FormState, GamesProps } from "../../../../types/listsManager.ts";
+import { FormState, GamesProps, SendingState } from "../../../../types/listsManager.ts";
 import { Input } from "../../../ui/input/Input.tsx";
 import { Select } from "../../../ui/select/Select.tsx";
 import clsx from "clsx";
 import { Icon } from "../../../ui/icon/Icon.tsx";
-import { SendingState } from "../ListsManager.tsx";
 
 const INITIAL_SEARCH_STATE = {
   search: "",
@@ -24,12 +23,14 @@ interface ManagerGamesSearchProps {
   formState: FormState;
   setFormState: React.Dispatch<React.SetStateAction<FormState>>;
   sendingState: SendingState;
+  handleGameRemove: (gameId: string) => void;
 }
 
 export const ManagerGamesSearch = ({
   formState,
   setFormState,
   sendingState,
+  handleGameRemove,
 }: ManagerGamesSearchProps) => {
   const { formState: searchState, handleOnChange } =
     useForm(INITIAL_SEARCH_STATE);
@@ -83,13 +84,6 @@ export const ManagerGamesSearch = ({
     setErrors(null);
   };
 
-  const handleGameRemove = (gameId: string) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      games: prevState.games.filter((game) => game.id !== gameId),
-    }));
-  };
-
   const getFetchStateMessage = () => {
     const messages = {
       [FetchState.Loading]: "Cargando...",
@@ -129,7 +123,9 @@ export const ManagerGamesSearch = ({
           })}
           defaultValue=""
         >
-          <option value="" disabled>{getFetchStateMessage()}</option>
+          <option value="" disabled>
+            {getFetchStateMessage()}
+          </option>
           {gamesData.map((game) => (
             <option key={game.id} value={game.name}>
               {game?.name}
@@ -165,9 +161,14 @@ export const ManagerGamesSearch = ({
               />
               <button
                 type="button"
-                className={clsx("group absolute right-1 top-1 rounded-lg bg-gray-700/70 p-2 hover:bg-gray-700/90", {
-                  "hidden": sendingState === SendingState.Loading || sendingState === SendingState.Success,
-                })}
+                className={clsx(
+                  "group absolute right-1 top-1 rounded-lg bg-gray-700/70 p-2 hover:bg-gray-700/90",
+                  {
+                    hidden:
+                      sendingState === SendingState.Loading ||
+                      sendingState === SendingState.Success,
+                  },
+                )}
                 onClick={() => handleGameRemove(game.id)}
               >
                 <Icon

@@ -9,7 +9,8 @@ import { ValidationPage } from "./pages/ValidationPage.tsx";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
 import { useAuth } from "./context/AuthContext.jsx";
 import { MyListsPage } from "./pages/MyListsPage.tsx";
-import { ListsManager } from "./components/lists/manager/ListsManager.tsx";
+import { ListAdd } from "./components/lists/manager/add/ListAdd.tsx";
+import { ListUpdate } from "./components/lists/manager/update/ListUpdate.tsx";
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -73,11 +74,10 @@ export const GameNestApp = () => {
       element: <ListsPage />,
     },
     {
-      id:8,
+      id: 8,
       path: "/lists/:listId",
       element: <ListDetailsPage />,
     },
-    
   ];
 
   const privateRoutes = [
@@ -114,34 +114,54 @@ export const GameNestApp = () => {
     {
       id: 8,
       path: "/user/lists",
-      element: <MyListsPage/>,
+      element: <MyListsPage />,
     },
     {
       id: 9,
       path: "/lists/add",
-      element: <ListsManager />,
-    }
+      element: <ListAdd />,
+    },
+    {
+      id: 10,
+      path: "/lists/update/:id",
+      element: <ListUpdate />,
+    },
   ];
 
   return (
     <>
       {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
       <Suspense fallback={""}>
-          <Routes>
+        <Routes>
+          <Route
+            element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/error" />}
+          >
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/user/validate/:token" element={<ValidationPage />} />
+          </Route>
+          <Route>
+            {publicRoutes.map((route) => {
+              return (
+                <Route
+                  key={route.id}
+                  path={route.path}
+                  element={route.element}
+                />
+              );
+            })}
+          </Route>
+          <Route
+            element={<ProtectedRoute isAllowed={isAuth} redirectTo="/error" />}
+          >
             <Route
               element={
-                <ProtectedRoute isAllowed={!isAuth} redirectTo="/error" />
+                <CollectionProvider>
+                  <Outlet />
+                </CollectionProvider>
               }
             >
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route
-                path="/user/validate/:token"
-                element={<ValidationPage />}
-              />
-            </Route>
-            <Route>
-              {publicRoutes.map((route) => {
+              {privateRoutes.map((route) => {
                 return (
                   <Route
                     key={route.id}
@@ -151,30 +171,8 @@ export const GameNestApp = () => {
                 );
               })}
             </Route>
-            <Route
-              element={
-                <ProtectedRoute isAllowed={isAuth} redirectTo="/error" />
-              }
-            >
-              <Route
-                element={
-                  <CollectionProvider>
-                    <Outlet />
-                  </CollectionProvider>
-                }
-              >
-                {privateRoutes.map((route) => {
-                  return (
-                    <Route
-                      key={route.id}
-                      path={route.path}
-                      element={route.element}
-                    />
-                  );
-                })}
-              </Route>
-            </Route>
-          </Routes>
+          </Route>
+        </Routes>
       </Suspense>
     </>
   );

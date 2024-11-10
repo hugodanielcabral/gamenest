@@ -303,33 +303,36 @@ export const updateList = async (req, res) => {
     const data = req.body;
     const { list_id } = req.params;
 
-    await sql.begin(async (sql) => {
-      // Actualizar los datos de la lista
-      await ListRepository.update(data, list_id);
+    // Actualizar la lista
+    await ListRepository.update(data, list_id);
 
-      // Eliminar los juegos que el usuario ha marcado para borrar
-      if (data.deletedGameIds.length > 0) {
-        await ListGamesRepository.deleteMany(data.deletedGameIds, list_id);
-      }
+    // Eliminar juegos si hay IDs proporcionados
+    if (data.deletedGameIds && data.deletedGameIds.length > 0) {
+      await ListGamesRepository.deleteMany(data.deletedGameIds, list_id);
+    }
 
-      // Insertar los juegos nuevos o no existentes
-      const existingGames = await ListGamesRepository.findById(list_id);
+    // Obtener los juegos existentes en la lista
+    const existingGames = await ListGamesRepository.findById(list_id);
+    const existingGameIds = existingGames.map((game) => game.game_id);
 
-      const existingGameIds = existingGames.map((game) => game.game_id);
-      const newGames = data.games.filter(
-        (game) => !existingGameIds.includes(game.game_id)
-      );
+    // Filtrar los nuevos juegos que no están en la lista existente
+    const newGames = data.games.filter(
+      (game) => !existingGameIds.includes(game.id)
+    );
 
-      if (newGames.length > 0) {
-        const newGamesData = newGames.map((game) => ({
-          ...game,
-          list_id,
-        }));
-        await ListGamesRepository.createMany(newGamesData);
-      }
+    // Añadir los nuevos juegos a la lista
+    if (newGames.length > 0) {
+      const newGamesData = newGames.map((game) => ({
+        list_id,
+        game_id: game.id,
+        game_slug: game.slug,
+        game_name: game.name,
+        game_cover: game.cover.url,
+      }));
+      await ListGamesRepository.createMany(newGamesData);
+    }
 
-      res.status(200).json({ message: "Lista actualizada correctamente." });
-    });
+    res.status(200).json({ message: "Lista actualizada correctamente." });
   } catch (error) {
     console.error("Error al actualizar la lista:", error);
     res.status(500).json({ message: error.message });

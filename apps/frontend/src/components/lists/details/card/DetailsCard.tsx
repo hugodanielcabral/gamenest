@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import type { Game } from "../../../../types/lists";
 import getImageUrl from "../../../../utils/getImageUrl";
 
@@ -9,13 +8,15 @@ interface DetailsCardProps {
 
 export const DetailsCard = ({ game, ownedGame }: DetailsCardProps) => {
   return (
-    <Link
-      to={`/games/${game.game_slug}`}
+    <a
+      href={`/games/${game.game_slug}`}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`relative md:tooltip md:tooltip-bottom md:tooltip-info`}
       data-tip={game.game_name}
     >
       {ownedGame && (
-        <span className="absolute bottom-0 left-0 right-0 bg-base-100 bg-opacity-85 p-1 text-xs font-bold text-white">
+        <span className="absolute bottom-0 left-0 right-0 bg-base-100 bg-opacity-85 p-1 text-xs font-bold text-white text-center">
           En tu colección
         </span>
       )}
@@ -24,6 +25,6 @@ export const DetailsCard = ({ game, ownedGame }: DetailsCardProps) => {
         alt={game.game_name}
         className="rounded-lg h-full object-cover"
       />
-    </Link>
+    </a>
   );
 };
