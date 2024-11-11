@@ -101,7 +101,7 @@ export const getListsById = async (req, res) => {
     }
 
     if (
-      listDetails[0].visibility !== "public" &&
+      listDetails[0].visibility === "private" &&
       listDetails[0].user_id !== req.user_id
     ) {
       return res.status(404).json({ message: "La lista no es pública." });
@@ -273,6 +273,8 @@ export const addList = async (req, res) => {
   try {
     const data = req.body;
     data["user_id"] = req.user_id;
+
+    console.log(data);
 
     const insertedList = await ListRepository.create(data);
 

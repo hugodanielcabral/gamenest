@@ -50,12 +50,12 @@ export const MyListsPage = () => {
 
             <Button
               variant="info"
-              className="btn-sm md:btn-md lg:btn-lg text-xs md:text-sm lg:text-base"
+              className="btn-sm btn-outline md:btn-md lg:btn-lg text-xs md:text-sm lg:text-base text-blue-400/70 hover:text-black/40"
               onClick={() => navigate("/lists/add")}
             >
               <Icon
                 name="icon-[tabler--plus]"
-                className="size-4 md:size-5 lg:size-6 text-black/40"
+                className="size-4 md:size-5 lg:size-6"
               />
               Crear lista
             </Button>
