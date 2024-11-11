@@ -16,19 +16,20 @@ import { ManagerGamesSearch } from "../gamesSearch/ManagerGamesSearch.tsx";
 const INITIAL_FORM_STATE: FormState = {
   title: "",
   description: "",
-  visibility: false,
+  visibility: "",
   games: [],
 };
 
+
 export const ListAdd = () => {
   const { formState, handleOnChange, setFormState } =
-    useForm<FormState>(INITIAL_FORM_STATE);
+  useForm<FormState>(INITIAL_FORM_STATE);
   const [sendingState, setSendingState] = useState<SendingState>(
     SendingState.Idle,
   );
   const [serverErrors, setServerErrors] = useState<ServerErrors[]>(null);
   const navigate = useNavigate();
-
+  
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSendingState(SendingState.Loading);

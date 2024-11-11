@@ -76,10 +76,13 @@ export const addListValidator = [
     .isLength({ min: 6, max: 40 })
     .withMessage("El título debe tener entre 6 y 40 caracteres"),
   body("description").optional().trim().isString().isLength({ max: 255 }),
-  body("visibility")
-    .optional()
-    .isBoolean()
-    .withMessage("Ocurrió un error al intentar guardar la lista"),
+  body("visibility").custom((value) => {
+    if (value === "public" || value === "private") {
+      return value;
+    }
+    throw new Error("Debes seleccionar un tipo de visibilidad válido");
+  }),
+
   body("games").optional().isArray(),
   (req, res, next) => {
     validateResult(req, res, next);
@@ -93,10 +96,12 @@ export const updateListValidator = [
     .isLength({ min: 6, max: 40 })
     .withMessage("El título debe tener entre 6 y 40 caracteres"),
   body("description").optional().trim().isString().isLength({ max: 255 }),
-  body("visibility")
-    .optional()
-    .isBoolean()
-    .withMessage("Ocurrió un error al intentar guardar la lista"),
+  body("visibility").custom((value) => {
+    if (value === "public" || value === "private") {
+      return value;
+    }
+    throw new Error("Debes seleccionar un tipo de visibilidad válido");
+  }),
   body("games").optional().isArray(),
   body("deletedGameIds").optional().isArray(),
   (req, res, next) => {

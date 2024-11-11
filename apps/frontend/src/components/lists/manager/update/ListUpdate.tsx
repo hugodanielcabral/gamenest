@@ -2,7 +2,11 @@ import { toast, Toaster } from "sonner";
 import { Layout } from "../../../layout/Layout";
 import { Container } from "../../../ui/container/Container";
 import { ListForm } from "../form/ListForm";
-import { FormState, SendingState, ServerErrors } from "../../../../types/listsManager";
+import {
+  FormState,
+  SendingState,
+  ServerErrors,
+} from "../../../../types/listsManager";
 import { useForm } from "../../../../hooks/useForm.ts";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,7 +16,7 @@ import { ManagerGamesSearch } from "../gamesSearch/ManagerGamesSearch.tsx";
 const INITIAL_FORM_STATE: FormState = {
   title: "",
   description: "",
-  visibility: false,
+  visibility: "",
   games: [],
   deletedGameIds: [],
 };
@@ -116,8 +120,8 @@ export const ListUpdate = () => {
 
   return (
     <Layout>
+      <Toaster position="top-center" duration={2000} visibleToasts={1} />
       <Container className="flex flex-col space-y-8 p-4">
-        <Toaster position="top-center" duration={2000} visibleToasts={1} />
         <ListForm
           handleOnSubmit={handleOnSubmit}
           formState={formState}

@@ -36,7 +36,7 @@ export const getPublicLists = async (req, res) => {
                     likeable_id
             ) lk ON l.list_id = lk.likeable_id
         WHERE
-            l.visibility = TRUE AND LOWER(l.title) LIKE ${`%${q}%`}
+            l.visibility = 'public' AND LOWER(l.title) LIKE ${`%${q}%`}
         ORDER BY ${sql(sort)} ${order === "asc" ? sql`ASC` : sql`DESC`}
         OFFSET ${(page - 1) * 18}
         LIMIT 18;
@@ -55,7 +55,7 @@ export const getPublicLists = async (req, res) => {
     }
 
     const totalPages =
-      await sql`SELECT COUNT(*) FROM lists WHERE visibility = TRUE AND LOWER(title) LIKE ${`%${q}%`};`;
+      await sql`SELECT COUNT(*) FROM lists WHERE visibility = 'public' AND LOWER(title) LIKE ${`%${q}%`};`;
 
     res.status(200).json({
       lists,
@@ -100,7 +100,10 @@ export const getListsById = async (req, res) => {
       return res.status(404).json({ message: "No se encontró la lista." });
     }
 
-    if (!listDetails[0].visibility && listDetails[0].user_id !== req.user_id) {
+    if (
+      listDetails[0].visibility !== "public" &&
+      listDetails[0].user_id !== req.user_id
+    ) {
       return res.status(404).json({ message: "La lista no es pública." });
     }
 
@@ -232,7 +235,7 @@ export const getPopularLists = async (req, res) => {
           likeable_id
       ) lk ON l.list_id = lk.likeable_id
       WHERE
-        l.visibility = TRUE
+        l.visibility = 'public'
       ORDER BY
         lk.total_likes DESC
       LIMIT 3;

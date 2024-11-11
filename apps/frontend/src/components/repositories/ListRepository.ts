@@ -32,7 +32,7 @@ export const ListRepository = {
         body: JSON.stringify({
           title: data.title,
           description: data.description,
-          visibility: Boolean(data.visibility),
+          visibility: data.visibility,
           games: data.games,
         }),
       });
@@ -55,7 +55,7 @@ export const ListRepository = {
         body: JSON.stringify({
           title: data.title,
           description: data.description,
-          visibility: Boolean(data.visibility),
+          visibility: data.visibility,
           games: data.games,
           deletedGameIds: data.deletedGameIds,
         }),

@@ -20,7 +20,7 @@ interface Game {
 export interface FormState {
   title: string;
   description: string;
-  visibility: boolean;
+  visibility: string;
   games: Game[];
   deletedGameIds?: string[];
 }

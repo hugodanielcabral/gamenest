@@ -1,15 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import { Layout } from "../components/layout/Layout.jsx";
 import { ListsContent } from "../components/lists/content/ListsContent.tsx";
 import { ListsOrder } from "../components/lists/order/ListsOrder.tsx";
 import { ListsPagination } from "../components/lists/pagination/ListsPagination.tsx";
 import { ListsSearch } from "../components/lists/search/ListsSearch.tsx";
 import { ListsSort } from "../components/lists/sort/ListsSort.tsx";
+import { Button } from "../components/ui/button/Button.tsx";
 import { Container } from "../components/ui/container/Container";
 import { Icon } from "../components/ui/icon/Icon.tsx";
 import { useQueryParams } from "../hooks/useQueryParams.ts";
 
 export const MyListsPage = () => {
   const { query } = useQueryParams();
+  const navigate = useNavigate();
 
   return (
     <Layout>
@@ -32,21 +35,35 @@ export const MyListsPage = () => {
           </div>
         </section>
         <section className="min-h-screen">
-          <div className="mb-2 flex items-center gap-2">
-            <Icon
-              name="icon-[tabler--list]"
-              className="size-8 text-yellow-400 sm:size-10"
-            />
-            <h2 className="text-pretty text-2xl text-white sm:text-3xl">
-              {query.q
-                ? `Resultados de búsqueda: ${query.q}`
-                : "Todas tus listas"}
-            </h2>
+          <div className="mb-2 flex items-center gap-2 justify-between">
+            <div className="flex items-center gap-2">
+              <Icon
+                name="icon-[tabler--list]"
+                className="size-8 text-yellow-400 sm:size-10"
+              />
+              <h2 className="text-pretty text-2xl text-white sm:text-3xl">
+                {query.q
+                  ? `Resultados de búsqueda: ${query.q}`
+                  : "Todas tus listas"}
+              </h2>
+            </div>
+
+            <Button
+              variant="info"
+              className="btn-sm md:btn-md lg:btn-lg text-xs md:text-sm lg:text-base"
+              onClick={() => navigate("/lists/add")}
+            >
+              <Icon
+                name="icon-[tabler--plus]"
+                className="size-4 md:size-5 lg:size-6 text-black/40"
+              />
+              Crear lista
+            </Button>
           </div>{" "}
           <ListsContent pathUrl={"user/lists"} />
         </section>
         <section className="flex justify-center">
-          <ListsPagination pathUrl={"user/lists"}/>
+          <ListsPagination pathUrl={"user/lists"} />
         </section>
       </Container>
     </Layout>

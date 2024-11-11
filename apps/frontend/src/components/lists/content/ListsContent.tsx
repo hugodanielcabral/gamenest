@@ -33,7 +33,7 @@ export const ListsContent = ({ pathUrl }: ListsContentProps) => {
     `${pathUrl}`,
     `${getQueryString()}`,
   );
-
+  
   if (isLoading) {
     return (
       <Loading

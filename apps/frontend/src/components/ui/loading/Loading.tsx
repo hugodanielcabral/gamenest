@@ -15,7 +15,7 @@ export const Loading = ({
   return (
     <div className={twMerge(clsx(className))}>
       <span
-        className={`loading loading-lg mx-auto size-32 sm:size-36 md:size-40 lg:size-44 text-${color} loading-${type}`}
+        className={`loading mx-auto size-32 sm:size-36 md:size-40 lg:size-44 text-${color} loading-${type}`}
       ></span>
     </div>
   );

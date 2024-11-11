@@ -12,7 +12,7 @@ export interface List {
   title: string;
   description: string;
   user_id: number;
-  visibility: boolean;
+  visibility: string;
   created_on: string;
   updated_on: string;
   username: string;

@@ -48,12 +48,12 @@ const VISIBILITY_OPTIONS = [
   {
     id: 1,
     title: "Pública",
-    value: true,
+    value: "public",
   },
   {
     id: 2,
     title: "Privada",
-    value: false,
+    value: "private",
   },
 ];
 
@@ -97,7 +97,18 @@ export const ListForm = ({
               "border-green-500": sendingState === SendingState.Success,
             })}
           />
-          <Select name="visibility" id="visibility" onChange={handleOnChange}>
+          <Select
+            name="visibility"
+            id="visibility"
+            className={clsx("", {
+              "border-red-500": serverErrors?.some((error) => {
+                return error.path === "visibility";
+              }),
+              "border-green-500": sendingState === SendingState.Success,
+            })}
+            onChange={handleOnChange}
+            value={formState.visibility}
+          >
             <option value="" disabled>
               Visibilidad
             </option>
@@ -105,7 +116,7 @@ export const ListForm = ({
               <Option
                 key={visibility.id}
                 text={visibility.title}
-                value={visibility.value.toString()}
+                value={visibility.value}
               />
             ))}
           </Select>
