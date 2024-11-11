@@ -243,7 +243,7 @@ export const CollectionList = ({
 }: CollectionListProps) => {
   return (
     <div className="col-span-3 grid h-fit grid-cols-1 gap-4 xl:grid-cols-2">
-      {collections.length > 0 ? (
+      {collections && collections.length > 0 ? (
         collections.map((collection, index) => (
           <Item
             key={collection.id + index}

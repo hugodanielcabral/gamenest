@@ -10,6 +10,7 @@ import clsx from "clsx";
 import { GET, PATCH, POST } from "../../../../services/apiServices.ts";
 import { toast, Toaster } from "sonner";
 import { ContentOptional } from "./optional/ContentOptional.tsx";
+import { DateTime } from "luxon";
 
 const initialPrimaryFormState = {
   platform_name: "",
@@ -59,6 +60,7 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
 
   const navigate = useNavigate();
 
+
   useEffect(() => {
     if (pathname.includes("/update/")) {
       GET(`/collection/game/${game.slug}`)
@@ -75,6 +77,8 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
             return;
           }
 
+          console.log(data[0].start_date)
+
           setPrimaryFormState({
             platform_name: data[0].platform_name || "",
             format_name: data[0].format_name || "",
@@ -89,8 +93,12 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
             amount_paid: data[0].amount_paid || 0,
             hours_played: data[0].hours_played || 0,
             minutes_played: data[0].minutes_played || 0,
-            start_date: data[0].start_date || "",
-            finish_date: data[0].finish_date || "",
+            start_date: DateTime.fromISO(data[0].start_date, {
+              zone: "utc",
+            }).toFormat("yyyy-MM-dd") || "",
+            finish_date: DateTime.fromISO(data[0].finish_date, {
+              zone: "utc",
+            }).toFormat("yyyy-MM-dd") || "",
             difficulty: data[0].difficulty || "",
             is_favorite: data[0].is_favorite || false,
           });

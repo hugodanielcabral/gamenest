@@ -1,6 +1,6 @@
 import type { GameDetailsProps } from "../../../types/gameDetails";
 import { useFetch } from "../../../hooks/useFetch";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Layout } from "../../layout/Layout";
 import { GameDetailsHeader } from "./header/GameDetailsHeader";
 import { GameDetailsContent } from "./content/GameDetailsContent";
@@ -11,6 +11,7 @@ export const GameDetails = () => {
   const { data: gameDetail, isLoading } = useFetch(
     `${BASE_URL}/games/${gameSlug}`,
   ) as GameDetailsProps;
+  const navigate = useNavigate();
 
   if (isLoading) {
     return (
@@ -18,6 +19,10 @@ export const GameDetails = () => {
         <span className="loading loading-spinner loading-lg mx-auto size-32 sm:size-36 md:size-40 lg:size-44"></span>
       </div>
     );
+  }
+
+  if (!gameDetail) {
+    navigate("/404");
   }
   
   return (
