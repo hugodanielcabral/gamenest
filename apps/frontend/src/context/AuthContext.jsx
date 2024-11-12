@@ -166,10 +166,6 @@ export const AuthProvider = ({ children }) => {
           console.log(error);
         });
     }
-
-    if (!Cookies.get("token")) {
-      setIsAuth(false);
-    }
   }, [pathname]);
 
   //* Because i was getting Login errors on the register page and viceversa
