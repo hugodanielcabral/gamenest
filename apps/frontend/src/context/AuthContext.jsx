@@ -165,8 +165,9 @@ export const AuthProvider = ({ children }) => {
         .catch((error) => {
           console.log(error);
         });
-    } else {
-      setUser(null);
+    }
+
+    if (!Cookies.get("token")) {
       setIsAuth(false);
     }
   }, [pathname]);
