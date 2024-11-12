@@ -70,6 +70,7 @@ export const signin = async (req, res) => {
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      httpOnly: true,
     });
 
     res.status(200).json({
