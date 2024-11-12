@@ -90,7 +90,7 @@ export const signout = (req, res) => {
 export const profile = async (req, res) => {
   try {
     const checkUserExists =
-      await sql`SELECT a.username, a.email, a.active, b."name" AS country FROM users a 
+      await sql`SELECT a.user_id, a.username, a.email, a.active, b."name" AS country FROM users a 
       INNER JOIN country b
       ON a.country_id = b.country_id
       WHERE user_id = ${req.user_id};`;
@@ -98,7 +98,7 @@ export const profile = async (req, res) => {
     if (!checkUserExists[0])
       return res.status(404).json({ message: "User not found" });
 
-    res.status(200).json({ user_id: req.user_id });
+    res.status(200).json({ user_id: checkUserExists[0].user_id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message });

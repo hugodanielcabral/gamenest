@@ -74,7 +74,7 @@ export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
         ) : (
           <TotalLikes likes={list.total_likes} />
         )}
-        {isAuth && user?.user_id === list?.user_id && (
+        {isAuth && user === list?.user_id && (
           <>
             <Button
               variant="success"

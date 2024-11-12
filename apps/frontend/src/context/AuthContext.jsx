@@ -149,24 +149,34 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (Cookies.get("token")) {
-      fetch(`${BASE_URL}/profile`, {
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setUser(data);
-          setIsAuth(true);
-        })
-        .catch((error) => {
-          console.log(error);
+    const fetchMe = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/profile`, {
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
         });
-    }
-  }, [pathname]);
+
+        const data = await response.json();
+
+        if (data.message === "Unauthorized") {
+          setIsAuth(false);
+          setUser(null);
+          return;
+        }
+
+        setUser(data.user_id);
+        setIsAuth(true);
+      } catch (error) {
+        setIsAuth(false);
+        setUser(null);
+      }
+    };
+
+    fetchMe();
+  }, []);
 
   //* Because i was getting Login errors on the register page and viceversa
   //* But also, when i changed pages, the error never disappeared
