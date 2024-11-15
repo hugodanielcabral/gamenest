@@ -4,9 +4,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const JWT = {
-  async generateToken(payload, expiresIn = "2h") {
+  async generateToken(payload, SEED, expiresIn = "2h") {
     return new Promise((resolve) => {
-      jwt.sign(payload, process.env.JWT_SECRET, { expiresIn }, (err, token) => {
+      jwt.sign(payload, SEED, { expiresIn }, (err, token) => {
         if (err) return resolve(null);
 
         resolve(token);
@@ -14,9 +14,9 @@ export const JWT = {
     });
   },
 
-  async validateToken(token) {
+  async validateToken(token, SEED) {
     return new Promise((resolve) => {
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      jwt.verify(token, SEED, (err, decoded) => {
         if (err) return resolve(null);
 
         resolve(decoded);

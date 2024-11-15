@@ -4,33 +4,20 @@ import {
   signin,
   signout,
   profile,
-  verifyUser,
-  updateProfile,
+  refresh,
 } from "../controllers/auth.controller.js";
-import { isAuth } from "../middlewares/auth.middleware.js";
-import {
-  signupValidator,
-  signinValidator,
-  updateProfileValidator,
-  verifyUserValidator,
-} from "../validators/auth.validation.js";
+import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.post("/signin", signinValidator, signin);
+router.post("/signin", signin);
 
-router.post("/signup", signupValidator, signup);
+router.post("/signup", signup);
 
 router.post("/signout", signout);
 
-router.get("/profile", isAuth, profile);
+router.get("/profile", AuthMiddleware.validateJWT, profile);
 
-router.get("/user/validate/:token", verifyUserValidator, verifyUser);
-
-router.patch(
-  "/user/update/profile/:username",
-  updateProfileValidator,
-  updateProfile
-);
+router.post("/refresh", refresh);
 
 export default router;

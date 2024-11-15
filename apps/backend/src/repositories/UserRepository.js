@@ -10,7 +10,7 @@ export const UserRepository = {
   async findUserByUsername(username) {
     const result = await sql`SELECT * FROM users WHERE username LIKE ${
       username + "%"
-    }`;
+    };`;
 
     return result;
   },
@@ -21,7 +21,7 @@ export const UserRepository = {
         data.username
       }, ${data.email}, ${data.encryptedPassword}, ${parseInt(
         data.country_id
-      )}) RETURNING *`;
+      )}) RETURNING *;`;
 
     return result;
   },

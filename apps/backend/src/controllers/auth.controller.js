@@ -1,47 +1,41 @@
-import sql from "../db.js";
-import { encryptPassword, comparePassword } from "../helpers/handleBcrypt.js";
-import { handleJwt } from "../helpers/handleJwt.js";
-import { v4 as uuidv4 } from "uuid";
-import { Resend } from "resend";
-import { emailTemplate, tokenValidation } from "../utils/email.js";
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { encryption } from "../helpers/handleEncryption.js";
+import { JWT } from "../helpers/handleJwt.js";
+import { UserRepository } from "../repositories/UserRepository.js";
+import { RefreshTokenRepository } from "../repositories/RefreshTokenRepository.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const signup = async (req, res) => {
   const { username, email, password, country_id } = req.body;
 
   try {
-    const userExists = await sql`SELECT * FROM users WHERE username LIKE ${
-      username + "%"
-    } OR email LIKE ${email + "%"}`;
+    const foundUser = await UserRepository.findUserByUsername(username);
 
-    if (userExists[0])
-      return res.status(400).json({ message: "User already exist" });
+    if (foundUser[0])
+      return res.status(400).json({ error: "User already exists." });
 
-    const encryptedPassword = await encryptPassword(password);
+    const encryptedPassword = await encryption.encrypt(password);
 
-    /* const verificationToken = uuidv4(); */
+    const newUser = await UserRepository.create({
+      username,
+      email,
+      encryptedPassword,
+      country_id,
+    });
 
-    const newUser =
-      await sql`INSERT INTO users (username, email, password, country_id) VALUES (${username}, ${email}, ${encryptedPassword}, ${parseInt(
-        country_id
-      )}) RETURNING *`;
+    if (!newUser[0])
+      return res.status(500).json({ error: "Unable to create an user." });
 
-    /* await sql`INSERT INTO verification_tokens (user_id, email, token, created_on, used) VALUES (${newUser[0].user_id}, ${email},${verificationToken}, current_timestamp, FALSE)`; */
+    await RefreshTokenRepository.create({
+      refreshToken: "",
+      expireDate: Date.now(),
+      user_id: newUser[0].user_id,
+    });
 
-    /* const token = await handleJwt({ email, verificationToken }, "1d"); */
-
-    /*  const { data, error } = await resend.emails.send(
-      emailTemplate(username, token, email)
-    ); */
-
-    /* if (error) {
-      return console.error({ error });
-    } */
-
-    res.status(201).json({ message: "User created" });
+    res.status(201).json({ message: "User created successfully." });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -49,124 +43,137 @@ export const signin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const checkUserExistence =
-      await sql`SELECT * FROM users WHERE username = ${username}`;
+    const foundUser = await UserRepository.findUserByUsername(username);
 
-    if (!checkUserExistence[0])
-      return res.status(404).json({ message: "User not found" });
+    if (!foundUser[0])
+      return res.status(404).json({ error: "User not found." });
 
-    const passwordComparison = await comparePassword(
+    const isPasswordValid = await encryption.compare(
       password,
-      checkUserExistence[0].password
+      foundUser[0].password
     );
 
-    if (!passwordComparison)
-      return res.status(401).json({ message: "Wrong password" });
+    if (!isPasswordValid)
+      return res.status(401).json({ error: "Wrong password." });
 
-    const token = await handleJwt({ id: checkUserExistence[0].user_id });
+    const accessToken = await JWT.generateToken(
+      { user_id: foundUser[0].user_id },
+      process.env.ACCESS_TOKEN_SEED,
+      "10m"
+    );
 
-    res.cookie("token", token, {
+    const refreshToken = await JWT.generateToken(
+      { user_id: foundUser[0].user_id },
+      process.env.REFRESH_TOKEN_SEED,
+      "2d"
+    );
+
+    if (!accessToken || !refreshToken)
+      return res.status(500).json({ error: "Unable to generate token." });
+
+    const expireDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+
+    await RefreshTokenRepository.update({
+      refreshToken: refreshToken,
+      expireDate: expireDate,
+      user_id: foundUser[0].user_id,
+    });
+
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
       sameSite: "none",
       secure: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      maxAge: 10 * 60 * 1000,
+      expires: new Date(Date.now() + 10 * 60 * 1000),
     });
 
     res.status(200).json({
-      username,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
 export const signout = (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("acessToken");
   res.sendStatus(200);
 };
 
 export const profile = async (req, res) => {
   try {
-    const checkUserExists =
-      await sql`SELECT a.user_id, a.username, a.email, a.active, b."name" AS country FROM users a 
-      INNER JOIN country b
-      ON a.country_id = b.country_id
-      WHERE user_id = ${req.user_id};`;
+    const foundUser = await UserRepository.findUserById(req.user_id);
+    if (!foundUser[0]) return res.status(404).json({ error: "User not found" });
 
-    if (!checkUserExists[0])
-      return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ user_id: checkUserExists[0].user_id });
+    res.status(200).json({ user_id: foundUser[0].user_id });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
-export const verifyUser = async (req, res) => {
-  const { token } = req.params;
-
-  /*   const decodedToken = await tokenValidation(token);
-
-  if (!decodedToken) return res.status(401).json({ message: "Invalid token" }); */
-
-  const decodedToken = await tokenValidation(token);
-  const { email, verificationToken } = decodedToken;
-
+export const refresh = async (req, res) => {
   try {
-    /* const verifyUserExistence =
-      await sql`SELECT * FROM users WHERE email = ${email}`; */
+    const { refreshToken } = req.body;
 
-    /* const verifyTokenExistence =
-      await sql`SELECT * FROM verification_tokens WHERE token = ${verificationToken} AND used = FALSE`; */
+    const payload = await JWT.validateToken(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SEED
+    );
 
-    /* if (!verifyUserExistence[0] || !verifyTokenExistence[0])
-      return res.status(404).json({ message: "Invalid Token" }); */
+    const storedRefreshToken = await RefreshTokenRepository.findOne(
+      payload.user_id,
+      refreshToken
+    );
 
-    const updateUserVerificationStatus =
-      await sql`UPDATE users SET verified = true WHERE email = ${email}`;
+    if (
+      !storedRefreshToken[0] ||
+      storedRefreshToken[0].user_id !== payload.user_id ||
+      new Date(storedRefreshToken[0].expire_date) < new Date()
+    )
+      return res.status(401).json({
+        error: "Invalid refresh token",
+      });
 
-    const updateVerificationTokens =
-      await sql`UPDATE verification_tokens SET used = true WHERE token = ${verificationToken} AND email = ${email}`;
+    const newAccessToken = await JWT.generateToken(
+      { user_id: payload.user_id },
+      process.env.ACCESS_TOKEN_SEED,
+      "10m"
+    );
 
-    return res
-      .status(200)
-      .json({ message: "El email fue validado correctamente." });
+    const newRefreshToken = await JWT.generateToken(
+      { user_id: payload.user_id },
+      process.env.REFRESH_TOKEN_SEED,
+      "2d"
+    );
+
+    if (!newAccessToken || !newRefreshToken)
+      return res.status(500).json({ error: "Unable to generate token." });
+
+    const expireDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000); // Fecha actual + 2 días
+
+    await RefreshTokenRepository.update({
+      refreshToken: refreshToken,
+      expireDate: expireDate,
+      user_id: payload.user_id,
+    });
+
+    res.cookie("accessToken", newAccessToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+      maxAge: 10 * 60 * 1000,
+      expires: new Date(Date.now() + 10 * 60 * 1000),
+    });
+
+    res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+    });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-export const updateProfile = async (req, res) => {
-  try {
-    const { username } = req.params;
-
-    const checkIfUserExists =
-      await sql`SELECT * FROM users WHERE username = ${username}`;
-
-    if (!checkIfUserExists[0]) throw new Error("No se encontró el usuario.");
-
-    const userRecord = await sql`UPDATE users SET ${sql(
-      req.body
-    )} WHERE username = ${username} RETURNING *`;
-
-    if (!userRecord[0])
-      throw new Error(
-        "Ocurrió un error al intentar actualizar el perfil del usuario."
-      );
-
-    const updatedUserProfile =
-      await sql`SELECT a.username, a.email, a.birthday, a.avatar, a.title, a.active, b."name" AS country, user_edit_credits FROM users a 
-      INNER JOIN country b
-      ON a.country_id = b.country_id
-      WHERE username = ${username};`;
-
-    res.status(200).json(updatedUserProfile[0]);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 };

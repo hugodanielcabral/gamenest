@@ -24,7 +24,7 @@ export const isAuth = (req, res, next) => {
 
 export const AuthMiddleware = {
   async validateJWT(req, res, next) {
-    const authorization = req.header("Authorization");
+    const authorization = req.header("authorization");
 
     if (!authorization) {
       return res.status(401).json({ error: "No token provided" });
@@ -34,10 +34,13 @@ export const AuthMiddleware = {
       return res.status(401).json({ error: "Invalid Bearer Token" });
     }
 
-    const token = authorization.split(" ").at(1) || "";
+    const accessToken = authorization.split(" ").at(1) || "";
 
     try {
-      const payload = await JWT.validateToken(token);
+      const payload = await JWT.validateToken(
+        accessToken,
+        process.env.ACCESS_TOKEN_SEED
+      );
 
       if (!payload) return res.status(401).json({ error: "Invalid token" });
 

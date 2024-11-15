@@ -1,7 +1,7 @@
-import { validateResult } from "../helpers/handleValidateResult.js";
+/* import { validateResult } from "../helpers/handleValidateResult.js";
 import sql from "../db.js";
 import { body, param } from "express-validator";
-import { comparePassword } from "../helpers/handleBcrypt.js";
+import { comparePassword } from "../helpers/handleEncryption.js";
 import { tokenValidation } from "../utils/email.js";
 
 export const signupValidator = [
@@ -123,3 +123,4 @@ export const updateProfileValidator = [
     validateResult(req, res, next);
   },
 ];
+ */
