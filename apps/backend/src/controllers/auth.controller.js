@@ -4,7 +4,7 @@ import { UserRepository } from "../repositories/UserRepository.js";
 import { RefreshTokenRepository } from "../repositories/RefreshTokenRepository.js";
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env.development" });
+dotenv.config({ path: ".env" });
 
 export const signup = async (req, res) => {
   const { username, email, password, country_id } = req.body;
