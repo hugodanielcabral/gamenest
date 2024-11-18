@@ -2,15 +2,22 @@ import { lazy, Suspense } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { RegisterPage } from "./pages/RegisterPage.tsx";
 import { LoginPage } from "./pages/LoginPage.tsx";
-import { ProtectedRoute } from "./components/ProtectedRoute.jsx";
+import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
 import { CollectionProvider } from "./context/CollectionContext.jsx";
 import { CollectionManager } from "./components/collection/manager/CollectionManager.tsx";
 import { ValidationPage } from "./pages/ValidationPage.tsx";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
-import { useAuth } from "./context/AuthContext.jsx";
+import { useAuth } from "./context/AuthContext.tsx";
 import { MyListsPage } from "./pages/MyListsPage.tsx";
 import { ListAdd } from "./components/lists/manager/add/ListAdd.tsx";
 import { ListUpdate } from "./components/lists/manager/update/ListUpdate.tsx";
+import { AuthStatus } from "./types/auth.ts";
+
+
+interface UseAuthProps  {
+  accessToken: string;
+  authStatus: AuthStatus
+}
 
 export const GameNestApp = () => {
   //* Lazy: let "lazy" load the components when the user needs it.
@@ -45,7 +52,7 @@ export const GameNestApp = () => {
     })),
   );
 
-  const { isAuth } = useAuth();
+  const { accessToken, authStatus } = useAuth() as UseAuthProps;
 
   const publicRoutes = [
     {
@@ -134,7 +141,7 @@ export const GameNestApp = () => {
       <Suspense fallback={""}>
         <Routes>
           <Route
-            element={<ProtectedRoute isAllowed={!isAuth} redirectTo="/error" />}
+            element={<ProtectedRoute isAllowed={accessToken ? false : true} authStatus={authStatus} redirectTo="/404" />}
           >
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
@@ -152,7 +159,7 @@ export const GameNestApp = () => {
             })}
           </Route>
           <Route
-            element={<ProtectedRoute isAllowed={isAuth} redirectTo="/error" />}
+            element={<ProtectedRoute isAllowed={accessToken ? true : false} authStatus={authStatus} redirectTo="/login" />}
           >
             <Route
               element={

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { LoginForm } from "../components/auth/login/form/LoginForm.js";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../context/AuthContext.tsx";
 import { useEffect, useState } from "react";
 import gamenestLogo from "../assets/logos/gamenest-logo-1.webp";
 import { useAuthForm } from "../hooks/useAuthForm.ts";
