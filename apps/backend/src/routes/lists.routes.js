@@ -18,27 +18,46 @@ import {
   getListsValidator,
   updateListValidator,
 } from "../validators/lists.validation.js";
-import { isAuth } from "../middlewares/auth.middleware.js";
-import { optionalAuth } from "../middlewares/optionalAuth.middleware.js";
+import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 router.get("/lists", getListsValidator, getPublicLists);
 
-router.get("/lists/:id", getListsByIdValidator, optionalAuth, getListsById);
+router.get(
+  "/lists/:id",
+  getListsByIdValidator,
+  AuthMiddleware.optionalAuth,
+  getListsById
+);
 
 router.get("/popular/lists", getPopularLists);
 
-router.get("/user/lists", isAuth, getListsValidator, getPrivateLists);
+router.get("/user/lists", AuthMiddleware.validateJWT, getPrivateLists);
 
-router.post("/lists", isAuth, addListValidator, addList);
+router.post("/lists", AuthMiddleware.validateJWT, addListValidator, addList);
 
-router.put("/lists/:list_id", isAuth, updateListValidator, updateList);
+router.put(
+  "/lists/:list_id",
+  AuthMiddleware.validateJWT,
+  updateListValidator,
+  updateList
+);
 
-router.delete("/lists/:list_id", isAuth, deleteListValidator, deleteList);
+router.delete(
+  "/lists/:list_id",
+  AuthMiddleware.validateJWT,
+  deleteListValidator,
+  deleteList
+);
 
-router.get("/lists/like/:list_id", isAuth, getListLikes);
+router.get("/lists/like/:list_id", AuthMiddleware.validateJWT, getListLikes);
 
-router.post("/lists/like/:list_id", isAuth, listLikeValidator, addListLike);
+router.post(
+  "/lists/like/:list_id",
+  AuthMiddleware.validateJWT,
+  listLikeValidator,
+  addListLike
+);
 
 export default router;

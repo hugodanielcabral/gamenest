@@ -9,7 +9,7 @@ import {
   getTotalCollectionPages,
   getCollectionFilters,
 } from "../controllers/collection.controller.js";
-import { isAuth } from "../middlewares/auth.middleware.js";
+import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 import {
   addCollectionValidator,
   getCollectionValidator,
@@ -17,27 +17,55 @@ import {
 
 const router = Router();
 
-router.get("/collection", isAuth, getCollectionValidator, getCollection);
+router.get(
+  "/collection",
+  AuthMiddleware.validateJWT,
+  getCollectionValidator,
+  getCollection
+);
 
-router.get("/collection/:id", isAuth /* getCollectionFromUser */);
+router.get(
+  "/collection/:id",
+  AuthMiddleware.validateJWT /* getCollectionFromUser */
+);
 
-router.get("/collection/game/:gameSlug", isAuth, getGameFromCollection);
+router.get(
+  "/collection/game/:gameSlug",
+  AuthMiddleware.validateJWT,
+  getGameFromCollection
+);
 
-router.get("/collection/totalPages", isAuth, getTotalCollectionPages);
+router.get(
+  "/collection/totalPages",
+  AuthMiddleware.validateJWT,
+  getTotalCollectionPages
+);
 
-router.get("/collection/filters", isAuth, getCollectionFilters);
+router.get(
+  "/collection/filters",
+  AuthMiddleware.validateJWT,
+  getCollectionFilters
+);
 
 /* CollectionManage  */
 
 router.post(
   "/collection/add/game",
-  isAuth,
+  AuthMiddleware.validateJWT,
   addCollectionValidator,
   addCollection
 );
 
-router.patch("/collection/update/game/:gameSlug", isAuth, updateCollection);
+router.patch(
+  "/collection/update/game/:gameSlug",
+  AuthMiddleware.validateJWT,
+  updateCollection
+);
 
-router.delete("/collection/delete/game/:id", isAuth, deleteGameFromCollection);
+router.delete(
+  "/collection/delete/game/:id",
+  AuthMiddleware.validateJWT,
+  deleteGameFromCollection
+);
 
 export default router;

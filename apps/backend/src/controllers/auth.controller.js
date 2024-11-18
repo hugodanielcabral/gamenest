@@ -4,7 +4,7 @@ import { UserRepository } from "../repositories/UserRepository.js";
 import { RefreshTokenRepository } from "../repositories/RefreshTokenRepository.js";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: ".env" });
 
 export const signup = async (req, res) => {
   const { username, email, password, country_id } = req.body;
@@ -79,7 +79,7 @@ export const signin = async (req, res) => {
       user_id: foundUser[0].user_id,
     });
 
-    res.cookie("accessToken", accessToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       sameSite: "none",
       secure: true,
@@ -90,6 +90,7 @@ export const signin = async (req, res) => {
     res.status(200).json({
       accessToken: accessToken,
       refreshToken: refreshToken,
+      user_id: foundUser[0].user_id,
     });
   } catch (error) {
     console.error(error);
@@ -98,7 +99,7 @@ export const signin = async (req, res) => {
 };
 
 export const signout = (req, res) => {
-  res.clearCookie("acessToken");
+  res.clearCookie("refreshToken");
   res.sendStatus(200);
 };
 
@@ -116,12 +117,14 @@ export const profile = async (req, res) => {
 
 export const refresh = async (req, res) => {
   try {
-    const { refreshToken } = req.body;
+    const { refreshToken } = req.cookies;
 
     const payload = await JWT.validateToken(
       refreshToken,
       process.env.REFRESH_TOKEN_SEED
     );
+
+    if (!payload) return res.status(401).json({ error: "No token provided." });
 
     const storedRefreshToken = await RefreshTokenRepository.findOne(
       payload.user_id,
@@ -155,12 +158,12 @@ export const refresh = async (req, res) => {
     const expireDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000); // Fecha actual + 2 días
 
     await RefreshTokenRepository.update({
-      refreshToken: refreshToken,
+      refreshToken: newRefreshToken,
       expireDate: expireDate,
       user_id: payload.user_id,
     });
 
-    res.cookie("accessToken", newAccessToken, {
+    res.cookie("refreshToken", newRefreshToken, {
       httpOnly: true,
       sameSite: "none",
       secure: true,
@@ -171,6 +174,7 @@ export const refresh = async (req, res) => {
     res.status(200).json({
       accessToken: newAccessToken,
       refreshToken: newRefreshToken,
+      user_id: payload.user_id,
     });
   } catch (error) {
     console.error(error);
