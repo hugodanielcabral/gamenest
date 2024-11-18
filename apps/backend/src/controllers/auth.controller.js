@@ -4,7 +4,7 @@ import { UserRepository } from "../repositories/UserRepository.js";
 import { RefreshTokenRepository } from "../repositories/RefreshTokenRepository.js";
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env" });
+dotenv.config({ path: ".env.development" });
 
 export const signup = async (req, res) => {
   const { username, email, password, country_id } = req.body;
@@ -83,8 +83,8 @@ export const signin = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       secure: true,
-      maxAge: 10 * 60 * 1000,
-      expires: new Date(Date.now() + 10 * 60 * 1000),
+      maxAge: expireDate,
+      expires: expireDate,
     });
 
     res.status(200).json({
@@ -155,7 +155,7 @@ export const refresh = async (req, res) => {
     if (!newAccessToken || !newRefreshToken)
       return res.status(500).json({ error: "Unable to generate token." });
 
-    const expireDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000); // Fecha actual + 2 días
+    const expireDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
 
     await RefreshTokenRepository.update({
       refreshToken: newRefreshToken,
@@ -167,8 +167,8 @@ export const refresh = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       secure: true,
-      maxAge: 10 * 60 * 1000,
-      expires: new Date(Date.now() + 10 * 60 * 1000),
+      maxAge: expireDate,
+      expires: expireDate,
     });
 
     res.status(200).json({

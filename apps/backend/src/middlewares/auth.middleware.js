@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { JWT } from "../helpers/handleJwt.js";
 import { UserRepository } from "../repositories/UserRepository.js";
 
-dotenv.config({ path: ".env" });
+dotenv.config({ path: ".env.development" });
 
 export const AuthMiddleware = {
   async validateJWT(req, res, next) {
