@@ -72,12 +72,12 @@ export const ContentAchievement = () => {
       </div>
 
       {currentTab === "achievements" ? (
-        <Achievements achievements={achievementData.steamData?.achievements} />
+        <Achievements achievements={achievementData?.steamData?.achievements} />
       ) : (
         <AchievementManager
-          achievements={achievementData.steamData?.achievements}
+          achievements={achievementData?.steamData?.achievements}
           gameSlug={gameSlug}
-          userAchievements={userAchievements}
+          userAchievements={userAchievements || []}
         />
       )}
     </div>
