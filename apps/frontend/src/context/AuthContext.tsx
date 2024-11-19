@@ -79,15 +79,18 @@ export const AuthProvider = ({ children }) => {
 
   const signout = async () => {
     try {
+      setAuthStatus(AuthStatus.Authenticating)
       const response = await AuthRepository.signout();
 
       if (response.status !== 200) {
+        setAuthStatus(AuthStatus.Error)
         throw new Error("An error occurred during signout.");
       }
 
       setIsAuth(false);
       setUser(null);
       setAccessToken(null);
+      setAuthStatus(AuthStatus.Authenticated)
     } catch (error) {
       console.log(error);
     }

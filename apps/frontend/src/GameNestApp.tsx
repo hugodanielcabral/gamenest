@@ -1,4 +1,3 @@
-import { lazy, Suspense } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { RegisterPage } from "./pages/RegisterPage.tsx";
 import { LoginPage } from "./pages/LoginPage.tsx";
@@ -12,6 +11,13 @@ import { MyListsPage } from "./pages/MyListsPage.tsx";
 import { ListAdd } from "./components/lists/manager/add/ListAdd.tsx";
 import { ListUpdate } from "./components/lists/manager/update/ListUpdate.tsx";
 import { AuthStatus } from "./types/auth.ts";
+import HomePage from "./pages/HomePage.tsx";
+import GamesFinderPage from "./pages/GamesFinderPage.tsx";
+import { GameDetails } from "./components/games/details/GameDetails.tsx";
+import { ListsPage } from "./pages/ListsPage.tsx";
+import { ListDetailsPage } from "./components/lists/details/ListDetailsPage.tsx";
+import { CollectionPage } from "./pages/CollectionPage.tsx";
+import { CollectionGamePage } from "./pages/CollectionGamePage.tsx";
 
 
 interface UseAuthProps  {
@@ -20,38 +26,7 @@ interface UseAuthProps  {
 }
 
 export const GameNestApp = () => {
-  //* Lazy: let "lazy" load the components when the user needs it.
-  const HomePage = lazy(() => import("./pages/HomePage.tsx"));
-  const GamesFinderPage = lazy(() => import("./pages/GamesFinderPage.tsx"));
-  const GameDetails = lazy(() =>
-    import("./components/games/details/GameDetails.tsx").then((module) => ({
-      default: module.GameDetails,
-    })),
-  );
-  const CollectionGamePage = lazy(() =>
-    import("./pages/CollectionGamePage.tsx").then((module) => ({
-      default: module.CollectionGamePage,
-    })),
-  );
-
-  const CollectionPage = lazy(() =>
-    import("./pages/CollectionPage.tsx").then((module) => ({
-      default: module.CollectionPage,
-    })),
-  );
-
-  const ListsPage = lazy(() =>
-    import("./pages/ListsPage.tsx").then((module) => ({
-      default: module.ListsPage,
-    })),
-  );
-
-  const ListDetailsPage = lazy(() =>
-    import("./components/lists/details/ListDetailsPage.tsx").then((module) => ({
-      default: module.ListDetailsPage,
-    })),
-  );
-
+  
   const { accessToken, authStatus } = useAuth() as UseAuthProps;
 
   const publicRoutes = [
@@ -137,8 +112,6 @@ export const GameNestApp = () => {
 
   return (
     <>
-      {/* //* Suspense: let display a "loader" (fallback) until the component finishes its load.  */}
-      <Suspense fallback={""}>
         <Routes>
           <Route
             element={<ProtectedRoute isAllowed={accessToken ? false : true} authStatus={authStatus} redirectTo="/404" />}
@@ -180,7 +153,6 @@ export const GameNestApp = () => {
             </Route>
           </Route>
         </Routes>
-      </Suspense>
     </>
   );
 };

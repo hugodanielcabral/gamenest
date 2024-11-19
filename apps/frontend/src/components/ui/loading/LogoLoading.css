@@ -1,0 +1,16 @@
+.logo {
+    filter: grayscale(100%);
+    animation: loading 2.0s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        filter: grayscale(100%);
+    }
+    50% {
+        filter: grayscale(0%);
+    }
+    100% {
+        filter: grayscale(100%);
+    }
+}

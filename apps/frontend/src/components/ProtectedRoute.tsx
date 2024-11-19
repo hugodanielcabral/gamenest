@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { Loading } from "./ui/loading/Loading";
 import { AuthStatus } from "../types/auth";
 import React from "react";
+import { LogoLoading } from "./ui/loading/LogoLoading.tsx";
 
 interface ProtectedRouteProps {
   isAllowed: boolean;
@@ -18,10 +18,10 @@ export const ProtectedRoute = ({
 }: ProtectedRouteProps) => {
   if (authStatus === AuthStatus.Authenticating)
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loading color="neutral" />
+      <div className="flex min-h-screen items-center justify-center bg-base-100">
+        <LogoLoading />
       </div>
-    );    
+    );
 
   if (!isAllowed) return <Navigate to={redirectTo} replace />;
   return children ? children : <Outlet />;
