@@ -10,7 +10,7 @@ import clsx from "clsx";
 import { GET, PATCH, POST } from "../../../../services/apiServices.ts";
 import { toast, Toaster } from "sonner";
 import { ContentOptional } from "./optional/ContentOptional.tsx";
-import { DateTime } from "luxon";
+import { formatDate } from "../../../../utils/formatDate.ts";
 
 const initialPrimaryFormState = {
   platform_name: "",
@@ -61,6 +61,7 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
   const navigate = useNavigate();
 
 
+
   useEffect(() => {
     if (pathname.includes("/update/")) {
       GET(`/collection/game/${game.slug}`)
@@ -77,7 +78,6 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
             return;
           }
 
-          console.log(data[0].start_date)
 
           setPrimaryFormState({
             platform_name: data[0].platform_name || "",
@@ -93,12 +93,8 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
             amount_paid: data[0].amount_paid || 0,
             hours_played: data[0].hours_played || 0,
             minutes_played: data[0].minutes_played || 0,
-            start_date: DateTime.fromISO(data[0].start_date, {
-              zone: "utc",
-            }).toFormat("yyyy-MM-dd") || "",
-            finish_date: DateTime.fromISO(data[0].finish_date, {
-              zone: "utc",
-            }).toFormat("yyyy-MM-dd") || "",
+            start_date: formatDate(data[0].start_date, "input"),
+            finish_date: formatDate(data[0].finish_date, "input"),          
             difficulty: data[0].difficulty || "",
             is_favorite: data[0].is_favorite || false,
           });
@@ -120,6 +116,7 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    console.log(optionalFormState.start_date, optionalFormState.finish_date)
     try {
       if (pathname.includes("/update/")) {
         setButtonState("sending");
@@ -216,6 +213,8 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
       });
     }
   };
+
+
 
   return (
     <form onSubmit={handleOnSubmit}>

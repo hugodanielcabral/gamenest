@@ -59,6 +59,7 @@ router.post(
 router.patch(
   "/collection/update/game/:gameSlug",
   AuthMiddleware.validateJWT,
+  addCollectionValidator,
   updateCollection
 );
 
