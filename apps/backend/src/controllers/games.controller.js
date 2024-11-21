@@ -169,13 +169,29 @@ export const getMostAnticipatedGames = async (req, res) => {
 
 export const getPopularGames = async (req, res) => {
   try {
+    const popularityIds = await fetch(
+      "https://api.igdb.com/v4/popularity_primitives",
+      {
+        method: "POST",
+        headers: {
+          "Client-ID": process.env.CLIENT_ID,
+          Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+        },
+        body: `fields game_id,value,popularity_type; sort value desc; limit 10; where popularity_type = 1;`,
+      }
+    );
+
+    const popularityData = await popularityIds.json();
+
+    const gamesIds = popularityData.map((game) => game.game_id);
+
     const response = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
       headers: {
         "Client-ID": process.env.CLIENT_ID,
         Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
       },
-      body: `fields name, cover.url,slug, hypes, rating,release_dates.human; where rating >= 80; sort hypes desc;`,
+      body: `fields id, name, cover.url,slug, hypes, rating,release_dates.human, platforms.abbreviation, platforms.name, first_release_date; where id = (${gamesIds.toString()});sort hypes desc;`,
     });
 
     const data = await response.json();

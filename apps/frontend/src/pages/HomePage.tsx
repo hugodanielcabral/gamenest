@@ -1,10 +1,13 @@
-import { HomeConnected } from "../components/home/connected/HomeConnected";
+import { HomePopular } from "../components/home/popular/HomePopular";
 import { Layout } from "../components/layout/Layout";
+import { Container } from "../components/ui/container/Container";
 
 const HomePage = () => {
   return (
     <Layout>
-      <HomeConnected />
+      <Container className="flex flex-col space-y-4 p-4">
+        <HomePopular />
+      </Container>
     </Layout>
   );
 };
