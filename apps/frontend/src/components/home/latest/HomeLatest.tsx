@@ -40,9 +40,12 @@ export const HomeLatest = () => {
 
   return (
     <div className="w-full">
+      <h2 className="col-span-full font-nunito text-xl text-white md:text-2xl lg:text-3xl mb-2">
+        Últimos lanzamientos
+      </h2>
       <Carousel>
         {fetchData.map((game) => (
-          <CarouselItem>
+          <CarouselItem key={game.id}>
             <Card
               className="w-40 sm:w-44 md:w-52 lg:w-64"
               linkTo={`/games/${game.slug}`}

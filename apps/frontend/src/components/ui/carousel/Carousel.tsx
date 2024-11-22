@@ -26,29 +26,29 @@ export const Carousel = ({ children }: { children: React.ReactNode }) => {
     <div className="relative overflow-hidden">
       <button
         onClick={handlePrev}
-        className="absolute left-0 top-1/2 z-10 -translate-y-1/2"
+        className="absolute -left-2 top-1/2 z-10 -translate-y-1/2"
         aria-label="Desplazar al elemento anterior"
       >
         <Icon
           name="icon-[iconamoon--arrow-left-2-bold]"
-          className="size-14 text-gray-300 hover:text-gray-400 md:size-20"
+          className="size-10 text-gray-300 hover:text-gray-400 sm:size-12 md:size-14 lg:size-16"
         />
       </button>
 
       <div
         ref={carouselRef}
-        className="flex w-full gap-2 overflow-x-scroll scroll-smooth"
+        className="flex w-full gap-2 overflow-x-scroll scroll-smooth p-2 lg:overflow-x-hidden"
       >
         {children}
       </div>
 
       <button
         onClick={handleNext}
-        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 bg-transparent shadow-lg"
+        className="absolute -right-2 top-1/2 z-10 -translate-y-1/2 bg-transparent shadow-lg"
       >
         <Icon
           name="icon-[iconamoon--arrow-right-2-bold]"
-          className="size-14 text-gray-300 hover:text-gray-400 md:size-20"
+          className="size-10 text-gray-300 hover:text-gray-400 sm:size-12 md:size-14 lg:size-16"
           aria-label="Desplazar al siguiente elemento"
         />
       </button>

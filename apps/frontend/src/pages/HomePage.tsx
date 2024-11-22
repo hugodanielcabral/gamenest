@@ -1,3 +1,4 @@
+import { HomeGenres } from "../components/home/genres/HomeGenres";
 import { HomeLatest } from "../components/home/latest/HomeLatest";
 import { HomePlatforms } from "../components/home/platforms/HomePlatforms";
 import { HomePopular } from "../components/home/popular/HomePopular";
@@ -11,6 +12,7 @@ const HomePage = () => {
         <HomePopular />
         <HomePlatforms />
         <HomeLatest />
+        <HomeGenres />
       </Container>
     </Layout>
   );
