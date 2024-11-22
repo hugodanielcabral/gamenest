@@ -1,72 +1,57 @@
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { twMerge } from "tailwind-merge";
+import React, { useRef } from "react";
+import { Icon } from "../icon/Icon";
 
-interface CarouselProps {
-  length: number;
-  start?: number;
-  end?: number;
-  children: React.ReactNode;
-  className?: string;
-}
+export const CarouselItem = ({ children }: { children: React.ReactNode }) => {
+  return <div>{children}</div>;
+};
 
-export const Carousel = ({
-  length,
-  start = 0,
-  end = 3,
-  className,
-  children,
-}: CarouselProps) => {
-  const [parent, enableAnimations] = useAutoAnimate();
+export const Carousel = ({ children }: { children: React.ReactNode }) => {
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  const [prevCard, setPrevCard] = useState(start);
-  const [nextCard, setNextCard] = useState(end);
-
-  const handleNextCard = () => {
-    if (nextCard === length) {
-      setPrevCard(start);
-      setNextCard(end);
-
-      return;
+  const handleNext = () => {
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.offsetWidth;
+      carouselRef.current.scrollLeft += scrollAmount;
     }
-
-    setNextCard((prev) => prev + 1);
-    setPrevCard((prev) => prev + 1);
   };
 
-  const handlePrevCard = () => {
-    if (prevCard === 0) return null;
-
-    setPrevCard((prev) => prev - 1);
-    setNextCard((prev) => prev - 1);
+  const handlePrev = () => {
+    if (carouselRef.current) {
+      const scrollAmount = carouselRef.current.offsetWidth;
+      carouselRef.current.scrollLeft -= scrollAmount;
+    }
   };
-
-  useEffect(() => {
-    setPrevCard(start);
-    setNextCard(end);
-  }, [start, end]);
 
   return (
-    <div
-      className={twMerge(
-        clsx("rounded-md bg-base-300 bg-opacity-70 p-4", className),
-      )}
-    >
-      <ul
-        className="flex justify-center items-center gap-1 rounded-md md:gap-2 relative"
-        ref={parent}
+    <div className="relative overflow-hidden">
+      <button
+        onClick={handlePrev}
+        className="absolute left-0 top-1/2 z-10 -translate-y-1/2"
+        aria-label="Desplazar al elemento anterior"
       >
-        <button
-          className="icon-[ooui--previous-ltr] size-6 md:size-10 text-white hover:text-gray-400"
-          onClick={handlePrevCard}
-        ></button>
-        {Array.isArray(children) ? children.slice(prevCard, nextCard) : null}
-        <button
-          className="icon-[ooui--next-ltr] size-6 md:size-10 text-white hover:text-gray-400"
-          onClick={handleNextCard}
-        ></button>
-      </ul>
+        <Icon
+          name="icon-[iconamoon--arrow-left-2-bold]"
+          className="size-14 text-gray-300 hover:text-gray-400 md:size-20"
+        />
+      </button>
+
+      <div
+        ref={carouselRef}
+        className="flex w-full gap-2 overflow-x-scroll scroll-smooth"
+      >
+        {children}
+      </div>
+
+      <button
+        onClick={handleNext}
+        className="absolute right-0 top-1/2 z-10 -translate-y-1/2 bg-transparent shadow-lg"
+      >
+        <Icon
+          name="icon-[iconamoon--arrow-right-2-bold]"
+          className="size-14 text-gray-300 hover:text-gray-400 md:size-20"
+          aria-label="Desplazar al siguiente elemento"
+        />
+      </button>
     </div>
   );
 };
