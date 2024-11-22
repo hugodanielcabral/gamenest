@@ -46,7 +46,7 @@ export const HomePopular = () => {
 
   return (
     <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-      <h2 className="col-span-full font-nunito text-xl text-red-500 md:text-2xl lg:text-3xl">
+      <h2 className="col-span-full font-nunito text-xl text-white md:text-2xl lg:text-3xl">
         Populares ahora mismo
         <Icon name="icon-[noto-v1--fire]" />
       </h2>
@@ -55,7 +55,7 @@ export const HomePopular = () => {
           <Card
             key={game.id}
             backgroundImage={game?.cover?.url}
-            linkTo={game?.slug}
+            linkTo={`/games/${game?.slug}`}
           >
             <CardBody>
               <CardImage
