@@ -37,7 +37,7 @@ export const Carousel = ({ children }: { children: React.ReactNode }) => {
 
       <div
         ref={carouselRef}
-        className="flex w-full gap-2 overflow-x-scroll scroll-smooth p-2 lg:overflow-x-hidden"
+        className="flex w-full gap-4 overflow-x-scroll scroll-smooth p-2 lg:overflow-x-hidden"
       >
         {children}
       </div>

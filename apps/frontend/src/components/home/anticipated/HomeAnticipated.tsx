@@ -2,8 +2,8 @@ import { DateTime } from "luxon";
 import { useDataFetch } from "../../../hooks/useDataFetch";
 import { Loading } from "../../ui/loading/Loading.tsx";
 import { Link } from "react-router-dom";
-import getImageUrl from "../../../utils/getImageUrl";
 import { useEffect, useState } from "react";
+import getImageUrl from "../../../utils/getImageUrl";
 
 interface HomeAnticipatedProps {
   fetchData: {
@@ -27,6 +27,8 @@ export const HomeAnticipated = () => {
     { id: number; days: number; hours: number; minutes: number }[]
   >([]);
 
+  const INTERVAL_TIME = 60000;
+
   useEffect(() => {
     if (fetchData && fetchData.length > 0) {
       const calculateCountdowns = () => {
@@ -47,7 +49,7 @@ export const HomeAnticipated = () => {
       };
 
       calculateCountdowns();
-      const interval = setInterval(calculateCountdowns, 60000);
+      const interval = setInterval(calculateCountdowns, INTERVAL_TIME);
 
       return () => clearInterval(interval);
     }
@@ -56,9 +58,9 @@ export const HomeAnticipated = () => {
   if (isLoading) {
     return (
       <Loading
-        className="flex min-h-screen items-start justify-center lg:col-span-3"
-        color="primary"
-        type="ring"
+        className="flex items-start justify-center lg:col-span-3"
+        color="info"
+        type="dots"
       />
     );
   }
@@ -69,7 +71,7 @@ export const HomeAnticipated = () => {
         Más anticipados
       </h2>
       {fetchData && fetchData.length > 0 ? (
-        fetchData.map((game) => {
+        fetchData.sort((a,b) => a.first_release_date - b.first_release_date).map((game) => {
           const countdown = countdowns.find((c) => c.id === game.id);
           return (
             <Link
@@ -88,7 +90,7 @@ export const HomeAnticipated = () => {
                   {game?.name}
                 </h3>
                 {countdown && (
-                  <p className="text-xs text-white sm:text-sm md:text-base">
+                  <p className="text-2xl text-warning sm:text-3xl md:text-4xl">
                     {countdown.days}d {countdown.hours}h {countdown.minutes}m
                   </p>
                 )}

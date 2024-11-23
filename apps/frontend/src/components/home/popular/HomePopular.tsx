@@ -37,9 +37,9 @@ export const HomePopular = () => {
   if (isLoading) {
     return (
       <Loading
-        className="flex min-h-screen items-start justify-center lg:col-span-3"
-        color="primary"
-        type="ring"
+        className="flex items-start justify-center lg:col-span-3"
+        color="info"
+        type="dots"
       />
     );
   }

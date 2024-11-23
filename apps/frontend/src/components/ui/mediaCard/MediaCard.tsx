@@ -33,7 +33,7 @@ export const MediaCard = ({
 
   return (
     <Link
-      className="group relative flex h-44 w-full items-center justify-center overflow-hidden rounded-lg bg-base-100 shadow-lg shadow-black hover:border-2 hover:border-gray-500"
+      className="group relative flex h-48 lg:h-52 xl:h-56 w-full items-center justify-center overflow-hidden rounded-lg bg-base-100 shadow-md shadow-black hover:border-2 hover:border-gray-500"
       to={linkTo}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}

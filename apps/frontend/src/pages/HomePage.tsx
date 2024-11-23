@@ -7,6 +7,7 @@ import { Layout } from "../components/layout/Layout";
 import { Container } from "../components/ui/container/Container";
 
 const HomePage = () => {
+  
   return (
     <Layout>
       <Container className="flex flex-col space-y-6 p-4 md:space-y-12">
