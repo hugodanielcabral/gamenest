@@ -70,8 +70,8 @@ export const HomeLatest = () => {
             </CarouselItem>
           ))
         ) : (
-          <div className="col-span-full flex min-h-screen justify-center">
-            <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+          <div className="col-span-full flex justify-center">
+            <p className="mt-10 text-pretty text-center font-nunito text-lg text-gray-300 italic sm:text-2xl md:text-3xl lg:text-4xl">
               No se encontraron los últimos lanzamientos.
             </p>
           </div>

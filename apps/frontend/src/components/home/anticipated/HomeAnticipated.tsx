@@ -82,7 +82,7 @@ export const HomeAnticipated = () => {
               <img
                 src={getImageUrl(game?.cover?.url, "cover_big_2x")}
                 alt={`${game?.name} cover image`}
-                className="absolute h-full w-full object-cover"
+                className="absolute h-full w-full object-cover rounded-md"
               />
               <div className="absolute inset-0 bg-black opacity-70 transition-opacity group-hover:opacity-60"></div>
               <div className="relative z-10 flex h-full w-full flex-col items-center justify-center">
@@ -99,8 +99,8 @@ export const HomeAnticipated = () => {
           );
         })
       ) : (
-        <div className="col-span-full flex min-h-screen justify-center">
-          <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+        <div className="col-span-full flex justify-center">
+          <p className="mt-10 text-pretty text-center font-nunito text-lg text-gray-300 italic sm:text-2xl md:text-3xl lg:text-4xl">
             No se encontraron los juegos más anticipados.
           </p>
         </div>

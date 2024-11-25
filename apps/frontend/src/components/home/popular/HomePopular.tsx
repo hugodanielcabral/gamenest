@@ -37,7 +37,7 @@ export const HomePopular = () => {
   if (isLoading) {
     return (
       <Loading
-        className="flex items-start justify-center lg:col-span-3"
+        className="flex items-start justify-center lg:col-span-3 size-32 sm:size-36 md:size-40 lg:size-44"
         color="info"
         type="dots"
       />
@@ -112,8 +112,8 @@ export const HomePopular = () => {
           </Card>
         ))
       ) : (
-        <div className="col-span-full flex min-h-screen justify-center">
-          <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+        <div className="col-span-full justify-center">
+          <p className="mt-10 text-pretty text-center font-nunito text-lg text-gray-300 sm:text-2xl md:text-3xl lg:text-4xl italic">
             No se encontró ningún juego "popular".
           </p>
         </div>

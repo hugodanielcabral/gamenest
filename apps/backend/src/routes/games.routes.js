@@ -2,14 +2,15 @@ import Router from "express";
 import {
   getGames,
   getGame,
-  getLatestGames,
-  getPopularGames,
+  getLatest,
+  getPopular,
   getSteamGameAchievement,
   createSteamGameAchievement,
   getUpcomingGames,
-  getMostAnticipatedGames,
+  getAnticipated,
   getCountGames,
   getGamesBySearch,
+  getPlatformGames,
 } from "../controllers/games.controller.js";
 import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 import { gamesValidation } from "../validators/games.validation.js";
@@ -22,19 +23,21 @@ router.get("/games/:id", getGame);
 
 router.get("/count/games", getCountGames);
 
-router.get("/games/latest/released", getLatestGames);
+router.get("/games/latest/released", getLatest);
 
 router.get("/games/latest/upcoming", getUpcomingGames);
 
-router.get("/games/latest/anticipated", getMostAnticipatedGames);
+router.get("/games/latest/anticipated", getAnticipated);
 
-router.get("/popular/games", getPopularGames);
+router.get("/popular/games", getPopular);
 
 router.get(
   "/achievement/:id",
   AuthMiddleware.validateJWT,
   getSteamGameAchievement
 );
+
+router.get("/platforms/:platform", getPlatformGames);
 
 router.post("/search/games", getGamesBySearch);
 
