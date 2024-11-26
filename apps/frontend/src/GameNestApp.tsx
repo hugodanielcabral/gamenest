@@ -18,15 +18,14 @@ import { ListsPage } from "./pages/ListsPage.tsx";
 import { ListDetailsPage } from "./components/lists/details/ListDetailsPage.tsx";
 import { CollectionPage } from "./pages/CollectionPage.tsx";
 import { CollectionGamePage } from "./pages/CollectionGamePage.tsx";
+import { CategoryPage } from "./pages/CategoryPage.tsx";
 
-
-interface UseAuthProps  {
+interface UseAuthProps {
   accessToken: string;
-  authStatus: AuthStatus
+  authStatus: AuthStatus;
 }
 
 export const GameNestApp = () => {
-  
   const { accessToken, authStatus } = useAuth() as UseAuthProps;
 
   const publicRoutes = [
@@ -59,6 +58,16 @@ export const GameNestApp = () => {
       id: 8,
       path: "/lists/:listId",
       element: <ListDetailsPage />,
+    },
+    {
+      id: 9,
+      path: "/platform/:path",
+      element: <CategoryPage />,
+    },
+    {
+      id: 10,
+      path: "/genre/:path",
+      element: <CategoryPage />,
     },
   ];
 
@@ -112,16 +121,44 @@ export const GameNestApp = () => {
 
   return (
     <>
-        <Routes>
+      <Routes>
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={accessToken ? false : true}
+              authStatus={authStatus}
+              redirectTo="/404"
+            />
+          }
+        >
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/user/validate/:token" element={<ValidationPage />} />
+        </Route>
+        <Route>
+          {publicRoutes.map((route) => {
+            return (
+              <Route key={route.id} path={route.path} element={route.element} />
+            );
+          })}
+        </Route>
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={accessToken ? true : false}
+              authStatus={authStatus}
+              redirectTo="/login"
+            />
+          }
+        >
           <Route
-            element={<ProtectedRoute isAllowed={accessToken ? false : true} authStatus={authStatus} redirectTo="/404" />}
+            element={
+              <CollectionProvider>
+                <Outlet />
+              </CollectionProvider>
+            }
           >
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/user/validate/:token" element={<ValidationPage />} />
-          </Route>
-          <Route>
-            {publicRoutes.map((route) => {
+            {privateRoutes.map((route) => {
               return (
                 <Route
                   key={route.id}
@@ -131,28 +168,8 @@ export const GameNestApp = () => {
               );
             })}
           </Route>
-          <Route
-            element={<ProtectedRoute isAllowed={accessToken ? true : false} authStatus={authStatus} redirectTo="/login" />}
-          >
-            <Route
-              element={
-                <CollectionProvider>
-                  <Outlet />
-                </CollectionProvider>
-              }
-            >
-              {privateRoutes.map((route) => {
-                return (
-                  <Route
-                    key={route.id}
-                    path={route.path}
-                    element={route.element}
-                  />
-                );
-              })}
-            </Route>
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
     </>
   );
 };
