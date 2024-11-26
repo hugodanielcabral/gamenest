@@ -37,7 +37,7 @@ export const HomePopular = () => {
   if (isLoading) {
     return (
       <Loading
-        className="flex items-start justify-center lg:col-span-3 size-32 sm:size-36 md:size-40 lg:size-44"
+        className="flex items-start justify-center"
         color="info"
         type="dots"
       />

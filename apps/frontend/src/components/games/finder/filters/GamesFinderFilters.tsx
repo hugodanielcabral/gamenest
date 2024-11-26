@@ -3,58 +3,68 @@ import { Collapse } from "../../../ui/collapse/Collapse";
 import { Label } from "../../../ui/label/Label.tsx";
 import { Checkbox } from "../../../ui/checkbox/Checkbox.tsx";
 import { useQueryParams } from "../../../../hooks/useQueryParams.ts";
-import { platformsFilterOptions } from "../../../../data/gamesFinder.ts";
+import {
+  genresFilterOptions,
+  platformsFilterOptions,
+} from "../../../../data/gamesFinder.ts";
 import { Button } from "../../../ui/button/Button.tsx";
 import { Drawer } from "../../../ui/drawer/Drawer.tsx";
 import { Icon } from "../../../ui/icon/Icon.tsx";
 
+const filtersConfig = [
+  {
+    id: "platforms",
+    title: "Plataformas",
+    options: platformsFilterOptions,
+    paramName: "platforms",
+  },
+  {
+    id: "genres",
+    title: "Géneros",
+    options: genresFilterOptions,
+    paramName: "genres",
+  },
+];
+
 export const GamesFinderFilters = () => {
   const { setParams, searchParams, clearParams } = useQueryParams();
-  const [showAllPlatforms, setShowAllPlatforms] = useState(false);
   const [isDrawlerOpen, setIsDrawlerOpen] = useState(false);
-  const initialPlatformsToShow = 10;
+  const maxVisibleFilters = 6;
 
-  const platforms = searchParams.get("platforms")?.split(",") || [];
+  const [showAllFilters, setShowAllFilters] = useState<{
+    [key: string]: boolean;
+  }>({});
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilterChange = (
+    category: string,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { value, checked } = e.target;
+    const currentFilters = searchParams.get(category)?.split(",") || [];
 
     if (checked) {
-      setParams("platforms", [...platforms, value].join(","));
+      setParams(category, [...currentFilters, value].join(","));
     } else {
-      const filteredPlatforms = platforms.filter(
-        (platform) => platform !== value,
-      );
-
-      if (filteredPlatforms.length === 0) {
-        clearParams("platforms");
-        return;
-      }
-
-      setParams("platforms", filteredPlatforms.join(","));
+      const updatedFilters = currentFilters.filter((item) => item !== value);
+      updatedFilters.length === 0
+        ? clearParams(category)
+        : setParams(category, updatedFilters.join(","));
     }
   };
 
-  const handleToggleShowPlatforms = () => {
-    setShowAllPlatforms((prev) => !prev);
+  const toggleShowAll = (category: string) => {
+    setShowAllFilters((prev) => ({ ...prev, [category]: !prev[category] }));
   };
-
-  const platformsToShow = showAllPlatforms
-    ? platformsFilterOptions
-    : platformsFilterOptions.slice(0, initialPlatformsToShow);
 
   return (
     <div className="col-span-1 mx-auto lg:mx-0">
       <Button
-        className="text-xs text-white sm:text-sm lg:hidden btn-outline"
+        className="btn-outline text-xs text-white sm:text-sm lg:hidden"
         variant="info"
         size="sm"
         onClick={() => setIsDrawlerOpen(!isDrawlerOpen)}
       >
-        <Icon
-          name="icon-[mdi--filter]"
-          className="size-3 sm:size-4"
-        />
+        <Icon name="icon-[mdi--filter]" className="size-3 sm:size-4" />
         Filtros
       </Button>
       <Drawer
@@ -62,67 +72,81 @@ export const GamesFinderFilters = () => {
         isOpen={isDrawlerOpen}
         setIsOpen={setIsDrawlerOpen}
       >
-        <Collapse
-          title="Plataformas"
-          detailsClassName="bg-base-300 border rounded-sm border-gray-700"
-          summaryClassName="bg-base-100 p-4"
-          isOpen={true}
-        >
-          {platformsToShow.map((platform) => (
-            <Label title={platform.title} key={platform.id}>
-              <Checkbox
-                name={platform.title}
-                value={platform.value}
-                onChange={handleOnChange}
-                checked={platforms.includes(platform.value)}
-              />
-            </Label>
-          ))}
-          {platformsFilterOptions.length > initialPlatformsToShow && (
-            <Button
-              className="mt-2 text-xs btn-outline"
-              variant="error"
-              size="sm"
-              onClick={handleToggleShowPlatforms}
+        {filtersConfig.map(({ id, title, options, paramName }) => {
+          const currentFilters = searchParams.get(paramName)?.split(",") || [];
+          const filtersToShow = showAllFilters[id]
+            ? options
+            : options.slice(0, maxVisibleFilters);
+
+          return (
+            <Collapse
+              key={id}
+              title={title}
+              detailsClassName="bg-base-300 border rounded-sm border-gray-700"
+              summaryClassName="bg-base-100 p-4"
+              isOpen={true}
             >
-              {showAllPlatforms ? "Mostrar menos" : "Mostrar más"}
-            </Button>
-          )}
-        </Collapse>
+              {filtersToShow.map(({ id, title, value }) => (
+                <Label title={title} key={id}>
+                  <Checkbox
+                    name={title}
+                    value={value}
+                    onChange={(e) => handleFilterChange(paramName, e)}
+                    checked={currentFilters.includes(value)}
+                  />
+                </Label>
+              ))}
+              {options.length > maxVisibleFilters && (
+                <Button
+                  className="btn-outline mt-2 text-xs"
+                  variant="error"
+                  size="sm"
+                  onClick={() => toggleShowAll(id)}
+                >
+                  {showAllFilters[id] ? "Mostrar menos" : "Mostrar más"}
+                </Button>
+              )}
+            </Collapse>
+          );
+        })}
       </Drawer>
       <div className="sticky top-20 hidden h-fit rounded-lg border border-gray-700 lg:block">
-        <Collapse
-          title="Plataformas"
-          detailsClassName="overflow-auto bg-base-200 rounded-lg"
-          summaryClassName="bg-base-100 p-2"
-        >
-          {platformsToShow.map((platform) => (
-            <Label title={platform.title} key={platform.id}>
-              <Checkbox
-                name={platform.title}
-                value={platform.value}
-                onChange={handleOnChange}
-                checked={platforms.includes(platform.value)}
-              />
-            </Label>
-          ))}
-          {platformsFilterOptions.length > initialPlatformsToShow && (
-            <Button
-              className="mt-2 text-xs btn-outline"
-              variant="error"
-              size="sm"
-              onClick={handleToggleShowPlatforms}
+        {filtersConfig.map(({ id, title, options, paramName }) => {
+          const currentFilters = searchParams.get(paramName)?.split(",") || [];
+          const filtersToShow = showAllFilters[id]
+            ? options
+            : options.slice(0, maxVisibleFilters);
+
+          return (
+            <Collapse
+              key={id}
+              title={title}
+              detailsClassName="overflow-auto bg-base-200 rounded-lg"
+              summaryClassName="bg-base-100 p-2"
             >
-              {showAllPlatforms ? <>
-                Mostrar menos
-                <Icon name="icon-[mdi--chevron-up]" className="size-4" />
-              </> : <>
-                Mostrar más
-                <Icon name="icon-[mdi--chevron-down]" className="size-4" />
-              </>}
-            </Button>
-          )}
-        </Collapse>
+              {filtersToShow.map(({ id, title, value }) => (
+                <Label title={title} key={id}>
+                  <Checkbox
+                    name={title}
+                    value={value}
+                    onChange={(e) => handleFilterChange(paramName, e)}
+                    checked={currentFilters.includes(value)}
+                  />
+                </Label>
+              ))}
+              {options.length > maxVisibleFilters && (
+                <Button
+                  className="btn-outline mt-2 text-xs"
+                  variant="error"
+                  size="sm"
+                  onClick={() => toggleShowAll(id)}
+                >
+                  {showAllFilters[id] ? "Mostrar menos" : "Mostrar más"}
+                </Button>
+              )}
+            </Collapse>
+          );
+        })}
       </div>
     </div>
   );

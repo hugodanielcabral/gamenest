@@ -73,7 +73,7 @@ export const CategoryPage = () => {
           "from-blue-800 from-10%": path === "playstation",
           "from-green-800 from-10%": path === "xbox",
           "from-amber-800 from-10%": path === "pc",
-          "from-red-800 from-10%": path === "nintendo",
+          "from-rose-800 from-10%": path === "nintendo",
         })}
       >
         <section className="flex flex-col items-center justify-around gap-2 sm:flex-row">
