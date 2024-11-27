@@ -1,6 +1,5 @@
 import { useDataFetch } from "../../../../hooks/useDataFetch";
 import { useQueryParams } from "../../../../hooks/useQueryParams";
-import { Loading } from "../../../ui/loading/Loading.tsx";
 
 interface CountGames {
   count: number;
@@ -17,15 +16,7 @@ export const Pagination = () => {
     error,
   } = useDataFetch<CountGames>("count/games", `${getQueryString()}`);
 
-  if (isLoading) {
-    return (
-      <Loading
-        className="m-6 flex items-center justify-center"
-        color="primary"
-        type="ring"
-      />
-    );
-  }
+  if (isLoading) return null;
 
   if (error) {
     return (

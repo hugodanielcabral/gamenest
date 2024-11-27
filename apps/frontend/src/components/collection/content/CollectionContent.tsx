@@ -39,12 +39,8 @@ export const CollectionContent = ({
   return (
     <>
       {isLoading ? (
-        <div className="col-span-3">
-          <Loading
-            color="primary"
-            type="ring"
-            className="flex min-h-screen justify-center"
-          />
+        <div className="col-span-3 flex min-h-screen flex-col items-center">
+           <Loading color="info" type="dots" />
         </div>
       ) : (
         <CollectionList

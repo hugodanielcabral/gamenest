@@ -34,8 +34,8 @@ export const ListsPopular = () => {
     return (
       <Loading
         className="flex min-h-screen items-start justify-center lg:col-span-3"
-        color="primary"
-        type="ring"
+        color="info"
+        type="dots"
       />
     );
   }

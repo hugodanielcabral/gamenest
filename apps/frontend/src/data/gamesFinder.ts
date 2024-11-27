@@ -39,21 +39,21 @@ const platformsFilterOptions = [
     title: "Nintendo DS",
     value: "20",
   },
-  {
+/*   {
     id: 9,
     title: "Nintendo DSi",
     value: "41",
-  },
-  {
+  }, */
+  /* {
     id: 10,
     title: "Nintendo Wii",
     value: "41",
-  },
-  {
+  }, */
+ /*  {
     id: 11,
     title: "Nintendo Wii U",
     value: "41",
-  },
+  }, */
   {
     id: 12,
     title: "PlayStation 3",
@@ -97,111 +97,31 @@ const platformsFilterOptions = [
 ];
 
 const genresFilterOptions = [
-  {
-    id: 1,
-    title: "Apuntar y clic",
-    value: "2",
-  },
-  {
-    id: 2,
-    title: "Peleas",
-    value: "4",
-  },
-  {
-    id: 3,
-    title: "Disparos",
-    value: "5",
-  },
-  {
-    id: 4,
-    title: "Música",
-    value: "7",
-  },
-  {
-    id: 5,
-    title: "Plataformas",
-    value: "8",
-  },
-  {
-    id: 6,
-    title: "Puzles",
-    value: "9",
-  },
-  {
-    id: 7,
-    title: "Carreras",
-    value: "10",
-  },
-  {
-    id: 8,
-    title: "Rol",
-    value: "12",
-  },
-  {
-    id: 9,
-    title: "Estrategia en tiempo real",
-    value: "11",
-  },
-  {
-    id: 10,
-    title: "Simulación",
-    value: "14",
-  },
-  {
-    id: 11,
-    title: "Deportes",
-    value: "15",
-  },
-  {
-    id: 12,
-    title: "Estrategia por turnos",
-    value: "16",
-  },
-  {
-    id: 13,
-    title: "Arcade",
-    value: "33",
-  },
-  {
-    id: 14,
-    title: "Cartas y tablero",
-    value: "35",
-  },
-  {
-    id: 15,
-    title: "Estrategia",
-    value: "15",
-  },
-  {
-    id: 16,
-    title: "Aventura",
-    value: "31",
-  },
-  {
-    id: 17,
-    title: "Indie",
-    value: "32",
-  },
-  {
-    id: 18,
-    title: "MOBA",
-    value: "36",
-  },
-  {
-    id: 19,
-    title: "Novela visual",
-    value: "34",
-  },
-  {
-    id: 20,
-    title: "Brawler",
-    value: "25",
-  },
-  {
-    id: 21,
-    title: "Táctico",
-    value: "24",
-  },
+  { id: 1, value: "2", title: "Point-and-click" },
+  { id: 2, value: "4", title: "Lucha" },
+  { id: 3, value: "5", title: "Disparos" },
+  { id: 4, value: "7", title: "Música" },
+  { id: 5, value: "8", title: "Plataformas" },
+  { id: 6, value: "9", title: "Puzzle" },
+  { id: 7, value: "10", title: "Carreras" },
+  { id: 8, value: "11", title: "Estrategia en tiempo real" },
+  { id: 9, value: "12", title: "Rol" },
+  { id: 10, value: "13", title: "Simulación" },
+  { id: 11, value: "14", title: "Deportes" },
+  { id: 12, value: "15", title: "Estrategia" },
+  { id: 13, value: "16", title: "Estrategia por turnos" },
+  { id: 14, value: "24", title: "Táctico" },
+  { id: 15, value: "25", title: "Hack and slash" },
+  { id: 16, value: "26", title: "Quiz" },
+  { id: 17, value: "30", title: "Pinball" },
+  { id: 18, value: "31", title: "Aventura" },
+  { id: 19, value: "32", title: "Indie" },
+  { id: 20, value: "33", title: "Arcade" },
+  { id: 21, value: "34", title: "Novela visual" },
+  { id: 22, value: "35", title: "Cartas y tablero" },
+  { id: 23, value: "36", title: "MOBA" },
 ];
+
+
 
 export { platformsFilterOptions, genresFilterOptions };

@@ -16,15 +16,8 @@ export const CollectionPagination = () => {
     `${getQueryString()}`,
   );
 
-  if (isLoading) {
-    return (
-      <Loading
-        className="m-6 flex items-center justify-center"
-        color="primary"
-        type="ring"
-      />
-    );
-  }
+  if (isLoading) return null
+  
 
   if (error) {
     return (
