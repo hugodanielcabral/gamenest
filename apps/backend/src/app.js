@@ -10,6 +10,7 @@ import countryRoutes from "./routes/country.routes.js";
 import rolesRoutes from "./routes/roles.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 import listsRoutes from "./routes/lists.routes.js";
+import categoriesRoutes from "./routes/categories.routes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
@@ -51,6 +52,7 @@ app.use("/api", rolesRoutes);
 app.use("/api", gamesRoutes);
 app.use("/api", usersRoutes);
 app.use("/api", listsRoutes);
+app.use("/api", categoriesRoutes);
 
 // Error Handling
 app.use((error, req, res, next) => {
