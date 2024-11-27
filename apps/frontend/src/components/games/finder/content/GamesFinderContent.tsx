@@ -31,8 +31,8 @@ export const GamesFinderContent = () => {
     return (
       <Loading
         className="lg:col-span-3 flex min-h-screen items-start justify-center"
-        color="primary"
-        type="ring"
+        color="info"
+        type="dots"
       />
     );
   }
