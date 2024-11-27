@@ -1,8 +1,7 @@
-/* import { validateResult } from "../helpers/handleValidateResult.js";
 import sql from "../db.js";
-import { body, param } from "express-validator";
-import { comparePassword } from "../helpers/handleEncryption.js";
-import { tokenValidation } from "../utils/email.js";
+import { validateResult } from "../helpers/handleValidateResult.js";
+import { body } from "express-validator";
+import { encryption } from "../helpers/handleEncryption.js";
 
 export const signupValidator = [
   body("username")
@@ -55,29 +54,6 @@ export const signupValidator = [
   },
 ];
 
-export const verifyUserValidator = [
-  param("token").custom(async (value) => {
-    const decodedToken = await tokenValidation(value);
-
-    if (!decodedToken) throw new Error("Token invalido.");
-
-    const { email, verificationToken } = decodedToken;
-
-    const verifyUserExistence =
-      await sql`SELECT * FROM users WHERE email = ${email}`;
-
-    if (!verifyUserExistence[0]) throw new Error("El usuario no existe.");
-
-    const verifyTokenExistence =
-      await sql`SELECT * FROM verification_tokens WHERE token = ${verificationToken} AND used = FALSE`;
-
-    if (!verifyTokenExistence[0]) throw new Error("El token ya fue usado.");
-  }),
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
-];
-
 export const signinValidator = [
   body("username")
     .trim()
@@ -95,11 +71,9 @@ export const signinValidator = [
       const userPassword =
         await sql`SELECT * FROM users WHERE username = ${req.body.username}`;
 
-      console.log(userPassword);
-
       if (userPassword.length <= 0) throw new Error("Contraseña incorrecta.");
 
-      const match = await comparePassword(value, userPassword[0].password);
+      const match = await encryption.compare(value, userPassword[0].password);
 
       if (!match) throw new Error("Contraseña incorrecta.");
     }),
@@ -107,20 +81,3 @@ export const signinValidator = [
     validateResult(req, res, next);
   },
 ];
-
-export const updateProfileValidator = [
-  body("birthday").custom((value) => {
-    const date = new Date(value).getFullYear();
-    const currentDate = new Date().getFullYear();
-    if (currentDate - date < 7) throw new Error("Debes ser mayor de 7 años.");
-
-    if (currentDate - date > 100)
-      throw new Error("Debes ser menor de 100 años.");
-
-    return true;
-  }),
-  (req, res, next) => {
-    validateResult(req, res, next);
-  },
-];
- */

@@ -46,6 +46,7 @@ export const AuthProvider = ({ children }) => {
       }
       return response.data;
     } catch (error) {
+      setErrors(error.response.data.errors);
       console.log(error);
     }
   };
@@ -63,7 +64,7 @@ export const AuthProvider = ({ children }) => {
         setAuthStatus(AuthStatus.Error);
         throw new Error(
           response.data.errors
-            ? response.data.errors[0].msg
+            ? response.data.error[0].msg
             : "An error occurred",
         );
       }
@@ -73,24 +74,27 @@ export const AuthProvider = ({ children }) => {
       setAccessToken(response.data.accessToken);
       return response.data;
     } catch (error) {
+      setErrors(error.response.data.errors);
+      setIsAuth(false);
+      setAuthStatus(AuthStatus.Error);
       console.log(error);
     }
   };
 
   const signout = async () => {
     try {
-      setAuthStatus(AuthStatus.Authenticating)
+      setAuthStatus(AuthStatus.Authenticating);
       const response = await AuthRepository.signout();
 
       if (response.status !== 200) {
-        setAuthStatus(AuthStatus.Error)
+        setAuthStatus(AuthStatus.Error);
         throw new Error("An error occurred during signout.");
       }
 
       setIsAuth(false);
       setUser(null);
       setAccessToken(null);
-      setAuthStatus(AuthStatus.Authenticated)
+      setAuthStatus(AuthStatus.Authenticated);
     } catch (error) {
       console.log(error);
     }
