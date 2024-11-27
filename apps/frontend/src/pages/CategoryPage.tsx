@@ -69,20 +69,36 @@ export const CategoryPage = () => {
   return (
     <Layout>
       <Container
-        className={clsx("flex flex-col space-y-6 p-4 md:space-y-12", {
-          "from-blue-800 from-10%": path === "playstation",
-          "from-green-800 from-10%": path === "xbox",
-          "from-amber-800 from-10%": path === "pc",
-          "from-rose-800 from-10%": path === "nintendo",
-        })}
+        className={clsx(
+          "flex flex-col space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-12",
+        )}
       >
+        <div
+          className={clsx(
+            "h-10 w-full bg-gradient-to-b from-gray-700 from-5% to-gray-800 to-95% opacity-90 sm:h-12 md:h-16 lg:h-20",
+            {
+              "from-rose-700": path === "nintendo",
+              "from-green-700": path === "xbox",
+              "from-blue-700": path === "playstation",
+              "from-accent": path === "pc",
+            },
+          )}
+        ></div>
         <section className="flex flex-col items-center justify-around gap-2 sm:flex-row">
           <h1 className="text-xl text-white md:text-2xl lg:text-3xl xl:text-4xl">
             Juegos de{" "}
             {genres.find((g) => g.slug === path)?.es_name ??
               capitalizeWord(path)}
           </h1>
-          <Button variant="info" onClick={handleAdvancedSearch}>
+          <Button
+            className={clsx("btn-outline btn-info", {
+              "btn-error": path === "nintendo",
+              "btn-success": path === "xbox",
+              "btn-info": path === "playstation",
+              "btn-accent": path === "pc",
+            })}
+            onClick={handleAdvancedSearch}
+          >
             <Icon name="icon-[material-symbols--search]" />
             Búsqueda avanzada
           </Button>
