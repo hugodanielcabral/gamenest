@@ -45,7 +45,7 @@ export const CollectionGamePage = () => {
 
   return isLoading ? (
     <div className="flex min-h-screen items-center justify-center">
-      <Loading color="neutral" />
+      <Loading color="info" type="dots" />
     </div>
   ) : (
     <Layout>

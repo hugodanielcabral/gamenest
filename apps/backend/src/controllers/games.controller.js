@@ -176,7 +176,7 @@ export const getAnticipated = async (req, res) => {
 
 export const getPopular = async (req, res) => {
   try {
-    const popularityBody = `fields game_id,value,popularity_type; sort value desc; limit 10; where popularity_type = 1;`;
+    const popularityBody = `fields game_id,value,popularity_type; sort value desc; limit 20; where popularity_type = 1;`;
 
     const popularityIds = await GamesRepository.get(
       popularityBody,
@@ -185,7 +185,7 @@ export const getPopular = async (req, res) => {
 
     const gamesIds = popularityIds.map((game) => game.game_id);
 
-    const body = `fields id, name, cover.url,slug, hypes, rating,release_dates.human, platforms.abbreviation, platforms.name, first_release_date; where id = (${gamesIds.toString()});sort hypes desc;`;
+    const body = `fields id, name, cover.url,slug, hypes, rating,release_dates.human, platforms.abbreviation, platforms.name, first_release_date, themes; where id = (${gamesIds.toString()}) & themes != (42);sort hypes desc;`;
 
     const data = await GamesRepository.get(body);
 

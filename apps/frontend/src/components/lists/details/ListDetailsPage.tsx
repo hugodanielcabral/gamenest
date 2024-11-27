@@ -20,7 +20,7 @@ export const ListDetailsPage = () => {
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <Loading color="primary" type="ring" />
+        <Loading color="info" type="dots" />
       </div>
     );
   }
