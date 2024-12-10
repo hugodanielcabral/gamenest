@@ -1,14 +1,8 @@
 import clsx from "clsx";
-import { FaUser } from "react-icons/fa";
-import {
-  MdEmail,
-  MdPassword,
-  MdVisibility,
-  MdVisibilityOff,
-} from "react-icons/md";
 import { Button } from "../../../ui/button/Button.tsx";
 import { Progress } from "../../progress/Progress";
 import { Link } from "react-router-dom";
+import { Icon } from "../../../ui/icon/Icon.tsx";
 
 type SignupError = {
   type: string;
@@ -83,7 +77,7 @@ export const RegisterForm = ({
           "[:invalid]:border-2 input input-bordered flex items-center gap-2",
         )}
       >
-        <FaUser className="size-4 opacity-70" />
+        <Icon name="icon-[mdi--user]" className="size-4 opacity-70" />
         <input
           type="text"
           className="peer grow bg-transparent"
@@ -115,7 +109,7 @@ export const RegisterForm = ({
           "input input-bordered flex items-center gap-2",
         )}
       >
-        <MdEmail className="size-4 opacity-70" />
+        <Icon name="icon-[ic--baseline-email]" className="size-4 opacity-70" />
         <input
           type="email"
           className="grow bg-transparent"
@@ -163,7 +157,10 @@ export const RegisterForm = ({
           "input input-bordered flex items-center gap-2",
         )}
       >
-        <MdPassword className="size-4 opacity-70" />
+        <Icon
+          name="icon-[material-symbols--password]"
+          className="size-4 opacity-70"
+        />{" "}
         <input
           type={showPassword.password ? "text" : "password"}
           className="grow bg-transparent"
@@ -175,13 +172,22 @@ export const RegisterForm = ({
           maxLength={20}
           pattern="^[a-zA-Z0-9@_\-!¡]+$"
         />
-
         <span
           id="password"
           className="cursor-pointer"
           onClick={handleShowPassword}
         >
-          {showPassword.password ? <MdVisibilityOff /> : <MdVisibility />}
+          {showPassword.password ? (
+            <Icon
+              name="icon-[material-symbols--visibility-off]"
+              className="size-4 opacity-70"
+            />
+          ) : (
+            <Icon
+              name="icon-[material-symbols--visibility]"
+              className="size-4 opacity-70"
+            />
+          )}
         </span>
       </label>
       {clientErrors?.password && (
@@ -204,7 +210,10 @@ export const RegisterForm = ({
           "input input-bordered flex items-center gap-2",
         )}
       >
-        <MdPassword className="size-4 opacity-70" />
+        <Icon
+          name="icon-[material-symbols--password]"
+          className="size-4 opacity-70"
+        />{" "}
         <input
           type={showPassword.repassword ? "text" : "password"}
           className="grow bg-transparent"
@@ -220,7 +229,17 @@ export const RegisterForm = ({
           className="cursor-pointer"
           onClick={handleShowPassword}
         >
-          {showPassword.repassword ? <MdVisibilityOff /> : <MdVisibility />}
+          {showPassword.repassword ? (
+            <Icon
+              name="icon-[material-symbols--visibility-off]"
+              className="size-4 opacity-70"
+            />
+          ) : (
+            <Icon
+              name="icon-[material-symbols--visibility]"
+              className="size-4 opacity-70"
+            />
+          )}
         </span>
       </label>
       {clientErrors?.repassword && (
@@ -231,7 +250,7 @@ export const RegisterForm = ({
 
       <Button
         disabled={buttonStatus === "submitting" || buttonStatus === "disabled"}
-        className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25 btn-outline disabled:opacity-50"
+        className="btn-outline w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:opacity-50 disabled:hover:bg-info/25"
         variant="info"
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Registrarse"}

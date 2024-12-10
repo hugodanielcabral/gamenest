@@ -1,8 +1,7 @@
 import clsx from "clsx";
-import { FaUser } from "react-icons/fa";
-import { MdPassword, MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Button } from "../../../ui/button/Button.tsx";
 import { Link } from "react-router-dom";
+import { Icon } from "../../../ui/icon/Icon.tsx";
 
 type SigninError = {
   type: string;
@@ -42,7 +41,7 @@ export const LoginForm = ({
 }: LoginFormProps) => {
   return (
     <form className="w-96 space-y-2 rounded-md p-5" onSubmit={handleOnSubmit}>
-      <div className="divider mb-6 divider-info opacity-75"></div>
+      <div className="divider divider-info mb-6 opacity-75"></div>
       {signinErrors && signinErrors?.length && (
         <p className="text-center text-xs text-red-500 md:text-sm">
           Nombre de usuario o contraseña inválidos.
@@ -56,7 +55,7 @@ export const LoginForm = ({
           "input input-bordered flex items-center gap-2",
         )}
       >
-        <FaUser className="size-4 opacity-70" />
+        <Icon name="icon-[mdi--user]" className="size-4 opacity-70" />
         <input
           type="text"
           className="peer grow bg-transparent"
@@ -78,7 +77,10 @@ export const LoginForm = ({
           "input input-bordered flex items-center gap-2",
         )}
       >
-        <MdPassword className="size-4 opacity-70" />
+        <Icon
+          name="icon-[material-symbols--password]"
+          className="size-4 opacity-70"
+        />
         <input
           type={showPassword.password ? "text" : "password"}
           className="grow bg-transparent"
@@ -96,21 +98,33 @@ export const LoginForm = ({
           className="cursor-pointer"
           onClick={handleShowPassword}
         >
-          {showPassword.password ? <MdVisibilityOff /> : <MdVisibility />}
+          {showPassword.password ? (
+            <Icon
+              name="icon-[material-symbols--visibility-off]"
+              className="size-4 opacity-70"
+            />
+          ) : (
+            <Icon
+              name="icon-[material-symbols--visibility]"
+              className="size-4 opacity-70"
+            />
+          )}
         </span>
       </label>
 
       <Button
         disabled={buttonStatus === "submitting" || buttonStatus === "disabled"}
-        className="w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:hover:bg-info/25 btn-outline disabled:opacity-50"
+        className="btn-outline w-full text-white disabled:cursor-not-allowed disabled:bg-opacity-25 disabled:text-gray-400 disabled:opacity-50 disabled:hover:bg-info/25"
         variant="info"
       >
         {buttonStatus === "submitting" ? "Enviando..." : "Iniciar sesión"}
       </Button>
-      <p className={clsx("text-center text-base text-gray-300 md:text-lg", {
-        hidden: buttonStatus === "submitting",
-        block: buttonStatus === "disabled",
-      })}>
+      <p
+        className={clsx("text-center text-base text-gray-300 md:text-lg", {
+          hidden: buttonStatus === "submitting",
+          block: buttonStatus === "disabled",
+        })}
+      >
         ¿No tienes una cuenta?{" "}
         <Link to="/register" className="text-error underline">
           Registrate

@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from "daisyui";
 import gradientMaskImage from "tailwind-gradient-mask-image";
+import typography from "@tailwindcss/typography";
 import { addDynamicIconSelectors } from "@iconify/tailwind";
 
 export default {
@@ -22,7 +23,7 @@ export default {
   plugins: [
     daisyui,
     // eslint-disable-next-line no-undef
-    require("@tailwindcss/typography"),
+    typography,
     gradientMaskImage,
     addDynamicIconSelectors(),
   ],
