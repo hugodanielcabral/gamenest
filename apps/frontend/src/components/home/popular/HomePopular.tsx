@@ -5,6 +5,13 @@ import { Card, CardBody, CardImage, CardTitle } from "./card/Card.tsx";
 import { Badge } from "../../ui/badge/Badge.tsx";
 import { Icon } from "../../ui/icon/Icon.tsx";
 import clsx from "clsx";
+import { useEffect, useState } from "react";
+
+interface Platform {
+  id: number;
+  abbreviation: string;
+  name: string;
+}
 
 interface HomePopularProps {
   fetchData: {
@@ -21,14 +28,56 @@ interface HomePopularProps {
       human: string;
     }[];
     slug: string;
-    platforms: {
-      id: number;
-      abbreviation: string;
-      name: string;
-    }[];
+    platforms: Platform[];
     first_release_date: number;
   }[];
 }
+
+const HomePopularPlatforms = ({ platforms }: { platforms: Platform[] }) => {
+  const [visibilePlatforms, setVisiblePlatforms] = useState<number>(3);
+
+  useEffect(() => {
+    const desktopMediaQuery = window.matchMedia("(min-width:720px)");
+
+    const handleMediaQueryChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setVisiblePlatforms(8);
+      } else {
+        setVisiblePlatforms(3);
+      }
+    };
+
+    if (desktopMediaQuery.matches) {
+      setVisiblePlatforms(8);
+    } else {
+      setVisiblePlatforms(3);
+    }
+
+    desktopMediaQuery.addEventListener("change", handleMediaQueryChange);
+
+    return () => {
+      desktopMediaQuery.removeEventListener("change", handleMediaQueryChange);
+    };
+  }, []);
+
+  const extraPlatforms = platforms.slice(visibilePlatforms);
+
+  return (
+    <ul className="mb-1 line-clamp-1 flex flex-wrap items-center gap-1 md:mb-4 md:gap-2">
+      {platforms?.slice(0, visibilePlatforms).map(({ id, abbreviation }) => (
+        <li key={id}>
+          <Badge className="text-xs sm:text-sm">{abbreviation}</Badge>
+        </li>
+      ))}
+
+      {extraPlatforms.length > 0 && (
+        <span className="text-sm text-gray-300">
+          ...{extraPlatforms.length} más
+        </span>
+      )}
+    </ul>
+  );
+};
 
 export const HomePopular = () => {
   const { fetchData, isLoading } =
@@ -75,22 +124,11 @@ export const HomePopular = () => {
                     </span>
                   )}
                 </CardTitle>
-                <ul className="mb-1 line-clamp-1 flex flex-wrap gap-1 md:mb-4 md:gap-2">
-                  {game?.platforms?.slice(0, 4).map((platform) => (
-                    <li key={platform.id}>
-                      <Badge className="text-xs sm:text-sm">
-                        {platform?.abbreviation}
-                      </Badge>
-                    </li>
-                  ))}
-                  {game?.platforms?.length > 4 && (
-                    <span className="text-gray-300">...</span>
-                  )}
-                </ul>
+                <HomePopularPlatforms platforms={game?.platforms} />
               </div>
 
               {game?.rating && (
-                <div className="flex flex-col items-end">
+                <div className="flex flex-col items-center">
                   <Icon
                     name="icon-[material-symbols--star]"
                     className={clsx("size-4 sm:size-5 md:size-6", {
@@ -104,7 +142,7 @@ export const HomePopular = () => {
                     })}
                   />
                   <span className="mr-0 text-xs text-white sm:text-sm md:mr-1 md:text-base">
-                    {Math.floor(game?.rating)}
+                    {Math.floor(game?.rating)} / 100
                   </span>
                 </div>
               )}
@@ -113,8 +151,9 @@ export const HomePopular = () => {
         ))
       ) : (
         <div className="col-span-full justify-center">
-          <p className="mt-10 text-pretty text-center font-nunito text-lg text-gray-300 sm:text-2xl md:text-3xl lg:text-4xl italic">
-            No se encontró ningún juego "popular".
+          <p className="text-pretty font-nunito text-sm italic text-gray-300 sm:text-lg md:text-xl lg:text-2xl">
+            No se encontró ningún juego popular en este momento. Inténtalo más
+            tarde.
           </p>
         </div>
       )}
