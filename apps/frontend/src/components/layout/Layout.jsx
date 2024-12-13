@@ -4,7 +4,11 @@ import { Footer } from "./footer/Footer.tsx";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
-export const Layout = ({ children, className, title = "GameNest" }) => {
+export const Layout = ({
+  children,
+  className,
+  title = "Tus juegos en un solo lugar",
+}) => {
   return (
     <>
       <Header />
