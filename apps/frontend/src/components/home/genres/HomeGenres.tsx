@@ -13,14 +13,14 @@ export const HomeGenres = () => {
         {genres.map((genre) => (
           <CarouselItem key={genre.id}>
             <Link
-              className="group flex h-24 w-32 flex-col items-center justify-center rounded-lg bg-base-100 p-4 shadow-md shadow-black transition-all duration-300 ease-in-out hover:bg-gray-800 md:h-28 md:w-40 lg:h-32 lg:w-56"
+              className="*:hover:text-blue-400 flex h-24 w-32 flex-col items-center justify-center rounded-lg bg-base-100 p-4 shadow-md shadow-black transition-all duration-300 ease-in-out hover:bg-gray-800 md:h-28 md:w-40 lg:h-32 lg:w-56"
               to={`/genre/${genre?.slug}`}
             >
               <Icon
                 name={genre.icon}
-                className="size-6 text-white transition-all duration-300 ease-in-out group-hover:text-blue-400 md:size-8 lg:size-10"
+                className="size-6 text-white transition-all duration-300 ease-in-out md:size-8 lg:size-10"
               />
-              <h3 className="line-clamp-1 font-nunito text-xs transition-all duration-300 ease-in-out group-hover:text-blue-400 md:text-base lg:text-lg text-gray-400">
+              <h3 className="line-clamp-1 font-nunito text-xs transition-all duration-300 ease-in-out md:text-base lg:text-lg text-gray-400">
                 {genre.es_name}
               </h3>
             </Link>

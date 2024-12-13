@@ -48,7 +48,7 @@ export const HomeLatest = () => {
           fetchData.map((game) => (
             <CarouselItem key={game.id}>
               <Card
-                className="w-40 sm:w-44 md:w-52 lg:w-64"
+                className="w-40 sm:w-44 md:w-52 lg:w-64 hover:border-2 hover:border-gray-600 border-2 border-base-100 transition-all ease-in-out duration-300"
                 linkTo={`/games/${game.slug}`}
               >
                 <CardImage
@@ -71,8 +71,8 @@ export const HomeLatest = () => {
           ))
         ) : (
           <div className="col-span-full flex justify-center">
-            <p className="mt-10 text-pretty text-center font-nunito text-lg text-gray-300 italic sm:text-2xl md:text-3xl lg:text-4xl">
-              No se encontraron los últimos lanzamientos.
+            <p className="text-pretty font-nunito text-sm italic text-gray-300 sm:text-lg md:text-xl lg:text-2xl">
+              No hay lanzamientos recientes disponibles.
             </p>
           </div>
         )}
