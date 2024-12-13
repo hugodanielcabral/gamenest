@@ -78,9 +78,9 @@ export const CategoryPage = () => {
             "h-10 w-full bg-gradient-to-b from-gray-700 from-5% to-gray-800 to-95% opacity-90 sm:h-12 md:h-16 lg:h-20",
             {
               "from-rose-700": path === "nintendo",
-              "from-green-700": path === "xbox",
-              "from-blue-700": path === "playstation",
-              "from-accent": path === "pc",
+              "from-green-600": path === "xbox",
+              "from-blue-600": path === "playstation",
+              "from-orange-700": path === "pc",
             },
           )}
         ></div>

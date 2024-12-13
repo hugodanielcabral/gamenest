@@ -4,10 +4,11 @@ import { Footer } from "./footer/Footer.tsx";
 import { twMerge } from "tailwind-merge";
 import clsx from "clsx";
 
-export const Layout = ({ children, className }) => {
+export const Layout = ({ children, className, title = "GameNest" }) => {
   return (
     <>
       <Header />
+      <title>{title + " | GameNest"}</title>
       <main className={twMerge(clsx("min-h-screen", className))}>
         {children}
       </main>
@@ -19,4 +20,5 @@ export const Layout = ({ children, className }) => {
 Layout.propTypes = {
   children: propTypes.node.isRequired,
   className: propTypes.string,
+  title: propTypes.string,
 };

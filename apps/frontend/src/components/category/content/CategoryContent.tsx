@@ -5,37 +5,18 @@ import {
   CardTitle,
 } from "../../home/popular/card/Card.tsx";
 import { DateTime } from "luxon";
-import { Badge } from "../../ui/badge/Badge.tsx";
 import { Icon } from "../../ui/icon/Icon.tsx";
+import { PlatformsList } from "../../platformsList/PlatformsList.tsx";
+import { IGDBGamesProps } from "../../../types/igdbGames.ts";
 import clsx from "clsx";
 
 interface CategoryContentProps {
-  games: {
-    id: number;
-    name: string;
-    cover: {
-      id: number;
-      url: string;
-    };
-    hypes: number;
-    rating: number;
-    release_dates: {
-      id: number;
-      human: string;
-    }[];
-    slug: string;
-    platforms: {
-      id: number;
-      abbreviation: string;
-      name: string;
-    }[];
-    first_release_date: number;
-  }[];
+  games: IGDBGamesProps[];
 }
 
 export const CategoryContent = ({ games }: CategoryContentProps) => {
   return (
-    <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 p-4">
+    <div className="grid grid-cols-1 gap-2 p-4 lg:grid-cols-2">
       {games && games.length > 0 ? (
         games.map((game) => (
           <Card
@@ -61,22 +42,11 @@ export const CategoryContent = ({ games }: CategoryContentProps) => {
                     </span>
                   )}
                 </CardTitle>
-                <ul className="mb-1 line-clamp-1 flex flex-wrap gap-1 md:mb-4 md:gap-2">
-                  {game?.platforms?.slice(0, 4).map((platform) => (
-                    <li key={platform.id}>
-                      <Badge className="text-xs sm:text-sm">
-                        {platform?.abbreviation}
-                      </Badge>
-                    </li>
-                  ))}
-                  {game?.platforms?.length > 4 && (
-                    <span className="text-gray-300">...</span>
-                  )}
-                </ul>
+                <PlatformsList platforms={game?.platforms} />
               </div>
 
               {game?.rating && (
-                <div className="flex flex-col items-end">
+                <div className="flex flex-col items-center">
                   <Icon
                     name="icon-[material-symbols--star]"
                     className={clsx("size-4 sm:size-5 md:size-6", {
@@ -90,7 +60,7 @@ export const CategoryContent = ({ games }: CategoryContentProps) => {
                     })}
                   />
                   <span className="mr-0 text-xs text-white sm:text-sm md:mr-1 md:text-base">
-                    {Math.floor(game?.rating)}
+                    {Math.floor(game?.rating)} / 100
                   </span>
                 </div>
               )}

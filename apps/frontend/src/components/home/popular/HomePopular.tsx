@@ -2,86 +2,15 @@ import { DateTime } from "luxon";
 import { useDataFetch } from "../../../hooks/useDataFetch";
 import { Loading } from "../../ui/loading/Loading.tsx";
 import { Card, CardBody, CardImage, CardTitle } from "./card/Card.tsx";
-import { Badge } from "../../ui/badge/Badge.tsx";
 import { Icon } from "../../ui/icon/Icon.tsx";
+import { IGDBGamesProps } from "../../../types/igdbGames.ts";
+import { PlatformsList } from "../../platformsList/PlatformsList.tsx";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
 
-interface Platform {
-  id: number;
-  abbreviation: string;
-  name: string;
-}
-
-interface HomePopularProps {
-  fetchData: {
-    id: number;
-    name: string;
-    cover: {
-      id: number;
-      url: string;
-    };
-    hypes: number;
-    rating: number;
-    release_dates: {
-      id: number;
-      human: string;
-    }[];
-    slug: string;
-    platforms: Platform[];
-    first_release_date: number;
-  }[];
-}
-
-const HomePopularPlatforms = ({ platforms }: { platforms: Platform[] }) => {
-  const [visibilePlatforms, setVisiblePlatforms] = useState<number>(3);
-
-  useEffect(() => {
-    const desktopMediaQuery = window.matchMedia("(min-width:720px)");
-
-    const handleMediaQueryChange = (e: MediaQueryListEvent) => {
-      if (e.matches) {
-        setVisiblePlatforms(8);
-      } else {
-        setVisiblePlatforms(3);
-      }
-    };
-
-    if (desktopMediaQuery.matches) {
-      setVisiblePlatforms(8);
-    } else {
-      setVisiblePlatforms(3);
-    }
-
-    desktopMediaQuery.addEventListener("change", handleMediaQueryChange);
-
-    return () => {
-      desktopMediaQuery.removeEventListener("change", handleMediaQueryChange);
-    };
-  }, []);
-
-  const extraPlatforms = platforms.slice(visibilePlatforms);
-
-  return (
-    <ul className="mb-1 line-clamp-1 flex flex-wrap items-center gap-1 md:mb-4 md:gap-2">
-      {platforms?.slice(0, visibilePlatforms).map(({ id, abbreviation }) => (
-        <li key={id}>
-          <Badge className="text-xs sm:text-sm">{abbreviation}</Badge>
-        </li>
-      ))}
-
-      {extraPlatforms.length > 0 && (
-        <span className="text-sm text-gray-300">
-          ...{extraPlatforms.length} más
-        </span>
-      )}
-    </ul>
-  );
-};
 
 export const HomePopular = () => {
   const { fetchData, isLoading } =
-    useDataFetch<HomePopularProps["fetchData"]>(`popular/games`);
+    useDataFetch<IGDBGamesProps[]>(`popular/games`);
 
   if (isLoading) {
     return (
@@ -124,7 +53,7 @@ export const HomePopular = () => {
                     </span>
                   )}
                 </CardTitle>
-                <HomePopularPlatforms platforms={game?.platforms} />
+                <PlatformsList platforms={game?.platforms} />
               </div>
 
               {game?.rating && (
