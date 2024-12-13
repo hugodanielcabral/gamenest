@@ -125,7 +125,7 @@ export const GameNestApp = () => {
         <Route
           element={
             <ProtectedRoute
-              isAllowed={accessToken ? false : true}
+              isAllowed={!accessToken}
               authStatus={authStatus}
               redirectTo="/404"
             />
@@ -145,7 +145,7 @@ export const GameNestApp = () => {
         <Route
           element={
             <ProtectedRoute
-              isAllowed={accessToken ? true : false}
+              isAllowed={!!accessToken}
               authStatus={authStatus}
               redirectTo="/login"
             />

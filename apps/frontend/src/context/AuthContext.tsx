@@ -3,7 +3,6 @@ import {
   useState,
   useContext,
   useEffect,
-  useLayoutEffect,
 } from "react";
 import { AuthRepository } from "../components/repositories/AuthRepository.ts";
 
@@ -122,7 +121,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const initAuth = async () => {
       try {
         await refreshToken();
