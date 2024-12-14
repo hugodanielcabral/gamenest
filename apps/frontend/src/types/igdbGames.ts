@@ -21,3 +21,11 @@ export interface IGDBGamesProps {
   platforms: IGDBPlatform[];
   first_release_date: number;
 }
+
+export interface IGDBTimeToBeat {
+  id: number;
+  game: number;
+  hastily: number;
+  normally: number;
+  completely: number;
+}

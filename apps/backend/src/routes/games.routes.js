@@ -11,6 +11,7 @@ import {
   getCountGames,
   getGamesBySearch,
   getPlatformGames,
+  getTimetoBeat,
 } from "../controllers/games.controller.js";
 import { AuthMiddleware } from "../middlewares/auth.middleware.js";
 import { gamesValidation } from "../validators/games.validation.js";
@@ -38,6 +39,8 @@ router.get(
 );
 
 router.get("/platforms/:platform", getPlatformGames);
+
+router.get("/timetobeat/:id", getTimetoBeat);
 
 router.post("/search/games", getGamesBySearch);
 

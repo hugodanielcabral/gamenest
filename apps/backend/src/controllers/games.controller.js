@@ -289,3 +289,17 @@ export const getPlatformGames = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+export const getTimetoBeat = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const body = `fields *; where game_id = ${id};`;
+    const response = await GamesRepository.get(body, "game_time_to_beats");
+
+    res.status(200).json(response[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

@@ -4,9 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Layout } from "../../layout/Layout";
 import { GameDetailsHeader } from "./header/GameDetailsHeader";
 import { GameDetailsContent } from "./content/GameDetailsContent";
+import { Loading } from "../../ui/loading/Loading.tsx";
+import { Container } from "../../ui/container/Container.tsx";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const GameDetails = () => {
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { gameId: gameSlug } = useParams();
   const { data: gameDetail, isLoading } = useFetch(
     `${BASE_URL}/games/${gameSlug}`,
@@ -15,22 +17,24 @@ export const GameDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <span className="loading loading-spinner loading-lg mx-auto size-32 sm:size-36 md:size-40 lg:size-44"></span>
-      </div>
+      <Loading
+        className="mx-auto flex min-h-screen flex-col justify-center"
+        color="info"
+        type="dots"
+      />
     );
   }
 
   if (!gameDetail) {
     navigate("/404");
   }
-  
+
   return (
-    <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-gray-800 from-50% to-base-100">
+    <Layout title={gameDetail?.name}>
+      <Container className="flex flex-col space-y-6 md:space-y-12">
         <GameDetailsHeader gameDetail={gameDetail} gameSlug={gameSlug} />
         <GameDetailsContent gameDetail={gameDetail} />
-      </div>
+      </Container>
     </Layout>
   );
 };
