@@ -2,11 +2,10 @@ import type { GameDetailsContentProps } from "../../../../types/gameDetails";
 import { platformsIcons } from "../../../../data/platformsIcons";
 import { CollectionButton } from "../../../CollectionButton";
 import { Icon } from "../../../ui/icon/Icon";
-import { Toaster } from "sonner";
-import gameDetailsBackground from "../../../../assets/backgrounds/gamesdetails-background.webp";
 import { DateTime, Duration } from "luxon";
 import { useDataFetch } from "../../../../hooks/useDataFetch";
 import { IGDBTimeToBeat } from "../../../../types/igdbGames";
+import gameDetailsBackground from "../../../../assets/backgrounds/gamesdetails-background.webp";
 import getImageUrl from "../../../../utils/getImageUrl";
 
 const TimeDisplay = ({ time, text }: { time: number; text: string }) => {
@@ -87,14 +86,11 @@ export const GameDetailsHeader = ({
               Tiempo para completar
             </h2>
           </span>
-
           <TimeDisplay time={timeToBeat?.hastily} text={"Rápido"} />
           <TimeDisplay time={timeToBeat?.normally} text={"Normal"} />
           <TimeDisplay time={timeToBeat?.completely} text={"Al 100%"} />
         </div>
       </div>
-
-      <Toaster position="top-center" visibleToasts={1} />
     </section>
   );
 };
