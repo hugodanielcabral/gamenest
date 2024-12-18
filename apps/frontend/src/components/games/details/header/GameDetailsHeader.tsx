@@ -7,6 +7,7 @@ import { useDataFetch } from "../../../../hooks/useDataFetch";
 import { IGDBTimeToBeat } from "../../../../types/igdbGames";
 import gameDetailsBackground from "../../../../assets/backgrounds/gamesdetails-background.webp";
 import getImageUrl from "../../../../utils/getImageUrl";
+import clsx from "clsx";
 
 const TimeDisplay = ({ time, text }: { time: number; text: string }) => {
   return (
@@ -41,11 +42,37 @@ export const GameDetailsHeader = ({
         alt={`Cover del juego "${gameDetail.name}"`}
         className="absolute left-0 top-0 z-0 h-full w-full bg-center object-cover opacity-20 blur-md"
       />
-      <img
-        src={getImageUrl(gameDetail?.cover?.url, "cover_big_2x")}
-        alt={`Cover del juego "${gameDetail.name}"`}
-        className="z-10 h-full w-64 self-center rounded-md shadow-md shadow-black"
-      />
+      <div className="relative z-10 h-full w-64 self-center rounded-md shadow-md shadow-black">
+        <img
+          src={getImageUrl(gameDetail?.cover?.url, "cover_big_2x")}
+          alt={`Cover del juego "${gameDetail.name}"`}
+          className="rounded-md"
+        />
+        <div
+          className="tooltip tooltip-right absolute right-0 top-0 rounded-bl-full bg-base-300 bg-opacity-90 p-5 sm:p-6"
+          data-tip="Calificación basada en datos de IGDB."
+        >
+          <Icon
+            name="icon-[ion--trophy-sharp] text-warning"
+            className="absolute right-1 top-1"
+          />
+          <span
+            className={clsx("text-lg font-bold", {
+              "text-red-500": gameDetail?.rating < 40,
+              "text-orange-800":
+                gameDetail?.rating >= 40 && gameDetail?.rating < 60,
+              "text-green-500":
+                gameDetail?.rating >= 60 && gameDetail?.rating < 80,
+              "text-yellow-500":
+                gameDetail?.rating >= 80 && gameDetail?.rating < 90,
+              "text-teal-400": gameDetail?.rating >= 90,
+            })}
+          >
+            {Math.floor(gameDetail?.rating)}
+          </span>
+        </div>
+      </div>
+
       <div className="z-10 space-y-4 self-center lg:self-end">
         {gameDetail?.platforms && gameDetail?.platforms.length > 0 && (
           <div className="flex flex-wrap gap-2">

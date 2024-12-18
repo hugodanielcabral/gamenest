@@ -38,6 +38,7 @@ interface GameDetailsProps {
       slug: string;
     }[];
     first_release_date: number;
+    rating: number;
   } | null;
   isLoading: boolean;
 }
@@ -82,6 +83,7 @@ interface GameDetailsContentProps {
       slug: string;
     }[];
     first_release_date: number;
+    rating: number;
   };
   gameSlug?: string;
 }
