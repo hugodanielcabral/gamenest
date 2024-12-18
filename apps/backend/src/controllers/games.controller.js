@@ -25,7 +25,7 @@ export const getGames = async (req, res) => {
       "Client-ID": process.env.CLIENT_ID,
       Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
     },
-    body: `fields name, first_release_date, rating, slug, cover.url, genres.name, platforms.abbreviation, platforms.name,release_dates.platform.name, release_dates.game.name, release_dates.date,parent_game.name, parent_game.slug, version_parent.name, version_parent.slug; ${
+    body: `fields name, first_release_date, rating, slug, cover.url, genres.name, platforms.abbreviation, platforms.name,release_dates.platform.name, release_dates.game.name, release_dates.date,parent_game.name, parent_game.slug, version_parent.name, version_parent.slug, category; ${
       q ? `search "${q}";` : ""
     } where ${platforms ? `platforms = (${platforms}) &` : ""} ${
       genres ? `genres = (${genres}) &` : ""

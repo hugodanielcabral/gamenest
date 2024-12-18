@@ -19,9 +19,11 @@ export const ListDetailsPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <Loading color="info" type="dots" />
-      </div>
+      <Loading
+      className="mx-auto flex min-h-screen flex-col justify-center"
+      color="info"
+      type="dots"
+    />
     );
   }
 

@@ -3,34 +3,25 @@ import { Card } from "./card/Card";
 import { Toaster } from "sonner";
 import { Loading } from "../../../ui/loading/Loading.tsx";
 import { useQueryParams } from "../../../../hooks/useQueryParams";
+import { createPortal } from "react-dom";
+import type { IGDBGamesProps } from "../../../../types/igdbGames.ts";
 
 interface GamesProps {
-  fetchData: {
-    id: string;
-    name: string;
-    cover: { id: string; url: string };
-    platforms: { id: string; abbreviation: string; name: string }[];
-    slug: string;
-    rating: number;
-    parent_game?: { id: string; name: string; slug: string };
-    first_release_date: number;
-    version_parent?: { id: string; name: string; slug: string };
-  }[];
+  fetchData: IGDBGamesProps[];
   isLoading: boolean;
 }
 
 export const GamesFinderContent = () => {
   const { getQueryString } = useQueryParams();
 
-  const { fetchData: gamesData, isLoading } = useDataFetch<GamesProps['fetchData']>(
-    "games",
-    `${getQueryString()}`
-  );
+  const { fetchData: gamesData, isLoading } = useDataFetch<
+    GamesProps["fetchData"]
+  >("games", `${getQueryString()}`);
 
   if (isLoading) {
     return (
       <Loading
-        className="lg:col-span-3 flex min-h-screen items-start justify-center"
+        className="flex items-start justify-center lg:col-span-3"
         color="info"
         type="dots"
       />
@@ -38,8 +29,8 @@ export const GamesFinderContent = () => {
   }
 
   return (
-    <div className="col-span-3 grid grid-cols-1 xl:grid-cols-2 gap-4 h-fit">
-      <Toaster position="top-center" />
+    <div className="col-span-3 grid h-fit grid-cols-1 gap-4 xl:grid-cols-2">
+      {createPortal(<Toaster position="top-center" />, document.body)}
       {gamesData && gamesData.length > 0 ? (
         gamesData.map((game) => <Card key={game.id} game={game} />)
       ) : (

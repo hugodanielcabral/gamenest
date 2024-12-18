@@ -20,6 +20,9 @@ export interface IGDBGamesProps {
   slug: string;
   platforms: IGDBPlatform[];
   first_release_date: number;
+  parent_game?: { id: string; name: string; slug: string };
+  version_parent?: { id: string; name: string; slug: string };
+  category?: number;
 }
 
 export interface IGDBTimeToBeat {

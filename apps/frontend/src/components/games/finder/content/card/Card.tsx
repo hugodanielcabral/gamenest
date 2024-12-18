@@ -1,34 +1,34 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Badge } from "../../../../ui/badge/Badge.tsx";
+import { Link } from "react-router-dom";
 import { Icon } from "../../../../ui/icon/Icon.tsx";
+import { DateTime } from "luxon";
+import { PlatformsList } from "../../../../platformsList/PlatformsList.tsx";
+import type { IGDBGamesProps } from "../../../../../types/igdbGames.ts";
 import getImageUrl from "../../../../../utils/getImageUrl";
 import clsx from "clsx";
-import { DateTime } from "luxon";
-import { Button } from "../../../../ui/button/Button.tsx";
 
 interface GameProps {
-  game: {
-    id: string;
-    name: string;
-    cover: { id: string; url: string };
-    platforms: { id: string; abbreviation: string; name: string }[];
-    slug: string;
-    rating: number;
-    parent_game?: { id: string; name: string; slug: string };
-    first_release_date: number;
-    version_parent?: { id: string; name: string; slug: string };
-  };
+  game: IGDBGamesProps;
 }
 
-const CardList = ({ children }: { children: React.ReactNode }) => {
-  return <li className="text-white">{children}</li>;
+const GAME_CATEGORY_ENUMS = {
+  0: "Edición",
+  1: "DLC",
+  2: "Expansión",
+  3: "Bundle",
+  4: "Exp. Ind",
+  5: "Mod",
+  6: "Episodio",
+  7: "Temporada",
+  8: "Remake",
+  9: "Remaster",
+  10: "Port",
+  11: "Fork",
+  12: "Pack",
+  14: "Actualización",
 };
 
 export const Card = ({ game }: GameProps) => {
   const coverImageUrl = getImageUrl(game?.cover?.url, "cover_big_2x");
-  const navigate = useNavigate();
-
   return (
     <Link
       className="group relative flex h-32 gap-4 overflow-hidden rounded-lg border border-gray-700 bg-base-100 p-4 transition-all duration-300 ease-in-out hover:border-gray-600 hover:bg-base-200 sm:h-36 md:h-40 lg:h-44"
@@ -60,43 +60,33 @@ export const Card = ({ game }: GameProps) => {
               )}
             </span>
           </h2>
-          <ul className="mb-1 line-clamp-1 flex flex-wrap gap-1 md:mb-4 md:gap-2">
-            {game?.platforms?.slice(0, 4).map((platform) => (
-              <CardList key={platform.id}>
-                <Badge className="text-xs sm:text-sm">
-                  {platform.abbreviation}
-                </Badge>
-              </CardList>
-            ))}
-            {game?.platforms?.length > 4 && (
-              <span className="text-gray-300">...</span>
-            )}
-          </ul>
+          <PlatformsList platforms={game?.platforms} maxVisible={6} />
 
           {game?.parent_game && !game?.version_parent && (
-            <Button
-              onClick={() => navigate(`/games/${game.parent_game.slug}`)}
-              className="btn-link line-clamp-2 text-pretty p-0 text-xs text-gray-300 hover:text-white hover:underline sm:text-sm"
+            <Link
+              to={`/games/${game.parent_game.slug}`}
+              className="btn-link line-clamp-2 w-fit text-pretty p-0 text-xs text-gray-300 hover:z-50 hover:text-white hover:underline sm:text-sm"
             >
-              DLC de{" "}
+              {GAME_CATEGORY_ENUMS[game?.category] + " de "}
               <span className="font-nunito font-semibold text-white">
                 {game?.parent_game.name}
               </span>
-            </Button>
+            </Link>
           )}
 
           {game?.version_parent && (
-            <Button
-              onClick={() => navigate(`/games/${game?.version_parent.slug}`)}
-              className="btn-link line-clamp-2 text-pretty p-0 text-xs text-gray-300 hover:text-white hover:underline sm:text-sm"
+            <Link
+              to={`/games/${game?.version_parent.slug}`}
+              className="btn-link z-50 line-clamp-2 text-pretty p-0 text-xs text-gray-300 hover:text-white hover:underline sm:text-sm"
             >
-              Actualización de{" "}
+              {GAME_CATEGORY_ENUMS[game?.category] + " de "}
               <span className="font-semibold text-white">
                 {game?.version_parent.name}
               </span>
-            </Button>
+            </Link>
           )}
         </div>
+
         <div className="flex flex-col items-end">
           <Icon
             name="icon-[material-symbols--star]"
