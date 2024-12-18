@@ -274,8 +274,6 @@ export const addList = async (req, res) => {
     const data = req.body;
     data["user_id"] = req.user_id;
 
-    console.log(data);
-
     const insertedList = await ListRepository.create(data);
 
     if (!insertedList.length) {
@@ -321,9 +319,12 @@ export const updateList = async (req, res) => {
     const existingGameIds = existingGames.map((game) => game.game_id);
 
     // Filtrar los nuevos juegos que no están en la lista existente
-    const newGames = data.games.filter(
-      (game) => !existingGameIds.includes(game.id)
-    );
+    const newGames = data.games.filter((game) => {
+      if (existingGameIds.includes(parseInt(game.game_id))) {
+        return false;
+      }
+      return true;
+    });
 
     // Añadir los nuevos juegos a la lista
     if (newGames.length > 0) {

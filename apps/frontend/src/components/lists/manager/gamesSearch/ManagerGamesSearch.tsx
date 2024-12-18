@@ -2,7 +2,11 @@ import { useState } from "react";
 import { useForm } from "../../../../hooks/useForm.ts";
 import { POST } from "../../../../services/apiServices.ts";
 import { DetailsCard } from "../../details/card/DetailsCard.tsx";
-import { FormState, GamesProps, SendingState } from "../../../../types/listsManager.ts";
+import {
+  FormState,
+  GamesProps,
+  SendingState,
+} from "../../../../types/listsManager.ts";
 import { Input } from "../../../ui/input/Input.tsx";
 import { Select } from "../../../ui/select/Select.tsx";
 import clsx from "clsx";
@@ -69,7 +73,9 @@ export const ManagerGamesSearch = ({
     if (!selectedGame) return;
 
     const isGameAlreadyAdded = formState.games.some(
-      (game) => game.id === selectedGame.id,
+      (game) => {
+        return game.slug === selectedGame.slug
+      },
     );
 
     if (isGameAlreadyAdded) {

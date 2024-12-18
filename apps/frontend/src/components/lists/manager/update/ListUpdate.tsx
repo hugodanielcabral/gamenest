@@ -30,6 +30,7 @@ const convertGameToState = (game: {
 }) => ({
   id: game.list_games_id.toString(),
   name: game.game_name,
+  game_id: game.game_id.toString(),
   cover: {
     id: game.list_games_id.toString(),
     url: game.game_cover,
