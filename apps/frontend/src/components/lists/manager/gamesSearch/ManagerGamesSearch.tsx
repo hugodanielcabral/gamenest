@@ -11,6 +11,7 @@ import { Input } from "../../../ui/input/Input.tsx";
 import { Select } from "../../../ui/select/Select.tsx";
 import clsx from "clsx";
 import { Icon } from "../../../ui/icon/Icon.tsx";
+import { Button } from "../../../ui/button/Button.tsx";
 
 const INITIAL_SEARCH_STATE = {
   search: "",
@@ -72,11 +73,9 @@ export const ManagerGamesSearch = ({
 
     if (!selectedGame) return;
 
-    const isGameAlreadyAdded = formState.games.some(
-      (game) => {
-        return game.slug === selectedGame.slug
-      },
-    );
+    const isGameAlreadyAdded = formState.games.some((game) => {
+      return game.slug === selectedGame.slug;
+    });
 
     if (isGameAlreadyAdded) {
       setErrors(`El juego ${selectedGame.name} ya está en tu lista`);
@@ -110,6 +109,7 @@ export const ManagerGamesSearch = ({
           onChange={handleOnChange}
           placeholder="Buscar juegos"
           disabled={isLoading}
+          autoComplete="off"
           className={clsx("max-w-full", {
             "opacity-50": isLoading,
             "border-red-500": errors,
@@ -129,15 +129,20 @@ export const ManagerGamesSearch = ({
           })}
           defaultValue=""
         >
-          <option value="" disabled>
-            {getFetchStateMessage()}
-          </option>
+          <option value="">{getFetchStateMessage()}</option>
           {gamesData.map((game) => (
             <option key={game.id} value={game.name}>
               {game?.name}
             </option>
           ))}
         </Select>
+        <Button
+          type="submit"
+          className="btn-outline btn-info btn-sm mx-auto md:btn-md"
+          disabled={isLoading || !searchState.search.length}
+        >
+          Buscar
+        </Button>
       </div>
 
       <small
