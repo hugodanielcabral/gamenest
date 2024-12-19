@@ -89,7 +89,7 @@ export const CollectionPage = () => {
     }
   };
   return (
-    <Layout>
+    <Layout title="Colección">
       <Container className="space-y-4 p-4">
         <section className="flex flex-col flex-wrap justify-start gap-2 md:flex-row">
           <CollectionSearch />

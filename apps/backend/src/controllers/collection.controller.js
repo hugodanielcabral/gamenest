@@ -10,7 +10,7 @@ export const getCollection = async (req, res) => {
       favorites,
       q,
       page = 1,
-      sort = "platform_name",
+      sort = "hours_played",
       order = "DESC",
     } = req.query;
 
@@ -28,7 +28,9 @@ export const getCollection = async (req, res) => {
     }
     ${favorites ? sql`AND is_favorite = ${favorites === "true"}` : sql``}
     ${q ? sql`AND game_name ILIKE ${q + "%"}` : sql``}
-    ORDER BY ${sql(sort)} ${order === "asc" ? sql`ASC` : sql`DESC`}
+    ORDER BY ${sql(sort)} ${
+      order === "asc" ? sql`ASC` : sql`DESC`
+    }, is_favorite DESC, rating DESC, game_name ASC
     OFFSET ${(page - 1) * 12}
     LIMIT 12
     `;

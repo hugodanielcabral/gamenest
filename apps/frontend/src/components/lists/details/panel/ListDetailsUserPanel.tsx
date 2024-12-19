@@ -7,6 +7,8 @@ import type { List } from "../../../../types/lists";
 import { useNavigate } from "react-router-dom";
 import { ListRepository } from "../../../repositories/ListRepository";
 import { toast } from "sonner";
+import { Modal } from "../../../ui/modal/Modal";
+import { useState } from "react";
 
 interface ListDetailsUserPanelProps {
   list: List;
@@ -14,40 +16,12 @@ interface ListDetailsUserPanelProps {
 
 export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
   const { isAuth, user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
-  const handleConfirm = () => {
-    toast.warning(
-      `¿Estás seguro de que deseas eliminar la lista?`,
-      {
-        duration: 3000,
-        className: "bg-neutral text-xs md:text-sm text-white font-nunito",
-        action: (
-          <>
-            <Button
-              className="btn-info text-white"
-              size="sm"
-              onClick={handleDelete}
-            >
-              Sí
-            </Button>
-            <Button
-              className="btn-error text-white"
-              size="sm"
-              onClick={() => {
-                toast.dismiss();
-              }}
-            >
-              No
-            </Button>
-          </>
-        ),
-      },
-    );
-  };
 
   const handleDelete = async () => {
     try {
+      setIsOpen(false);
       const response = await ListRepository.delete(list.list_id);
 
       if (!response.ok) {
@@ -65,6 +39,35 @@ export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
   return (
     <div className="-order-1 col-span-full flex h-fit flex-col gap-2 rounded-md p-4 lg:order-2 lg:col-span-1">
       <div className="flex justify-center gap-2">
+        {isAuth && isOpen && (
+          <Modal isOpen={isOpen} onClose={() => setIsOpen(!isOpen)}>
+            <p className="text-pretty text-sm md:text-base lg:text-lg">
+              ¿Estas seguro de eliminar{" "}
+              <span className="font-bold text-warning">{list.title}</span> de tu
+              colección?
+            </p>
+            <div className="mt-2 space-x-2">
+              <Button
+                type="button"
+                className="btn-outline"
+                size="sm"
+                variant="error"
+                onClick={handleDelete}
+              >
+                Eliminar
+              </Button>
+              <Button
+                type="button"
+                className="btn-outline"
+                size="sm"
+                variant="info"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                Cancelar
+              </Button>
+            </div>
+          </Modal>
+        )}
         {isAuth ? (
           <LikeButton
             likes={list.total_likes}
@@ -89,7 +92,7 @@ export const ListDetailsUserPanel = ({ list }: ListDetailsUserPanelProps) => {
               variant="error"
               className="btn-outline tooltip tooltip-top"
               data-tip="Eliminar lista"
-              onClick={handleConfirm}
+              onClick={() => setIsOpen(true)}
             >
               <Icon name="icon-[material-symbols--delete]" className="size-6" />
             </Button>

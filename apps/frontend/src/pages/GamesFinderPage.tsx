@@ -10,7 +10,7 @@ import { GamesFinderFilters } from "../components/games/finder/filters/GamesFind
 
 const GamesFinderPage = () => {
   return (
-    <Layout>
+    <Layout title="Buscador de juegos">
       <Container className="space-y-4 p-4">
         <section className="flex flex-col flex-wrap justify-start gap-2 md:flex-row">
           <GamesFinderSearch />

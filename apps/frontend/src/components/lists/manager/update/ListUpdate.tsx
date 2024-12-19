@@ -120,7 +120,7 @@ export const ListUpdate = () => {
   };
 
   return (
-    <Layout>
+    <Layout title="Actualizar Lista">
       <Toaster position="top-center" duration={2000} visibleToasts={1} />
       <Container className="flex flex-col space-y-8 p-4">
         <ListForm

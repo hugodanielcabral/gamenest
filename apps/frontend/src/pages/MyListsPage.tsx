@@ -15,7 +15,7 @@ export const MyListsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <Layout>
+    <Layout title="Mis listas">
       <Container className="flex flex-col space-y-8 p-4">
         <section className="flex flex-wrap items-center justify-start gap-2 rounded-lg bg-red-500/60 p-2 md:flex-row md:p-4">
           <div className="max-w-sm">

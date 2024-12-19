@@ -66,8 +66,13 @@ export const CategoryPage = () => {
     );
   }
 
+
   return (
-    <Layout>
+    <Layout
+      title={
+        genres.find((g) => g.slug === path)?.es_name ?? "Juegos de " + capitalizeWord(path)
+      }
+    >
       <Container
         className={clsx(
           "flex flex-col space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-12",

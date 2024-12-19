@@ -6,7 +6,6 @@ import { Input } from "../../../../ui/input/Input.tsx";
 import { Label } from "../../../../ui/label/Label.tsx";
 import { Option, Select } from "../../../../ui/select/Select.tsx";
 import clsx from "clsx";
-import { Icon } from "../../../../ui/icon/Icon.tsx";
 
 interface ContentOptionalProps {
   formState: {
@@ -36,24 +35,17 @@ export const ContentOptional = ({
   handleOnChange,
   serverErrors,
 }: ContentOptionalProps) => {
-
   return (
-    <div className="p-4 space-y-6">
+    <div className="space-y-6 p-4">
       <div className="divider divider-neutral"></div>
       <div className="flex items-center justify-center gap-4">
         <h2 className="text-center text-xl text-gray-300 sm:text-2xl md:text-3xl lg:text-4xl">
           Datos opcionales
         </h2>
       </div>
-      <section
-        className="flex flex-col gap-4"
-      >
+      <section className="flex flex-col gap-4">
         {serverErrors?.length > 0 && (
-          <div className="mx-auto mt-4 max-w-6xl rounded-lg border border-gray-600 bg-error p-2 md:p-4">
-            <Icon
-              name="icon-[mdi--alert]"
-              className="size-4 w-full text-center text-white md:size-6"
-            />
+          <div className="mx-auto mt-4 max-w-6xl rounded-lg border border-gray-600 bg-error p-2 md:p-2">
             <ol className="flex flex-wrap gap-4">
               {serverErrors?.map((error, index) => (
                 <li key={error.path} className="text-white">

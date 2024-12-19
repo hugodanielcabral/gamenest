@@ -4,6 +4,7 @@ import { Layout } from "../../layout/Layout";
 import { ManagerHeader } from "./header/ManagerHeader";
 import { Container } from "../../ui/container/Container";
 import { CollectionManagerContent } from "./content/CollectionManagerContent";
+import { Loading } from "../../ui/loading/Loading.tsx";
 
 interface GameProps {
   data: {
@@ -37,13 +38,15 @@ export const CollectionManager = () => {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <span className="loading loading-spinner loading-lg mx-auto size-32 sm:size-36 md:size-40 lg:size-44"></span>
-      </div>
+      <Loading
+        className="mx-auto flex min-h-screen flex-col justify-center"
+        color="info"
+        type="dots"
+      />
     );
   }
   return (
-    <Layout>
+    <Layout title={game?.name}>
       <Container>
         <ManagerHeader game={game} />
         <CollectionManagerContent game={game} />

@@ -48,7 +48,7 @@ export const CollectionGamePage = () => {
       <Loading color="info" type="dots" />
     </div>
   ) : (
-    <Layout>
+    <Layout title={`${collection[0]?.game_name}`}>
       <Container className="space-y-4">
         <CollectionGamePageHeader collection={collection} />
         <CollectionGamePageContent collection={collection} />

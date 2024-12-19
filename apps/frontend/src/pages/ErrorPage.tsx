@@ -7,6 +7,7 @@ export const ErrorPage = () => {
 
   return (
     <div className="grid h-screen place-content-center min-h-screen bg-gradient-to-b from-gray-800 from-50% to-base-300 px-4">
+      <title>404 | GameNest</title>
       <div className="text-center">
         <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-red-500">404</h1>
 

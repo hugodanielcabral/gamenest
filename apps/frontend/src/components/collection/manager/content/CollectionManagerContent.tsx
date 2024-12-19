@@ -11,6 +11,7 @@ import { GET, PATCH, POST } from "../../../../services/apiServices.ts";
 import { toast, Toaster } from "sonner";
 import { ContentOptional } from "./optional/ContentOptional.tsx";
 import { formatDate } from "../../../../utils/formatDate.ts";
+import { createPortal } from "react-dom";
 
 const initialPrimaryFormState = {
   platform_name: "",
@@ -60,8 +61,6 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
 
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
     if (pathname.includes("/update/")) {
       GET(`/collection/game/${game.slug}`)
@@ -78,7 +77,6 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
             return;
           }
 
-
           setPrimaryFormState({
             platform_name: data[0].platform_name || "",
             format_name: data[0].format_name || "",
@@ -94,7 +92,7 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
             hours_played: data[0].hours_played || 0,
             minutes_played: data[0].minutes_played || 0,
             start_date: formatDate(data[0].start_date, "input"),
-            finish_date: formatDate(data[0].finish_date, "input"),          
+            finish_date: formatDate(data[0].finish_date, "input"),
             difficulty: data[0].difficulty || "",
             is_favorite: data[0].is_favorite || false,
           });
@@ -116,7 +114,6 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(optionalFormState.start_date, optionalFormState.finish_date)
     try {
       if (pathname.includes("/update/")) {
         setButtonState("sending");
@@ -140,11 +137,12 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
         if (!updatedCollection) {
           setButtonState("default");
           return toast.error(
-            "Ocurrió un error al actualizar la información del juego", {
+            "Ocurrió un error al actualizar la información del juego",
+            {
               duration: 3000,
               className:
                 "bg-error text-white text-xs md:text-sm text-white font-nunito",
-            }
+            },
           );
         }
 
@@ -214,15 +212,12 @@ export const CollectionManagerContent = ({ game }: GameProps) => {
     }
   };
 
-
-
   return (
     <form onSubmit={handleOnSubmit}>
-      <Toaster
-        position="top-center"
-        duration={2000}
-        visibleToasts={1}
-      />
+      {createPortal(
+        <Toaster position="top-center" duration={2000} visibleToasts={1} />,
+        document.body,
+      )}
       <Progress
         className={clsx("mb-4", {
           "progress-success": formProgress === 100,
