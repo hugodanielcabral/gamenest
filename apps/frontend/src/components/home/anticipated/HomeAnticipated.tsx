@@ -148,7 +148,7 @@ export const HomeAnticipated = () => {
             return <GameCard key={game.id} game={game} countdown={countdown} />;
           })
       ) : (
-        <div className="col-span-full flex justify-center">
+        <div className="col-span-full flex">
           <p className="text-pretty font-nunito text-sm italic text-gray-300 sm:text-lg md:text-xl lg:text-2xl">
             No hay juegos anticipados disponibles en este momento.
           </p>

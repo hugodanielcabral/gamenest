@@ -31,7 +31,7 @@ export const HomePopular = () => {
       {fetchData && fetchData.length > 0 ? (
         fetchData.map((game) => (
           <Card
-            key={game.id}
+            key={game?.id}
             backgroundImage={game?.cover?.url}
             linkTo={`/games/${game?.slug}`}
           >

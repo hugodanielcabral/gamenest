@@ -40,9 +40,9 @@ export const PlatformsList = ({
     };
   }, []);
 
-  const extraPlatforms = platforms.slice(visiblePlatforms);
+  const extraPlatforms = platforms?.slice(visiblePlatforms);
 
-  return (
+  return extraPlatforms ? (
     <ul className="mb-1 line-clamp-1 flex flex-wrap items-center gap-1 md:mb-4 md:gap-2">
       {platforms?.slice(0, visiblePlatforms).map(({ id, abbreviation }) => (
         <li key={id}>
@@ -50,11 +50,15 @@ export const PlatformsList = ({
         </li>
       ))}
 
-      {extraPlatforms.length > 0 && (
+      {extraPlatforms?.length > 0 && (
         <span className="text-sm text-gray-300">
           ...{extraPlatforms.length} más
         </span>
       )}
     </ul>
+  ) : (
+    <p className="text-xs text-gray-400 sm:text-sm">
+      No hay plataformas disponibles.
+    </p>
   );
 };
