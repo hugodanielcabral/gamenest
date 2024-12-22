@@ -49,8 +49,8 @@ export const GameDetailsHeader = ({
           className="rounded-md"
         />
         <div
-          className="tooltip tooltip-right absolute right-0 top-0 rounded-bl-full bg-base-300 bg-opacity-90 p-5 sm:p-6"
-          data-tip="Calificación basada en datos de IGDB."
+          className="tooltip tooltip-left md:tooltip-right absolute right-0 top-0 rounded-bl-full bg-base-300 bg-opacity-90 p-5 sm:p-6"
+          data-tip="Calificación IGDB."
         >
           <Icon
             name="icon-[ion--trophy-sharp] text-warning"
