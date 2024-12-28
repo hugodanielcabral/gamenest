@@ -133,7 +133,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     initAuth();
-  }, [accessToken]);
+  }, []);
 
   //* Because i was getting Login errors on the register page and viceversa
   //* But also, when i changed pages, the error never disappeared
