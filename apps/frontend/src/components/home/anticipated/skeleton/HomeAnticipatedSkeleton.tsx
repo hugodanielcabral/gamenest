@@ -14,8 +14,6 @@ export const HomeAnticipatedSkeleton = () => {
               height="100%" 
               width="100%" 
               className="rounded-md"
-              baseColor="#1e293b"
-              highlightColor="#374151"
             />
           </div>
         ))}
