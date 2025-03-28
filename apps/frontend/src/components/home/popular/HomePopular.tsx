@@ -1,31 +1,25 @@
 import { DateTime } from "luxon";
 import { useDataFetch } from "../../../hooks/useDataFetch";
-import { Loading } from "../../ui/loading/Loading.tsx";
 import { Card, CardBody, CardImage, CardTitle } from "./card/Card.tsx";
 import { Icon } from "../../ui/icon/Icon.tsx";
 import { IGDBGamesProps } from "../../../types/igdbGames.ts";
 import { PlatformsList } from "../../platformsList/PlatformsList.tsx";
 import clsx from "clsx";
-
+import { HomePopularSkeleton } from "./skeleton/HomePopularSkeleton.tsx";
 
 export const HomePopular = () => {
   const { fetchData, isLoading } =
     useDataFetch<IGDBGamesProps[]>(`popular/games`);
 
   if (isLoading) {
-    return (
-      <Loading
-        className="flex items-start justify-center"
-        color="info"
-        type="dots"
-      />
-    );
+    return <HomePopularSkeleton />;
   }
 
   return (
-    <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-      <h2 className="col-span-full font-nunito text-xl text-white md:text-2xl lg:text-3xl">
-        Populares ahora mismo
+    <div className="grid max-w-7xl grid-cols-1 gap-2 md:mx-auto lg:grid-cols-2">
+      <h2 className="col-span-full my-4 text-center font-nunito text-xl text-white md:text-3xl lg:text-4xl">
+        <Icon name="icon-[noto-v1--fire]" />
+        Los más populares ahora mismo
         <Icon name="icon-[noto-v1--fire]" />
       </h2>
       {fetchData && fetchData.length > 0 ? (

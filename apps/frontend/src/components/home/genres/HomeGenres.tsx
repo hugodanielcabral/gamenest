@@ -7,7 +7,7 @@ export const HomeGenres = () => {
   return (
     <div className="w-full">
       <h2 className="col-span-full mb-2 font-nunito text-xl text-white md:text-2xl lg:text-3xl">
-        Géneros
+        Todos los géneros
       </h2>
       <Carousel>
         {genres.map((genre) => (

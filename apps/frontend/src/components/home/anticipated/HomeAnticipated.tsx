@@ -1,10 +1,10 @@
 import { DateTime } from "luxon";
 import { useDataFetch } from "../../../hooks/useDataFetch";
-import { Loading } from "../../ui/loading/Loading.tsx";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IGDBGamesProps } from "../../../types/igdbGames.ts";
 import getImageUrl from "../../../utils/getImageUrl";
+import { HomeAnticipatedSkeleton } from "./skeleton/HomeAnticipatedSkeleton";
 
 export const TimeDisplay = ({ time, text }: { time: number; text: string }) => {
   return (
@@ -60,12 +60,12 @@ const GameCard = ({
     <Link
       key={game.id}
       to={`/games/${game?.slug}`}
-      className="group relative h-[200px] w-full sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px]"
+      className="w-4/4 group relative h-[200px] overflow-hidden sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px]"
     >
       <img
         src={getImageUrl(game?.cover?.url, "cover_big_2x")}
         alt={`${game?.name} cover image`}
-        className="absolute h-full w-full rounded-md object-cover"
+        className="absolute h-full w-full scale-125 rounded-md object-cover"
       />
       <div className="absolute inset-0 bg-black opacity-70 transition-opacity group-hover:opacity-60"></div>
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-4">
@@ -91,7 +91,7 @@ const GameCard = ({
 };
 
 export const HomeAnticipated = () => {
-  const { fetchData, isLoading } = useDataFetch<IGDBGamesProps[]>(
+  const { fetchData, isLoading, error } = useDataFetch<IGDBGamesProps[]>(
     `games/latest/anticipated`,
   );
 
@@ -125,32 +125,37 @@ export const HomeAnticipated = () => {
     }
   }, [fetchData]);
 
-  if (isLoading) {
-    return (
-      <Loading
-        className="flex items-start justify-center lg:col-span-3"
-        color="info"
-        type="dots"
-      />
-    );
-  }
-
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-4">
+    <div className="flex flex-col">
       <h2 className="col-span-full mb-2 font-nunito text-xl text-white md:text-2xl lg:text-3xl">
-        Más anticipados
+        Los más anticipados
       </h2>
-      {fetchData && fetchData.length > 0 ? (
-        fetchData
-          .sort((a, b) => a.first_release_date - b.first_release_date)
-          .map((game) => {
-            const countdown = countdowns.find((c) => c.id === game.id);
-            return <GameCard key={game.id} game={game} countdown={countdown} />;
-          })
+
+      {isLoading ? (
+        <HomeAnticipatedSkeleton />
+      ) : error ? (
+        <div className="flex w-full justify-center">
+          <p className="text-pretty font-nunito text-sm italic text-red-400 sm:text-lg md:text-xl lg:text-2xl">
+            Ocurrió un error al cargar los juegos anticipados. Por favor,
+            inténtalo más tarde.
+          </p>
+        </div>
+      ) : fetchData && fetchData.length > 0 ? (
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4">
+          {fetchData
+            .sort((a, b) => a.first_release_date - b.first_release_date)
+            .map((game) => {
+              const countdown = countdowns.find((c) => c.id === game.id);
+              return (
+                <GameCard key={game.id} game={game} countdown={countdown} />
+              );
+            })}
+        </div>
       ) : (
-        <div className="col-span-full flex">
+        <div className="flex w-full justify-center">
           <p className="text-pretty font-nunito text-sm italic text-gray-300 sm:text-lg md:text-xl lg:text-2xl">
-            No hay juegos anticipados disponibles en este momento.
+            No se encontraron juegos anticipados en este momento. Inténtalo más
+            tarde.
           </p>
         </div>
       )}
