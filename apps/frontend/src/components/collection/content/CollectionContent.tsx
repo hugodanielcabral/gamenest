@@ -1,5 +1,5 @@
-import { Loading } from "../../ui/loading/Loading.tsx";
 import { CollectionList } from "../list/CollectionList";
+import { CollectionContentSkeleton } from "./skeleton/CollectionContentSkeleton.tsx";
 
 interface CollectionContentProps {
   deleteGameCollection: (collection_id: number) => void;
@@ -39,9 +39,7 @@ export const CollectionContent = ({
   return (
     <>
       {isLoading ? (
-        <div className="col-span-3 flex min-h-screen flex-col items-center">
-           <Loading color="info" type="dots" />
-        </div>
+        <CollectionContentSkeleton />
       ) : (
         <CollectionList
           collections={collections}

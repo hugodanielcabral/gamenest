@@ -1,10 +1,10 @@
 import { useDataFetch } from "../../../../hooks/useDataFetch";
 import { Card } from "./card/Card";
 import { Toaster } from "sonner";
-import { Loading } from "../../../ui/loading/Loading.tsx";
 import { useQueryParams } from "../../../../hooks/useQueryParams";
 import { createPortal } from "react-dom";
 import type { IGDBGamesProps } from "../../../../types/igdbGames.ts";
+import { GamesFinderContentSkeleton } from "./skeleton/GamesFinderContentSkeleton.tsx";
 
 interface GamesProps {
   fetchData: IGDBGamesProps[];
@@ -19,13 +19,7 @@ export const GamesFinderContent = () => {
   >("games", `${getQueryString()}`);
 
   if (isLoading) {
-    return (
-      <Loading
-        className="flex items-start justify-center lg:col-span-3"
-        color="info"
-        type="dots"
-      />
-    );
+    return <GamesFinderContentSkeleton />;
   }
 
   return (
@@ -35,7 +29,7 @@ export const GamesFinderContent = () => {
         gamesData.map((game) => <Card key={game.id} game={game} />)
       ) : (
         <div className="col-span-full flex min-h-screen justify-center">
-          <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+          <p className="text-pretty font-nunito text-sm italic text-gray-300 sm:text-lg md:text-xl lg:text-2xl">
             No se encontraron resultados para tu búsqueda. Verifica los filtros
             aplicados.
           </p>

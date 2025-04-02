@@ -222,7 +222,7 @@ const Item = ({
           });
         }}
         className={clsx(
-          "btn-ghost tooltip tooltip-left tooltip-error absolute bottom-12 md:bottom-14 right-0 z-10 disabled:cursor-not-allowed disabled:opacity-50",
+          "btn-ghost tooltip tooltip-left tooltip-error absolute bottom-12 right-0 z-10 disabled:cursor-not-allowed disabled:opacity-50 md:bottom-14",
         )}
         size="sm"
         disabled={sending}
@@ -253,7 +253,7 @@ export const CollectionList = ({
         ))
       ) : (
         <div className="col-span-full flex min-h-screen justify-center">
-          <p className="mt-10 text-pretty text-center font-nunito text-lg text-white sm:text-2xl md:text-3xl lg:text-4xl">
+          <p className="text-pretty font-nunito text-sm italic text-gray-300 sm:text-lg md:text-xl lg:text-2xl">
             No se encontró ningún juego en tu colección.
           </p>
         </div>
