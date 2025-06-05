@@ -1,4 +1,5 @@
-import dotenv from "dotenv";
+import { Request, Response, NextFunction } from "express";
+import "./loadEnv.js";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
@@ -18,7 +19,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 /* import "./cronJobs/deleteUnverifiedUsers.js";
 import "./cronJobs/restartUserEditCredits.js"; */
-dotenv.config({ path: ".env" });
 
 const app = express();
 
@@ -55,7 +55,11 @@ app.use("/api", listsRoutes);
 app.use("/api", categoriesRoutes);
 
 // Error Handling
-app.use((error, req, res, next) => {
+interface CustomError extends Error {
+  status?: number;
+}
+
+app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {
   res.status(error.status || 500);
   res.json({
     error: {
