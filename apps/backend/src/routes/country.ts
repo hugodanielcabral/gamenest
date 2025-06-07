@@ -6,7 +6,7 @@ import {
   updateCountry,
   deleteCountry,
 } from "../controllers/country";
-import { AuthMiddleware } from "../middlewares/auth.middleware.js";
+import { AuthMiddleware } from "../middlewares/auth.js";
 
 const router = Router();
 
