@@ -1,12 +1,6 @@
 import Router from "express";
-import {
-  signup,
-  signin,
-  signout,
-  profile,
-  refresh,
-} from "../controllers/auth.controller.js";
-import { AuthMiddleware } from "../middlewares/auth.middleware.js";
+import { signup, signin, signout, profile, refresh } from "../controllers/auth";
+import { AuthMiddleware } from "../middlewares/auth.js";
 import {
   signinValidator,
   signupValidator,

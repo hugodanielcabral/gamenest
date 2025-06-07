@@ -4,7 +4,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import authRoutes from "./routes/auth.routes.js";
+import authRoutes from "./routes/auth";
 import collectionRoutes from "./routes/collection.routes.js";
 import gamesRoutes from "./routes/games.routes.js";
 import countryRoutes from "./routes/country";
