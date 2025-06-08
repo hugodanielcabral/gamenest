@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BcryptEncryptionAdapter } from "../adapters/encryption.js";
 import { JwtAdapter } from "../adapters/jwt.adapter.js";
-import type { AuthRequest } from "../middlewares/auth";
+import type { AuthRequest } from "../middlewares/auth.js";
 import Token from "../models/Token.js";
 import User from "../models/User.js";
 

@@ -9,7 +9,7 @@ import {
   getTotalCollectionPages,
   getCollectionFilters,
 } from "../controllers/collection.controller.js";
-import { AuthMiddleware } from "../middlewares/auth.middleware.js";
+import { AuthMiddleware } from "../middlewares/auth";
 import {
   addCollectionValidator,
   getCollectionValidator,
