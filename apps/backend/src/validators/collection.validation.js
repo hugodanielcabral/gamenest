@@ -1,7 +1,6 @@
 import { query } from "express-validator";
 import { validateResult } from "../helpers/handleValidateResult.js";
 import { body } from "express-validator";
-import { availablePlatforms } from "../data/availablePlatforms.js";
 
 export const addCollectionValidator = [
   body("hours_played")

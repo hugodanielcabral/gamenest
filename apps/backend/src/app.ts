@@ -6,7 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth";
 import collectionRoutes from "./routes/collection.routes.js";
-import gamesRoutes from "./routes/games.routes.js";
+import gamesRoutes from "./routes/games.routes";
 import countryRoutes from "./routes/country";
 import rolesRoutes from "./routes/roles";
 import usersRoutes from "./routes/users.routes.js";
@@ -15,6 +15,7 @@ import categoriesRoutes from "./routes/categories.routes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
+import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 /* import "./cronJobs/deleteUnverifiedUsers.js";
@@ -55,17 +56,7 @@ app.use("/api", listsRoutes);
 app.use("/api", categoriesRoutes);
 
 // Error Handling
-interface CustomError extends Error {
-  status?: number;
-}
 
-app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message,
-    },
-  });
-});
+app.use(errorHandler)
 
 export default app;
