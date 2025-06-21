@@ -6,7 +6,7 @@ import {
   updateCollection,
   deleteCollection,
 } from "../controllers/collection.controller";
-import { AuthMiddleware } from "../middlewares/auth";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 import type { ApiEndpoint } from "../types/apiroute";
 
 const router = Router();

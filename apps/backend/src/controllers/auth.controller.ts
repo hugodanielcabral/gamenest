@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { BcryptEncryptionAdapter } from "../adapters/encryption.js";
-import { JwtAdapter } from "../adapters/jwt.adapter.js";
-import type { AuthRequest } from "../middlewares/auth.js";
-import Token from "../models/Token.js";
-import User from "../models/User.js";
+import { BcryptEncryptionAdapter } from "../adapters/encryption";
+import { JwtAdapter } from "../adapters/jwt.adapter";
+import type { AuthRequest } from "../middlewares/auth.middleware";
+import Token from "../models/token.model";
+import User from "../models/user.model";
 
 export const signup = async (req: Request, res: Response) => {
   const { username, email, password, country_id } = req.body;

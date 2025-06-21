@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import sql from "../db.js";
-import Roles from "../models/Roles";
+import Roles from "../models/roles.model";
 
 export const getRoles = async (req: Request, res: Response) => {
   try {

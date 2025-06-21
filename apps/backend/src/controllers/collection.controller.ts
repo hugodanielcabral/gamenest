@@ -1,4 +1,4 @@
-import { AuthRequest } from "../middlewares/auth.js";
+import { AuthRequest } from "../middlewares/auth.middleware.js";
 import Collection from "../models/collection.model.js";
 import { Request, Response, NextFunction } from "express";
 import { ICollection } from "../types/collection.js";

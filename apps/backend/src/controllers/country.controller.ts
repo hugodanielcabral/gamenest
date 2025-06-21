@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Country from "../models/Country";
+import Country from "../models/country.model";
 
 export const getCountries = async (req: Request, res: Response) => {
   try {

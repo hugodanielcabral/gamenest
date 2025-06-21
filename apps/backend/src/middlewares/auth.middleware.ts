@@ -1,5 +1,5 @@
 import { JwtAdapter } from "../adapters/jwt.adapter.js";
-import User from "../models/User.js";
+import User from "../models/user.model.js";
 import { Request, Response, NextFunction } from "express";
 
 export interface AuthRequest extends Request {

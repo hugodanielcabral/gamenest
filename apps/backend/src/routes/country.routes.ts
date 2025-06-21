@@ -5,8 +5,8 @@ import {
   createCountry,
   updateCountry,
   deleteCountry,
-} from "../controllers/country";
-import { AuthMiddleware } from "../middlewares/auth.js";
+} from "../controllers/country.controller";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 

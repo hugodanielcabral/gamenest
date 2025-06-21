@@ -12,8 +12,6 @@ const ALLOWED_COLUMNS: readonly AllowedCols[] = [
   "ownership_name"
 ] as const;
 
-//? Conventir a clase? y crear metodos que se encarge de la validaciones y el otro para conventirlo 
-
 export const parseQueryString: ParseQueryStringFn = (queryString) => {
   if (!queryString?.trim()) return undefined;
   

@@ -3,19 +3,17 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import authRoutes from "./routes/auth";
+import authRoutes from "./routes/auth.routes.js";
 import collectionRoutes from "./routes/collection.routes.js";
 import gamesRoutes from "./routes/games.routes";
-import countryRoutes from "./routes/country";
-import rolesRoutes from "./routes/roles";
+import countryRoutes from "./routes/country.routes.js";
+import rolesRoutes from "./routes/roles.routes.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
 import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-/* import "./cronJobs/deleteUnverifiedUsers.js";
-import "./cronJobs/restartUserEditCredits.js"; */
 
 const app = express();
 

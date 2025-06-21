@@ -5,8 +5,8 @@ import {
   createRole,
   updateRole,
   deleteRole,
-} from "../controllers/roles";
-import { AuthMiddleware } from "../middlewares/auth";
+} from "../controllers/roles.controller";
+import { AuthMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 
