@@ -18,21 +18,18 @@ const requestOptions = {
   responseType: "json" as const,
 };
 
-export interface IMultiQueryResponse {
-  games: {
-    name: string;
-    result: IGames[];
-  };
-  count: IGamesCount;
-}
+export type MultiQueryRawResponse = [
+  { name: string; result: IGames[] },
+  { name: string; count: number }
+];
 
 export default class Games {
   static async findAll(
-    sort: "name" | "rating" | "hypes"  = "hypes",
+    sort: "name" | "rating" | "hypes" = "hypes",
     order: "asc" | "desc" = "desc",
     platforms?: string,
     page: string = "1"
-  ): Promise<IMultiQueryResponse[] | null> {
+  ): Promise<MultiQueryRawResponse | null> {
     try {
       const response = await apicalypse(requestOptions)
         .multi([
@@ -71,7 +68,7 @@ export default class Games {
     platforms: string,
     page: string,
     q: string
-  ): Promise<IMultiQueryResponse[] | null> {
+  ): Promise<MultiQueryRawResponse | null> {
     try {
       const gamesRequest = apicalypse(requestOptions)
         .fields(

@@ -34,7 +34,7 @@ export interface IGames {
 }
 
 export interface IGamesCount {
-  name: "string";
+  name: string;
   count: number;
 }
 

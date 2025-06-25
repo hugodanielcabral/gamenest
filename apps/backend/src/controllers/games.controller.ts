@@ -1,7 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import Games, { IMultiQueryResponse } from "../models/games.model";
+import Games, { MultiQueryRawResponse } from "../models/games.model";
 
-export const getGames = async (req: Request, res: Response, next:NextFunction) => {
+export const getGames = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const {
       sort = "hypes",
@@ -17,7 +21,7 @@ export const getGames = async (req: Request, res: Response, next:NextFunction) =
       q?: string;
     };
 
-    let games: IMultiQueryResponse[] | null;
+    let games: MultiQueryRawResponse | null;
 
     if (q) {
       games = await Games.search(platforms, page, q);
@@ -27,11 +31,15 @@ export const getGames = async (req: Request, res: Response, next:NextFunction) =
 
     res.status(200).json(games);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
-export const getGame = async (req: Request, res: Response, next:NextFunction) => {
+export const getGame = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { slug } = req.params;
 
@@ -41,11 +49,15 @@ export const getGame = async (req: Request, res: Response, next:NextFunction) =>
 
     res.status(200).json(game);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
-export const getLatestGames = async (req: Request, res: Response, next:NextFunction) => {
+export const getLatestGames = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const CURRENT_TIMESTAMP = Math.floor(Date.now() / 1000);
   const LAST_48_HOURS = CURRENT_TIMESTAMP - 172800;
   try {
@@ -58,11 +70,15 @@ export const getLatestGames = async (req: Request, res: Response, next:NextFunct
 
     res.status(200).json(latest);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
-export const getUpcomingGames = async (req: Request, res: Response, next:NextFunction) => {
+export const getUpcomingGames = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   tomorrow.setHours(0, 0, 0, 0);
@@ -78,11 +94,15 @@ export const getUpcomingGames = async (req: Request, res: Response, next:NextFun
 
     res.status(200).json(upcoming);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
-export const getAnticipatedGames = async (req: Request, res: Response, next:NextFunction) => {
+export const getAnticipatedGames = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const calculateTimestamp = (daysToAdd = 0, endOfDay = false) => {
     const date = new Date();
     date.setDate(date.getDate() + daysToAdd);
@@ -103,11 +123,15 @@ export const getAnticipatedGames = async (req: Request, res: Response, next:Next
 
     res.status(200).json(anticipated);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
-export const getPopularGames = async (req: Request, res: Response, next:NextFunction) => {
+export const getPopularGames = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const popularityGames = await Games.findByPopScore();
 
@@ -117,6 +141,6 @@ export const getPopularGames = async (req: Request, res: Response, next:NextFunc
 
     res.status(200).json(games);
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
