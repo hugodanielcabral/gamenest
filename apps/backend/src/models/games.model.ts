@@ -28,10 +28,10 @@ export interface IMultiQueryResponse {
 
 export default class Games {
   static async findAll(
-    sort: "name" | "rating" | "hypes",
-    order: "asc" | "desc",
-    platforms: string,
-    page: string
+    sort: "name" | "rating" | "hypes"  = "hypes",
+    order: "asc" | "desc" = "desc",
+    platforms?: string,
+    page: string = "1"
   ): Promise<IMultiQueryResponse[] | null> {
     try {
       const response = await apicalypse(requestOptions)
@@ -39,10 +39,10 @@ export default class Games {
           apicalypse()
             .query("games", "all-games")
             .fields(
-              "name,slug,storyline,summary,version_title,first_release_date,cover.url,platforms.name,genres.name,involved_companies.company.name,involved_companies.developer,videos.video_id,ratings"
+              "name,slug,storyline,summary,version_title,first_release_date,cover.url,platforms.name,genres.name,involved_companies.company.name,involved_companies.developer,videos.video_id,rating"
             )
             .limit(20)
-            .offset(parseInt(page) * 20)
+            .offset((parseInt(page) - 1) * 20)
             .sort(`${sort} ${order}`)
             .where(
               `themes != (42) ${
