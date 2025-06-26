@@ -160,7 +160,7 @@ export default class Games {
           : response.data;
       }
 
-      throw new AppError("Juegos no encontrados)", 404);
+      throw new AppError("Juegos no encontrados", 404);
     } catch (error) {
       console.error("Error al traer los datos:", error);
       throw new AppError("Error al buscar juegos", 500);
